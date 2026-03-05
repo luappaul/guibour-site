@@ -1,14 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  --color-excel-green: #217346;
-  --color-excel-dark: #185C37;
-  --color-office-gray: #F0F0F0;
-  --color-chrome-dark: #2D2D2D;
-  --color-status-dark: #2A3644;
-  --color-gold: #F0C830;
-  --font-mono: "Consolas", "SF Mono", "Fira Code", ui-monospace, monospace;
-  --font-office: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --color-dark-bg: #080D14;
+  --color-corporate-blue: #0047AB;
+  --color-cyber-cyan: #00A89D;
+  --color-cyan-bright: #00C9C8;
+  --color-dark-green: #00755E;
+  --color-grid-bg: #F4F8FB;
+  --color-grid-line: #C8D8E8;
+  --color-grey-text: #607888;
+  --color-chrome-bg: #EBF0F5;
+  --color-chrome-border: #C0D0DE;
+
+  --font-oxanium: 'Oxanium', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-body: 'Rajdhani', sans-serif;
 }
 
 * {
@@ -18,15 +24,15 @@
 }
 
 html, body {
-  font-family: var(--font-office);
-  background: #1E293B;
-  color: #E2E8F0;
+  font-family: var(--font-body);
+  background: var(--color-grid-bg);
+  color: #1A2530;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: #217346;
+  background: var(--color-cyber-cyan);
   color: white;
 }
 
@@ -34,24 +40,25 @@ html, body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #1E293B;
+  background: var(--color-grid-bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: #475569;
+  background: var(--color-grid-line);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #64748B;
+  background: var(--color-grey-text);
 }
 
+/* ===== ANIMATIONS ===== */
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
 
-@keyframes pulse-gold {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(240, 200, 48, 0.4); }
-  50% { box-shadow: 0 0 20px 4px rgba(240, 200, 48, 0.2); }
+@keyframes pulse-neon {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,168,157,0.4); }
+  50% { box-shadow: 0 0 20px 4px rgba(0,168,157,0.2); }
 }
 
 @keyframes float {
@@ -62,4 +69,68 @@ html, body {
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes progress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes bootLine {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== NEON UTILITIES ===== */
+.neon-text {
+  text-shadow: 0 0 14px rgba(0,201,200,0.8), 0 0 40px rgba(0,201,200,0.3);
+}
+
+.neon-text-blue {
+  text-shadow: 0 0 14px rgba(0,71,171,0.6), 0 0 40px rgba(0,71,171,0.2);
+}
+
+.neon-separator {
+  box-shadow: 0 0 8px var(--color-cyan-bright);
+}
+
+.neon-button {
+  box-shadow: 0 0 20px rgba(0,168,157,0.15), inset 0 0 20px rgba(0,168,157,0.05);
+}
+
+/* ===== EXCEL GRID BACKGROUND ===== */
+.excel-grid-bg {
+  background-color: var(--color-grid-bg);
+  background-image:
+    linear-gradient(var(--color-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid-line) 1px, transparent 1px);
+  background-size: 56px 34px;
+}
+
+/* ===== SCANLINES ===== */
+.scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0,0,0,0.15) 2px,
+    rgba(0,0,0,0.15) 4px
+  );
+  pointer-events: none;
+  opacity: 0.3;
 }

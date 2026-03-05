@@ -2,6 +2,13 @@
 
 import { useState } from 'react';
 import ExcelNav from '@/components/ui/ExcelNav';
+import Logo from '@/components/ui/Logo';
+
+const contactInfo = [
+  { label: 'EMAIL', value: 'contact@guibour.fr' },
+  { label: 'SITE', value: 'guibour.fr' },
+  { label: 'STATUS', value: 'SYSTÈME OPÉRATIONNEL' },
+];
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
@@ -12,86 +19,287 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: '#1E293B' }}>
+    <div className="min-h-screen" style={{ background: '#F4F8FB' }}>
       <ExcelNav />
-      <main className="mx-auto max-w-2xl px-6 py-10">
-        {/* Header */}
-        <div className="mb-8 overflow-hidden rounded-xl shadow-lg">
-          <div className="flex items-center gap-3 bg-[#217346] px-5 py-3">
-            <div className="flex gap-2">
-              <span className="block h-3.5 w-3.5 rounded-full" style={{ background: '#FF5F56' }} />
-              <span className="block h-3.5 w-3.5 rounded-full" style={{ background: '#FFBD2E' }} />
-              <span className="block h-3.5 w-3.5 rounded-full" style={{ background: '#27C93F' }} />
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        minHeight: 'calc(100vh - 48px)',
+      }}>
+        {/* LEFT - Dark column */}
+        <div style={{
+          background: '#080D14',
+          position: 'relative',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          padding: '60px 48px',
+        }}>
+          {/* Subtle grid */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: 'linear-gradient(rgba(0,168,157,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,168,157,0.04) 1px, transparent 1px)',
+            backgroundSize: '52px 32px',
+          }} />
+
+          <div style={{ position: 'relative', zIndex: 10 }}>
+            {/* Logo */}
+            <div style={{ marginBottom: '48px' }}>
+              <Logo variant="dark" size="md" />
             </div>
-            <span className="text-sm font-bold text-white">Contact.xlsx</span>
-          </div>
-          <div className="bg-[#F5F5F5] px-5 py-4">
-            <p className="font-mono text-sm text-[#475569]">=SI(message&lt;&gt;&quot;&quot;, ENVOYER(), &quot;En attente...&quot;)</p>
+
+            {/* Contact blocks */}
+            {contactInfo.map(info => (
+              <div key={info.label} style={{
+                borderLeft: '2px solid #00C9C8',
+                paddingLeft: '16px',
+                marginBottom: '24px',
+              }}>
+                <span style={{
+                  fontFamily: "'Share Tech Mono', monospace",
+                  fontSize: '7px',
+                  color: '#00C9C8',
+                  letterSpacing: '4px',
+                  display: 'block',
+                  marginBottom: '4px',
+                }}>
+                  {info.label}
+                </span>
+                <span style={{
+                  fontFamily: "'Oxanium', sans-serif",
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  color: 'white',
+                  letterSpacing: '1px',
+                }}>
+                  {info.value}
+                </span>
+              </div>
+            ))}
+
+            {/* Footer text */}
+            <div style={{
+              marginTop: '48px',
+              fontFamily: "'Share Tech Mono', monospace",
+              fontSize: '7px',
+              color: '#1A4040',
+              letterSpacing: '2px',
+              lineHeight: '1.8',
+            }}>
+              GUIBOUR CORP. — DOCUMENT INTERNE<br />
+              REF: GS-CONTACT-001<br />
+              © 2025 GUIBOUR SYSTEM
+            </div>
           </div>
         </div>
 
-        {/* Form */}
-        <div className="overflow-hidden rounded-lg bg-white shadow-lg">
-          <div className="border-b border-[#E2E8F0] px-6 py-4">
-            <h2 className="text-lg font-bold text-[#1E293B]">Nouveau message</h2>
-            <p className="text-xs text-[#94A3B8]">Envoyez un memo a la direction de Guibour Corp.</p>
-          </div>
-
+        {/* RIGHT - White column with form */}
+        <div style={{
+          background: 'white',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          padding: '60px 48px',
+        }}>
           {sent ? (
-            <div className="px-6 py-12 text-center">
-              <p className="text-4xl">📨</p>
-              <p className="mt-3 text-lg font-bold text-[#1E293B]">Memo envoye !</p>
-              <p className="mt-1 text-sm text-[#94A3B8]">
-                La direction vous repondra apres la pause cafe.
+            <div style={{ textAlign: 'center' }}>
+              <h2 style={{
+                fontFamily: "'Oxanium', sans-serif",
+                fontSize: '20px',
+                fontWeight: 700,
+                color: '#1A2530',
+                letterSpacing: '3px',
+                marginBottom: '16px',
+              }}>
+                MESSAGE ENVOYÉ
+              </h2>
+              <p style={{
+                fontFamily: "'Share Tech Mono', monospace",
+                fontSize: '9px',
+                color: '#607888',
+                letterSpacing: '2px',
+              }}>
+                La direction vous répondra après la pause café.
               </p>
               <button
                 onClick={() => setSent(false)}
-                className="mt-4 cursor-pointer rounded-lg px-6 py-2 text-sm font-bold text-white"
-                style={{ background: '#217346' }}
+                style={{
+                  marginTop: '24px',
+                  fontFamily: "'Oxanium', sans-serif",
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  letterSpacing: '3px',
+                  color: '#00A89D',
+                  background: '#080D14',
+                  border: '1px solid #00A89D',
+                  padding: '12px 32px',
+                  cursor: 'pointer',
+                  boxShadow: '0 0 20px rgba(0,168,157,0.15)',
+                }}
               >
-                Nouveau memo
+                NOUVEAU MESSAGE
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4 p-6">
-              <div>
-                <label className="mb-1 block text-xs font-semibold text-[#475569]">De :</label>
-                <input
-                  type="email"
-                  required
-                  placeholder="votre@email.com"
-                  className="w-full rounded-md border border-[#CBD5E1] bg-[#F8FAFC] px-4 py-2.5 text-sm text-[#1E293B] outline-none focus:border-[#217346] focus:ring-2 focus:ring-[#217346]/30"
-                />
-              </div>
-              <div>
-                <label className="mb-1 block text-xs font-semibold text-[#475569]">Objet :</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="Sujet du memo..."
-                  className="w-full rounded-md border border-[#CBD5E1] bg-[#F8FAFC] px-4 py-2.5 text-sm text-[#1E293B] outline-none focus:border-[#217346] focus:ring-2 focus:ring-[#217346]/30"
-                />
-              </div>
-              <div>
-                <label className="mb-1 block text-xs font-semibold text-[#475569]">Message :</label>
-                <textarea
-                  required
-                  rows={5}
-                  placeholder="Votre message..."
-                  className="w-full resize-none rounded-md border border-[#CBD5E1] bg-[#F8FAFC] px-4 py-2.5 text-sm text-[#1E293B] outline-none focus:border-[#217346] focus:ring-2 focus:ring-[#217346]/30"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full cursor-pointer rounded-lg py-3 text-sm font-bold text-white transition-all hover:brightness-110 active:scale-[0.98]"
-                style={{ background: 'linear-gradient(to bottom, #27AE60, #1E8C4D)' }}
-              >
-                Envoyer le memo
-              </button>
-            </form>
+            <>
+              <h2 style={{
+                fontFamily: "'Oxanium', sans-serif",
+                fontSize: '18px',
+                fontWeight: 700,
+                color: '#1A2530',
+                letterSpacing: '3px',
+                marginBottom: '32px',
+              }}>
+                ENVOYER UN MESSAGE
+              </h2>
+
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <div>
+                  <label style={{
+                    fontFamily: "'Share Tech Mono', monospace",
+                    fontSize: '7px',
+                    color: '#607888',
+                    letterSpacing: '3px',
+                    display: 'block',
+                    marginBottom: '6px',
+                  }}>
+                    NOM / PSEUDO
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Votre pseudo..."
+                    style={{
+                      width: '100%',
+                      fontFamily: "'Oxanium', sans-serif",
+                      fontSize: '12px',
+                      color: '#1A2530',
+                      background: '#F4F8FB',
+                      border: '1px solid #C8D8E8',
+                      padding: '10px 14px',
+                      outline: 'none',
+                    }}
+                    onFocus={(e) => e.target.style.borderColor = '#00A89D'}
+                    onBlur={(e) => e.target.style.borderColor = '#C8D8E8'}
+                  />
+                </div>
+
+                <div>
+                  <label style={{
+                    fontFamily: "'Share Tech Mono', monospace",
+                    fontSize: '7px',
+                    color: '#607888',
+                    letterSpacing: '3px',
+                    display: 'block',
+                    marginBottom: '6px',
+                  }}>
+                    EMAIL
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="votre@email.com"
+                    style={{
+                      width: '100%',
+                      fontFamily: "'Oxanium', sans-serif",
+                      fontSize: '12px',
+                      color: '#1A2530',
+                      background: '#F4F8FB',
+                      border: '1px solid #C8D8E8',
+                      padding: '10px 14px',
+                      outline: 'none',
+                    }}
+                    onFocus={(e) => e.target.style.borderColor = '#00A89D'}
+                    onBlur={(e) => e.target.style.borderColor = '#C8D8E8'}
+                  />
+                </div>
+
+                <div>
+                  <label style={{
+                    fontFamily: "'Share Tech Mono', monospace",
+                    fontSize: '7px',
+                    color: '#607888',
+                    letterSpacing: '3px',
+                    display: 'block',
+                    marginBottom: '6px',
+                  }}>
+                    OBJET
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Sujet du message..."
+                    style={{
+                      width: '100%',
+                      fontFamily: "'Oxanium', sans-serif",
+                      fontSize: '12px',
+                      color: '#1A2530',
+                      background: '#F4F8FB',
+                      border: '1px solid #C8D8E8',
+                      padding: '10px 14px',
+                      outline: 'none',
+                    }}
+                    onFocus={(e) => e.target.style.borderColor = '#00A89D'}
+                    onBlur={(e) => e.target.style.borderColor = '#C8D8E8'}
+                  />
+                </div>
+
+                <div>
+                  <label style={{
+                    fontFamily: "'Share Tech Mono', monospace",
+                    fontSize: '7px',
+                    color: '#607888',
+                    letterSpacing: '3px',
+                    display: 'block',
+                    marginBottom: '6px',
+                  }}>
+                    MESSAGE
+                  </label>
+                  <textarea
+                    required
+                    rows={5}
+                    placeholder="Votre message..."
+                    style={{
+                      width: '100%',
+                      fontFamily: "'Oxanium', sans-serif",
+                      fontSize: '12px',
+                      color: '#1A2530',
+                      background: '#F4F8FB',
+                      border: '1px solid #C8D8E8',
+                      padding: '10px 14px',
+                      outline: 'none',
+                      resize: 'none',
+                    }}
+                    onFocus={(e) => e.target.style.borderColor = '#00A89D'}
+                    onBlur={(e) => e.target.style.borderColor = '#C8D8E8'}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  style={{
+                    width: '100%',
+                    fontFamily: "'Oxanium', sans-serif",
+                    fontSize: '11px',
+                    fontWeight: 700,
+                    letterSpacing: '3px',
+                    color: '#00A89D',
+                    background: '#080D14',
+                    border: '1px solid #00A89D',
+                    padding: '14px',
+                    cursor: 'pointer',
+                    boxShadow: '0 0 20px rgba(0,168,157,0.15), inset 0 0 20px rgba(0,168,157,0.05)',
+                  }}
+                >
+                  ENVOYER &rarr;
+                </button>
+              </form>
+            </>
           )}
         </div>
-      </main>
+      </div>
     </div>
   );
 }

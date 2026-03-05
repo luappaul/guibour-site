@@ -2,8 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import ExcelNav from '@/components/ui/ExcelNav';
+import ExcelChrome from '@/components/ui/ExcelChrome';
 import { getLeaderboard, formatSalary } from '@/lib/leaderboard';
 import { LeaderboardEntry } from '@/lib/gameTypes';
+
+function getRankTitle(rank: number): string {
+  if (rank === 1) return '▲ DIRECTEUR GÉNÉRAL';
+  if (rank === 2) return '▲ DIRECTEUR';
+  if (rank === 3) return '▲ MANAGER';
+  return '─ EMPLOYÉ';
+}
 
 export default function ResultatsPage() {
   const [board, setBoard] = useState<LeaderboardEntry[]>([]);
@@ -13,63 +21,134 @@ export default function ResultatsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen" style={{ background: '#1E293B' }}>
+    <div className="min-h-screen">
       <ExcelNav />
-      <main className="mx-auto max-w-3xl px-6 py-10">
-        {/* Header */}
-        <div className="mb-8 overflow-hidden rounded-xl shadow-lg">
-          <div className="flex items-center gap-3 bg-[#217346] px-5 py-3">
-            <div className="flex gap-2">
-              <span className="block h-3.5 w-3.5 rounded-full" style={{ background: '#FF5F56' }} />
-              <span className="block h-3.5 w-3.5 rounded-full" style={{ background: '#FFBD2E' }} />
-              <span className="block h-3.5 w-3.5 rounded-full" style={{ background: '#27C93F' }} />
-            </div>
-            <span className="text-sm font-bold text-white">Resultats.xlsx</span>
+      <ExcelChrome formulaText={`=RANK(JOUEURS) // TOTAL_ENTRÉES: ${board.length}`}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '40px 24px' }}>
+          {/* Page title */}
+          <div style={{ marginBottom: '32px' }}>
+            <span style={{
+              fontFamily: "'Share Tech Mono', monospace",
+              fontSize: '8px',
+              color: '#00A89D',
+              letterSpacing: '6px',
+            }}>01 / CLASSEMENT</span>
+            <h1 style={{
+              fontFamily: "'Oxanium', sans-serif",
+              fontSize: '28px',
+              fontWeight: 800,
+              color: '#1A2530',
+              letterSpacing: '2px',
+              marginTop: '8px',
+            }}>RÉSULTATS</h1>
+            <div style={{
+              width: '60px',
+              height: '2px',
+              background: 'linear-gradient(90deg, #00A89D, transparent)',
+              marginTop: '8px',
+            }} />
           </div>
-          <div className="bg-[#F5F5F5] px-5 py-4">
-            <p className="font-mono text-sm text-[#475569]">=CLASSEMENT(salaries, &quot;meilleurs&quot;)</p>
-          </div>
-        </div>
 
-        {/* Table */}
-        <div className="overflow-hidden rounded-lg shadow-lg">
-          <table className="w-full">
-            <thead>
-              <tr style={{ background: 'linear-gradient(to bottom, #F0F0F0, #DCDCDC)' }}>
-                <th className="px-4 py-3 text-left text-xs font-bold text-[#475569]">#</th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-[#475569]">Employe</th>
-                <th className="px-4 py-3 text-right text-xs font-bold text-[#475569]">Niveau</th>
-                <th className="px-4 py-3 text-right text-xs font-bold text-[#475569]">Salaire</th>
-              </tr>
-            </thead>
-            <tbody>
-              {board.length === 0 && (
-                <tr>
-                  <td colSpan={4} className="bg-white px-4 py-8 text-center text-sm text-[#94A3B8]">
-                    Aucun resultat. Jouez pour apparaitre ici !
-                  </td>
-                </tr>
-              )}
-              {board.map((entry, i) => (
-                <tr
-                  key={i}
-                  className={i % 2 === 0 ? 'bg-white' : 'bg-[#F8FAFC]'}
-                  style={i < 3 ? { borderLeft: `3px solid ${['#F0C830', '#94A3B8', '#CD7F32'][i]}` } : {}}
-                >
-                  <td className="px-4 py-3 text-sm font-bold text-[#475569]">
-                    {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : i + 1}
-                  </td>
-                  <td className="px-4 py-3 text-sm font-semibold text-[#1E293B]">{entry.name}</td>
-                  <td className="px-4 py-3 text-right text-sm text-[#475569]">{entry.level}</td>
-                  <td className="px-4 py-3 text-right font-mono text-sm font-bold text-[#217346]">
-                    {formatSalary(entry.score)}
-                  </td>
-                </tr>
+          {/* Table */}
+          <div style={{ border: '1px solid #C8D8E8', background: 'white' }}>
+            {/* Header row */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '60px 1fr 140px 120px 120px',
+              background: '#EBF0F5',
+              borderBottom: '2px solid #C0D0DE',
+            }}>
+              {['RANG', 'PSEUDO', 'TITRE', 'NIVEAU', 'SALAIRE'].map(col => (
+                <div key={col} style={{
+                  padding: '10px 12px',
+                  fontFamily: "'Share Tech Mono', monospace",
+                  fontSize: '8px',
+                  fontWeight: 'bold',
+                  color: '#607888',
+                  letterSpacing: '2px',
+                  borderRight: '1px solid #C0D0DE',
+                }}>
+                  {col}
+                </div>
               ))}
-            </tbody>
-          </table>
+            </div>
+
+            {/* Data rows */}
+            {board.length === 0 && (
+              <div style={{
+                padding: '40px',
+                textAlign: 'center',
+                fontFamily: "'Rajdhani', sans-serif",
+                fontSize: '14px',
+                color: '#607888',
+              }}>
+                Aucun résultat. Jouez pour apparaître ici !
+              </div>
+            )}
+            {board.map((entry, i) => (
+              <div key={i} style={{
+                display: 'grid',
+                gridTemplateColumns: '60px 1fr 140px 120px 120px',
+                background: i < 1 ? '#D4E8FF' : i % 2 === 0 ? 'white' : '#F4F8FB',
+                borderBottom: '1px solid #C8D8E8',
+                ...(i < 1 ? { border: '1px solid #0047AB' } : {}),
+              }}>
+                <div style={{
+                  padding: '10px 12px',
+                  fontFamily: "'Oxanium', sans-serif",
+                  fontSize: '13px',
+                  fontWeight: 700,
+                  color: '#1A2530',
+                  borderRight: '1px solid #C8D8E8',
+                }}>
+                  {i + 1}
+                </div>
+                <div style={{
+                  padding: '10px 12px',
+                  fontFamily: "'Oxanium', sans-serif",
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  color: '#1A2530',
+                  borderRight: '1px solid #C8D8E8',
+                }}>
+                  {entry.name}
+                </div>
+                <div style={{
+                  padding: '10px 12px',
+                  fontFamily: "'Share Tech Mono', monospace",
+                  fontSize: '9px',
+                  color: i < 3 ? '#0047AB' : '#607888',
+                  letterSpacing: '1px',
+                  borderRight: '1px solid #C8D8E8',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}>
+                  {getRankTitle(i + 1)}
+                </div>
+                <div style={{
+                  padding: '10px 12px',
+                  fontFamily: "'Oxanium', sans-serif",
+                  fontSize: '13px',
+                  fontWeight: 700,
+                  color: '#0047AB',
+                  borderRight: '1px solid #C8D8E8',
+                }}>
+                  {entry.level}
+                </div>
+                <div style={{
+                  padding: '10px 12px',
+                  fontFamily: "'Oxanium', sans-serif",
+                  fontSize: '13px',
+                  fontWeight: 700,
+                  color: '#00755E',
+                }}>
+                  {formatSalary(entry.score)}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </main>
+      </ExcelChrome>
     </div>
   );
 }
