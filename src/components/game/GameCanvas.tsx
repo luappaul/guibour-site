@@ -63,12 +63,19 @@ export default function GameCanvas() {
   // Keyboard
   useEffect(() => {
     const onDown = (e: KeyboardEvent) => {
+      // Don't intercept keys when typing in an input/textarea
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
       if (['ArrowLeft', 'ArrowRight', 'ArrowUp', ' ', 'a', 'q', 'd', 'z', 'w'].includes(e.key)) {
         e.preventDefault();
       }
       stateRef.current?.keys.add(e.key);
     };
     const onUp = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
       stateRef.current?.keys.delete(e.key);
     };
     window.addEventListener('keydown', onDown);
