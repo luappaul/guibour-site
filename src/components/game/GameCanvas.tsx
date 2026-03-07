@@ -166,7 +166,7 @@ export default function GameCanvas() {
              style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }}>
           <div className="w-[440px] max-w-[90vw] overflow-hidden rounded-xl shadow-2xl"
                style={{ animation: 'slideUp 0.3s ease-out' }}>
-            <div className="flex items-center gap-3 bg-[#217346] px-5 py-3">
+            <div className="flex items-center gap-3 bg-[#1A5C38] px-5 py-3">
               <div className="flex gap-2">
                 <span className="block h-3.5 w-3.5 rounded-full" style={{ background: '#FF5F56' }} />
                 <span className="block h-3.5 w-3.5 rounded-full" style={{ background: '#FFBD2E' }} />
@@ -184,7 +184,7 @@ export default function GameCanvas() {
                 onChange={e => setPlayerName(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleStart()}
                 placeholder="Nom..."
-                className="mb-5 w-full rounded-lg border border-[#CBD5E1] bg-white px-5 py-3.5 text-base text-[#1E293B] outline-none transition-all focus:border-[#217346] focus:ring-2 focus:ring-[#217346]/30"
+                className="mb-5 w-full rounded-lg border border-[#CBD5E1] bg-white px-5 py-3.5 text-base text-[#1E293B] outline-none transition-all focus:border-[#1A5C38] focus:ring-2 focus:ring-[#1A5C38]/30"
               />
               <button
                 onClick={handleStart}

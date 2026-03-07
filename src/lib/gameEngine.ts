@@ -56,6 +56,22 @@ const EFFECT_DURATION = 300;
 const COL_NUMBERS = ['4', '5', '6', '3', '4', '5', 'II', '1', '9', '0', '1', '1', '1', '2', '8', '3', '7', '4'];
 const ROW_NUMBERS = ['1', '\u20222', '3', '5', '6', '7', '8', '9', '5', '10', '17', '18', '19', '10', '11.', '12', '13', '14', '15', '18', '19', '7', '110', '21', '23'];
 
+// ===== SPRITES =====
+let spriteIdle: HTMLImageElement | null = null;
+let spriteRun: HTMLImageElement | null = null;
+let spritesLoaded = false;
+
+if (typeof window !== 'undefined') {
+  spriteIdle = new Image();
+  spriteIdle.src = '/guibour-idle.png';
+  spriteRun = new Image();
+  spriteRun.src = '/guibour-run.png';
+  Promise.all([
+    new Promise<void>(r => { spriteIdle!.onload = () => r(); }),
+    new Promise<void>(r => { spriteRun!.onload = () => r(); }),
+  ]).then(() => { spritesLoaded = true; });
+}
+
 // ===== PARTICLES =====
 interface Particle {
   x: number; y: number; vx: number; vy: number;
@@ -843,9 +859,6 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
 
   ctx.save();
   ctx.translate(player.x, player.y);
-  if (player.direction === 'left') ctx.scale(-1, 1);
-
-  const walk = player.direction !== 'idle' ? Math.sin(frameCount * 0.15) : 0;
 
   // Shadow
   ctx.globalAlpha = 0.1;
@@ -853,47 +866,34 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
   ctx.beginPath(); ctx.ellipse(0, 30, 16, 4, 0, 0, Math.PI * 2); ctx.fill();
   ctx.globalAlpha = 1;
 
-  // Legs
-  ctx.fillStyle = '#4A4A50';
-  const legA = walk * 12;
-  ctx.save(); ctx.translate(-5, 12); ctx.rotate(legA * Math.PI / 180);
-  ctx.beginPath(); ctx.roundRect(-4, 0, 8, 18, 2); ctx.fill(); ctx.restore();
-  ctx.save(); ctx.translate(5, 12); ctx.rotate(-legA * Math.PI / 180);
-  ctx.beginPath(); ctx.roundRect(-4, 0, 8, 18, 2); ctx.fill(); ctx.restore();
+  if (spritesLoaded && spriteIdle && spriteRun) {
+    const isMoving = player.direction !== 'idle';
+    const sprite = isMoving ? spriteRun : spriteIdle;
 
-  // Shoes
-  ctx.fillStyle = '#2A2A2A';
-  ctx.beginPath(); ctx.roundRect(-11, 28, 9, 4, [0, 0, 2, 2]); ctx.fill();
-  ctx.beginPath(); ctx.roundRect(2, 28, 9, 4, [0, 0, 2, 2]); ctx.fill();
+    // Sprite sizing: fit to player height (64px tall)
+    const drawH = 64;
+    const aspectRatio = sprite.naturalWidth / sprite.naturalHeight;
+    const drawW = drawH * aspectRatio;
 
-  // Shirt
-  ctx.fillStyle = '#F0EDE8';
-  ctx.beginPath(); ctx.roundRect(-13, -18, 26, 32, 4); ctx.fill();
+    // Flip when moving left (run sprite faces right by default)
+    if (player.direction === 'left') {
+      ctx.scale(-1, 1);
+    }
 
-  // Jacket sides (not a full jacket — white shirt visible)
-  ctx.fillStyle = '#3A3E4A';
-  ctx.beginPath(); ctx.roundRect(-15, -16, 5, 28, [3, 0, 0, 3]); ctx.fill();
-  ctx.beginPath(); ctx.roundRect(10, -16, 5, 28, [0, 3, 3, 0]); ctx.fill();
-
-  // Tie
-  ctx.fillStyle = '#3060A0';
-  ctx.beginPath();
-  ctx.moveTo(-2, -14); ctx.lineTo(2, -14);
-  ctx.lineTo(1.5, 6); ctx.lineTo(0, 9); ctx.lineTo(-1.5, 6);
-  ctx.closePath(); ctx.fill();
-
-  // Head
-  ctx.fillStyle = '#E8C898';
-  ctx.beginPath(); ctx.arc(0, -26, 10, 0, Math.PI * 2); ctx.fill();
-
-  // Hair (brown)
-  ctx.fillStyle = '#5A3A20';
-  ctx.beginPath(); ctx.arc(0, -29, 10.5, Math.PI * 0.9, Math.PI * 2.1); ctx.fill();
-
-  // Eyes
-  ctx.fillStyle = '#2A2A2A';
-  ctx.beginPath(); ctx.arc(-4, -27, 1.5, 0, Math.PI * 2); ctx.fill();
-  ctx.beginPath(); ctx.arc(4, -27, 1.5, 0, Math.PI * 2); ctx.fill();
+    ctx.drawImage(sprite, -drawW / 2, -drawH + 32, drawW, drawH);
+  } else {
+    // Fallback: simple rectangle while sprites load
+    if (player.direction === 'left') ctx.scale(-1, 1);
+    ctx.fillStyle = '#F0EDE8';
+    ctx.beginPath(); ctx.roundRect(-13, -18, 26, 32, 4); ctx.fill();
+    ctx.fillStyle = '#3060A0';
+    ctx.beginPath();
+    ctx.moveTo(-2, -14); ctx.lineTo(2, -14);
+    ctx.lineTo(1.5, 6); ctx.lineTo(0, 9); ctx.lineTo(-1.5, 6);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#E8C898';
+    ctx.beginPath(); ctx.arc(0, -26, 10, 0, Math.PI * 2); ctx.fill();
+  }
 
   ctx.restore();
 }
