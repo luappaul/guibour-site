@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --color-dark-bg: #080D14;
-  --color-corporate-blue: #0047AB;
-  --color-cyber-cyan: #00A89D;
-  --color-cyan-bright: #00C9C8;
+  --color-dark-bg: #0A1A12;
+  --color-corporate-blue: #1A5C38;
+  --color-cyber-cyan: #2E8B57;
+  --color-cyan-bright: #3CB371;
   --color-dark-green: #00755E;
   --color-grid-bg: #F4F8FB;
   --color-grid-line: #C8D8E8;
@@ -57,8 +57,8 @@ html, body {
 }
 
 @keyframes pulse-neon {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(0,168,157,0.4); }
-  50% { box-shadow: 0 0 20px 4px rgba(0,168,157,0.2); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(46,139,87,0.4); }
+  50% { box-shadow: 0 0 20px 4px rgba(46,139,87,0.2); }
 }
 
 @keyframes float {
@@ -98,11 +98,11 @@ html, body {
 
 /* ===== NEON UTILITIES ===== */
 .neon-text {
-  text-shadow: 0 0 14px rgba(0,201,200,0.8), 0 0 40px rgba(0,201,200,0.3);
+  text-shadow: 0 0 14px rgba(60,179,113,0.8), 0 0 40px rgba(60,179,113,0.3);
 }
 
-.neon-text-blue {
-  text-shadow: 0 0 14px rgba(0,71,171,0.6), 0 0 40px rgba(0,71,171,0.2);
+.neon-text-green {
+  text-shadow: 0 0 14px rgba(26,92,56,0.6), 0 0 40px rgba(26,92,56,0.2);
 }
 
 .neon-separator {
@@ -110,7 +110,17 @@ html, body {
 }
 
 .neon-button {
-  box-shadow: 0 0 20px rgba(0,168,157,0.15), inset 0 0 20px rgba(0,168,157,0.05);
+  box-shadow: 0 0 20px rgba(46,139,87,0.15), inset 0 0 20px rgba(46,139,87,0.05);
+}
+
+@keyframes logoPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+@keyframes walkCycle {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(calc(100vw + 100%)); }
 }
 
 /* ===== EXCEL GRID BACKGROUND ===== */

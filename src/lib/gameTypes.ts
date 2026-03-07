@@ -77,6 +77,8 @@ export interface GameState {
   touchRight: boolean;
   touchShoot: boolean;
   levelTransitionTimer: number;
+  startTime: number;
+  endTime: number;
 }
 
 export interface LeaderboardEntry {

@@ -28,6 +28,14 @@ export function formatSalary(score: number): string {
   return score.toLocaleString('fr-FR') + ' \u20AC';
 }
 
-export function getShareText(name: string, level: number, score: number): string {
-  return `guibour.fr\nGuibureaucracy\n\nEmployee @${name} has reached Level ${level}\nCurrent Salary: ${formatSalary(score)}\n\n#guibour #guibureaucracy`;
+export function formatDuration(ms: number): string {
+  const totalSeconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
+
+export function getShareText(name: string, level: number, score: number, durationMs?: number): string {
+  const duration = durationMs ? formatDuration(durationMs) : '0:00';
+  return `guibour.fr\nGuibureaucracy\n\nJ'ai tenu ${duration} dans le systeme interne de Guibour Corp.\nSalaire atteint : ${formatSalary(score)}\nPeux-tu battre mon score ?\n\n#guibour #guibureaucracy`;
 }

@@ -76,6 +76,7 @@ export function createInitialState(cw: number, ch: number): GameState {
     nextId: 1, canvasWidth: cw, canvasHeight: ch,
     keys: new Set(), touchLeft: false, touchRight: false, touchShoot: false,
     levelTransitionTimer: 0,
+    startTime: 0, endTime: 0,
   };
 }
 
@@ -93,6 +94,8 @@ export function startGame(state: GameState, playerName: string): GameState {
   s.projectiles = []; s.bonuses = []; s.activeEffects = [];
   s.nextId = 1;
   s.dossiers = spawnDossiers(s, 1);
+  s.startTime = Date.now();
+  s.endTime = 0;
   particles = [];
   return s;
 }
@@ -127,7 +130,7 @@ export function updateGame(state: GameState): GameState {
   if (state.status === 'levelComplete') {
     state.levelTransitionTimer--;
     if (state.levelTransitionTimer <= 0) {
-      if (state.level >= 10) { state.status = 'victory'; return state; }
+      if (state.level >= 10) { state.status = 'victory'; state.endTime = Date.now(); return state; }
       state.level++;
       state.dossiers = spawnDossiers(state, state.level);
       state.projectiles = []; state.bonuses = [];
@@ -288,7 +291,7 @@ function checkCollisions(state: GameState) {
       if (Math.sqrt(dx * dx + dy * dy) < d.radius + player.width / 2.5) {
         player.lives--;
         player.invincible = 120;
-        if (player.lives <= 0) state.status = 'gameOver';
+        if (player.lives <= 0) { state.status = 'gameOver'; state.endTime = Date.now(); }
         break;
       }
     }
@@ -775,13 +778,13 @@ function drawProjectiles(ctx: CanvasRenderingContext2D, state: GameState) {
     const topY = proj.y - proj.height;
 
     if (proj.type === 'email') {
-      // Blue line
-      ctx.strokeStyle = 'rgba(60, 130, 220, 0.5)';
+      // Green line
+      ctx.strokeStyle = 'rgba(46, 139, 87, 0.5)';
       ctx.lineWidth = 2;
       ctx.beginPath(); ctx.moveTo(proj.x, proj.y); ctx.lineTo(proj.x, topY); ctx.stroke();
 
       // Glow
-      ctx.fillStyle = 'rgba(60, 130, 220, 0.08)';
+      ctx.fillStyle = 'rgba(46, 139, 87, 0.08)';
       ctx.fillRect(proj.x - 8, topY, 16, proj.height);
 
       // Envelopes
@@ -796,7 +799,7 @@ function drawProjectiles(ctx: CanvasRenderingContext2D, state: GameState) {
       }
 
       // Arrow tip
-      ctx.fillStyle = '#3C82DC';
+      ctx.fillStyle = '#2E8B57';
       ctx.beginPath();
       ctx.moveTo(proj.x - 5, topY + 10);
       ctx.lineTo(proj.x, topY);
@@ -820,7 +823,7 @@ function drawProjectiles(ctx: CanvasRenderingContext2D, state: GameState) {
 function drawEnvelope(ctx: CanvasRenderingContext2D, x: number, y: number, s: number) {
   ctx.fillStyle = '#F0F4FA';
   ctx.fillRect(x - s, y - s * 0.5, s * 2, s);
-  ctx.strokeStyle = '#3C82DC';
+  ctx.strokeStyle = '#2E8B57';
   ctx.lineWidth = 1;
   ctx.strokeRect(x - s, y - s * 0.5, s * 2, s);
   // Flap
@@ -828,7 +831,7 @@ function drawEnvelope(ctx: CanvasRenderingContext2D, x: number, y: number, s: nu
   ctx.moveTo(x - s, y - s * 0.5);
   ctx.lineTo(x, y + s * 0.15);
   ctx.lineTo(x + s, y - s * 0.5);
-  ctx.strokeStyle = '#3C82DC';
+  ctx.strokeStyle = '#2E8B57';
   ctx.lineWidth = 0.8;
   ctx.stroke();
 }
@@ -1107,10 +1110,10 @@ function drawStatusBar(ctx: CanvasRenderingContext2D, w: number, h: number, stat
   const y = h - STATUS_H;
   const { player } = state;
 
-  // Dark blue-gray status bar
+  // Dark green status bar
   const grad = ctx.createLinearGradient(0, y, 0, h);
-  grad.addColorStop(0, '#3A4A5C');
-  grad.addColorStop(1, '#2A3644');
+  grad.addColorStop(0, '#1A4A2C');
+  grad.addColorStop(1, '#0F3320');
   ctx.fillStyle = grad;
   ctx.fillRect(0, y, w, STATUS_H);
 
@@ -1199,7 +1202,7 @@ function drawLevelComplete(ctx: CanvasRenderingContext2D, state: GameState) {
   ctx.beginPath(); ctx.roundRect(bX, bY, bW, bH, 6); ctx.fill();
 
   // Title bar (Excel green)
-  ctx.fillStyle = '#217346';
+  ctx.fillStyle = '#1A5C38';
   ctx.beginPath(); ctx.roundRect(bX, bY, bW, 28, [6, 6, 0, 0]); ctx.fill();
 
   ctx.fillStyle = '#FFF';
@@ -1212,7 +1215,7 @@ function drawLevelComplete(ctx: CanvasRenderingContext2D, state: GameState) {
   ctx.textAlign = 'center';
   ctx.fillText(`Niveau ${state.level} termine !`, w / 2, bY + 60);
 
-  ctx.fillStyle = '#217346';
+  ctx.fillStyle = '#1A5C38';
   ctx.font = 'bold 14px Consolas, monospace';
   ctx.fillText(`Prime: +${(state.level * 500).toLocaleString('fr-FR')} \u20AC`, w / 2, bY + 85);
 

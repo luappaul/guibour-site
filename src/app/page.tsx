@@ -6,6 +6,7 @@ import ExcelNav from '@/components/ui/ExcelNav';
 import ExcelChrome from '@/components/ui/ExcelChrome';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import Logo from '@/components/ui/Logo';
+import GuibourCharacter from '@/components/ui/GuibourCharacter';
 
 const GameCanvas = dynamic(() => import('@/components/game/GameCanvas'), {
   ssr: false,
@@ -21,31 +22,66 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
       justifyContent: 'center',
       minHeight: 'calc(100vh - 160px)',
       padding: '40px 20px',
+      background: 'linear-gradient(180deg, #0A1A12 0%, #122A1C 40%, #0A1A12 100%)',
+      position: 'relative',
+      overflow: 'hidden',
     }}>
+      {/* Subtle grid overlay */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: 'linear-gradient(rgba(46,139,87,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(46,139,87,0.06) 1px, transparent 1px)',
+        backgroundSize: '56px 34px',
+        pointerEvents: 'none',
+      }} />
+
       {/* Eyebrow tag */}
       <span style={{
         fontFamily: "'Share Tech Mono', monospace",
         fontSize: '8px',
-        color: '#00755E',
+        color: '#3CB371',
         letterSpacing: '3px',
         marginBottom: '24px',
+        position: 'relative',
+        zIndex: 2,
       }}>
         EMPLOYEE ID: GS-4891 // GUIBOUR CORP. // 2025
       </span>
 
-      {/* Logo */}
-      <Logo variant="light" size="lg" />
+      {/* Logo - much bigger */}
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        <Logo variant="dark" size="lg" />
+      </div>
+
+      {/* Big title reinforcement */}
+      <h1 style={{
+        fontFamily: "'Oxanium', sans-serif",
+        fontSize: 'clamp(32px, 6vw, 80px)',
+        fontWeight: 900,
+        color: 'white',
+        letterSpacing: '6px',
+        marginTop: '16px',
+        textShadow: '0 0 20px rgba(60,179,113,0.6), 0 0 60px rgba(26,92,56,0.4)',
+        position: 'relative',
+        zIndex: 2,
+        textAlign: 'center',
+        lineHeight: 1,
+      }}>
+        GUIBUREAUCRACY
+      </h1>
 
       {/* Description */}
       <span style={{
         fontFamily: "'Share Tech Mono', monospace",
-        fontSize: '9px',
-        color: '#607888',
+        fontSize: '10px',
+        color: '#3CB371',
         letterSpacing: '2px',
         marginTop: '24px',
         textAlign: 'center',
+        position: 'relative',
+        zIndex: 2,
       }}>
-        NOUVEAU SINGLE // JOUE ET GRIMPE DANS LA HIÉRARCHIE
+        NOUVEAU SINGLE // JOUE ET GRIMPE DANS LA HIERARCHIE
       </span>
 
       {/* Excel cells */}
@@ -55,10 +91,12 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
         marginTop: '20px',
         background: '#C8D8E8',
         border: '1px solid #C8D8E8',
+        position: 'relative',
+        zIndex: 2,
       }}>
         {[
           { label: 'LVL', value: '1' },
-          { label: 'SALAIRE', value: '0€' },
+          { label: 'SALAIRE', value: '0\u20AC' },
           { label: 'RTT', value: '3' },
           { label: 'FORMULE', value: '=SUM(AMBITION)' },
         ].map(cell => (
@@ -78,33 +116,56 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
               fontFamily: "'Oxanium', sans-serif",
               fontSize: '12px',
               fontWeight: 700,
-              color: cell.label === 'FORMULE' ? '#0047AB' : '#1A2530',
+              color: cell.label === 'FORMULE' ? '#1A5C38' : '#1A2530',
             }}>{cell.value}</div>
           </div>
         ))}
       </div>
 
-      {/* CTA Button */}
+      {/* CTA Button - bigger and more impactful */}
       <button
         onClick={onPlay}
         style={{
-          marginTop: '32px',
+          marginTop: '36px',
           fontFamily: "'Oxanium', sans-serif",
-          fontSize: '12px',
+          fontSize: '16px',
           fontWeight: 700,
-          letterSpacing: '8px',
-          color: '#00A89D',
-          background: '#080D14',
-          border: '1px solid #00A89D',
-          padding: '15px 52px',
+          letterSpacing: '10px',
+          color: '#fff',
+          background: '#1A5C38',
+          border: '2px solid #3CB371',
+          padding: '20px 64px',
           cursor: 'pointer',
-          boxShadow: '0 0 20px rgba(0,168,157,0.15), inset 0 0 20px rgba(0,168,157,0.05)',
+          boxShadow: '0 0 30px rgba(46,139,87,0.3), inset 0 0 20px rgba(46,139,87,0.1)',
           position: 'relative',
           overflow: 'hidden',
+          zIndex: 2,
+          transition: 'all 0.2s ease',
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.background = '#2E8B57';
+          e.currentTarget.style.boxShadow = '0 0 40px rgba(46,139,87,0.5), inset 0 0 30px rgba(46,139,87,0.15)';
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.background = '#1A5C38';
+          e.currentTarget.style.boxShadow = '0 0 30px rgba(46,139,87,0.3), inset 0 0 20px rgba(46,139,87,0.1)';
         }}
       >
         JOUER
       </button>
+
+      {/* Walking character at the bottom */}
+      <div style={{
+        position: 'absolute',
+        bottom: 20,
+        left: 0,
+        right: 0,
+        overflow: 'hidden',
+        height: '100px',
+        zIndex: 1,
+      }}>
+        <GuibourCharacter size={80} animate={true} />
+      </div>
     </div>
   );
 }
@@ -115,7 +176,6 @@ export default function Home() {
   const [loadingDone, setLoadingDone] = useState(false);
 
   useEffect(() => {
-    // Check if loading was already shown this session
     if (typeof window !== 'undefined') {
       const alreadyLoaded = sessionStorage.getItem('guibour-loaded');
       if (alreadyLoaded) {
@@ -136,12 +196,10 @@ export default function Home() {
     setShowGame(true);
   }, []);
 
-  // Show loading screen first
   if (showLoading) {
     return <LoadingScreen onComplete={handleLoadingComplete} />;
   }
 
-  // Show game full screen
   if (showGame) {
     return (
       <div className="flex h-screen flex-col overflow-hidden" style={{ background: '#1E293B' }}>
@@ -153,7 +211,6 @@ export default function Home() {
     );
   }
 
-  // Show homepage hero
   return (
     <div className="min-h-screen">
       <ExcelNav />
