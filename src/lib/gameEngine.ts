@@ -16,13 +16,13 @@ const PLAYER_W = 40;
 const SIZE_CONFIG: Record<BubbleSize, {
   radius: number; bounceVy: number; speedX: number; divisionVy: number; score: number;
 }> = {
-  7: { radius: 50, bounceVy: -9.5, speedX: 1.0, divisionVy: -4.0, score: 50 },
-  6: { radius: 40, bounceVy: -8.8, speedX: 1.3, divisionVy: -4.5, score: 100 },
-  5: { radius: 32, bounceVy: -8.0, speedX: 1.6, divisionVy: -5.0, score: 150 },
-  4: { radius: 25, bounceVy: -7.2, speedX: 1.9, divisionVy: -5.5, score: 250 },
-  3: { radius: 18, bounceVy: -6.4, speedX: 2.2, divisionVy: -6.0, score: 400 },
-  2: { radius: 12, bounceVy: -5.6, speedX: 2.5, divisionVy: -6.5, score: 600 },
-  1: { radius: 8,  bounceVy: -4.8, speedX: 2.8, divisionVy: 0,   score: 1000 },
+  7: { radius: 50, bounceVy: -13.5, speedX: 1.0, divisionVy: -6.0, score: 50 },
+  6: { radius: 40, bounceVy: -12.5, speedX: 1.2, divisionVy: -6.5, score: 100 },
+  5: { radius: 32, bounceVy: -11.5, speedX: 1.4, divisionVy: -7.0, score: 150 },
+  4: { radius: 25, bounceVy: -10.5, speedX: 1.6, divisionVy: -7.5, score: 250 },
+  3: { radius: 18, bounceVy: -9.2,  speedX: 1.8, divisionVy: -8.0, score: 400 },
+  2: { radius: 12, bounceVy: -8.0,  speedX: 2.0, divisionVy: -8.5, score: 600 },
+  1: { radius: 8,  bounceVy: -6.5,  speedX: 2.2, divisionVy: 0,   score: 1000 },
 };
 
 const SPLIT_MAP: Record<BubbleSize, BubbleSize | null> = {
