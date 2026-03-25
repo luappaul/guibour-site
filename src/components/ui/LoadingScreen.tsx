@@ -10,9 +10,9 @@ interface LoadingScreenProps {
 
 const BOOT_LINES = [
   { text: 'C:\\GUIBOUR\\SYSTEM> init.exe', color: '#1A4A3A', delay: 400 },
-  { text: '✓ Chargement des dossiers administratifs...', color: '#2E8B57', delay: 800 },
-  { text: '✓ Module RTT initialisé — 3 unités disponibles', color: '#2E8B57', delay: 1400 },
-  { text: '✓ Connexion Guibour Corp. établie', color: '#2E8B57', delay: 2000 },
+  { text: '✓ Chargement des dossiers administratifs...', color: '#00A89D', delay: 800 },
+  { text: '✓ Module RTT initialisé — 3 unités disponibles', color: '#00A89D', delay: 1400 },
+  { text: '✓ Connexion Guibour Corp. établie', color: '#00A89D', delay: 2000 },
   { text: '▶ Préparation de l\'espace de travail...', color: '#1A4A3A', delay: 2600, cursor: true },
 ];
 
@@ -51,7 +51,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       position: 'fixed',
       inset: 0,
       zIndex: 9999,
-      background: '#0A1A12',
+      background: '#0A1520',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -65,8 +65,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         inset: 0,
         backgroundImage: `
           url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"),
-          linear-gradient(rgba(46,139,87,0.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(46,139,87,0.04) 1px, transparent 1px)
+          linear-gradient(rgba(0,71,171,0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,71,171,0.04) 1px, transparent 1px)
         `,
         backgroundSize: '256px 256px, 52px 32px, 52px 32px',
       }} />
@@ -91,14 +91,14 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           animation: 'logoPulse 3s ease-in-out infinite',
         }}>
           <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'center' }}>
-            <GlobeSVG size={90} color="#1A5C38" accentColor="#3CB371" glowColor="#3CB371" />
+            <GlobeSVG size={90} color="#0047AB" accentColor="#00A89D" glowColor="#00A89D" />
           </div>
 
           <span style={{
-            fontFamily: "'Oxanium', sans-serif",
+            fontFamily: "'Orbitron', sans-serif",
             fontSize: '72px',
             fontWeight: 800,
-            color: '#0A1A12',
+            color: '#0A1520',
             letterSpacing: '2px',
             display: 'block',
             lineHeight: 1,
@@ -110,16 +110,16 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           <div style={{
             width: '320px',
             height: '1px',
-            background: 'linear-gradient(90deg, transparent, #2E8B57, #3CB371, transparent)',
+            background: 'linear-gradient(90deg, transparent, #00A89D, #00A89D, transparent)',
             margin: '16px auto',
-            boxShadow: '0 0 8px #3CB371',
+            boxShadow: '0 0 8px #00A89D',
           }} />
 
           <span style={{
-            fontFamily: "'Oxanium', sans-serif",
+            fontFamily: "'Orbitron', sans-serif",
             fontSize: '14px',
             fontWeight: 300,
-            color: '#2E8B57',
+            color: '#00A89D',
             letterSpacing: '18px',
             display: 'block',
           }}>
@@ -132,21 +132,21 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           width: '320px',
           margin: '40px auto 0',
           background: 'rgba(26,92,56,0.2)',
-          border: '1px solid #1A5C38',
+          border: '1px solid #0047AB',
           padding: '4px',
         }}>
           <div style={{
             height: '10px',
             width: `${progress}%`,
-            background: 'linear-gradient(90deg, #1A5C38, #2E8B57)',
-            boxShadow: '0 0 8px #2E8B57',
+            background: 'linear-gradient(90deg, #0047AB, #00A89D)',
+            boxShadow: '0 0 8px #00A89D',
             transition: 'width 0.1s linear',
           }} />
         </div>
         <span style={{
           fontFamily: "'Share Tech Mono', monospace",
           fontSize: '9px',
-          color: '#3CB371',
+          color: '#00A89D',
           letterSpacing: '3px',
           marginTop: '8px',
           display: 'block',
@@ -186,7 +186,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             {line.text}
             {line.cursor && (
               <span style={{
-                color: '#3CB371',
+                color: '#00A89D',
                 animation: 'cursorBlink 1s infinite',
                 marginLeft: '4px',
               }}>█</span>
