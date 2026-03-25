@@ -41,11 +41,11 @@ export default function ExcelNav() {
               key={tab.href}
               href={tab.href}
               style={{
-                fontFamily: "'Oxanium', sans-serif",
+                fontFamily: "'Orbitron', sans-serif",
                 fontSize: '10px',
                 fontWeight: 600,
                 letterSpacing: '3px',
-                color: active ? '#2E8B57' : '#607888',
+                color: active ? '#00A89D' : '#607888',
                 textDecoration: 'none',
                 padding: '0 18px',
                 height: '100%',
@@ -63,7 +63,7 @@ export default function ExcelNav() {
         <Link
           href="/"
           style={{
-            fontFamily: "'Oxanium', sans-serif",
+            fontFamily: "'Orbitron', sans-serif",
             fontSize: '10px',
             fontWeight: 700,
             letterSpacing: '3px',
@@ -74,9 +74,9 @@ export default function ExcelNav() {
             display: 'flex',
             alignItems: 'center',
             marginLeft: '14px',
-            background: '#1A5C38',
-            border: '1px solid #2E8B57',
-            boxShadow: '0 0 20px rgba(46,139,87,0.15), inset 0 0 20px rgba(46,139,87,0.05)',
+            background: '#0047AB',
+            border: '1px solid #00A89D',
+            boxShadow: '0 0 20px rgba(0,71,171,0.15), inset 0 0 20px rgba(0,71,171,0.05)',
           }}
         >
           JOUER
