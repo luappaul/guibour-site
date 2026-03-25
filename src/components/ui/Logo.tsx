@@ -7,7 +7,7 @@ interface LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
-function GlobeSVG({ size = 80, color = '#1A5C38', accentColor = '#3CB371', glowColor }: { size?: number; color?: string; accentColor?: string; glowColor?: string }) {
+function GlobeSVG({ size = 80, color = '#1A5C38', accentColor = '#00A89D', glowColor }: { size?: number; color?: string; accentColor?: string; glowColor?: string }) {
   const r = size * 0.425;
   const cx = size / 2;
   const cy = size / 2;
@@ -63,7 +63,7 @@ export default function Logo({ variant = 'dark', size = 'md' }: LogoProps) {
         <GlobeSVG
           size={s.globe}
           color="#1A5C38"
-          accentColor="#3CB371"
+          accentColor="#00A89D"
         />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <span style={{
@@ -97,8 +97,8 @@ export default function Logo({ variant = 'dark', size = 'md' }: LogoProps) {
       <GlobeSVG
         size={s.globe}
         color="#1A5C38"
-        accentColor={isDark ? '#3CB371' : '#2E8B57'}
-        glowColor={isDark ? '#3CB371' : undefined}
+        accentColor={isDark ? '#00A89D' : '#2E8B57'}
+        glowColor={isDark ? '#00A89D' : undefined}
       />
       <span style={{
         fontFamily: "'Oxanium', sans-serif",
@@ -116,15 +116,15 @@ export default function Logo({ variant = 'dark', size = 'md' }: LogoProps) {
       <div style={{
         width: `${s.sepW}px`,
         height: '1px',
-        background: 'linear-gradient(90deg, transparent, #2E8B57, #3CB371, transparent)',
+        background: 'linear-gradient(90deg, transparent, #2E8B57, #00A89D, transparent)',
         margin: `${s.gap * 0.6}px 0`,
-        ...(isDark ? { boxShadow: '0 0 8px #3CB371' } : {}),
+        ...(isDark ? { boxShadow: '0 0 8px #00A89D' } : {}),
       }} />
       <span style={{
         fontFamily: "'Oxanium', sans-serif",
         fontSize: `${s.sub}px`,
         fontWeight: 300,
-        color: isDark ? '#3CB371' : '#607888',
+        color: isDark ? '#00A89D' : '#607888',
         letterSpacing: s.subSpacing,
         lineHeight: 1,
       }}>
