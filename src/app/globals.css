@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --color-dark-bg: #0A1A12;
-  --color-corporate-blue: #1A5C38;
-  --color-cyber-cyan: #2E8B57;
-  --color-cyan-bright: #3CB371;
+  --color-dark-bg: #0A1520;
+  --color-corporate-blue: #0047AB;
+  --color-cyber-cyan: #00A89D;
+  --color-cyan-bright: #00A89D;
   --color-dark-green: #00755E;
   --color-grid-bg: #F4F8FB;
   --color-grid-line: #C8D8E8;
@@ -12,7 +12,7 @@
   --color-chrome-bg: #EBF0F5;
   --color-chrome-border: #C0D0DE;
 
-  --font-oxanium: 'Oxanium', sans-serif;
+  --font-oxanium: 'Orbitron', sans-serif;
   --font-mono: 'Share Tech Mono', monospace;
   --font-body: 'Rajdhani', sans-serif;
 }
@@ -57,8 +57,8 @@ html, body {
 }
 
 @keyframes pulse-neon {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(46,139,87,0.4); }
-  50% { box-shadow: 0 0 20px 4px rgba(46,139,87,0.2); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,71,171,0.4); }
+  50% { box-shadow: 0 0 20px 4px rgba(0,71,171,0.2); }
 }
 
 @keyframes float {
@@ -122,7 +122,7 @@ html, body {
 }
 
 .neon-button {
-  box-shadow: 0 0 20px rgba(46,139,87,0.15), inset 0 0 20px rgba(46,139,87,0.05);
+  box-shadow: 0 0 20px rgba(0,71,171,0.15), inset 0 0 20px rgba(0,71,171,0.05);
 }
 
 @keyframes logoPulse {
