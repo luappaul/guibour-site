@@ -53,14 +53,14 @@ export default function ContactPage() {
             {/* Contact blocks */}
             {contactInfo.map(info => (
               <div key={info.label} style={{
-                borderLeft: '2px solid #00C9C8',
+                borderLeft: '2px solid #00A89D',
                 paddingLeft: '16px',
                 marginBottom: '24px',
               }}>
                 <span style={{
                   fontFamily: "'Share Tech Mono', monospace",
                   fontSize: '7px',
-                  color: '#00C9C8',
+                  color: '#00A89D',
                   letterSpacing: '4px',
                   display: 'block',
                   marginBottom: '4px',
@@ -84,7 +84,7 @@ export default function ContactPage() {
               marginTop: '48px',
               fontFamily: "'Share Tech Mono', monospace",
               fontSize: '7px',
-              color: '#1A4040',
+              color: '#1A3050',
               letterSpacing: '2px',
               lineHeight: '1.8',
             }}>
