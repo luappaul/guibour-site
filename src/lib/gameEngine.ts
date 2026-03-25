@@ -13,16 +13,17 @@ const PLAYER_H = 90;
 const PLAYER_W = 40;
 
 // 7 bubble sizes: radius, bounceVy, speedX, divisionVy, score
+// SPEC: plus la balle est grosse, MOINS elle rebondit (bounceVy proche de 0 = rebond faible)
 const SIZE_CONFIG: Record<BubbleSize, {
   radius: number; bounceVy: number; speedX: number; divisionVy: number; score: number;
 }> = {
-  7: { radius: 50, bounceVy: -13.5, speedX: 1.0, divisionVy: -6.0, score: 50 },
-  6: { radius: 40, bounceVy: -12.5, speedX: 1.2, divisionVy: -6.5, score: 100 },
-  5: { radius: 32, bounceVy: -11.5, speedX: 1.4, divisionVy: -7.0, score: 150 },
-  4: { radius: 25, bounceVy: -10.5, speedX: 1.6, divisionVy: -7.5, score: 250 },
-  3: { radius: 18, bounceVy: -9.2,  speedX: 1.8, divisionVy: -8.0, score: 400 },
-  2: { radius: 12, bounceVy: -8.0,  speedX: 2.0, divisionVy: -8.5, score: 600 },
-  1: { radius: 8,  bounceVy: -6.5,  speedX: 2.2, divisionVy: 0,   score: 1000 },
+  7: { radius: 80, bounceVy: -6.5,  speedX: 0.8, divisionVy: -7.5,  score: 50 },
+  6: { radius: 62, bounceVy: -7.5,  speedX: 1.0, divisionVy: -8.5,  score: 100 },
+  5: { radius: 48, bounceVy: -8.5,  speedX: 1.2, divisionVy: -9.5,  score: 150 },
+  4: { radius: 36, bounceVy: -9.5,  speedX: 1.4, divisionVy: -10.5, score: 250 },
+  3: { radius: 26, bounceVy: -10.5, speedX: 1.6, divisionVy: -11.5, score: 400 },
+  2: { radius: 16, bounceVy: -11.5, speedX: 1.8, divisionVy: -13.0, score: 600 },
+  1: { radius: 10, bounceVy: -13.0, speedX: 2.0, divisionVy: 0,     score: 1000 },
 };
 
 const SPLIT_MAP: Record<BubbleSize, BubbleSize | null> = {
@@ -588,7 +589,7 @@ function drawTimerGauge(ctx: CanvasRenderingContext2D, w: number, state: GameSta
   ctx.fillRect(0, 0, w, TIMER_BAR_H);
 
   // Fill
-  let color = '#3CB371'; // green
+  let color = '#00A89D'; // green
   if (ratio < 0.15) color = '#FF4444'; // red
   else if (ratio < 0.30) color = '#FFA500'; // orange
 
@@ -638,7 +639,7 @@ function drawBubbles(ctx: CanvasRenderingContext2D, state: GameState) {
 }
 
 function drawProjectiles(ctx: CanvasRenderingContext2D, state: GameState) {
-  ctx.strokeStyle = '#3CB371';
+  ctx.strokeStyle = '#00A89D';
   ctx.lineWidth = 3;
   for (const p of state.projectiles) {
     if (!p.active) continue;
@@ -649,7 +650,7 @@ function drawProjectiles(ctx: CanvasRenderingContext2D, state: GameState) {
     ctx.stroke();
 
     // Arrow tip
-    ctx.fillStyle = '#3CB371';
+    ctx.fillStyle = '#00A89D';
     ctx.beginPath();
     ctx.moveTo(p.x - 5, topY + 5);
     ctx.lineTo(p.x, topY - 3);
@@ -717,7 +718,7 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
     ctx.drawImage(idleImg, player.x - player.width / 2, player.y - player.height, player.width, player.height);
   } else {
     // Fallback rectangle
-    ctx.fillStyle = '#3CB371';
+    ctx.fillStyle = '#00A89D';
     ctx.fillRect(player.x - player.width / 2, player.y - player.height, player.width, player.height);
   }
 
@@ -750,8 +751,8 @@ function drawLevelComplete(ctx: CanvasRenderingContext2D, state: GameState) {
   ctx.fillStyle = 'rgba(10,26,18,0.5)';
   ctx.fillRect(0, 0, w, h);
 
-  ctx.fillStyle = '#3CB371';
-  ctx.font = 'bold 32px "Oxanium", sans-serif';
+  ctx.fillStyle = '#00A89D';
+  ctx.font = 'bold 32px "Orbitron", sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText('DOSSIER CLASSE !', w / 2, h / 2 - 15);
@@ -770,7 +771,7 @@ function drawBurnout(ctx: CanvasRenderingContext2D, w: number, h: number, state:
 
   // BURN OUT text
   ctx.fillStyle = '#FF4444';
-  ctx.font = 'bold 48px "Oxanium", sans-serif';
+  ctx.font = 'bold 48px "Orbitron", sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText('BURN OUT !', w / 2, h / 2);
