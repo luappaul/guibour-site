@@ -572,7 +572,9 @@ export function renderGame(ctx: CanvasRenderingContext2D, state: GameState) {
 function drawBackground(ctx: CanvasRenderingContext2D, w: number, h: number, state: GameState) {
   const bg = assets?.backgrounds.get(state.level);
   if (bg) {
+    ctx.globalAlpha = 0.88;
     ctx.drawImage(bg, 0, 0, w, h);
+    ctx.globalAlpha = 1;
   } else {
     // Fallback: solid color
     ctx.fillStyle = '#1a1a2e';

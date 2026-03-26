@@ -53,21 +53,6 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
         <Logo variant="dark" size="lg" />
       </div>
 
-      {/* Single name — small tag, not the hero title */}
-      <div style={{
-        fontFamily: "'Share Tech Mono', monospace",
-        fontSize: '9px',
-        color: '#607888',
-        letterSpacing: '4px',
-        marginTop: '12px',
-        position: 'relative',
-        zIndex: 2,
-        border: '1px solid rgba(0,71,171,0.3)',
-        padding: '4px 12px',
-        background: 'rgba(0,71,171,0.06)',
-      }}>
-        ▶ GUIBUREAUCRACY — NOUVEAU SINGLE 2025
-      </div>
 
       {/* Description */}
       <span style={{
