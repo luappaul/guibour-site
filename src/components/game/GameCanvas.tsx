@@ -24,6 +24,10 @@ export default function GameCanvas() {
   const [showPhrase, setShowPhrase] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [elevatorActive, setElevatorActive] = useState(false);
+  // Direct DOM refs for timer (avoid React re-render per frame)
+  const timerFillRef = useRef<HTMLDivElement>(null);
+  const timerTextRef = useRef<HTMLSpanElement>(null);
+  const timerFormulaRef = useRef<HTMLSpanElement>(null);
 
   // Load assets on mount
   useEffect(() => {
@@ -103,6 +107,31 @@ export default function GameCanvas() {
         lives: s.player.lives,
         score: s.player.score,
       }));
+
+      // Update timer DOM directly (no React state = no re-render per frame)
+      if (timerFillRef.current && s.timer) {
+        const ratio = Math.max(0, s.timer.remaining / s.timer.total);
+        const pct = (ratio * 100).toFixed(1);
+        timerFillRef.current.style.width = pct + '%';
+        const isRed = ratio < 0.15;
+        const isOrange = ratio < 0.30;
+        timerFillRef.current.style.background = isRed
+          ? 'linear-gradient(90deg, #FF4444, #FF6666)'
+          : isOrange
+            ? 'linear-gradient(90deg, #FFA500, #FFD000)'
+            : 'linear-gradient(90deg, #0047AB, #00A89D)';
+        timerFillRef.current.style.boxShadow = isRed
+          ? '0 0 8px rgba(255,68,68,0.6)'
+          : '0 0 6px rgba(0,168,157,0.4)';
+      }
+      if (timerTextRef.current && s.timer) {
+        timerTextRef.current.textContent = Math.ceil(s.timer.remaining) + 's';
+      }
+      if (timerFormulaRef.current && s.timer) {
+        const secs = Math.ceil(s.timer.remaining);
+        timerFormulaRef.current.textContent =
+          `=DESTROY(DOSSIERS,SALAIRE) // RTT:${s.player.lives} // SCORE:${s.player.score.toLocaleString('fr-FR')}€ // TEMPS:${secs}s`;
+      }
 
       renderGame(ctx, s);
       rafRef.current = requestAnimationFrame(loop);
@@ -196,12 +225,12 @@ export default function GameCanvas() {
   if (!assetsLoaded) {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center gap-4"
-           style={{ background: '#0A1A12' }}>
+           style={{ background: '#0A1520' }}>
         <h2 style={{
-          fontFamily: "'Oxanium', sans-serif",
+          fontFamily: "'Orbitron', sans-serif",
           fontSize: '24px',
           fontWeight: 800,
-          color: '#3CB371',
+          color: '#00A89D',
           letterSpacing: '4px',
         }}>
           W.O.W
@@ -217,14 +246,14 @@ export default function GameCanvas() {
         <div style={{
           width: '200px',
           height: '6px',
-          background: '#1A3A28',
+          background: '#1A3A6A',
           borderRadius: '3px',
           overflow: 'hidden',
         }}>
           <div style={{
             width: `${loadProgress}%`,
             height: '100%',
-            background: '#3CB371',
+            background: '#00A89D',
             transition: 'width 0.2s ease',
           }} />
         </div>
@@ -240,9 +269,69 @@ export default function GameCanvas() {
   }
 
   return (
-    <div className="flex h-full w-full" style={{ background: '#0A1A12' }}>
+    <div className="flex h-full w-full" style={{ background: '#0A1520' }}>
       {/* Game area */}
       <div className="relative flex-1">
+          {/* EXCEL FORMULA BAR — Timer at TOP */}
+        {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete') && (
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-10"
+               style={{ fontFamily: "'Share Tech Mono', monospace" }}>
+            {/* Formula row */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              height: '22px',
+              background: '#EBF0F5',
+              borderBottom: '1px solid #C0D0DE',
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '28px',
+                height: '100%',
+                borderRight: '1px solid #C0D0DE',
+                background: '#E0E8F0',
+                flexShrink: 0,
+              }}>
+                <span style={{ fontFamily: 'monospace', fontSize: '9px', color: '#0047AB', fontStyle: 'italic', fontWeight: 700 }}>fx</span>
+              </div>
+              <span ref={timerFormulaRef} style={{
+                fontSize: '9px',
+                color: '#0047AB',
+                padding: '0 8px',
+                letterSpacing: '0.5px',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+              }}>
+                =DESTROY(DOSSIERS,SALAIRE) // RTT:3 // SCORE:0€ // TEMPS:90s
+              </span>
+              <div style={{ flex: 1 }} />
+              <span ref={timerTextRef} style={{
+                fontSize: '9px',
+                color: '#607888',
+                paddingRight: '8px',
+                flexShrink: 0,
+              }}>90s</span>
+            </div>
+            {/* Timer progress bar (depleting) */}
+            <div style={{
+              height: '4px',
+              background: 'rgba(200,216,232,0.5)',
+              position: 'relative',
+              overflow: 'hidden',
+            }}>
+              <div ref={timerFillRef} style={{
+                height: '100%',
+                width: '100%',
+                background: 'linear-gradient(90deg, #0047AB, #00A89D)',
+                boxShadow: '0 0 6px rgba(0,168,157,0.4)',
+                transition: 'background 0.3s ease',
+              }} />
+            </div>
+          </div>
+        )}
+
         {/* HUD overlay — BOTTOM bar */}
         {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete') && (
           <div className="pointer-events-none absolute inset-x-0 bottom-2 z-10 flex items-end justify-between px-3"
@@ -278,20 +367,20 @@ export default function GameCanvas() {
             {/* Center: Level name + phrase */}
             <div className="text-center">
               <div style={{
-                background: 'rgba(10,21,32,0.7)',
+                background: 'rgba(10,21,32,0.85)',
                 padding: '4px 12px',
-                borderRadius: '4px',
+                border: '1px solid rgba(0,71,171,0.4)',
                 fontSize: '11px',
-                color: '#3CB371',
+                color: '#00A89D',
                 letterSpacing: '1px',
               }}>
                 {hudInfo.levelName}
               </div>
               {showPhrase && (
                 <div style={{
-                  background: 'rgba(10,21,32,0.7)',
+                  background: 'rgba(10,21,32,0.85)',
                   padding: '3px 10px',
-                  borderRadius: '4px',
+                  border: '1px solid rgba(0,71,171,0.3)',
                   fontSize: '9px',
                   color: '#607888',
                   marginTop: '4px',
@@ -305,9 +394,9 @@ export default function GameCanvas() {
             {/* Right: Score + Mute */}
             <div className="flex items-center gap-2">
               <div style={{
-                background: 'rgba(10,21,32,0.7)',
-                padding: '4px 10px',
-                borderRadius: '4px',
+                background: 'rgba(10,21,32,0.85)',
+                padding: '5px 10px',
+                border: '1px solid rgba(0,71,171,0.4)',
                 fontSize: '11px',
                 color: '#FFD700',
                 letterSpacing: '1px',
@@ -318,12 +407,11 @@ export default function GameCanvas() {
                 onClick={handleToggleMute}
                 className="pointer-events-auto cursor-pointer"
                 style={{
-                  background: 'rgba(10,21,32,0.7)',
-                  padding: '4px 8px',
-                  borderRadius: '4px',
+                  background: 'rgba(10,21,32,0.85)',
+                  padding: '5px 8px',
+                  border: '1px solid rgba(0,71,171,0.4)',
                   fontSize: '12px',
-                  color: isMuted ? '#FF5F56' : '#3CB371',
-                  border: 'none',
+                  color: isMuted ? '#FF5F56' : '#00A89D',
                 }}
               >
                 {isMuted ? '🔇' : '🔊'}
@@ -345,16 +433,16 @@ export default function GameCanvas() {
         {elevatorActive && (
           <div className="pointer-events-none absolute inset-0 z-15"
                style={{
-                 background: '#0A1A12',
+                 background: '#0A1520',
                  animation: 'elevatorSlide 1.5s ease-in-out forwards',
                }}>
             <div className="flex h-full items-center justify-center">
               <div className="text-center">
                 <p style={{
-                  fontFamily: "'Oxanium', sans-serif",
+                  fontFamily: "'Orbitron', sans-serif",
                   fontSize: '20px',
                   fontWeight: 700,
-                  color: '#3CB371',
+                  color: '#00A89D',
                   letterSpacing: '4px',
                   animation: 'pulse 1s ease-in-out infinite',
                 }}>
@@ -380,7 +468,7 @@ export default function GameCanvas() {
                style={{ background: 'rgba(10,21,32,0.7)', backdropFilter: 'blur(3px)' }}>
             <div className="text-center">
               <h1 style={{
-                fontFamily: "'Oxanium', sans-serif",
+                fontFamily: "'Orbitron', sans-serif",
                 fontSize: 'clamp(28px, 5vw, 48px)',
                 fontWeight: 900,
                 color: '#fff',
@@ -392,7 +480,7 @@ export default function GameCanvas() {
               <p style={{
                 fontFamily: "'Share Tech Mono', monospace",
                 fontSize: '12px',
-                color: '#3CB371',
+                color: '#00A89D',
                 letterSpacing: '3px',
                 marginTop: '4px',
               }}>
@@ -412,13 +500,13 @@ export default function GameCanvas() {
               onClick={handlePlay}
               className="cursor-pointer transition-all hover:brightness-110 active:scale-95"
               style={{
-                fontFamily: "'Oxanium', sans-serif",
+                fontFamily: "'Orbitron', sans-serif",
                 fontSize: '14px',
                 fontWeight: 700,
                 letterSpacing: '8px',
                 color: '#fff',
-                background: '#1A5C38',
-                border: '2px solid #3CB371',
+                background: '#0047AB',
+                border: '2px solid #00A89D',
                 padding: '16px 52px',
                 boxShadow: '0 0 30px rgba(0,71,171,0.3)',
               }}
@@ -444,11 +532,11 @@ export default function GameCanvas() {
             <div className="w-[440px] max-w-[90vw] overflow-hidden shadow-2xl"
                  style={{
                    animation: 'slideUp 0.3s ease-out',
-                   border: '2px solid #1A5C38',
+                   border: '2px solid #0047AB',
                    background: '#fff',
                  }}>
               <div className="flex items-center justify-between px-3 py-2"
-                   style={{ background: '#1A5C38' }}>
+                   style={{ background: '#0047AB' }}>
                 <div className="flex items-center gap-2">
                   <div className="flex gap-1.5">
                     <span className="block h-2.5 w-2.5 rounded-full" style={{ background: '#FF5F56' }} />
@@ -456,7 +544,7 @@ export default function GameCanvas() {
                     <span className="block h-2.5 w-2.5 rounded-full" style={{ background: '#27C93F' }} />
                   </div>
                   <span style={{
-                    fontFamily: "'Oxanium', sans-serif",
+                    fontFamily: "'Orbitron', sans-serif",
                     fontSize: '11px',
                     fontWeight: 700,
                     color: '#fff',
@@ -476,7 +564,7 @@ export default function GameCanvas() {
                 <span style={{
                   fontFamily: "'Share Tech Mono', monospace",
                   fontSize: '10px',
-                  color: '#1A5C38',
+                  color: '#0047AB',
                   padding: '4px 8px',
                 }}>
                   =EMBAUCHE(NOM_EMPLOYE)
@@ -507,7 +595,7 @@ export default function GameCanvas() {
                     padding: '10px 12px',
                     border: '1px solid #C8D8E8',
                     background: '#fff',
-                    color: '#0A1A12',
+                    color: '#0A1520',
                     outline: 'none',
                     marginBottom: '14px',
                   }}
@@ -516,13 +604,13 @@ export default function GameCanvas() {
                   onClick={handleStart}
                   className="w-full cursor-pointer py-3 transition-all hover:brightness-110 active:scale-[0.98]"
                   style={{
-                    fontFamily: "'Oxanium', sans-serif",
+                    fontFamily: "'Orbitron', sans-serif",
                     fontSize: '12px',
                     fontWeight: 700,
                     letterSpacing: '4px',
                     color: '#fff',
-                    background: '#1A5C38',
-                    border: '1px solid #0A1A12',
+                    background: '#0047AB',
+                    border: '1px solid #0A1520',
                   }}
                 >
                   COMMENCER

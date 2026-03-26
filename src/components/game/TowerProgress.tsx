@@ -67,7 +67,7 @@ export default function TowerProgress({ currentLevel, totalLevels, assets }: Pro
                   borderRadius: '2px',
                   color: isCurrent ? '#0A1520' : isCompleted ? '#fff' : '#607888',
                   background: isCurrent
-                    ? '#00A89D'
+                    ? '#00C9C8'
                     : isCompleted
                     ? 'rgba(0,168,157,0.4)'
                     : isFuture

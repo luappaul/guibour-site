@@ -140,7 +140,7 @@ export default function ResultatsPage() {
                   fontFamily: "'Orbitron', sans-serif",
                   fontSize: '13px',
                   fontWeight: 700,
-                  color: '#00A89D',
+                  color: '#00755E',
                 }}>
                   {formatSalary(entry.score)}
                 </div>

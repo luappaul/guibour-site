@@ -45,7 +45,7 @@ export default function ExcelNav() {
                 fontSize: '10px',
                 fontWeight: 600,
                 letterSpacing: '3px',
-                color: active ? '#00A89D' : '#607888',
+                color: active ? '#0047AB' : '#607888',
                 textDecoration: 'none',
                 padding: '0 18px',
                 height: '100%',
@@ -76,7 +76,7 @@ export default function ExcelNav() {
             marginLeft: '14px',
             background: '#0047AB',
             border: '1px solid #00A89D',
-            boxShadow: '0 0 20px rgba(0,71,171,0.15), inset 0 0 20px rgba(0,71,171,0.05)',
+            boxShadow: '0 0 20px rgba(0,71,171,0.2), inset 0 0 20px rgba(0,71,171,0.05)',
           }}
         >
           JOUER

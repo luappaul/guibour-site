@@ -580,27 +580,10 @@ function drawBackground(ctx: CanvasRenderingContext2D, w: number, h: number, sta
   }
 }
 
-function drawTimerGauge(ctx: CanvasRenderingContext2D, w: number, state: GameState) {
-  const { timer } = state;
-  const ratio = Math.max(0, timer.remaining / timer.total);
-
-  // Background
-  ctx.fillStyle = 'rgba(60,60,60,0.7)';
-  ctx.fillRect(0, 0, w, TIMER_BAR_H);
-
-  // Fill
-  let color = '#00A89D'; // green
-  if (ratio < 0.15) color = '#FF4444'; // red
-  else if (ratio < 0.30) color = '#FFA500'; // orange
-
-  ctx.fillStyle = color;
-  ctx.fillRect(0, 0, w * ratio, TIMER_BAR_H);
-
-  // Pulse when red
-  if (ratio < 0.15 && state.frameCount % 30 < 15) {
-    ctx.fillStyle = 'rgba(255,68,68,0.3)';
-    ctx.fillRect(0, 0, w, TIMER_BAR_H);
-  }
+function drawTimerGauge(ctx: CanvasRenderingContext2D, w: number, _state: GameState) {
+  // Timer is now rendered as HTML overlay (Excel formula bar) in GameCanvas.tsx
+  // Keep zone transparent to preserve physics offsets (TIMER_BAR_H = 8px)
+  ctx.clearRect(0, 0, w, TIMER_BAR_H);
 }
 
 function drawCeilingSpikes(ctx: CanvasRenderingContext2D, w: number) {
@@ -639,7 +622,7 @@ function drawBubbles(ctx: CanvasRenderingContext2D, state: GameState) {
 }
 
 function drawProjectiles(ctx: CanvasRenderingContext2D, state: GameState) {
-  ctx.strokeStyle = '#00A89D';
+  ctx.strokeStyle = '#00C9C8';
   ctx.lineWidth = 3;
   for (const p of state.projectiles) {
     if (!p.active) continue;
@@ -650,7 +633,7 @@ function drawProjectiles(ctx: CanvasRenderingContext2D, state: GameState) {
     ctx.stroke();
 
     // Arrow tip
-    ctx.fillStyle = '#00A89D';
+    ctx.fillStyle = '#00C9C8';
     ctx.beginPath();
     ctx.moveTo(p.x - 5, topY + 5);
     ctx.lineTo(p.x, topY - 3);
@@ -718,7 +701,7 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
     ctx.drawImage(idleImg, player.x - player.width / 2, player.y - player.height, player.width, player.height);
   } else {
     // Fallback rectangle
-    ctx.fillStyle = '#00A89D';
+    ctx.fillStyle = '#00C9C8';
     ctx.fillRect(player.x - player.width / 2, player.y - player.height, player.width, player.height);
   }
 
@@ -751,7 +734,7 @@ function drawLevelComplete(ctx: CanvasRenderingContext2D, state: GameState) {
   ctx.fillStyle = 'rgba(10,26,18,0.5)';
   ctx.fillRect(0, 0, w, h);
 
-  ctx.fillStyle = '#00A89D';
+  ctx.fillStyle = '#00C9C8';
   ctx.font = 'bold 32px "Orbitron", sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';

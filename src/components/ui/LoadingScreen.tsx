@@ -9,11 +9,11 @@ interface LoadingScreenProps {
 }
 
 const BOOT_LINES = [
-  { text: 'C:\\GUIBOUR\\SYSTEM> init.exe', color: '#1A4A3A', delay: 400 },
+  { text: 'C:\\GUIBOUR\\SYSTEM> init.exe', color: '#1A3A6A', delay: 400 },
   { text: '✓ Chargement des dossiers administratifs...', color: '#00A89D', delay: 800 },
   { text: '✓ Module RTT initialisé — 3 unités disponibles', color: '#00A89D', delay: 1400 },
   { text: '✓ Connexion Guibour Corp. établie', color: '#00A89D', delay: 2000 },
-  { text: '▶ Préparation de l\'espace de travail...', color: '#1A4A3A', delay: 2600, cursor: true },
+  { text: '▶ Préparation de l\'espace de travail...', color: '#1A3A6A', delay: 2600, cursor: true },
 ];
 
 export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
@@ -65,8 +65,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         inset: 0,
         backgroundImage: `
           url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"),
-          linear-gradient(rgba(0,71,171,0.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(0,71,171,0.04) 1px, transparent 1px)
+          linear-gradient(rgba(0,71,171,0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,71,171,0.05) 1px, transparent 1px)
         `,
         backgroundSize: '256px 256px, 52px 32px, 52px 32px',
       }} />
@@ -110,7 +110,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           <div style={{
             width: '320px',
             height: '1px',
-            background: 'linear-gradient(90deg, transparent, #00A89D, #00A89D, transparent)',
+            background: 'linear-gradient(90deg, transparent, #0047AB, #00A89D, transparent)',
             margin: '16px auto',
             boxShadow: '0 0 8px #00A89D',
           }} />
@@ -119,7 +119,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             fontFamily: "'Orbitron', sans-serif",
             fontSize: '14px',
             fontWeight: 300,
-            color: '#00A89D',
+            color: '#0047AB',
             letterSpacing: '18px',
             display: 'block',
           }}>
@@ -131,7 +131,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         <div style={{
           width: '320px',
           margin: '40px auto 0',
-          background: 'rgba(26,92,56,0.2)',
+          background: 'rgba(0,71,171,0.15)',
           border: '1px solid #0047AB',
           padding: '4px',
         }}>
