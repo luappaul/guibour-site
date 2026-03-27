@@ -68,7 +68,7 @@ export default function ContactPage() {
                   {info.label}
                 </span>
                 <span style={{
-                  fontFamily: "'Oxanium', sans-serif",
+                  fontFamily: "'Orbitron', sans-serif",
                   fontSize: '13px',
                   fontWeight: 600,
                   color: 'white',
@@ -106,7 +106,7 @@ export default function ContactPage() {
           {sent ? (
             <div style={{ textAlign: 'center' }}>
               <h2 style={{
-                fontFamily: "'Oxanium', sans-serif",
+                fontFamily: "'Orbitron', sans-serif",
                 fontSize: '20px',
                 fontWeight: 700,
                 color: '#1A2530',
@@ -127,7 +127,7 @@ export default function ContactPage() {
                 onClick={() => setSent(false)}
                 style={{
                   marginTop: '24px',
-                  fontFamily: "'Oxanium', sans-serif",
+                  fontFamily: "'Orbitron', sans-serif",
                   fontSize: '10px',
                   fontWeight: 700,
                   letterSpacing: '3px',
@@ -145,7 +145,7 @@ export default function ContactPage() {
           ) : (
             <>
               <h2 style={{
-                fontFamily: "'Oxanium', sans-serif",
+                fontFamily: "'Orbitron', sans-serif",
                 fontSize: '18px',
                 fontWeight: 700,
                 color: '#1A2530',
@@ -173,7 +173,7 @@ export default function ContactPage() {
                     placeholder="Votre pseudo..."
                     style={{
                       width: '100%',
-                      fontFamily: "'Oxanium', sans-serif",
+                      fontFamily: "'Orbitron', sans-serif",
                       fontSize: '12px',
                       color: '#1A2530',
                       background: '#F4F8FB',
@@ -203,7 +203,7 @@ export default function ContactPage() {
                     placeholder="votre@email.com"
                     style={{
                       width: '100%',
-                      fontFamily: "'Oxanium', sans-serif",
+                      fontFamily: "'Orbitron', sans-serif",
                       fontSize: '12px',
                       color: '#1A2530',
                       background: '#F4F8FB',
@@ -233,7 +233,7 @@ export default function ContactPage() {
                     placeholder="Sujet du message..."
                     style={{
                       width: '100%',
-                      fontFamily: "'Oxanium', sans-serif",
+                      fontFamily: "'Orbitron', sans-serif",
                       fontSize: '12px',
                       color: '#1A2530',
                       background: '#F4F8FB',
@@ -263,7 +263,7 @@ export default function ContactPage() {
                     placeholder="Votre message..."
                     style={{
                       width: '100%',
-                      fontFamily: "'Oxanium', sans-serif",
+                      fontFamily: "'Orbitron', sans-serif",
                       fontSize: '12px',
                       color: '#1A2530',
                       background: '#F4F8FB',
@@ -281,7 +281,7 @@ export default function ContactPage() {
                   type="submit"
                   style={{
                     width: '100%',
-                    fontFamily: "'Oxanium', sans-serif",
+                    fontFamily: "'Orbitron', sans-serif",
                     fontSize: '11px',
                     fontWeight: 700,
                     letterSpacing: '3px',

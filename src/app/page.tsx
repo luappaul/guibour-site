@@ -6,7 +6,7 @@ import ExcelNav from '@/components/ui/ExcelNav';
 import ExcelChrome from '@/components/ui/ExcelChrome';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import Logo from '@/components/ui/Logo';
-import GuibourCharacter from '@/components/ui/GuibourCharacter';
+import CharacterSelect, { CharacterData } from '@/components/ui/CharacterSelect';
 
 const GameCanvas = dynamic(() => import('@/components/game/GameCanvas'), {
   ssr: false,
@@ -22,7 +22,7 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
       justifyContent: 'center',
       minHeight: 'calc(100vh - 160px)',
       padding: '40px 20px',
-      background: 'linear-gradient(180deg, #0A1A12 0%, #122A1C 40%, #0A1A12 100%)',
+      background: 'linear-gradient(180deg, #0A1520 0%, #0D1D35 40%, #0A1520 100%)',
       position: 'relative',
       overflow: 'hidden',
     }}>
@@ -30,7 +30,7 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
       <div style={{
         position: 'absolute',
         inset: 0,
-        backgroundImage: 'linear-gradient(rgba(46,139,87,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(46,139,87,0.06) 1px, transparent 1px)',
+        backgroundImage: 'linear-gradient(rgba(0,71,171,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(0,71,171,0.07) 1px, transparent 1px)',
         backgroundSize: '56px 34px',
         pointerEvents: 'none',
       }} />
@@ -39,7 +39,7 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
       <span style={{
         fontFamily: "'Share Tech Mono', monospace",
         fontSize: '8px',
-        color: '#3CB371',
+        color: '#00A89D',
         letterSpacing: '3px',
         marginBottom: '24px',
         position: 'relative',
@@ -53,28 +53,12 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
         <Logo variant="dark" size="lg" />
       </div>
 
-      {/* Big title reinforcement */}
-      <h1 style={{
-        fontFamily: "'Oxanium', sans-serif",
-        fontSize: 'clamp(32px, 6vw, 80px)',
-        fontWeight: 900,
-        color: 'white',
-        letterSpacing: '6px',
-        marginTop: '16px',
-        textShadow: '0 0 20px rgba(60,179,113,0.6), 0 0 60px rgba(26,92,56,0.4)',
-        position: 'relative',
-        zIndex: 2,
-        textAlign: 'center',
-        lineHeight: 1,
-      }}>
-        GUIBUREAUCRACY
-      </h1>
 
       {/* Description */}
       <span style={{
         fontFamily: "'Share Tech Mono', monospace",
         fontSize: '10px',
-        color: '#3CB371',
+        color: '#00A89D',
         letterSpacing: '2px',
         marginTop: '24px',
         textAlign: 'center',
@@ -113,10 +97,10 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
               marginBottom: '2px',
             }}>{cell.label}</div>
             <div style={{
-              fontFamily: "'Oxanium', sans-serif",
+              fontFamily: "'Orbitron', sans-serif",
               fontSize: '12px',
               fontWeight: 700,
-              color: cell.label === 'FORMULE' ? '#1A5C38' : '#1A2530',
+              color: cell.label === 'FORMULE' ? '#0047AB' : '#1A2530',
             }}>{cell.value}</div>
           </div>
         ))}
@@ -127,53 +111,42 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
         onClick={onPlay}
         style={{
           marginTop: '36px',
-          fontFamily: "'Oxanium', sans-serif",
+          fontFamily: "'Orbitron', sans-serif",
           fontSize: '16px',
           fontWeight: 700,
           letterSpacing: '10px',
           color: '#fff',
-          background: '#1A5C38',
-          border: '2px solid #3CB371',
+          background: '#0047AB',
+          border: '2px solid #00A89D',
           padding: '20px 64px',
           cursor: 'pointer',
-          boxShadow: '0 0 30px rgba(46,139,87,0.3), inset 0 0 20px rgba(46,139,87,0.1)',
+          boxShadow: '0 0 30px rgba(0,71,171,0.4), inset 0 0 20px rgba(0,71,171,0.1)',
           position: 'relative',
           overflow: 'hidden',
           zIndex: 2,
           transition: 'all 0.2s ease',
         }}
         onMouseEnter={e => {
-          e.currentTarget.style.background = '#2E8B57';
-          e.currentTarget.style.boxShadow = '0 0 40px rgba(46,139,87,0.5), inset 0 0 30px rgba(46,139,87,0.15)';
+          e.currentTarget.style.background = '#1A6ED8';
+          e.currentTarget.style.boxShadow = '0 0 40px rgba(0,71,171,0.6), inset 0 0 30px rgba(0,71,171,0.15)';
         }}
         onMouseLeave={e => {
-          e.currentTarget.style.background = '#1A5C38';
-          e.currentTarget.style.boxShadow = '0 0 30px rgba(46,139,87,0.3), inset 0 0 20px rgba(46,139,87,0.1)';
+          e.currentTarget.style.background = '#0047AB';
+          e.currentTarget.style.boxShadow = '0 0 30px rgba(0,71,171,0.4), inset 0 0 20px rgba(0,71,171,0.1)';
         }}
       >
         JOUER
       </button>
-
-      {/* Walking character at the bottom */}
-      <div style={{
-        position: 'absolute',
-        bottom: 20,
-        left: 0,
-        right: 0,
-        overflow: 'hidden',
-        height: '100px',
-        zIndex: 1,
-      }}>
-        <GuibourCharacter size={80} animate={true} />
-      </div>
     </div>
   );
 }
 
 export default function Home() {
   const [showLoading, setShowLoading] = useState(false);
+  const [showCharacterSelect, setShowCharacterSelect] = useState(false);
   const [showGame, setShowGame] = useState(false);
   const [loadingDone, setLoadingDone] = useState(false);
+  const [selectedCharacter, setSelectedCharacter] = useState<CharacterData | null>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -193,19 +166,39 @@ export default function Home() {
   }, []);
 
   const handlePlay = useCallback(() => {
+    setShowCharacterSelect(true);
+  }, []);
+
+  const handleCharacterSelect = useCallback((character: CharacterData) => {
+    setSelectedCharacter(character);
+    setShowCharacterSelect(false);
     setShowGame(true);
+  }, []);
+
+  const handleCharacterBack = useCallback(() => {
+    setShowCharacterSelect(false);
   }, []);
 
   if (showLoading) {
     return <LoadingScreen onComplete={handleLoadingComplete} />;
   }
 
+  if (showCharacterSelect) {
+    return <CharacterSelect onSelect={handleCharacterSelect} onBack={handleCharacterBack} />;
+  }
+
   if (showGame) {
     return (
-      <div className="flex h-screen flex-col overflow-hidden" style={{ background: '#1E293B' }}>
+      <div
+        className="flex flex-col overflow-hidden"
+        style={{ background: '#0A1520', height: '100dvh' }}
+      >
         <ExcelNav />
-        <main className="flex-1">
-          <GameCanvas />
+        <main
+          className="flex-1"
+          style={{ minHeight: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
+        >
+          <GameCanvas characterName={selectedCharacter?.name ?? ''} />
         </main>
       </div>
     );
@@ -214,7 +207,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <ExcelNav />
-      <ExcelChrome formulaText='=LAUNCH_GAME("GUIBOUR","SINGLE_2025") → WELCOME_TO_THE_SYSTEM'>
+      <ExcelChrome formulaText='=LAUNCH_GAME("W.O.W","SINGLE_2025") → WELCOME_TO_THE_SYSTEM'>
         <HeroContent onPlay={handlePlay} />
       </ExcelChrome>
     </div>

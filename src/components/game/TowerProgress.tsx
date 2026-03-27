@@ -15,9 +15,13 @@ export default function TowerProgress({ currentLevel, totalLevels, assets }: Pro
     <div
       className="relative flex-shrink-0 overflow-hidden"
       style={{
-        width: '80px',
+        width: '18%',
+        minWidth: '80px',
+        maxWidth: '180px',
         height: '100%',
-        background: '#0A1A12',
+        background: '#0A1520',
+        border: '2px solid #00C9C8',
+        boxSizing: 'border-box',
       }}
     >
       {/* Tower background image */}
@@ -65,15 +69,15 @@ export default function TowerProgress({ currentLevel, totalLevels, assets }: Pro
                   fontWeight: isCurrent ? 800 : 400,
                   letterSpacing: '0.5px',
                   borderRadius: '2px',
-                  color: isCurrent ? '#0A1A12' : isCompleted ? '#fff' : '#607888',
+                  color: isCurrent ? '#0A1520' : isCompleted ? '#fff' : '#607888',
                   background: isCurrent
-                    ? '#3CB371'
+                    ? '#00C9C8'
                     : isCompleted
-                    ? 'rgba(60,179,113,0.4)'
+                    ? 'rgba(0,168,157,0.4)'
                     : isFuture
                     ? 'rgba(96,120,136,0.2)'
                     : 'transparent',
-                  boxShadow: isCurrent ? '0 0 8px rgba(60,179,113,0.6)' : 'none',
+                  boxShadow: isCurrent ? '0 0 8px rgba(0,168,157,0.6)' : 'none',
                   transition: 'all 0.3s ease',
                 }}
               >

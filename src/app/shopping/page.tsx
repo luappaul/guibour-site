@@ -48,7 +48,7 @@ function ProductSVG({ type }: { type: string }) {
           <path d="M20 15 L10 25 L18 30 L18 65 L62 65 L62 30 L70 25 L60 15 L50 22 C47 25 33 25 30 22 Z"
             fill="none" stroke="#0047AB" strokeWidth="2" />
           <path d="M50 22 C47 25 33 25 30 22" fill="none" stroke="#0047AB" strokeWidth="1.5" />
-          <text x="40" y="48" textAnchor="middle" fontFamily="Oxanium" fontSize="8" fontWeight="800" fill="#0047AB" letterSpacing="1">GS</text>
+          <text x="40" y="48" textAnchor="middle" fontFamily="Orbitron" fontSize="8" fontWeight="800" fill="#0047AB" letterSpacing="1">GS</text>
         </svg>
       </div>
     );
@@ -61,7 +61,7 @@ function ProductSVG({ type }: { type: string }) {
           <path d="M52 32 C60 32 62 38 62 42 C62 46 60 52 52 52" fill="none" stroke="#0047AB" strokeWidth="2" />
           <path d="M28 22 C28 18 32 16 35 19" fill="none" stroke="#00A89D" strokeWidth="1.5" opacity="0.6" />
           <path d="M35 20 C35 16 39 14 42 17" fill="none" stroke="#00A89D" strokeWidth="1.5" opacity="0.6" />
-          <text x="35" y="48" textAnchor="middle" fontFamily="Oxanium" fontSize="6" fontWeight="700" fill="#0047AB">CORP.</text>
+          <text x="35" y="48" textAnchor="middle" fontFamily="Orbitron" fontSize="6" fontWeight="700" fill="#0047AB">CORP.</text>
         </svg>
       </div>
     );
@@ -86,7 +86,7 @@ function ProductSVG({ type }: { type: string }) {
         <rect x="30" y="12" width="20" height="10" rx="1" fill="none" stroke="#0047AB" strokeWidth="1.5" />
         <rect x="34" y="14" width="4" height="6" fill="#00A89D" />
         <rect x="42" y="14" width="4" height="6" fill="#00A89D" />
-        <text x="40" y="42" textAnchor="middle" fontFamily="Oxanium" fontSize="5" fontWeight="700" fill="#0047AB">GUIBOUR</text>
+        <text x="40" y="42" textAnchor="middle" fontFamily="Orbitron" fontSize="5" fontWeight="700" fill="#0047AB">GUIBOUR</text>
         <text x="40" y="50" textAnchor="middle" fontFamily="Share Tech Mono" fontSize="5" fill="#607888">8GB</text>
       </svg>
     </div>
@@ -127,7 +127,7 @@ export default function ShoppingPage() {
               letterSpacing: '6px',
             }}>02 / BOUTIQUE</span>
             <h1 style={{
-              fontFamily: "'Oxanium', sans-serif",
+              fontFamily: "'Orbitron', sans-serif",
               fontSize: '28px',
               fontWeight: 800,
               color: '#1A2530',
@@ -184,7 +184,7 @@ export default function ShoppingPage() {
 
                 {/* Product name */}
                 <h3 style={{
-                  fontFamily: "'Oxanium', sans-serif",
+                  fontFamily: "'Orbitron', sans-serif",
                   fontSize: '10px',
                   fontWeight: 700,
                   color: '#1A2530',
@@ -207,7 +207,7 @@ export default function ShoppingPage() {
 
                 {/* Price */}
                 <span style={{
-                  fontFamily: "'Oxanium', sans-serif",
+                  fontFamily: "'Orbitron', sans-serif",
                   fontSize: '16px',
                   fontWeight: 800,
                   color: '#00A89D',

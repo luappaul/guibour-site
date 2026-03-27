@@ -34,7 +34,7 @@ export default function ResultatsPage() {
               letterSpacing: '6px',
             }}>01 / CLASSEMENT</span>
             <h1 style={{
-              fontFamily: "'Oxanium', sans-serif",
+              fontFamily: "'Orbitron', sans-serif",
               fontSize: '28px',
               fontWeight: 800,
               color: '#1A2530',
@@ -95,7 +95,7 @@ export default function ResultatsPage() {
               }}>
                 <div style={{
                   padding: '10px 12px',
-                  fontFamily: "'Oxanium', sans-serif",
+                  fontFamily: "'Orbitron', sans-serif",
                   fontSize: '13px',
                   fontWeight: 700,
                   color: '#1A2530',
@@ -105,7 +105,7 @@ export default function ResultatsPage() {
                 </div>
                 <div style={{
                   padding: '10px 12px',
-                  fontFamily: "'Oxanium', sans-serif",
+                  fontFamily: "'Orbitron', sans-serif",
                   fontSize: '13px',
                   fontWeight: 600,
                   color: '#1A2530',
@@ -127,7 +127,7 @@ export default function ResultatsPage() {
                 </div>
                 <div style={{
                   padding: '10px 12px',
-                  fontFamily: "'Oxanium', sans-serif",
+                  fontFamily: "'Orbitron', sans-serif",
                   fontSize: '13px',
                   fontWeight: 700,
                   color: '#0047AB',
@@ -137,7 +137,7 @@ export default function ResultatsPage() {
                 </div>
                 <div style={{
                   padding: '10px 12px',
-                  fontFamily: "'Oxanium', sans-serif",
+                  fontFamily: "'Orbitron', sans-serif",
                   fontSize: '13px',
                   fontWeight: 700,
                   color: '#00755E',
