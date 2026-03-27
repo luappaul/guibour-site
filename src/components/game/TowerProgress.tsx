@@ -15,9 +15,13 @@ export default function TowerProgress({ currentLevel, totalLevels, assets }: Pro
     <div
       className="relative flex-shrink-0 overflow-hidden"
       style={{
-        width: '80px',
+        width: '18%',
+        minWidth: '80px',
+        maxWidth: '180px',
         height: '100%',
         background: '#0A1520',
+        border: '2px solid #00C9C8',
+        boxSizing: 'border-box',
       }}
     >
       {/* Tower background image */}

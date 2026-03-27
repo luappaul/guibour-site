@@ -282,14 +282,14 @@ export default function GameCanvas() {
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       gap: '0',
-      padding: '14px 10px',
+      padding: '10px 8px',
     }}>
 
       {/* ── TOP ROW: game canvas + tower ── */}
-      <div className="flex flex-1" style={{ gap: '3.6%', minHeight: 0 }}>
+      <div className="flex flex-1" style={{ gap: '8px', minHeight: 0 }}>
 
         {/* Game canvas area */}
-        <div className="relative flex-1" style={{ background: '#0A1520', overflow: 'hidden' }}>
+        <div className="relative flex-1" style={{ background: '#0A1520', overflow: 'hidden', border: '2px solid #00C9C8', boxSizing: 'border-box' }}>
           <canvas
             ref={canvasRef}
             className="block h-full w-full"
