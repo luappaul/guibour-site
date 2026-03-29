@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic';
 import ExcelNav from '@/components/ui/ExcelNav';
 import ExcelChrome from '@/components/ui/ExcelChrome';
 import LoadingScreen from '@/components/ui/LoadingScreen';
-import Logo from '@/components/ui/Logo';
 import CharacterSelect, { CharacterData } from '@/components/ui/CharacterSelect';
 
 const GameCanvas = dynamic(() => import('@/components/game/GameCanvas'), {
@@ -22,120 +21,137 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
       justifyContent: 'center',
       minHeight: 'calc(100vh - 160px)',
       padding: '40px 20px',
-      background: 'linear-gradient(180deg, #0A1520 0%, #0D1D35 40%, #0A1520 100%)',
       position: 'relative',
       overflow: 'hidden',
     }}>
-      {/* Subtle grid overlay */}
+      {/* Employee ID */}
       <div style={{
-        position: 'absolute',
-        inset: 0,
-        backgroundImage: 'linear-gradient(rgba(0,71,171,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(0,71,171,0.07) 1px, transparent 1px)',
-        backgroundSize: '56px 34px',
-        pointerEvents: 'none',
-      }} />
-
-      {/* Eyebrow tag */}
-      <span style={{
         fontFamily: "'Share Tech Mono', monospace",
-        fontSize: '8px',
-        color: '#00A89D',
-        letterSpacing: '3px',
-        marginBottom: '24px',
+        fontSize: '10px',
+        color: '#4CAF50',
+        letterSpacing: '4px',
+        marginBottom: '28px',
         position: 'relative',
         zIndex: 2,
       }}>
-        EMPLOYEE ID: GS-4891 // GUIBOUR CORP. // 2025
-      </span>
-
-      {/* Logo - much bigger */}
-      <div style={{ position: 'relative', zIndex: 2 }}>
-        <Logo variant="dark" size="lg" />
+        EMPLOYEE ID: GS-4891 // GUIBOUR CORP. // 2026
       </div>
 
+      {/* GUIBOUR — Lilita One green glow */}
+      <div style={{
+        fontFamily: "'Lilita One', cursive",
+        fontSize: 'clamp(52px, 10vw, 88px)',
+        color: '#5CDB5C',
+        letterSpacing: '5px',
+        lineHeight: 1,
+        textShadow: '3px 3px 0 #1B4332, 0 0 30px rgba(92,219,92,.3)',
+        position: 'relative',
+        zIndex: 2,
+        animation: 'glowGreen 3s ease-in-out infinite',
+      }}>
+        GUIBOUR
+      </div>
 
-      {/* Description */}
-      <span style={{
+      {/* SYSTEM — Lilita One yellow */}
+      <div style={{
+        fontFamily: "'Lilita One', cursive",
+        fontSize: 'clamp(28px, 5vw, 48px)',
+        color: '#FFE033',
+        letterSpacing: '8px',
+        textShadow: '2px 2px 0 rgba(160,128,13,.5)',
+        marginTop: '-4px',
+        position: 'relative',
+        zIndex: 2,
+      }}>
+        SYSTEM
+      </div>
+
+      {/* Subtitle */}
+      <div style={{
         fontFamily: "'Share Tech Mono', monospace",
-        fontSize: '10px',
-        color: '#00A89D',
-        letterSpacing: '2px',
-        marginTop: '24px',
-        textAlign: 'center',
+        fontSize: '11px',
+        color: '#4CAF50',
+        letterSpacing: '3px',
+        marginTop: '14px',
         position: 'relative',
         zIndex: 2,
       }}>
         NOUVEAU SINGLE // JOUE ET GRIMPE DANS LA HIERARCHIE
-      </span>
+      </div>
 
       {/* Excel cells */}
       <div style={{
         display: 'flex',
         gap: '1px',
-        marginTop: '20px',
-        background: '#C8D8E8',
-        border: '1px solid #C8D8E8',
+        marginTop: '24px',
+        background: '#1B4332',
+        border: '1px solid #2C5F2E',
         position: 'relative',
         zIndex: 2,
       }}>
         {[
-          { label: 'LVL', value: '1' },
-          { label: 'SALAIRE', value: '0\u20AC' },
-          { label: 'RTT', value: '3' },
-          { label: 'FORMULE', value: '=SUM(AMBITION)' },
+          { label: 'LVL', value: '1', gold: false },
+          { label: 'SALAIRE', value: '0€', gold: true },
+          { label: 'RTT', value: '3', gold: false },
+          { label: 'FORMULE', value: '=SUM(AMBITION)', gold: true },
         ].map(cell => (
           <div key={cell.label} style={{
-            background: 'white',
-            padding: '6px 16px',
+            background: '#0D2B0D',
+            padding: '8px 18px',
             textAlign: 'center',
           }}>
             <div style={{
               fontFamily: "'Share Tech Mono', monospace",
               fontSize: '7px',
-              color: '#607888',
+              color: '#4CAF50',
               letterSpacing: '2px',
-              marginBottom: '2px',
+              marginBottom: '3px',
             }}>{cell.label}</div>
             <div style={{
-              fontFamily: "'Orbitron', sans-serif",
-              fontSize: '12px',
-              fontWeight: 700,
-              color: cell.label === 'FORMULE' ? '#0047AB' : '#1A2530',
+              fontFamily: "'Luckiest Guy', cursive",
+              fontSize: '14px',
+              color: cell.gold ? '#FFE033' : '#5CDB5C',
             }}>{cell.value}</div>
           </div>
         ))}
       </div>
 
-      {/* CTA Button - bigger and more impactful */}
+      {/* CTA JOUER — Bangers font, green glow */}
       <button
         onClick={onPlay}
         style={{
           marginTop: '36px',
-          fontFamily: "'Orbitron', sans-serif",
-          fontSize: '16px',
-          fontWeight: 700,
-          letterSpacing: '10px',
-          color: '#fff',
-          background: '#0047AB',
-          border: '2px solid #00A89D',
-          padding: '20px 64px',
+          fontFamily: "'Bangers', cursive",
+          fontSize: '22px',
+          letterSpacing: '8px',
+          color: '#5CDB5C',
+          background: '#1B4332',
+          border: '2px solid #5CDB5C',
+          padding: '14px 56px',
           cursor: 'pointer',
-          boxShadow: '0 0 30px rgba(0,71,171,0.4), inset 0 0 20px rgba(0,71,171,0.1)',
+          boxShadow: '0 0 16px rgba(92,219,92,.2)',
           position: 'relative',
           overflow: 'hidden',
           zIndex: 2,
           transition: 'all 0.2s ease',
+          textShadow: '0 0 10px rgba(92,219,92,.4)',
         }}
         onMouseEnter={e => {
-          e.currentTarget.style.background = '#1A6ED8';
-          e.currentTarget.style.boxShadow = '0 0 40px rgba(0,71,171,0.6), inset 0 0 30px rgba(0,71,171,0.15)';
+          e.currentTarget.style.background = '#2C5F2E';
+          e.currentTarget.style.boxShadow = '0 0 28px rgba(92,219,92,.4)';
         }}
         onMouseLeave={e => {
-          e.currentTarget.style.background = '#0047AB';
-          e.currentTarget.style.boxShadow = '0 0 30px rgba(0,71,171,0.4), inset 0 0 20px rgba(0,71,171,0.1)';
+          e.currentTarget.style.background = '#1B4332';
+          e.currentTarget.style.boxShadow = '0 0 16px rgba(92,219,92,.2)';
         }}
       >
-        JOUER
+        <span style={{ position: 'relative', zIndex: 1 }}>JOUER</span>
+        {/* shimmer */}
+        <span style={{
+          position: 'absolute', top: 0, left: '-100%', width: '50%', height: '100%',
+          background: 'linear-gradient(90deg, transparent, rgba(92,219,92,.1), transparent)',
+          animation: 'shimmer 3s ease-in-out infinite',
+        }} />
       </button>
     </div>
   );
@@ -191,23 +207,23 @@ export default function Home() {
     return (
       <div
         className="flex flex-col overflow-hidden"
-        style={{ background: '#0A1520', height: '100dvh' }}
+        style={{ background: '#080F08', height: '100dvh', paddingLeft: '48px' }}
       >
-        <ExcelNav />
         <main
           className="flex-1"
           style={{ minHeight: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
         >
           <GameCanvas characterName={selectedCharacter?.name ?? ''} />
         </main>
+        <ExcelNav />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" style={{ background: '#080F08' }}>
       <ExcelNav />
-      <ExcelChrome formulaText='=LAUNCH_GAME("W.O.W","SINGLE_2025") → WELCOME_TO_THE_SYSTEM'>
+      <ExcelChrome formulaText='=LAUNCH_GAME("GUIBOUR","SINGLE_2026") → WELCOME_TO_THE_SYSTEM'>
         <HeroContent onPlay={handlePlay} />
       </ExcelChrome>
     </div>

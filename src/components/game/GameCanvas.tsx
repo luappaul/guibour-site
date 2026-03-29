@@ -254,78 +254,96 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
   // Loading screen
   if (!assetsLoaded) {
     return (
-      <div className="flex h-full w-full flex-col items-center justify-center gap-6"
-           style={{ background: '#0A1520' }}>
-        <h2 style={{
-          fontFamily: "'Share Tech Mono', monospace",
-          fontSize: 'clamp(48px, 10vw, 80px)',
-          fontWeight: 400,
-          color: '#fff',
-          letterSpacing: '12px',
-          textShadow: '0 0 30px rgba(0,168,157,0.7), 0 0 80px rgba(0,168,157,0.3)',
+      <div className="flex h-full w-full flex-col items-center justify-center gap-5"
+           style={{
+             background: '#080F08',
+             backgroundImage: 'linear-gradient(rgba(44,95,46,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(44,95,46,.08) 1px, transparent 1px)',
+             backgroundSize: '52px 32px',
+           }}>
+        <div style={{
+          fontFamily: "'Lilita One', cursive",
+          fontSize: 'clamp(52px, 10vw, 80px)',
+          color: '#5CDB5C',
+          letterSpacing: '6px',
           lineHeight: 1,
+          textShadow: '3px 3px 0 #1B4332, 0 0 40px rgba(92,219,92,.4)',
         }}>
           W.O.W
-        </h2>
-        <p style={{
+        </div>
+        <div style={{
           fontFamily: "'Share Tech Mono', monospace",
-          fontSize: 'clamp(13px, 2vw, 18px)',
-          color: '#00A89D',
+          fontSize: 'clamp(12px, 2vw, 16px)',
+          color: '#FFE033',
           letterSpacing: '6px',
         }}>
-          WORK OR WINDOW
-        </p>
-        <p style={{
+          WORLD OF WORK
+        </div>
+        <div style={{
           fontFamily: "'Share Tech Mono', monospace",
-          fontSize: 'clamp(11px, 1.5vw, 14px)',
-          color: '#607888',
+          fontSize: 'clamp(10px, 1.5vw, 13px)',
+          color: '#4CAF50',
           letterSpacing: '2px',
-          marginTop: '-8px',
+          marginTop: '-4px',
         }}>
           25 ÉTAGES — SURVIVEZ À GUIBOUR CORP.
-        </p>
-        <div style={{
-          width: 'clamp(240px, 40vw, 400px)',
-          height: '16px',
-          background: 'rgba(0,71,171,0.2)',
-          border: '1px solid #0047AB',
-          padding: '3px',
-          marginTop: '8px',
-        }}>
-          <div style={{
-            width: `${loadProgress}%`,
-            height: '100%',
-            background: 'linear-gradient(90deg, #0047AB, #00A89D)',
-            boxShadow: '0 0 10px rgba(0,168,157,0.6)',
-            transition: 'width 0.2s ease',
-          }} />
         </div>
-        <p style={{
-          fontFamily: "'Share Tech Mono', monospace",
-          fontSize: 'clamp(12px, 1.8vw, 16px)',
-          color: '#00A89D',
-          letterSpacing: '3px',
-        }}>
-          CHARGEMENT... {loadProgress}%
-        </p>
+        {/* fx progress bar */}
+        <div style={{ width: 'clamp(280px, 40vw, 420px)', marginTop: '8px' }}>
+          <div style={{
+            background: '#060E00',
+            border: '1px solid #1B4332',
+            padding: '5px 10px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            borderRadius: '3px',
+          }}>
+            <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '13px', color: '#5CDB5C', fontWeight: 700 }}>fx</span>
+            <div style={{
+              flex: 1,
+              background: '#0D2B0D',
+              border: '1px solid #1B4332',
+              height: '14px',
+              borderRadius: '2px',
+              overflow: 'hidden',
+            }}>
+              <div style={{
+                height: '100%',
+                width: `${loadProgress}%`,
+                background: 'linear-gradient(90deg, #5CDB5C, #2C5F2E)',
+                borderRadius: '2px',
+                boxShadow: '0 0 8px rgba(92,219,92,.5)',
+                transition: 'width 0.2s ease',
+              }} />
+            </div>
+          </div>
+          <div style={{
+            fontFamily: "'Share Tech Mono', monospace",
+            fontSize: '11px',
+            color: '#2C5F2E',
+            textAlign: 'center',
+            marginTop: '5px',
+            letterSpacing: '2px',
+          }}>
+            =LOADING(&quot;GAME_ASSETS&quot;) // {loadProgress}%
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col h-full w-full" style={{
-      backgroundImage: "url('/steel-texture.png')",
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
+      background: '#060E00',
       gap: '0',
-      padding: '10px 8px',
+      padding: '8px 8px',
     }}>
 
       {/* ── TOP ROW: game canvas + tower ── */}
       <div className="flex flex-1" style={{ gap: '8px', minHeight: 0 }}>
 
         {/* Game canvas area */}
-        <div className="relative flex-1" style={{ background: '#0A1520', overflow: 'hidden', border: '2px solid #00C9C8', boxSizing: 'border-box' }}>
+        <div className="relative flex-1" style={{ background: '#0A1400', overflow: 'hidden', border: '2px solid #2C5F2E', boxSizing: 'border-box' }}>
           <canvas
             ref={canvasRef}
             className="block h-full w-full"
@@ -338,11 +356,11 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
           {/* Elevator transition */}
           {elevatorActive && (
             <div className="pointer-events-none absolute inset-0 z-15"
-                 style={{ background: '#0A1520', animation: 'elevatorSlide 1.5s ease-in-out forwards' }}>
+                 style={{ background: '#080F08', animation: 'elevatorSlide 1.5s ease-in-out forwards' }}>
               <div className="flex h-full items-center justify-center">
                 <div className="text-center">
-                  <p style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '24px', fontWeight: 700, color: '#00A89D', letterSpacing: '4px', animation: 'pulse 1s ease-in-out infinite' }}>▲</p>
-                  <p style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '13px', color: '#607888', letterSpacing: '2px', marginTop: '8px' }}>ASCENSEUR EN COURS...</p>
+                  <p style={{ fontFamily: "'Bangers', cursive", fontSize: '28px', color: '#5CDB5C', letterSpacing: '4px', animation: 'pulse 1s ease-in-out infinite', textShadow: '0 0 16px rgba(92,219,92,.5)' }}>▲ MONTÉE</p>
+                  <p style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '12px', color: '#4CAF50', letterSpacing: '2px', marginTop: '8px' }}>ASCENSEUR EN COURS...</p>
                 </div>
               </div>
             </div>
@@ -351,28 +369,30 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
           {/* IDLE overlay */}
           {gameStatus === 'idle' && (
             <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-6"
-                 style={{ background: 'rgba(10,21,32,0.7)', backdropFilter: 'blur(3px)' }}>
+                 style={{ background: 'rgba(8,15,8,0.75)', backdropFilter: 'blur(3px)' }}>
               <div className="text-center">
-                <h1 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 'clamp(36px, 6vw, 64px)', fontWeight: 900, color: '#fff', letterSpacing: '6px', textShadow: '0 0 20px rgba(0,168,157,0.5)' }}>
+                <div style={{ fontFamily: "'Lilita One', cursive", fontSize: 'clamp(40px, 8vw, 72px)', color: '#5CDB5C', letterSpacing: '8px', textShadow: '3px 3px 0 #1B4332, 0 0 30px rgba(92,219,92,.35)', lineHeight: 1 }}>
                   W.O.W
-                </h1>
-                <p style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '16px', color: '#00A89D', letterSpacing: '4px', marginTop: '6px' }}>
-                  WORK OR WINDOW
-                </p>
-                <p style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '13px', color: '#607888', letterSpacing: '2px', marginTop: '10px' }}>
+                </div>
+                <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '14px', color: '#FFE033', letterSpacing: '6px', marginTop: '6px' }}>
+                  WORLD OF WORK
+                </div>
+                <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '11px', color: '#4CAF50', letterSpacing: '2px', marginTop: '8px' }}>
                   25 ÉTAGES — SURVIVEZ À GUIBOUR CORP.
-                </p>
+                </div>
               </div>
               <button
                 onClick={handlePlay}
-                className="cursor-pointer transition-all hover:brightness-110 active:scale-95"
-                style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '18px', fontWeight: 700, letterSpacing: '8px', color: '#fff', background: '#0047AB', border: '2px solid #00A89D', padding: '18px 60px', boxShadow: '0 0 30px rgba(0,71,171,0.3)' }}
+                className="cursor-pointer active:scale-95"
+                style={{ fontFamily: "'Bangers', cursive", fontSize: '22px', letterSpacing: '8px', color: '#5CDB5C', background: '#1B4332', border: '2px solid #5CDB5C', padding: '14px 56px', boxShadow: '0 0 16px rgba(92,219,92,.25)', transition: 'all 0.2s ease', textShadow: '0 0 10px rgba(92,219,92,.4)' }}
+                onMouseEnter={e => { e.currentTarget.style.background = '#2C5F2E'; e.currentTarget.style.boxShadow = '0 0 28px rgba(92,219,92,.4)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = '#1B4332'; e.currentTarget.style.boxShadow = '0 0 16px rgba(92,219,92,.25)'; }}
               >
                 JOUER
               </button>
-              <div className="text-center" style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '12px', color: '#607888', letterSpacing: '1px' }}>
+              <div className="text-center" style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '11px', color: '#2C5F2E', letterSpacing: '1px' }}>
                 <p>FLÈCHES / ZQSD POUR BOUGER — ESPACE POUR TIRER</p>
-                <p style={{ marginTop: '6px' }}>MOBILE : GAUCHE/DROITE POUR BOUGER, CENTRE POUR TIRER</p>
+                <p style={{ marginTop: '4px' }}>MOBILE : GAUCHE/DROITE POUR BOUGER, CENTRE POUR TIRER</p>
               </div>
             </div>
           )}
@@ -446,59 +466,63 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
 
       {/* ── TIMER / FORMULA BAR ROW ── */}
       {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete') && (
-        <div style={{ flexShrink: 0, background: '#EBF0F5', fontFamily: "'Share Tech Mono', monospace", marginTop: '18px' }}>
+        <div style={{ flexShrink: 0, background: '#060E00', borderTop: '2px solid #1B4332', fontFamily: "'Share Tech Mono', monospace", marginTop: '6px' }}>
           {/* Formula row */}
-          <div style={{ display: 'flex', alignItems: 'center', height: '28px', borderBottom: '1px solid #C0D0DE' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '100%', borderRight: '1px solid #C0D0DE', background: '#E0E8F0', flexShrink: 0 }}>
-              <span style={{ fontFamily: 'monospace', fontSize: '13px', color: '#0047AB', fontStyle: 'italic', fontWeight: 700 }}>fx</span>
+          <div style={{ display: 'flex', alignItems: 'center', height: '28px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '100%', borderRight: '1px solid #1B4332', background: '#0D2B0D', flexShrink: 0 }}>
+              <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '13px', color: '#5CDB5C', fontWeight: 700 }}>fx</span>
             </div>
-            <span ref={timerFormulaRef} style={{ fontSize: '12px', color: '#0047AB', padding: '0 10px', letterSpacing: '0.5px', whiteSpace: 'nowrap', overflow: 'hidden', flex: 1 }}>
-              =DESTROY(DOSSIERS,SALAIRE) // RTT:3 // SCORE:0€ // TEMPS:90s
-            </span>
-            <span ref={timerTextRef} style={{ fontSize: '13px', color: '#607888', paddingRight: '10px', flexShrink: 0, fontWeight: 700 }}>90s</span>
-          </div>
-          {/* Depleting progress bar */}
-          <div style={{ height: '5px', background: 'rgba(200,216,232,0.5)', position: 'relative', overflow: 'hidden' }}>
-            <div ref={timerFillRef} style={{ height: '100%', width: '100%', background: 'linear-gradient(90deg, #0047AB, #00A89D)', boxShadow: '0 0 6px rgba(0,168,157,0.4)', transition: 'background 0.3s ease' }} />
+            <div style={{ flex: 1, padding: '0 10px', overflow: 'hidden', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ flex: 1, background: '#0D2B0D', border: '1px solid #1B4332', height: '12px', borderRadius: '2px', overflow: 'hidden' }}>
+                <div ref={timerFillRef} style={{ height: '100%', width: '100%', background: 'linear-gradient(90deg, #5CDB5C, #FFE033)', boxShadow: '0 0 6px rgba(92,219,92,.4)', transition: 'background 0.3s ease' }} />
+              </div>
+              <span ref={timerFormulaRef} style={{ fontSize: '10px', color: '#4CAF50', whiteSpace: 'nowrap', letterSpacing: '0.5px' }}>
+                =TEMPS(90s)
+              </span>
+              <span ref={timerTextRef} style={{ fontSize: '12px', color: '#FFE033', flexShrink: 0, fontFamily: "'Luckiest Guy', cursive" }}>90s</span>
+            </div>
           </div>
         </div>
       )}
 
       {/* ── HUD ROW: lives + level name + score + mute ── */}
       {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete') && (
-        <div style={{ flexShrink: 0, height: '56px', background: '#0D1D2E', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 14px', fontFamily: "'Share Tech Mono', monospace", marginTop: '7px' }}>
+        <div style={{ flexShrink: 0, background: '#060E00', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #1B4332', marginTop: '4px' }}>
 
-          {/* Left: RTT lives */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ fontSize: '11px', color: '#607888', letterSpacing: '2px', marginRight: '4px' }}>RTT</span>
-            {[1, 2, 3].map(i => (
-              <div key={i} style={{ width: '28px', height: '28px', borderRadius: '50%', background: i <= hudInfo.lives ? '#0047AB' : 'rgba(0,71,171,0.15)', border: `2px solid ${i <= hudInfo.lives ? '#00A89D' : 'rgba(0,168,157,0.3)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: i <= hudInfo.lives ? '0 0 8px rgba(0,168,157,0.5)' : 'none', transition: 'all 0.3s ease' }}>
-                <span style={{ fontSize: '12px', color: i <= hudInfo.lives ? '#fff' : '#334' }}>★</span>
-              </div>
-            ))}
+          {/* Left: RTT lives — Excel cells */}
+          <div style={{ display: 'flex', gap: '1px', background: '#1B4332', border: '1px solid #1B4332' }}>
+            <div style={{ background: '#0D2B0D', padding: '6px 14px', textAlign: 'center' }}>
+              <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '7px', color: '#4CAF50', letterSpacing: '2px' }}>ÉTAGE</div>
+              <div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '16px', color: '#FFE033' }}>{String(currentLevel + 1).padStart(2, '0')}</div>
+            </div>
+            <div style={{ background: '#0D2B0D', padding: '6px 14px', textAlign: 'center' }}>
+              <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '7px', color: '#4CAF50', letterSpacing: '2px' }}>SALAIRE</div>
+              <div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '16px', color: '#5CDB5C' }}>{hudInfo.score.toLocaleString('fr-FR')}€</div>
+            </div>
+            <div style={{ background: '#0D2B0D', padding: '6px 14px', textAlign: 'center' }}>
+              <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '7px', color: '#4CAF50', letterSpacing: '2px' }}>RTT</div>
+              <div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '16px', color: '#FF4444' }}>{'❤'.repeat(hudInfo.lives)}</div>
+            </div>
           </div>
 
-          {/* Center: level name + phrase */}
-          <div className="text-center">
-            <div style={{ fontSize: '13px', color: '#00A89D', letterSpacing: '1px' }}>
+          {/* Center: level name */}
+          <div className="text-center" style={{ padding: '0 12px' }}>
+            <div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '13px', color: '#FFE033', letterSpacing: '2px' }}>
               {hudInfo.levelName}
             </div>
             {showPhrase && (
-              <div style={{ fontSize: '11px', color: '#607888', marginTop: '2px', animation: 'fadeIn 0.3s ease' }}>
+              <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '9px', color: '#4CAF50', marginTop: '1px', animation: 'fadeIn 0.3s ease' }}>
                 {hudInfo.phrase}
               </div>
             )}
           </div>
 
-          {/* Right: score + mute */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{ fontSize: '15px', color: '#FFD700', letterSpacing: '1px', fontWeight: 700 }}>
-              {hudInfo.score.toLocaleString('fr-FR')} €
-            </div>
+          {/* Right: mute */}
+          <div style={{ padding: '0 8px' }}>
             <button
               onClick={handleToggleMute}
               className="pointer-events-auto cursor-pointer"
-              style={{ background: 'rgba(0,71,171,0.2)', padding: '6px 10px', border: '1px solid rgba(0,71,171,0.4)', fontSize: '24px', color: isMuted ? '#FF5F56' : '#00A89D', lineHeight: 1 }}
+              style={{ background: '#0D2B0D', padding: '6px 10px', border: '1px solid #1B4332', fontSize: '20px', color: isMuted ? '#FF4444' : '#5CDB5C', lineHeight: 1 }}
             >
               {isMuted ? '🔇' : '🔊'}
             </button>

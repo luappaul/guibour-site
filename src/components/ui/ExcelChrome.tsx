@@ -8,26 +8,28 @@ interface ExcelChromeProps {
 const COLUMNS = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X'];
 const ROW_COUNT = 40;
 
-export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SINGLE_2025") → WELCOME_TO_THE_SYSTEM', children }: ExcelChromeProps) {
+export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SINGLE_2026") → WELCOME_TO_THE_SYSTEM', children }: ExcelChromeProps) {
   return (
     <div style={{
       position: 'relative',
       minHeight: '100vh',
-      backgroundColor: '#F4F8FB',
-      backgroundImage: 'linear-gradient(#C8D8E8 1px, transparent 1px), linear-gradient(90deg, #C8D8E8 1px, transparent 1px)',
+      paddingLeft: '48px', // leave room for sidebar nav
+      backgroundColor: '#0A1400',
+      backgroundImage:
+        'linear-gradient(rgba(44,95,46,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(44,95,46,.08) 1px, transparent 1px)',
       backgroundSize: '56px 34px',
-      backgroundPosition: '40px 48px',
+      backgroundPosition: '44px 48px',
     }}>
       {/* Column headers row */}
       <div style={{
         position: 'sticky',
-        top: 48, // below nav
+        top: 0,
         zIndex: 20,
         display: 'flex',
         height: '28px',
-        background: '#EBF0F5',
-        borderBottom: '2px solid #C0D0DE',
-        paddingLeft: '40px',
+        background: '#060E00',
+        borderBottom: '1px solid #1B4332',
+        paddingLeft: '44px',
       }}>
         {COLUMNS.map(col => (
           <div key={col} style={{
@@ -38,8 +40,8 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
             justifyContent: 'center',
             fontFamily: "'Share Tech Mono', monospace",
             fontSize: '9px',
-            color: '#607888',
-            borderRight: '1px solid #C0D0DE',
+            color: '#2C5F2E',
+            borderRight: '1px solid #1B4332',
           }}>
             {col}
           </div>
@@ -49,27 +51,27 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
       {/* Formula bar */}
       <div style={{
         position: 'sticky',
-        top: 76, // 48 nav + 28 cols
+        top: 28,
         zIndex: 20,
         display: 'flex',
         alignItems: 'center',
         height: '24px',
-        background: '#EBF0F5',
-        borderBottom: '1px solid #C0D0DE',
-        paddingLeft: '40px',
+        background: '#060E00',
+        borderBottom: '2px solid #1B4332',
+        paddingLeft: '44px',
         gap: '12px',
       }}>
         <span style={{
           fontFamily: "'Share Tech Mono', monospace",
-          fontSize: '10px',
-          color: '#0047AB',
-          fontStyle: 'italic',
+          fontSize: '11px',
+          color: '#5CDB5C',
+          fontWeight: 700,
           paddingLeft: '8px',
         }}>fx</span>
         <span style={{
           fontFamily: "'Share Tech Mono', monospace",
           fontSize: '9px',
-          color: '#607888',
+          color: '#4CAF50',
           letterSpacing: '1px',
         }}>{formulaText}</span>
       </div>
@@ -77,12 +79,12 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
       {/* Row numbers column */}
       <div style={{
         position: 'fixed',
-        left: 0,
-        top: 100, // 48 nav + 28 cols + 24 formula
+        left: '48px', // after sidebar
+        top: 52, // 28 cols + 24 formula
         bottom: 0,
-        width: '40px',
-        background: '#EBF0F5',
-        borderRight: '1px solid #C0D0DE',
+        width: '44px',
+        background: '#060E00',
+        borderRight: '1px solid #1B4332',
         zIndex: 15,
         display: 'flex',
         flexDirection: 'column',
@@ -95,8 +97,8 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
             justifyContent: 'center',
             fontFamily: "'Share Tech Mono', monospace",
             fontSize: '8px',
-            color: '#607888',
-            borderBottom: '1px solid #C0D0DE',
+            color: '#1B4332',
+            borderBottom: '1px solid #0D2B0D',
           }}>
             {i + 1}
           </div>
@@ -105,9 +107,9 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
 
       {/* Main content area */}
       <div style={{
-        paddingLeft: '40px',
+        paddingLeft: '44px',
         paddingTop: '16px',
-        minHeight: 'calc(100vh - 100px)',
+        minHeight: 'calc(100vh - 52px)',
       }}>
         {children}
       </div>

@@ -6,51 +6,58 @@ export interface CharacterData {
   id: string;
   name: string;
   title: string;
-  description: string;
-  stats: { label: string; value: number; max: number }[];
-  accentColor: string;
-  bgColor: string;
+  emoji: string;
+  stats: { label: string; value: number }[];
+  locked?: boolean;
+  lockedLabel?: string;
 }
 
 const CHARACTERS: CharacterData[] = [
   {
     id: 'guibour',
     name: 'GUIBOUR',
-    title: 'LE STAGIAIRE',
-    description: 'Survit aux réunions inutiles grâce à sa naïveté légendaire. Équilibré dans tous les domaines.',
+    title: 'EMPLOYÉ MODÈLE',
+    emoji: '🧑‍💼',
     stats: [
-      { label: 'VITESSE',  value: 3, max: 5 },
-      { label: 'RTT',      value: 3, max: 5 },
-      { label: 'AGILITÉ',  value: 3, max: 5 },
+      { label: 'VIT', value: 3 },
+      { label: 'TIR', value: 3 },
+      { label: 'LUCK', value: 3 },
     ],
-    accentColor: '#00A89D',
-    bgColor: 'rgba(0,71,171,0.15)',
   },
   {
-    id: 'adeline',
-    name: 'ADELINE',
-    title: 'LA COMPTABLE',
-    description: 'Maîtrise les tableurs à la perfection. Résistante mais peu agile — elle préfère rester à son bureau.',
+    id: 'nath',
+    name: 'NATH',
+    title: 'SECRÉTAIRE',
+    emoji: '👩‍💼',
     stats: [
-      { label: 'VITESSE',  value: 2, max: 5 },
-      { label: 'RTT',      value: 5, max: 5 },
-      { label: 'AGILITÉ',  value: 2, max: 5 },
+      { label: 'VIT', value: 4 },
+      { label: 'TIR', value: 2 },
+      { label: 'LUCK', value: 4 },
     ],
-    accentColor: '#FFD700',
-    bgColor: 'rgba(180,130,0,0.12)',
   },
   {
-    id: 'marc',
-    name: 'MARC',
-    title: 'LE COMMERCIAL',
-    description: 'Toujours en déplacement, jamais au bureau. Fulgurant mais fragile — une signature de trop et c\'est le burnout.',
+    id: 'tim',
+    name: 'TIM',
+    title: 'STAGIAIRE',
+    emoji: '🧑‍🎓',
     stats: [
-      { label: 'VITESSE',  value: 5, max: 5 },
-      { label: 'RTT',      value: 2, max: 5 },
-      { label: 'AGILITÉ',  value: 5, max: 5 },
+      { label: 'VIT', value: 5 },
+      { label: 'TIR', value: 1 },
+      { label: 'LUCK', value: 5 },
     ],
-    accentColor: '#FF6B35',
-    bgColor: 'rgba(200,60,0,0.12)',
+  },
+  {
+    id: 'bigboss',
+    name: 'BIG BOSS',
+    title: 'DIRECTEUR',
+    emoji: '👔',
+    locked: true,
+    lockedLabel: '🔒 ÉTAGE 15+',
+    stats: [
+      { label: 'VIT', value: 2 },
+      { label: 'TIR', value: 5 },
+      { label: 'LUCK', value: 2 },
+    ],
   },
 ];
 
@@ -60,11 +67,10 @@ interface CharacterSelectProps {
 }
 
 export default function CharacterSelect({ onSelect, onBack }: CharacterSelectProps) {
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const handleConfirm = () => {
-    const char = CHARACTERS.find(c => c.id === selectedId);
+    const char = CHARACTERS.find(c => c.id === selectedId && !c.locked);
     if (char) onSelect(char);
   };
 
@@ -73,64 +79,63 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
       position: 'fixed',
       inset: 0,
       zIndex: 100,
-      background: '#0A1520',
+      background: '#080F08',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '20px',
+      padding: '20px 20px 20px 68px', // leave room for sidebar
       overflow: 'auto',
     }}>
-      {/* Grid background */}
+      {/* Green grid background */}
       <div style={{
         position: 'absolute',
         inset: 0,
-        backgroundImage: 'linear-gradient(rgba(0,71,171,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,71,171,0.05) 1px, transparent 1px)',
+        backgroundImage:
+          'linear-gradient(rgba(44,95,46,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(44,95,46,.08) 1px, transparent 1px)',
         backgroundSize: '56px 34px',
         pointerEvents: 'none',
       }} />
-
-      {/* Scanlines */}
       <div className="scanlines" style={{ position: 'absolute', inset: 0 }} />
 
-      {/* Header */}
-      <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', marginBottom: '32px' }}>
-        {/* Excel formula bar */}
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '12px',
-          background: '#EBF0F5',
-          border: '1px solid #C0D0DE',
-          padding: '4px 16px',
-          marginBottom: '24px',
-        }}>
-          <span style={{ fontFamily: 'monospace', fontSize: '13px', color: '#0047AB', fontStyle: 'italic', fontWeight: 700 }}>fx</span>
-          <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '11px', color: '#607888', letterSpacing: '1px' }}>
-            =SELECT_EMPLOYEE(DEPARTEMENT, POSTE)
-          </span>
-        </div>
+      {/* Formula bar */}
+      <div style={{
+        position: 'relative',
+        zIndex: 2,
+        background: '#060E00',
+        border: '1px solid #1B4332',
+        padding: '5px 16px',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '10px',
+        marginBottom: '24px',
+      }}>
+        <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '12px', color: '#5CDB5C', fontWeight: 700 }}>fx</span>
+        <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '10px', color: '#4CAF50', letterSpacing: '1px' }}>
+          =SELECT(&quot;PERSONNAGE&quot;) → CHOOSE_YOUR_FIGHTER
+        </span>
+      </div>
 
-        <h1 style={{
-          fontFamily: "'Orbitron', sans-serif",
-          fontSize: 'clamp(20px, 4vw, 32px)',
-          fontWeight: 900,
-          color: '#fff',
-          letterSpacing: '6px',
-          textShadow: '0 0 20px rgba(0,168,157,0.4)',
-          display: 'block',
+      {/* Title */}
+      <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', marginBottom: '28px' }}>
+        <div style={{
+          fontFamily: "'Bangers', cursive",
+          fontSize: 'clamp(22px, 4vw, 36px)',
+          color: '#5CDB5C',
+          letterSpacing: '5px',
+          textShadow: '2px 2px 0 #1B4332',
         }}>
-          CHOISISSEZ VOTRE EMPLOYÉ
-        </h1>
-        <p style={{
+          SÉLECTION DU PERSONNEL
+        </div>
+        <div style={{
           fontFamily: "'Share Tech Mono', monospace",
-          fontSize: '11px',
-          color: '#607888',
+          fontSize: '10px',
+          color: '#4CAF50',
           letterSpacing: '3px',
-          marginTop: '8px',
+          marginTop: '4px',
         }}>
-          GUIBOUR CORP. — DÉPARTEMENT R.H. // FORMULAIRE D&apos;EMBAUCHE
-        </p>
+          DOSSIER RH // CHOISISSEZ VOTRE PROFIL
+        </div>
       </div>
 
       {/* Character cards */}
@@ -138,180 +143,113 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
         position: 'relative',
         zIndex: 2,
         display: 'flex',
-        gap: '20px',
+        gap: '14px',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        maxWidth: '960px',
+        maxWidth: '800px',
         width: '100%',
       }}>
         {CHARACTERS.map(char => {
-          const isHovered = hoveredId === char.id;
-          const isSelected = selectedId === char.id;
+          const isSelected = selectedId === char.id && !char.locked;
           return (
             <div
               key={char.id}
-              onClick={() => setSelectedId(char.id)}
-              onMouseEnter={() => setHoveredId(char.id)}
-              onMouseLeave={() => setHoveredId(null)}
+              onClick={() => !char.locked && setSelectedId(char.id)}
               style={{
-                flex: '1 1 260px',
-                maxWidth: '300px',
-                border: isSelected
-                  ? `2px solid ${char.accentColor}`
-                  : isHovered
-                    ? '2px solid rgba(0,168,157,0.5)'
-                    : '2px solid rgba(0,71,171,0.3)',
-                background: isSelected
-                  ? char.bgColor
-                  : isHovered
-                    ? 'rgba(0,71,171,0.08)'
-                    : 'rgba(0,71,171,0.04)',
-                padding: '0',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                boxShadow: isSelected
-                  ? `0 0 24px ${char.accentColor}40`
-                  : isHovered
-                    ? '0 0 16px rgba(0,168,157,0.2)'
-                    : 'none',
+                width: '160px',
+                border: isSelected ? '2px solid #5CDB5C' : '2px solid #1B4332',
+                borderRadius: '8px',
                 overflow: 'hidden',
+                boxShadow: isSelected ? '0 0 20px rgba(92,219,92,.25)' : 'none',
+                cursor: char.locked ? 'not-allowed' : 'pointer',
+                transition: 'all 0.2s ease',
+                opacity: char.locked ? 0.45 : 1,
+              }}
+              onMouseEnter={e => {
+                if (!char.locked && !isSelected) {
+                  e.currentTarget.style.borderColor = '#2C5F2E';
+                  e.currentTarget.style.boxShadow = '0 0 12px rgba(92,219,92,.1)';
+                }
+              }}
+              onMouseLeave={e => {
+                if (!char.locked && !isSelected) {
+                  e.currentTarget.style.borderColor = '#1B4332';
+                  e.currentTarget.style.boxShadow = 'none';
+                }
               }}
             >
-              {/* Card header bar */}
+              {/* Status bar */}
               <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '6px 12px',
-                background: isSelected ? char.accentColor : 'rgba(0,71,171,0.3)',
+                background: char.locked ? '#7B241C' : isSelected ? '#2C5F2E' : '#1B4332',
+                padding: '4px',
+                fontFamily: "'Share Tech Mono', monospace",
+                fontSize: '9px',
+                textAlign: 'center',
+                color: char.locked ? '#FF4444' : isSelected ? '#5CDB5C' : '#4CAF50',
+                letterSpacing: '2px',
                 transition: 'background 0.2s ease',
               }}>
-                <span style={{
-                  fontFamily: "'Share Tech Mono', monospace",
-                  fontSize: '10px',
-                  color: isSelected ? '#0A1520' : '#607888',
-                  letterSpacing: '2px',
-                }}>
-                  FICHE EMPLOYÉ
-                </span>
-                {isSelected && (
-                  <span style={{
-                    fontFamily: "'Share Tech Mono', monospace",
-                    fontSize: '10px',
-                    color: '#0A1520',
-                    fontWeight: 700,
-                    letterSpacing: '1px',
-                  }}>
-                    ✓ SÉLECTIONNÉ
-                  </span>
-                )}
+                {char.locked ? char.lockedLabel : isSelected ? '✓ SÉLECTIONNÉ' : 'DISPONIBLE'}
               </div>
 
-              {/* Avatar area */}
+              {/* Avatar */}
               <div style={{
-                height: '140px',
+                height: '110px',
+                background: isSelected ? '#1B4332' : '#0D2B0D',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'rgba(10,21,32,0.5)',
-                borderBottom: '1px solid rgba(0,71,171,0.2)',
-                position: 'relative',
-                overflow: 'hidden',
+                fontSize: '48px',
+                transition: 'background 0.2s ease',
               }}>
-                {/* Character silhouette / icon */}
-                <div style={{
-                  fontSize: '72px',
-                  opacity: isSelected ? 1 : 0.6,
-                  transition: 'opacity 0.2s ease',
-                  filter: isSelected ? `drop-shadow(0 0 12px ${char.accentColor})` : 'none',
-                }}>
-                  {char.id === 'guibour' ? '🧑‍💼' : char.id === 'adeline' ? '👩‍💻' : '🤵'}
-                </div>
-                {/* ID badge */}
-                <div style={{
-                  position: 'absolute',
-                  bottom: 8,
-                  right: 8,
-                  background: 'rgba(0,71,171,0.6)',
-                  border: `1px solid ${char.accentColor}`,
-                  padding: '2px 8px',
-                }}>
-                  <span style={{
-                    fontFamily: "'Share Tech Mono', monospace",
-                    fontSize: '8px',
-                    color: char.accentColor,
-                    letterSpacing: '1px',
-                  }}>ID: GS-{char.id === 'guibour' ? '4891' : char.id === 'adeline' ? '2241' : '7734'}</span>
-                </div>
+                {char.emoji}
               </div>
 
-              {/* Card body */}
-              <div style={{ padding: '16px' }}>
-                <div style={{ marginBottom: '4px' }}>
-                  <span style={{
-                    fontFamily: "'Orbitron', sans-serif",
-                    fontSize: '18px',
-                    fontWeight: 800,
-                    color: isSelected ? char.accentColor : '#fff',
-                    letterSpacing: '2px',
-                    transition: 'color 0.2s ease',
-                  }}>{char.name}</span>
-                </div>
-                <div style={{ marginBottom: '12px' }}>
-                  <span style={{
-                    fontFamily: "'Share Tech Mono', monospace",
-                    fontSize: '9px',
-                    color: char.accentColor,
-                    letterSpacing: '3px',
-                  }}>{char.title}</span>
-                </div>
-                <p style={{
-                  fontFamily: "'Share Tech Mono', monospace",
-                  fontSize: '10px',
-                  color: '#607888',
-                  lineHeight: 1.6,
-                  marginBottom: '16px',
-                  minHeight: '48px',
+              {/* Info */}
+              <div style={{ background: '#0D2B0D', padding: '12px' }}>
+                <div style={{
+                  fontFamily: "'Bangers', cursive",
+                  fontSize: '16px',
+                  color: '#5CDB5C',
+                  letterSpacing: '2px',
                 }}>
-                  {char.description}
-                </p>
+                  {char.name}
+                </div>
+                <div style={{
+                  fontFamily: "'Share Tech Mono', monospace",
+                  fontSize: '8px',
+                  color: char.locked ? '#FF4444' : '#FFE033',
+                  letterSpacing: '1px',
+                  marginBottom: '8px',
+                }}>
+                  {char.title}
+                </div>
 
                 {/* Stats */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <div style={{
+                  display: 'flex',
+                  gap: '1px',
+                  background: '#1B4332',
+                  border: '1px solid #1B4332',
+                }}>
                   {char.stats.map(stat => (
-                    <div key={stat.label} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span style={{
-                        fontFamily: "'Share Tech Mono', monospace",
-                        fontSize: '8px',
-                        color: '#607888',
-                        letterSpacing: '1px',
-                        width: '56px',
-                        flexShrink: 0,
-                      }}>{stat.label}</span>
+                    <div key={stat.label} style={{
+                      background: '#0A1400',
+                      padding: '4px 0',
+                      textAlign: 'center',
+                      flex: 1,
+                    }}>
                       <div style={{
-                        flex: 1,
-                        height: '6px',
-                        background: 'rgba(0,71,171,0.2)',
-                        border: '1px solid rgba(0,71,171,0.3)',
-                      }}>
-                        <div style={{
-                          width: `${(stat.value / stat.max) * 100}%`,
-                          height: '100%',
-                          background: isSelected
-                            ? `linear-gradient(90deg, ${char.accentColor}CC, ${char.accentColor})`
-                            : 'linear-gradient(90deg, #0047AB, #00A89D)',
-                          transition: 'all 0.3s ease',
-                          boxShadow: isSelected ? `0 0 6px ${char.accentColor}80` : 'none',
-                        }} />
-                      </div>
-                      <span style={{
                         fontFamily: "'Share Tech Mono', monospace",
-                        fontSize: '9px',
-                        color: isSelected ? char.accentColor : '#607888',
-                        width: '12px',
-                        textAlign: 'right',
+                        fontSize: '7px',
+                        color: '#4CAF50',
+                      }}>{stat.label}</div>
+                      <div style={{
+                        fontFamily: "'Luckiest Guy', cursive",
+                        fontSize: '13px',
+                        color: isSelected ? '#FFE033' : '#5CDB5C',
                         transition: 'color 0.2s ease',
-                      }}>{stat.value}</span>
+                      }}>{stat.value}</div>
                     </div>
                   ))}
                 </div>
@@ -321,35 +259,35 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
         })}
       </div>
 
-      {/* Action buttons */}
+      {/* Actions */}
       <div style={{
         position: 'relative',
         zIndex: 2,
         display: 'flex',
-        gap: '16px',
-        marginTop: '36px',
+        gap: '14px',
+        marginTop: '32px',
         alignItems: 'center',
       }}>
         <button
           onClick={onBack}
           style={{
             fontFamily: "'Share Tech Mono', monospace",
-            fontSize: '12px',
+            fontSize: '11px',
             letterSpacing: '3px',
-            color: '#607888',
+            color: '#2C5F2E',
             background: 'transparent',
-            border: '1px solid rgba(96,120,136,0.4)',
-            padding: '12px 28px',
+            border: '1px solid #1B4332',
+            padding: '10px 24px',
             cursor: 'pointer',
             transition: 'all 0.2s ease',
           }}
           onMouseEnter={e => {
-            e.currentTarget.style.color = '#fff';
-            e.currentTarget.style.borderColor = '#607888';
+            e.currentTarget.style.color = '#5CDB5C';
+            e.currentTarget.style.borderColor = '#2C5F2E';
           }}
           onMouseLeave={e => {
-            e.currentTarget.style.color = '#607888';
-            e.currentTarget.style.borderColor = 'rgba(96,120,136,0.4)';
+            e.currentTarget.style.color = '#2C5F2E';
+            e.currentTarget.style.borderColor = '#1B4332';
           }}
         >
           ← RETOUR
@@ -359,32 +297,31 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
           onClick={handleConfirm}
           disabled={!selectedId}
           style={{
-            fontFamily: "'Orbitron', sans-serif",
-            fontSize: '14px',
-            fontWeight: 700,
-            letterSpacing: '6px',
-            color: selectedId ? '#fff' : '#334',
-            background: selectedId ? '#0047AB' : 'rgba(0,71,171,0.1)',
-            border: `2px solid ${selectedId ? '#00A89D' : 'rgba(0,71,171,0.2)'}`,
-            padding: '16px 52px',
+            fontFamily: "'Bangers', cursive",
+            fontSize: '18px',
+            letterSpacing: '5px',
+            color: selectedId ? '#5CDB5C' : '#1B4332',
+            background: selectedId ? '#1B4332' : 'rgba(27,67,50,0.2)',
+            border: `2px solid ${selectedId ? '#5CDB5C' : '#1B4332'}`,
+            padding: '12px 44px',
             cursor: selectedId ? 'pointer' : 'not-allowed',
-            boxShadow: selectedId ? '0 0 30px rgba(0,71,171,0.3)' : 'none',
+            boxShadow: selectedId ? '0 0 16px rgba(92,219,92,.2)' : 'none',
             transition: 'all 0.2s ease',
           }}
           onMouseEnter={e => {
             if (selectedId) {
-              e.currentTarget.style.background = '#1A6ED8';
-              e.currentTarget.style.boxShadow = '0 0 40px rgba(0,71,171,0.5)';
+              e.currentTarget.style.background = '#2C5F2E';
+              e.currentTarget.style.boxShadow = '0 0 24px rgba(92,219,92,.35)';
             }
           }}
           onMouseLeave={e => {
             if (selectedId) {
-              e.currentTarget.style.background = '#0047AB';
-              e.currentTarget.style.boxShadow = '0 0 30px rgba(0,71,171,0.3)';
+              e.currentTarget.style.background = '#1B4332';
+              e.currentTarget.style.boxShadow = '0 0 16px rgba(92,219,92,.2)';
             }
           }}
         >
-          COMMENCER
+          CONFIRMER L&apos;EMBAUCHE →
         </button>
       </div>
     </div>
