@@ -14,9 +14,9 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
       position: 'relative',
       minHeight: '100vh',
       paddingLeft: '48px', // leave room for sidebar nav
-      backgroundColor: '#0A1400',
+      backgroundColor: '#131E08',
       backgroundImage:
-        'linear-gradient(rgba(44,95,46,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(44,95,46,.08) 1px, transparent 1px)',
+        'linear-gradient(rgba(61,128,64,.11) 1px, transparent 1px), linear-gradient(90deg, rgba(61,128,64,.11) 1px, transparent 1px)',
       backgroundSize: '56px 34px',
       backgroundPosition: '44px 48px',
     }}>
@@ -27,8 +27,8 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
         zIndex: 20,
         display: 'flex',
         height: '28px',
-        background: '#060E00',
-        borderBottom: '1px solid #1B4332',
+        background: '#0D1A0D',
+        borderBottom: '1px solid #2A6040',
         paddingLeft: '44px',
       }}>
         {COLUMNS.map(col => (
@@ -40,8 +40,8 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
             justifyContent: 'center',
             fontFamily: "'Share Tech Mono', monospace",
             fontSize: '9px',
-            color: '#2C5F2E',
-            borderRight: '1px solid #1B4332',
+            color: '#3A8040',
+            borderRight: '1px solid #2A6040',
           }}>
             {col}
           </div>
@@ -57,21 +57,21 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
         alignItems: 'center',
         height: '24px',
         background: '#060E00',
-        borderBottom: '2px solid #1B4332',
+        borderBottom: '2px solid #2A6040',
         paddingLeft: '44px',
         gap: '12px',
       }}>
         <span style={{
           fontFamily: "'Share Tech Mono', monospace",
           fontSize: '11px',
-          color: '#5CDB5C',
+          color: '#7AEC7A',
           fontWeight: 700,
           paddingLeft: '8px',
         }}>fx</span>
         <span style={{
           fontFamily: "'Share Tech Mono', monospace",
           fontSize: '9px',
-          color: '#4CAF50',
+          color: '#6ED47A',
           letterSpacing: '1px',
         }}>{formulaText}</span>
       </div>
@@ -97,8 +97,8 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
             justifyContent: 'center',
             fontFamily: "'Share Tech Mono', monospace",
             fontSize: '8px',
-            color: '#1B4332',
-            borderBottom: '1px solid #0D2B0D',
+            color: '#2A6040',
+            borderBottom: '1px solid #1A3018',
           }}>
             {i + 1}
           </div>

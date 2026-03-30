@@ -1,23 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  --color-dark-bg: #080F08;
-  --color-dark-bg2: #0A1400;
-  --color-card: #0D2B0D;
-  --color-border: #1B4332;
-  --color-active: #2C5F2E;
-  --color-green: #5CDB5C;
-  --color-yellow: #FFE033;
-  --color-red: #FF4444;
-  --color-orange: #FF8800;
-  --color-cyan: #00C9C8;
-  --color-purple: #AA44FF;
+  /* V7 palette — éclaircie */
+  --color-dark-bg:  #0E1A0E;
+  --color-dark-bg2: #131E08;
+  --color-card:     #1A3018;
+  --color-border:   #2A6040;
+  --color-active:   #3A8040;
+  --color-green:    #7AEC7A;
+  --color-yellow:   #FFE033;
+  --color-red:      #FF5555;
+  --color-orange:   #FF8800;
+  --color-cyan:     #00C9C8;
+  --color-purple:   #AA44FF;
 
-  --font-logo: 'Lilita One', cursive;
+  --font-logo:    'Lilita One', cursive;
   --font-display: 'Luckiest Guy', cursive;
-  --font-impact: 'Bangers', cursive;
-  --font-mono: 'Share Tech Mono', monospace;
-  --font-body: 'Space Grotesk', sans-serif;
+  --font-impact:  'Bangers', cursive;
+  --font-mono:    'Share Tech Mono', monospace;
+  --font-body:    'Space Grotesk', sans-serif;
 }
 
 * {
@@ -28,21 +29,21 @@
 
 html, body {
   font-family: var(--font-body);
-  background: #080F08;
-  color: #A5D6A7;
+  background: #0E1A0E;
+  color: #C5EAC5;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: #2C5F2E;
-  color: #5CDB5C;
+  background: #3A8040;
+  color: #7AEC7A;
 }
 
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #060E00; }
-::-webkit-scrollbar-thumb { background: #1B4332; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #2C5F2E; }
+::-webkit-scrollbar-track { background: #0A1408; }
+::-webkit-scrollbar-thumb { background: #2A6040; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #3A8040; }
 
 /* ===== ANIMATIONS ===== */
 @keyframes blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
@@ -67,23 +68,27 @@ html, body {
   to{opacity:1;transform:translateY(0)}
 }
 @keyframes colorCycle {
-  0%{color:#5CDB5C} 33%{color:#FFE033} 66%{color:#FF4444} 100%{color:#5CDB5C}
+  0%{color:#7AEC7A} 33%{color:#FFE033} 66%{color:#FF5555} 100%{color:#7AEC7A}
 }
 @keyframes glowGreen {
-  0%,100%{text-shadow:3px 3px 0 #1B4332, 0 0 20px rgba(92,219,92,.3)}
-  50%{text-shadow:3px 3px 0 #1B4332, 0 0 40px rgba(92,219,92,.6)}
+  0%,100%{text-shadow:3px 3px 0 #2A6040, 0 0 20px rgba(122,236,122,.35)}
+  50%{text-shadow:3px 3px 0 #2A6040, 0 0 50px rgba(122,236,122,.65)}
 }
 @keyframes walkCycle {
   0%{transform:translateX(-100%)}
   100%{transform:translateX(calc(100vw + 100%))}
 }
+@keyframes sphereGlow {
+  0%,100%{box-shadow:inset -5px -5px 12px rgba(0,0,0,.35),inset 3px 3px 7px rgba(255,255,255,.2),0 0 18px rgba(122,236,122,.3)}
+  50%{box-shadow:inset -5px -5px 12px rgba(0,0,0,.35),inset 3px 3px 7px rgba(255,255,255,.2),0 0 32px rgba(122,236,122,.55)}
+}
 
 /* ===== EXCEL GREEN GRID ===== */
 .excel-bg {
-  background-color: #0A1400;
+  background-color: #131E08;
   background-image:
-    linear-gradient(rgba(44,95,46,.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(44,95,46,.1) 1px, transparent 1px);
+    linear-gradient(rgba(61,128,64,.11) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(61,128,64,.11) 1px, transparent 1px);
   background-size: 56px 34px;
 }
 
@@ -92,10 +97,10 @@ html, body {
   background: repeating-linear-gradient(
     0deg,
     transparent 0px, transparent 2px,
-    rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px
+    rgba(0,0,0,0.10) 2px, rgba(0,0,0,0.10) 4px
   );
   pointer-events: none;
-  opacity: 0.4;
+  opacity: 0.35;
 }
 
 /* ===== SIDEBAR NAV ===== */
@@ -108,8 +113,8 @@ html, body {
   width: 48px;
   overflow: hidden;
   transition: width 0.25s ease;
-  background: #060E00;
-  border-right: 2px solid #1B4332;
+  background: #0D1A0D;
+  border-right: 2px solid #2A6040;
   display: flex;
   flex-direction: column;
 }

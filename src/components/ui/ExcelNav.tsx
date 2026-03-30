@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Sphere from './Sphere';
 
 const tabs = [
   { href: '/', label: 'JOUER', icon: '▶' },
@@ -24,33 +25,33 @@ export default function ExcelNav() {
         width: '48px',
         overflow: 'hidden',
         transition: 'width 0.25s ease',
-        background: '#060E00',
-        borderRight: '2px solid #1B4332',
+        background: '#0D1A0D',
+        borderRight: '2px solid #2A6040',
         display: 'flex',
         flexDirection: 'column',
-        boxShadow: '2px 0 12px rgba(0,0,0,0.5)',
+        boxShadow: '2px 0 14px rgba(0,0,0,0.5)',
       }}
       onMouseEnter={e => { e.currentTarget.style.width = '200px'; }}
       onMouseLeave={e => { e.currentTarget.style.width = '48px'; }}
     >
-      {/* Logo area */}
+      {/* Logo area — sphère + texte */}
       <div style={{
-        padding: '14px 0',
-        borderBottom: '1px solid #1B4332',
+        padding: '12px 0',
+        borderBottom: '1px solid #2A6040',
         display: 'flex',
         alignItems: 'center',
         gap: '10px',
-        paddingLeft: '12px',
+        paddingLeft: '10px',
         flexShrink: 0,
         overflow: 'hidden',
         whiteSpace: 'nowrap',
       }}>
-        <span style={{ fontSize: '22px', flexShrink: 0 }}>🏢</span>
+        <Sphere size={28} />
         <div style={{ overflow: 'hidden' }}>
           <div style={{
             fontFamily: "'Lilita One', cursive",
             fontSize: '13px',
-            color: '#5CDB5C',
+            color: '#7AEC7A',
             letterSpacing: '2px',
             lineHeight: 1.1,
           }}>GUIBOUR</div>
@@ -79,23 +80,23 @@ export default function ExcelNav() {
                 fontFamily: "'Share Tech Mono', monospace",
                 fontSize: '11px',
                 letterSpacing: '2px',
-                color: active ? '#5CDB5C' : '#2C5F2E',
+                color: active ? '#7AEC7A' : '#3A8040',
                 textDecoration: 'none',
-                borderLeft: active ? '3px solid #5CDB5C' : '3px solid transparent',
-                background: active ? 'rgba(44,95,46,0.2)' : 'transparent',
+                borderLeft: active ? '3px solid #7AEC7A' : '3px solid transparent',
+                background: active ? 'rgba(58,128,64,0.2)' : 'transparent',
                 transition: 'all 0.15s ease',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
               }}
               onMouseEnter={e => {
                 if (!active) {
-                  e.currentTarget.style.color = '#5CDB5C';
-                  e.currentTarget.style.background = 'rgba(44,95,46,0.1)';
+                  e.currentTarget.style.color = '#7AEC7A';
+                  e.currentTarget.style.background = 'rgba(58,128,64,0.12)';
                 }
               }}
               onMouseLeave={e => {
                 if (!active) {
-                  e.currentTarget.style.color = '#2C5F2E';
+                  e.currentTarget.style.color = '#3A8040';
                   e.currentTarget.style.background = 'transparent';
                 }
               }}
@@ -109,7 +110,7 @@ export default function ExcelNav() {
 
       {/* Bottom JOUER button */}
       <div style={{
-        borderTop: '1px solid #1B4332',
+        borderTop: '1px solid #2A6040',
         padding: '12px 10px',
         flexShrink: 0,
         overflow: 'hidden',
@@ -124,21 +125,21 @@ export default function ExcelNav() {
             fontFamily: "'Bangers', cursive",
             fontSize: '15px',
             letterSpacing: '4px',
-            color: '#5CDB5C',
+            color: '#fff',
             textDecoration: 'none',
-            background: '#1B4332',
-            border: '1px solid #2C5F2E',
+            background: '#2A6040',
+            border: '1px solid #7AEC7A',
             padding: '10px 12px',
-            boxShadow: '0 0 12px rgba(92,219,92,0.15)',
+            boxShadow: '0 0 14px rgba(122,236,122,.18)',
             transition: 'all 0.2s ease',
           }}
           onMouseEnter={e => {
-            e.currentTarget.style.background = '#2C5F2E';
-            e.currentTarget.style.boxShadow = '0 0 20px rgba(92,219,92,0.3)';
+            e.currentTarget.style.background = '#3A8040';
+            e.currentTarget.style.boxShadow = '0 0 22px rgba(122,236,122,.35)';
           }}
           onMouseLeave={e => {
-            e.currentTarget.style.background = '#1B4332';
-            e.currentTarget.style.boxShadow = '0 0 12px rgba(92,219,92,0.15)';
+            e.currentTarget.style.background = '#2A6040';
+            e.currentTarget.style.boxShadow = '0 0 14px rgba(122,236,122,.18)';
           }}
         >
           <span style={{ fontSize: '14px', flexShrink: 0 }}>🎮</span>

@@ -1,17 +1,18 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Sphere from './Sphere';
 
 interface LoadingScreenProps {
   onComplete: () => void;
 }
 
 const BOOT_LINES = [
-  { text: 'C:\\GUIBOUR\\SYSTEM> init.exe', color: '#1B4332', delay: 400 },
-  { text: '✓ Chargement des dossiers administratifs...', color: '#4CAF50', delay: 800 },
-  { text: '✓ Module RTT initialisé — 3 unités disponibles', color: '#4CAF50', delay: 1400 },
-  { text: '✓ Connexion Guibour Corp. établie', color: '#4CAF50', delay: 2000 },
-  { text: '▶ Préparation de l\'espace de travail...', color: '#1B4332', delay: 2600, cursor: true },
+  { text: 'C:\\GUIBOUR\\SYSTEM> init.exe', color: '#2A6040', delay: 400 },
+  { text: '✓ Chargement des dossiers administratifs...', color: '#6ED47A', delay: 800 },
+  { text: '✓ Module RTT initialisé — 3 unités disponibles', color: '#6ED47A', delay: 1400 },
+  { text: '✓ Connexion Guibour Corp. établie', color: '#6ED47A', delay: 2000 },
+  { text: '▶ Préparation de l\'espace de travail...', color: '#3A8040', delay: 2600, cursor: true },
 ];
 
 export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
@@ -46,7 +47,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       position: 'fixed',
       inset: 0,
       zIndex: 9999,
-      background: '#080F08',
+      background: '#0D1A0D',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -55,12 +56,12 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       transition: 'opacity 0.5s ease-out',
       overflow: 'hidden',
     }}>
-      {/* Green grid background */}
+      {/* Green grid background — V7 plus visible */}
       <div style={{
         position: 'absolute',
         inset: 0,
         backgroundImage:
-          'linear-gradient(rgba(44,95,46,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(44,95,46,.08) 1px, transparent 1px)',
+          'linear-gradient(rgba(61,128,64,.11) 1px, transparent 1px), linear-gradient(90deg, rgba(61,128,64,.11) 1px, transparent 1px)',
         backgroundSize: '52px 32px',
         pointerEvents: 'none',
       }} />
@@ -74,80 +75,93 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         <div style={{
           fontFamily: "'Share Tech Mono', monospace",
           fontSize: '11px',
-          color: '#4CAF50',
+          color: '#6ED47A',
           letterSpacing: '4px',
           marginBottom: '28px',
         }}>
           EMPLOYEE ID: GS-4891 // INITIALIZING...
         </div>
 
-        {/* GUIBOUR — Lilita One green */}
+        {/* Logo horizontal : sphère + texte */}
         <div style={{
-          fontFamily: "'Lilita One', cursive",
-          fontSize: 'clamp(52px, 10vw, 80px)',
-          color: '#5CDB5C',
-          letterSpacing: '6px',
-          lineHeight: 1,
-          textShadow: '3px 3px 0 #1B4332, 0 0 40px rgba(92,219,92,.35)',
-          animation: 'glowGreen 3s ease-in-out infinite',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '22px',
+          marginBottom: '14px',
         }}>
-          GUIBOUR
-        </div>
+          <Sphere size={90} />
 
-        {/* SYSTEM — Lilita One yellow */}
-        <div style={{
-          fontFamily: "'Lilita One', cursive",
-          fontSize: 'clamp(28px, 5vw, 44px)',
-          color: '#FFE033',
-          letterSpacing: '10px',
-          textShadow: '2px 2px 0 rgba(160,128,13,.5), 0 0 20px rgba(255,224,51,.2)',
-          marginTop: '-4px',
-        }}>
-          SYSTEM
-        </div>
+          <div style={{ textAlign: 'left' }}>
+            {/* GUIBOUR */}
+            <div style={{
+              fontFamily: "'Lilita One', cursive",
+              fontSize: 'clamp(48px, 9vw, 76px)',
+              color: '#7AEC7A',
+              letterSpacing: '5px',
+              lineHeight: 1,
+              textShadow: '3px 3px 0 #2A6040, 0 0 40px rgba(122,236,122,.4)',
+              animation: 'glowGreen 3s ease-in-out infinite',
+            }}>
+              GUIBOUR
+            </div>
 
-        {/* W.O.W subtitle */}
-        <div style={{
-          fontFamily: "'Share Tech Mono', monospace",
-          fontSize: '13px',
-          color: '#4CAF50',
-          letterSpacing: '8px',
-          marginTop: '10px',
-        }}>
-          W . O . W — WORLD OF WORK
+            {/* SYSTEM */}
+            <div style={{
+              fontFamily: "'Lilita One', cursive",
+              fontSize: 'clamp(26px, 4.5vw, 40px)',
+              color: '#FFE033',
+              letterSpacing: '10px',
+              textShadow: '2px 2px 0 rgba(160,128,13,.55), 0 0 20px rgba(255,224,51,.25)',
+              marginTop: '-4px',
+            }}>
+              SYSTEM
+            </div>
+
+            {/* W.O.W subtitle */}
+            <div style={{
+              fontFamily: "'Share Tech Mono', monospace",
+              fontSize: '12px',
+              color: '#6ED47A',
+              letterSpacing: '7px',
+              marginTop: '8px',
+            }}>
+              W . O . W — WORLD OF WORK
+            </div>
+          </div>
         </div>
 
         {/* Progress bar — fx Excel style */}
-        <div style={{ width: '340px', margin: '36px auto 0' }}>
+        <div style={{ width: '340px', margin: '28px auto 0' }}>
           <div style={{
-            background: '#060E00',
-            border: '1px solid #1B4332',
-            padding: '5px 10px',
+            background: '#131E08',
+            border: '1px solid #2A6040',
+            padding: '6px 12px',
             display: 'flex',
             alignItems: 'center',
             gap: '10px',
-            borderRadius: '3px',
+            borderRadius: '4px',
           }}>
             <span style={{
               fontFamily: "'Share Tech Mono', monospace",
-              fontSize: '12px',
-              color: '#5CDB5C',
+              fontSize: '13px',
+              color: '#7AEC7A',
               fontWeight: 700,
             }}>fx</span>
             <div style={{
               flex: 1,
-              background: '#0D2B0D',
-              border: '1px solid #1B4332',
-              height: '12px',
-              borderRadius: '2px',
+              background: '#1A3018',
+              border: '1px solid #2A6040',
+              height: '13px',
+              borderRadius: '3px',
               overflow: 'hidden',
             }}>
               <div style={{
                 height: '100%',
                 width: `${progress}%`,
-                background: 'linear-gradient(90deg, #5CDB5C, #2C5F2E)',
-                borderRadius: '2px',
-                boxShadow: '0 0 8px rgba(92,219,92,.5)',
+                background: 'linear-gradient(90deg, #7AEC7A, #3A8040)',
+                borderRadius: '3px',
+                boxShadow: '0 0 8px rgba(122,236,122,.5)',
                 transition: 'width 0.1s linear',
               }} />
             </div>
@@ -155,7 +169,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           <div style={{
             fontFamily: "'Share Tech Mono', monospace",
             fontSize: '10px',
-            color: '#2C5F2E',
+            color: '#3A8040',
             textAlign: 'center',
             marginTop: '6px',
             letterSpacing: '2px',
@@ -165,7 +179,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         </div>
       </div>
 
-      {/* Badge employé — pendule bottom right */}
+      {/* Badge employé — pendule bottom right, sphère dans le badge */}
       <div style={{
         position: 'absolute',
         right: '36px',
@@ -175,14 +189,14 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         flexDirection: 'column',
         alignItems: 'center',
       }}>
-        <div style={{ width: '2px', height: '20px', background: '#2C5F2E' }} />
+        <div style={{ width: '2px', height: '20px', background: '#3A8040' }} />
         <div style={{
-          width: '56px',
-          height: '76px',
+          width: '60px',
+          height: '80px',
           background: 'linear-gradient(135deg, #fff, #eee)',
-          borderRadius: '6px',
-          border: '3px solid #5CDB5C',
-          boxShadow: '0 4px 16px rgba(0,0,0,.5), 0 0 12px rgba(92,219,92,.15)',
+          borderRadius: '7px',
+          border: '3px solid #7AEC7A',
+          boxShadow: '0 4px 16px rgba(0,0,0,.5), 0 0 12px rgba(122,236,122,.18)',
           animation: 'swing 3s ease-in-out infinite',
           transformOrigin: 'top center',
           display: 'flex',
@@ -191,20 +205,11 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           justifyContent: 'center',
           gap: '3px',
         }}>
-          <div style={{
-            width: '34px',
-            height: '34px',
-            borderRadius: '50%',
-            background: '#ddd',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '20px',
-          }}>👤</div>
+          <Sphere size={28} animated={false} />
           <div style={{
             fontFamily: "'Share Tech Mono', monospace",
             fontSize: '6px',
-            color: '#1B4332',
+            color: '#1A3A1A',
             letterSpacing: '1px',
           }}>GUIBOUR</div>
           <div style={{
@@ -227,13 +232,13 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             fontFamily: "'Share Tech Mono', monospace",
             fontSize: '9px',
             color: line.color,
-            lineHeight: '1.8',
+            lineHeight: '1.9',
             animation: 'bootLine 0.3s ease-out',
           }}>
             {line.text}
             {line.cursor && (
               <span style={{
-                color: '#5CDB5C',
+                color: '#7AEC7A',
                 animation: 'cursorBlink 1s infinite',
                 marginLeft: '4px',
               }}>█</span>
