@@ -38,7 +38,7 @@ export default function ContactPage() {
                   letterSpacing: '4px', lineHeight: 1,
                 }}>NOUS CONTACTER</div>
                 <div style={{
-                  fontFamily: "'Share Tech Mono', monospace",
+                  fontFamily: "'Orbitron', sans-serif",
                   fontSize: '8px', color: '#3C5A7A',
                   letterSpacing: '4px', marginTop: '4px',
                 }}>03 / W.O.W — FORMULAIRE INTERNE</div>
@@ -53,12 +53,12 @@ export default function ContactPage() {
               ].map(item => (
                 <div key={item.label}>
                   <div style={{
-                    fontFamily: "'Share Tech Mono', monospace",
+                    fontFamily: "'Orbitron', sans-serif",
                     fontSize: '7px', color: '#2B5090',
                     letterSpacing: '3px', marginBottom: '3px',
                   }}>{item.label}</div>
                   <div style={{
-                    fontFamily: "'Share Tech Mono', monospace",
+                    fontFamily: "'Orbitron', sans-serif",
                     fontSize: '11px', color: '#8FA5B8',
                   }}>{item.value}</div>
                 </div>
@@ -80,12 +80,12 @@ export default function ContactPage() {
                 letterSpacing: '4px', textAlign: 'center',
               }}>MESSAGE ENVOYÉ</div>
               <div style={{
-                fontFamily: "'Share Tech Mono', monospace",
+                fontFamily: "'Orbitron', sans-serif",
                 fontSize: '10px', color: '#8FA5B8',
                 letterSpacing: '3px', textAlign: 'center',
               }}>LA DIRECTION VOUS RÉPONDRA APRÈS LA PAUSE CAFÉ.</div>
               <div style={{
-                fontFamily: "'Share Tech Mono', monospace",
+                fontFamily: "'Orbitron', sans-serif",
                 fontSize: '8px', color: '#C8D8E8',
                 letterSpacing: '2px', marginTop: '8px',
               }}>=MAIL_SENT() // REF: {Math.floor(Math.random() * 90000) + 10000}</div>
@@ -119,7 +119,7 @@ export default function ContactPage() {
                   fontSize: '22px', color: '#0D2B5E', letterSpacing: '3px',
                 }}>ENVOYER UN MESSAGE</div>
                 <div style={{
-                  fontFamily: "'Share Tech Mono', monospace",
+                  fontFamily: "'Orbitron', sans-serif",
                   fontSize: '7px', color: '#C8D8E8', letterSpacing: '3px',
                 }}>=FORM("GS-CONTACT")</div>
               </div>
@@ -131,7 +131,7 @@ export default function ContactPage() {
                   <div style={{ background: '#fff', padding: '4px 0' }}>
                     <label style={{
                       display: 'block',
-                      fontFamily: "'Share Tech Mono', monospace",
+                      fontFamily: "'Orbitron', sans-serif",
                       fontSize: '7px', color: '#8FA5B8',
                       letterSpacing: '3px', padding: '10px 16px 0',
                     }}>NOM / PSEUDO</label>
@@ -139,7 +139,7 @@ export default function ContactPage() {
                       type="text" required placeholder="Votre pseudo..."
                       style={{
                         width: '100%', border: 'none', borderBottom: '2px solid transparent',
-                        fontFamily: "'Share Tech Mono', monospace",
+                        fontFamily: "'Orbitron', sans-serif",
                         fontSize: '13px', color: '#1A2B40',
                         background: 'transparent',
                         padding: '6px 16px 10px', outline: 'none',
@@ -153,7 +153,7 @@ export default function ContactPage() {
                   <div style={{ background: '#fff', padding: '4px 0' }}>
                     <label style={{
                       display: 'block',
-                      fontFamily: "'Share Tech Mono', monospace",
+                      fontFamily: "'Orbitron', sans-serif",
                       fontSize: '7px', color: '#8FA5B8',
                       letterSpacing: '3px', padding: '10px 16px 0',
                     }}>EMAIL</label>
@@ -161,7 +161,7 @@ export default function ContactPage() {
                       type="email" required placeholder="votre@email.com"
                       style={{
                         width: '100%', border: 'none', borderBottom: '2px solid transparent',
-                        fontFamily: "'Share Tech Mono', monospace",
+                        fontFamily: "'Orbitron', sans-serif",
                         fontSize: '13px', color: '#1A2B40',
                         background: 'transparent',
                         padding: '6px 16px 10px', outline: 'none',
@@ -178,7 +178,7 @@ export default function ContactPage() {
                 <div style={{ background: '#fff', marginBottom: '1px', padding: '4px 0' }}>
                   <label style={{
                     display: 'block',
-                    fontFamily: "'Share Tech Mono', monospace",
+                    fontFamily: "'Orbitron', sans-serif",
                     fontSize: '7px', color: '#8FA5B8',
                     letterSpacing: '3px', padding: '10px 16px 0',
                   }}>OBJET</label>
@@ -186,7 +186,7 @@ export default function ContactPage() {
                     type="text" required placeholder="Sujet du message..."
                     style={{
                       width: '100%', border: 'none', borderBottom: '2px solid transparent',
-                      fontFamily: "'Share Tech Mono', monospace",
+                      fontFamily: "'Orbitron', sans-serif",
                       fontSize: '13px', color: '#1A2B40',
                       background: 'transparent',
                       padding: '6px 16px 10px', outline: 'none',
@@ -202,7 +202,7 @@ export default function ContactPage() {
                 <div style={{ background: '#fff', marginBottom: '24px', padding: '4px 0' }}>
                   <label style={{
                     display: 'block',
-                    fontFamily: "'Share Tech Mono', monospace",
+                    fontFamily: "'Orbitron', sans-serif",
                     fontSize: '7px', color: '#8FA5B8',
                     letterSpacing: '3px', padding: '10px 16px 0',
                   }}>MESSAGE</label>
@@ -210,7 +210,7 @@ export default function ContactPage() {
                     required rows={6} placeholder="Votre message..."
                     style={{
                       width: '100%', border: 'none', borderBottom: '2px solid transparent',
-                      fontFamily: "'Share Tech Mono', monospace",
+                      fontFamily: "'Orbitron', sans-serif",
                       fontSize: '13px', color: '#1A2B40',
                       background: 'transparent',
                       padding: '6px 16px 14px', outline: 'none',
@@ -225,7 +225,7 @@ export default function ContactPage() {
                 {/* Actions */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div style={{
-                    fontFamily: "'Share Tech Mono', monospace",
+                    fontFamily: "'Orbitron', sans-serif",
                     fontSize: '7px', color: '#C8D8E8', letterSpacing: '2px',
                   }}>
                     © 2026 GUIBOUR — REF: GS-CONTACT-001

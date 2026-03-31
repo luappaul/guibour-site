@@ -38,7 +38,7 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
     }}>
       {/* Employee ID */}
       <div style={{
-        fontFamily: "'Share Tech Mono', monospace",
+        fontFamily: "'Orbitron', sans-serif",
         fontSize: '10px',
         color: '#5B9BD5',
         letterSpacing: '4px',
@@ -91,7 +91,7 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
 
       {/* Subtitle */}
       <div style={{
-        fontFamily: "'Share Tech Mono', monospace",
+        fontFamily: "'Orbitron', sans-serif",
         fontSize: '11px',
         color: '#5B9BD5',
         letterSpacing: '3px',

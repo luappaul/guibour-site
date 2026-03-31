@@ -110,8 +110,8 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
         gap: '10px',
         marginBottom: '24px',
       }}>
-        <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '12px', color: '#00D4CC', fontWeight: 700 }}>fx</span>
-        <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '10px', color: '#5B9BD5', letterSpacing: '1px' }}>
+        <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '12px', color: '#00D4CC', fontWeight: 700 }}>fx</span>
+        <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#5B9BD5', letterSpacing: '1px' }}>
           =SELECT(&quot;PERSONNAGE&quot;) → CHOOSE_YOUR_FIGHTER
         </span>
       </div>
@@ -128,7 +128,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
           SÉLECTION DU PERSONNEL
         </div>
         <div style={{
-          fontFamily: "'Share Tech Mono', monospace",
+          fontFamily: "'Orbitron', sans-serif",
           fontSize: '10px',
           color: '#5B9BD5',
           letterSpacing: '3px',
@@ -182,7 +182,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
               <div style={{
                 background: char.locked ? '#4A1010' : isSelected ? '#0047AB' : '#1B3A6B',
                 padding: '4px',
-                fontFamily: "'Share Tech Mono', monospace",
+                fontFamily: "'Orbitron', sans-serif",
                 fontSize: '9px',
                 textAlign: 'center',
                 color: char.locked ? '#FF6B6B' : isSelected ? '#A8D8FF' : '#5B9BD5',
@@ -216,7 +216,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
                   {char.name}
                 </div>
                 <div style={{
-                  fontFamily: "'Share Tech Mono', monospace",
+                  fontFamily: "'Orbitron', sans-serif",
                   fontSize: '8px',
                   color: char.locked ? '#FF6B6B' : '#00D4CC',
                   letterSpacing: '1px',
@@ -240,7 +240,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
                       flex: 1,
                     }}>
                       <div style={{
-                        fontFamily: "'Share Tech Mono', monospace",
+                        fontFamily: "'Orbitron', sans-serif",
                         fontSize: '7px',
                         color: '#3C5A7A',
                       }}>{stat.label}</div>
@@ -271,7 +271,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
         <button
           onClick={onBack}
           style={{
-            fontFamily: "'Share Tech Mono', monospace",
+            fontFamily: "'Orbitron', sans-serif",
             fontSize: '11px',
             letterSpacing: '3px',
             color: '#3C5A7A',

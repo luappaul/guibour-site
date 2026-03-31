@@ -36,7 +36,7 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontFamily: "'Share Tech Mono', monospace",
+            fontFamily: "'Orbitron', sans-serif",
             fontSize: '9px',
             color: '#5B9BD5',
             borderRight: '1px solid rgba(43,80,144,.4)',
@@ -60,14 +60,14 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
         gap: '12px',
       }}>
         <span style={{
-          fontFamily: "'Share Tech Mono', monospace",
+          fontFamily: "'Orbitron', sans-serif",
           fontSize: '11px',
           color: '#00D4CC',
           fontWeight: 700,
           paddingLeft: '8px',
         }}>fx</span>
         <span style={{
-          fontFamily: "'Share Tech Mono', monospace",
+          fontFamily: "'Orbitron', sans-serif",
           fontSize: '9px',
           color: '#5B9BD5',
           letterSpacing: '1px',

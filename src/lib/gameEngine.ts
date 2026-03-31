@@ -745,7 +745,7 @@ function drawLevelComplete(ctx: CanvasRenderingContext2D, state: GameState) {
   ctx.fillText('DOSSIER CLASSE !', w / 2, h / 2 - 15);
 
   ctx.fillStyle = '#fff';
-  ctx.font = '16px "Share Tech Mono", monospace';
+  ctx.font = '16px "Orbitron", sans-serif';
   ctx.fillText(`Etage ${state.level} termine`, w / 2, h / 2 + 20);
   ctx.textBaseline = 'alphabetic';
 }
@@ -764,7 +764,7 @@ function drawBurnout(ctx: CanvasRenderingContext2D, w: number, h: number, state:
   ctx.fillText('BURN OUT !', w / 2, h / 2);
 
   ctx.fillStyle = '#fff';
-  ctx.font = '18px "Share Tech Mono", monospace';
+  ctx.font = '18px "Orbitron", sans-serif';
   ctx.fillText(`RTT restants : ${state.player.lives}`, w / 2, h / 2 + 40);
   ctx.textBaseline = 'alphabetic';
 }

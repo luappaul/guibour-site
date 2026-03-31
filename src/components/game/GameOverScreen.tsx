@@ -98,7 +98,7 @@ export default function GameOverScreen({ state, onRestart }: Props) {
         )}
         {isVictory && (
           <p style={{
-            fontFamily: "'Share Tech Mono', monospace",
+            fontFamily: "'Orbitron', sans-serif",
             fontSize: '12px',
             color: '#607888',
             letterSpacing: '2px',
@@ -145,7 +145,7 @@ export default function GameOverScreen({ state, onRestart }: Props) {
               <span style={{ fontFamily: 'monospace', fontSize: '9px', color: '#777' }}>fx</span>
             </div>
             <span style={{
-              fontFamily: "'Share Tech Mono', monospace",
+              fontFamily: "'Orbitron', sans-serif",
               fontSize: '10px',
               color: '#0047AB',
               padding: '4px 8px',
@@ -162,7 +162,7 @@ export default function GameOverScreen({ state, onRestart }: Props) {
               padding: '10px',
               marginBottom: '12px',
             }}>
-              <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '10px', color: '#607888' }}>
+              <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#607888' }}>
                 DUREE DANS LE SYSTEME
               </span>
               <div style={{
@@ -192,7 +192,7 @@ export default function GameOverScreen({ state, onRestart }: Props) {
               ].map(cell => (
                 <div key={cell.label} style={{ background: '#fff', padding: '8px 6px', textAlign: 'center' }}>
                   <div style={{
-                    fontFamily: "'Share Tech Mono', monospace",
+                    fontFamily: "'Orbitron', sans-serif",
                     fontSize: '8px',
                     color: '#607888',
                     letterSpacing: '2px',
@@ -209,7 +209,7 @@ export default function GameOverScreen({ state, onRestart }: Props) {
             </div>
 
             <p style={{
-              fontFamily: "'Share Tech Mono', monospace",
+              fontFamily: "'Orbitron', sans-serif",
               fontSize: '10px',
               color: '#0047AB',
               letterSpacing: '2px',
@@ -259,10 +259,10 @@ export default function GameOverScreen({ state, onRestart }: Props) {
 
           <div className="flex items-center justify-between px-3 py-1"
                style={{ background: '#0047AB', borderTop: '1px solid #0F3320' }}>
-            <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '8px', color: 'rgba(255,255,255,0.6)' }}>
+            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: 'rgba(255,255,255,0.6)' }}>
               guibour.fr
             </span>
-            <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '8px', color: 'rgba(255,255,255,0.6)' }}>
+            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: 'rgba(255,255,255,0.6)' }}>
               #WOW #guibour
             </span>
           </div>

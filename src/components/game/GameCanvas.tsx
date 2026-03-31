@@ -281,7 +281,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
           WORK OR WINDOW
         </div>
         <div style={{
-          fontFamily: "'Share Tech Mono', monospace",
+          fontFamily: "'Orbitron', sans-serif",
           fontSize: 'clamp(10px, 1.5vw, 13px)',
           color: '#5B9BD5',
           letterSpacing: '2px',
@@ -300,7 +300,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
             gap: '10px',
             borderRadius: '3px',
           }}>
-            <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '13px', color: '#00D4CC', fontWeight: 700 }}>fx</span>
+            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '13px', color: '#00D4CC', fontWeight: 700 }}>fx</span>
             <div style={{
               flex: 1,
               background: '#12274A',
@@ -320,7 +320,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
             </div>
           </div>
           <div style={{
-            fontFamily: "'Share Tech Mono', monospace",
+            fontFamily: "'Orbitron', sans-serif",
             fontSize: '11px',
             color: '#2B5090',
             textAlign: 'center',
@@ -362,7 +362,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
               <div className="flex h-full items-center justify-center">
                 <div className="text-center">
                   <p style={{ fontFamily: "'Lilita One', cursive", fontSize: '28px', color: '#5CDB5C', letterSpacing: '4px', animation: 'pulse 1s ease-in-out infinite', textShadow: '0 0 16px rgba(92,219,92,.5)' }}>▲ MONTÉE</p>
-                  <p style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '12px', color: '#4CAF50', letterSpacing: '2px', marginTop: '8px' }}>ASCENSEUR EN COURS...</p>
+                  <p style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '12px', color: '#4CAF50', letterSpacing: '2px', marginTop: '8px' }}>ASCENSEUR EN COURS...</p>
                 </div>
               </div>
             </div>
@@ -376,10 +376,10 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
                 <div style={{ fontFamily: "'Lilita One', cursive", fontSize: 'clamp(40px, 8vw, 72px)', color: '#5CDB5C', letterSpacing: '8px', textShadow: '3px 3px 0 #1B4332, 0 0 30px rgba(92,219,92,.35)', lineHeight: 1 }}>
                   W.O.W
                 </div>
-                <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '14px', color: '#FFE033', letterSpacing: '6px', marginTop: '6px' }}>
+                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '14px', color: '#FFE033', letterSpacing: '6px', marginTop: '6px' }}>
                   WORK OR WINDOW
                 </div>
-                <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '11px', color: '#4CAF50', letterSpacing: '2px', marginTop: '8px' }}>
+                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#4CAF50', letterSpacing: '2px', marginTop: '8px' }}>
                   25 ÉTAGES — SURVIVEZ AUX 25 ÉTAGES
                 </div>
               </div>
@@ -392,7 +392,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
               >
                 JOUER À <span style={{ color: '#7AEC7A', textShadow: '0 0 8px rgba(122,236,122,.5)', marginLeft: '6px' }}>W.O.W</span>
               </button>
-              <div className="text-center" style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '11px', color: '#2C5F2E', letterSpacing: '1px' }}>
+              <div className="text-center" style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#2C5F2E', letterSpacing: '1px' }}>
                 <p>FLÈCHES / ZQSD POUR BOUGER — ESPACE POUR TIRER</p>
                 <p style={{ marginTop: '4px' }}>MOBILE : GAUCHE/DROITE POUR BOUGER, CENTRE POUR TIRER</p>
               </div>
@@ -424,12 +424,12 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
                   <div className="flex items-center justify-center border-r px-2 py-1" style={{ borderColor: '#C0D0DE', background: '#E8E8E8' }}>
                     <span style={{ fontFamily: 'monospace', fontSize: '11px', color: '#777' }}>fx</span>
                   </div>
-                  <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '12px', color: '#0047AB', padding: '4px 8px' }}>
+                  <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '12px', color: '#0047AB', padding: '4px 8px' }}>
                     =EMBAUCHE(NOM_EMPLOYE)
                   </span>
                 </div>
                 <div className="p-6" style={{ background: '#F5F5F5' }}>
-                  <p style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '13px', color: '#607888', letterSpacing: '1px', marginBottom: '14px' }}>
+                  <p style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '13px', color: '#607888', letterSpacing: '1px', marginBottom: '14px' }}>
                     ENTREZ VOTRE NOM D&apos;EMPLOYÉ :
                   </p>
                   <input
@@ -440,7 +440,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
                     onChange={e => setPlayerName(e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && handleStart()}
                     placeholder="Nom..."
-                    style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '16px', width: '100%', padding: '10px 12px', border: '1px solid #C8D8E8', background: '#fff', color: '#0A1520', outline: 'none', marginBottom: '14px' }}
+                    style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '16px', width: '100%', padding: '10px 12px', border: '1px solid #C8D8E8', background: '#fff', color: '#0A1520', outline: 'none', marginBottom: '14px' }}
                   />
                   <button
                     onClick={handleStart}
@@ -468,11 +468,11 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
 
       {/* ── TIMER / FORMULA BAR ROW ── */}
       {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete') && (
-        <div style={{ flexShrink: 0, background: '#060E00', borderTop: '2px solid #1B4332', fontFamily: "'Share Tech Mono', monospace", marginTop: '6px' }}>
+        <div style={{ flexShrink: 0, background: '#060E00', borderTop: '2px solid #1B4332', fontFamily: "'Orbitron', sans-serif", marginTop: '6px' }}>
           {/* Formula row */}
           <div style={{ display: 'flex', alignItems: 'center', height: '28px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '100%', borderRight: '1px solid #1B4332', background: '#0D2B0D', flexShrink: 0 }}>
-              <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '13px', color: '#5CDB5C', fontWeight: 700 }}>fx</span>
+              <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '13px', color: '#5CDB5C', fontWeight: 700 }}>fx</span>
             </div>
             <div style={{ flex: 1, padding: '0 10px', overflow: 'hidden', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <div style={{ flex: 1, background: '#0D2B0D', border: '1px solid #1B4332', height: '12px', borderRadius: '2px', overflow: 'hidden' }}>
@@ -494,15 +494,15 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
           {/* Left: RTT lives — Excel cells */}
           <div style={{ display: 'flex', gap: '1px', background: '#1B4332', border: '1px solid #1B4332' }}>
             <div style={{ background: '#0D2B0D', padding: '6px 14px', textAlign: 'center' }}>
-              <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '7px', color: '#4CAF50', letterSpacing: '2px' }}>ÉTAGE</div>
+              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#4CAF50', letterSpacing: '2px' }}>ÉTAGE</div>
               <div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '16px', color: '#FFE033' }}>{String(currentLevel + 1).padStart(2, '0')}</div>
             </div>
             <div style={{ background: '#0D2B0D', padding: '6px 14px', textAlign: 'center' }}>
-              <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '7px', color: '#4CAF50', letterSpacing: '2px' }}>SALAIRE</div>
+              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#4CAF50', letterSpacing: '2px' }}>SALAIRE</div>
               <div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '16px', color: '#5CDB5C' }}>{hudInfo.score.toLocaleString('fr-FR')}€</div>
             </div>
             <div style={{ background: '#0D2B0D', padding: '6px 14px', textAlign: 'center' }}>
-              <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '7px', color: '#4CAF50', letterSpacing: '2px' }}>RTT</div>
+              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#4CAF50', letterSpacing: '2px' }}>RTT</div>
               <div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '16px', color: '#FF4444' }}>{'❤'.repeat(hudInfo.lives)}</div>
             </div>
           </div>
@@ -513,7 +513,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
               {hudInfo.levelName}
             </div>
             {showPhrase && (
-              <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '9px', color: '#4CAF50', marginTop: '1px', animation: 'fadeIn 0.3s ease' }}>
+              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#4CAF50', marginTop: '1px', animation: 'fadeIn 0.3s ease' }}>
                 {hudInfo.phrase}
               </div>
             )}

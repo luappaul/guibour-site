@@ -38,7 +38,7 @@ export default function ResultatsPage() {
             {/* Page title */}
             <div style={{ marginBottom: '32px' }}>
               <span style={{
-                fontFamily: "'Share Tech Mono', monospace",
+                fontFamily: "'Orbitron', sans-serif",
                 fontSize: '8px',
                 color: '#8FA5B8',
                 letterSpacing: '6px',
@@ -74,7 +74,7 @@ export default function ResultatsPage() {
                 {['RANG', 'PSEUDO', 'TITRE', 'NIVEAU', 'SALAIRE'].map(col => (
                   <div key={col} style={{
                     padding: '10px 12px',
-                    fontFamily: "'Share Tech Mono', monospace",
+                    fontFamily: "'Orbitron', sans-serif",
                     fontSize: '8px',
                     fontWeight: 'bold',
                     color: '#5B9BD5',
@@ -91,7 +91,7 @@ export default function ResultatsPage() {
                 <div style={{
                   padding: '48px',
                   textAlign: 'center',
-                  fontFamily: "'Share Tech Mono', monospace",
+                  fontFamily: "'Orbitron', sans-serif",
                   fontSize: '11px',
                   color: '#8FA5B8',
                   letterSpacing: '2px',
@@ -122,7 +122,7 @@ export default function ResultatsPage() {
                   </div>
                   <div style={{
                     padding: '12px 12px',
-                    fontFamily: "'Share Tech Mono', monospace",
+                    fontFamily: "'Orbitron', sans-serif",
                     fontSize: '12px',
                     color: '#1A2B40',
                     fontWeight: i === 0 ? 700 : 400,
@@ -134,7 +134,7 @@ export default function ResultatsPage() {
                   </div>
                   <div style={{
                     padding: '12px 12px',
-                    fontFamily: "'Share Tech Mono', monospace",
+                    fontFamily: "'Orbitron', sans-serif",
                     fontSize: '8px',
                     color: i < 3 ? '#007B8A' : '#8FA5B8',
                     letterSpacing: '1px',
@@ -157,7 +157,7 @@ export default function ResultatsPage() {
                   </div>
                   <div style={{
                     padding: '12px 12px',
-                    fontFamily: "'Share Tech Mono', monospace",
+                    fontFamily: "'Orbitron', sans-serif",
                     fontSize: '12px',
                     fontWeight: 700,
                     color: '#C8960A',
@@ -173,7 +173,7 @@ export default function ResultatsPage() {
             {/* Footer note */}
             <div style={{
               marginTop: '16px',
-              fontFamily: "'Share Tech Mono', monospace",
+              fontFamily: "'Orbitron', sans-serif",
               fontSize: '7px',
               color: '#8FA5B8',
               letterSpacing: '2px',

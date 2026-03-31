@@ -65,7 +65,7 @@ export default function TowerProgress({ currentLevel, totalLevels, assets }: Pro
                   padding: '1px 0',
                   textAlign: 'center',
                   fontSize: '8px',
-                  fontFamily: "'Share Tech Mono', monospace",
+                  fontFamily: "'Orbitron', sans-serif",
                   fontWeight: isCurrent ? 800 : 400,
                   letterSpacing: '0.5px',
                   borderRadius: '2px',

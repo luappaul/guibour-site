@@ -73,7 +73,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       <div style={{ position: 'relative', zIndex: 10, textAlign: 'center', animation: 'slideUp 1s ease' }}>
         {/* Employee ID */}
         <div style={{
-          fontFamily: "'Share Tech Mono', monospace",
+          fontFamily: "'Orbitron', sans-serif",
           fontSize: '11px',
           color: '#5B9BD5',
           letterSpacing: '4px',
@@ -120,7 +120,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
             {/* W.O.W subtitle */}
             <div style={{
-              fontFamily: "'Share Tech Mono', monospace",
+              fontFamily: "'Orbitron', sans-serif",
               fontSize: '12px',
               color: '#5B9BD5',
               letterSpacing: '7px',
@@ -143,7 +143,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             borderRadius: '4px',
           }}>
             <span style={{
-              fontFamily: "'Share Tech Mono', monospace",
+              fontFamily: "'Orbitron', sans-serif",
               fontSize: '13px',
               color: '#00D4CC',
               fontWeight: 700,
@@ -167,7 +167,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             </div>
           </div>
           <div style={{
-            fontFamily: "'Share Tech Mono', monospace",
+            fontFamily: "'Orbitron', sans-serif",
             fontSize: '10px',
             color: '#2B5090',
             textAlign: 'center',
@@ -207,13 +207,13 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         }}>
           <Sphere size={28} animated={false} />
           <div style={{
-            fontFamily: "'Share Tech Mono', monospace",
+            fontFamily: "'Orbitron', sans-serif",
             fontSize: '6px',
             color: '#0D2B5E',
             letterSpacing: '1px',
           }}>GUIBOUR</div>
           <div style={{
-            fontFamily: "'Share Tech Mono', monospace",
+            fontFamily: "'Orbitron', sans-serif",
             fontSize: '5px',
             color: '#607888',
           }}>GS-4891</div>
@@ -229,7 +229,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       }}>
         {BOOT_LINES.slice(0, visibleLines).map((line, i) => (
           <div key={i} style={{
-            fontFamily: "'Share Tech Mono', monospace",
+            fontFamily: "'Orbitron', sans-serif",
             fontSize: '9px',
             color: line.color,
             lineHeight: '1.9',
