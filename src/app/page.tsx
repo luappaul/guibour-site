@@ -13,6 +13,17 @@ const GameCanvas = dynamic(() => import('@/components/game/GameCanvas'), {
   loading: () => <div className="flex-1" />,
 });
 
+import Link from 'next/link';
+
+function WowSpan() {
+  return (
+    <span style={{
+      color: '#7AEC7A',
+      textShadow: '0 0 10px rgba(122,236,122,.55)',
+    }}>W.O.W</span>
+  );
+}
+
 function HeroContent({ onPlay }: { onPlay: () => void }) {
   return (
     <div style={{
@@ -38,7 +49,7 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
         EMPLOYEE ID: GS-4891 // GUIBOUR CORP. // 2026
       </div>
 
-      {/* Logo horizontal — sphère + texte */}
+      {/* Logo horizontal — sphère + texte centré */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -50,28 +61,28 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
       }}>
         <Sphere size={80} />
 
-        <div style={{ textAlign: 'left' }}>
-          {/* GUIBOUR — Lilita One bleu ciel */}
+        <div style={{ textAlign: 'center' }}>
+          {/* GUIBOUR — même couleur que SYSTEM */}
           <div style={{
             fontFamily: "'Lilita One', cursive",
             fontSize: 'clamp(48px, 9vw, 82px)',
-            color: '#A8D8FF',
+            color: '#00D4CC',
             letterSpacing: '5px',
             lineHeight: 1,
-            textShadow: '3px 3px 0 #0D2B5E, 0 0 30px rgba(90,160,255,.4)',
+            textShadow: '3px 3px 0 #003A40, 0 0 30px rgba(0,212,204,.4)',
             animation: 'glowBlue 3s ease-in-out infinite',
           }}>
             GUIBOUR
           </div>
 
-          {/* SYSTEM — Lilita One cyan */}
+          {/* SYSTEM */}
           <div style={{
             fontFamily: "'Lilita One', cursive",
             fontSize: 'clamp(26px, 4.5vw, 44px)',
             color: '#00D4CC',
             letterSpacing: '8px',
             textShadow: '2px 2px 0 rgba(0,80,80,.55)',
-            marginTop: '-4px',
+            marginTop: '-8px',
           }}>
             SYSTEM
           </div>
@@ -87,6 +98,7 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
         marginTop: '14px',
         position: 'relative',
         zIndex: 2,
+        textAlign: 'center',
       }}>
         NOUVEAU SINGLE // JOUE ET GRIMPE DANS LA HIÉRARCHIE
       </div>
@@ -128,25 +140,27 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
         ))}
       </div>
 
-      {/* CTA JOUER */}
+      {/* CTA JOUER À W.O.W */}
       <button
         onClick={onPlay}
         style={{
           marginTop: '36px',
-          fontFamily: "'Bangers', cursive",
-          fontSize: '24px',
-          letterSpacing: '10px',
+          fontFamily: "'Lilita One', cursive",
+          fontSize: '22px',
+          letterSpacing: '6px',
           color: '#fff',
           background: 'linear-gradient(135deg, #0047AB, #007B8A)',
           border: '2px solid #5B9BD5',
-          padding: '14px 56px',
+          padding: '14px 48px',
           cursor: 'pointer',
           boxShadow: '0 0 18px rgba(0,71,171,.3)',
           position: 'relative',
           overflow: 'hidden',
           zIndex: 2,
           transition: 'all 0.2s ease',
-          textShadow: '0 0 10px rgba(168,216,255,.35)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
         }}
         onMouseEnter={e => {
           e.currentTarget.style.background = 'linear-gradient(135deg, #1B5EBB, #008B9A)';
@@ -157,7 +171,9 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
           e.currentTarget.style.boxShadow = '0 0 18px rgba(0,71,171,.3)';
         }}
       >
-        <span style={{ position: 'relative', zIndex: 1 }}>JOUER</span>
+        <span style={{ position: 'relative', zIndex: 1 }}>
+          JOUER À <WowSpan />
+        </span>
         {/* shimmer */}
         <span style={{
           position: 'absolute', top: 0, left: '-100%', width: '50%', height: '100%',
@@ -165,6 +181,28 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
           animation: 'shimmer 3s ease-in-out infinite',
         }} />
       </button>
+
+      {/* Invitation discrète — Boutique */}
+      <Link
+        href="/shopping"
+        style={{
+          marginTop: '20px',
+          fontFamily: "'Share Tech Mono', monospace",
+          fontSize: '9px',
+          letterSpacing: '3px',
+          color: '#3C5A7A',
+          textDecoration: 'none',
+          borderBottom: '1px solid #1E3F6E',
+          paddingBottom: '2px',
+          position: 'relative',
+          zIndex: 2,
+          transition: 'color 0.2s ease',
+        }}
+        onMouseEnter={e => { e.currentTarget.style.color = '#5B9BD5'; }}
+        onMouseLeave={e => { e.currentTarget.style.color = '#3C5A7A'; }}
+      >
+        ↗ VOIR LA BOUTIQUE GUIBOUR CORP.
+      </Link>
     </div>
   );
 }

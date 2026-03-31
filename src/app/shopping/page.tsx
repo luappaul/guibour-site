@@ -90,14 +90,14 @@ export default function ShoppingPage() {
                 fontSize: '8px',
                 color: '#8FA5B8',
                 letterSpacing: '6px',
-              }}>02 / BOUTIQUE</span>
+              }}>02 / BOUTIQUE MERCH</span>
               <h1 style={{
                 fontFamily: "'Lilita One', cursive",
                 fontSize: '36px',
                 color: '#0D2B5E',
                 letterSpacing: '4px',
                 marginTop: '6px',
-              }}>MERCH</h1>
+              }}>BOUTIQUE</h1>
               <div style={{
                 width: '60px',
                 height: '2px',

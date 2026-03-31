@@ -92,15 +92,15 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         }}>
           <Sphere size={90} />
 
-          <div style={{ textAlign: 'left' }}>
-            {/* GUIBOUR */}
+          <div style={{ textAlign: 'center' }}>
+            {/* GUIBOUR — même couleur que SYSTEM */}
             <div style={{
               fontFamily: "'Lilita One', cursive",
               fontSize: 'clamp(48px, 9vw, 76px)',
-              color: '#A8D8FF',
+              color: '#00D4CC',
               letterSpacing: '5px',
               lineHeight: 1,
-              textShadow: '3px 3px 0 #0D2B5E, 0 0 40px rgba(90,160,255,.4)',
+              textShadow: '3px 3px 0 #003A40, 0 0 40px rgba(0,212,204,.4)',
               animation: 'glowBlue 3s ease-in-out infinite',
             }}>
               GUIBOUR
@@ -113,7 +113,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
               color: '#00D4CC',
               letterSpacing: '10px',
               textShadow: '2px 2px 0 rgba(0,80,80,.55), 0 0 20px rgba(0,212,204,.25)',
-              marginTop: '-4px',
+              marginTop: '-8px',
             }}>
               SYSTEM
             </div>

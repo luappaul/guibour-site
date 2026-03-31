@@ -359,7 +359,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
                  style={{ background: '#080F08', animation: 'elevatorSlide 1.5s ease-in-out forwards' }}>
               <div className="flex h-full items-center justify-center">
                 <div className="text-center">
-                  <p style={{ fontFamily: "'Bangers', cursive", fontSize: '28px', color: '#5CDB5C', letterSpacing: '4px', animation: 'pulse 1s ease-in-out infinite', textShadow: '0 0 16px rgba(92,219,92,.5)' }}>▲ MONTÉE</p>
+                  <p style={{ fontFamily: "'Lilita One', cursive", fontSize: '28px', color: '#5CDB5C', letterSpacing: '4px', animation: 'pulse 1s ease-in-out infinite', textShadow: '0 0 16px rgba(92,219,92,.5)' }}>▲ MONTÉE</p>
                   <p style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '12px', color: '#4CAF50', letterSpacing: '2px', marginTop: '8px' }}>ASCENSEUR EN COURS...</p>
                 </div>
               </div>
@@ -384,11 +384,11 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
               <button
                 onClick={handlePlay}
                 className="cursor-pointer active:scale-95"
-                style={{ fontFamily: "'Bangers', cursive", fontSize: '22px', letterSpacing: '8px', color: '#5CDB5C', background: '#1B4332', border: '2px solid #5CDB5C', padding: '14px 56px', boxShadow: '0 0 16px rgba(92,219,92,.25)', transition: 'all 0.2s ease', textShadow: '0 0 10px rgba(92,219,92,.4)' }}
-                onMouseEnter={e => { e.currentTarget.style.background = '#2C5F2E'; e.currentTarget.style.boxShadow = '0 0 28px rgba(92,219,92,.4)'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = '#1B4332'; e.currentTarget.style.boxShadow = '0 0 16px rgba(92,219,92,.25)'; }}
+                style={{ fontFamily: "'Lilita One', cursive", fontSize: '20px', letterSpacing: '4px', color: '#fff', background: 'linear-gradient(135deg, #0047AB, #007B8A)', border: '2px solid #5B9BD5', padding: '14px 48px', boxShadow: '0 0 16px rgba(0,71,171,.3)', transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '6px' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(135deg, #1B5EBB, #008B9A)'; e.currentTarget.style.boxShadow = '0 0 28px rgba(0,71,171,.5)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg, #0047AB, #007B8A)'; e.currentTarget.style.boxShadow = '0 0 16px rgba(0,71,171,.3)'; }}
               >
-                JOUER
+                JOUER À <span style={{ color: '#7AEC7A', textShadow: '0 0 8px rgba(122,236,122,.5)', marginLeft: '6px' }}>W.O.W</span>
               </button>
               <div className="text-center" style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '11px', color: '#2C5F2E', letterSpacing: '1px' }}>
                 <p>FLÈCHES / ZQSD POUR BOUGER — ESPACE POUR TIRER</p>

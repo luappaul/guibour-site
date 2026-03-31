@@ -5,9 +5,9 @@ import { usePathname } from 'next/navigation';
 import Sphere from './Sphere';
 
 const tabs = [
-  { href: '/', label: 'JOUER' },
+  { href: '/', label: 'JOUER À W.O.W' },
   { href: '/resultats', label: 'CLASSEMENT' },
-  { href: '/shopping', label: 'MERCH' },
+  { href: '/shopping', label: 'BOUTIQUE' },
   { href: '/contact', label: 'CONTACT' },
 ];
 
@@ -34,24 +34,29 @@ export default function ExcelNav() {
       onMouseEnter={e => { e.currentTarget.style.width = '200px'; }}
       onMouseLeave={e => { e.currentTarget.style.width = '48px'; }}
     >
-      {/* Logo area */}
-      <div style={{
-        padding: '12px 0',
-        borderBottom: '1px solid #1B3A6B',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '10px',
-        paddingLeft: '10px',
-        flexShrink: 0,
-        overflow: 'hidden',
-        whiteSpace: 'nowrap',
-      }}>
+      {/* Logo area — cliquable vers accueil */}
+      <Link
+        href="/"
+        style={{
+          padding: '12px 0',
+          borderBottom: '1px solid #1B3A6B',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+          paddingLeft: '10px',
+          flexShrink: 0,
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+          textDecoration: 'none',
+          cursor: 'pointer',
+        }}
+      >
         <Sphere size={28} />
         <div style={{ overflow: 'hidden' }}>
           <div style={{
             fontFamily: "'Lilita One', cursive",
             fontSize: '13px',
-            color: '#A8D8FF',
+            color: '#00D4CC',
             letterSpacing: '2px',
             lineHeight: 1.1,
           }}>GUIBOUR</div>
@@ -60,14 +65,16 @@ export default function ExcelNav() {
             fontSize: '9px',
             color: '#00D4CC',
             letterSpacing: '3px',
+            marginTop: '-1px',
           }}>SYSTEM</div>
         </div>
-      </div>
+      </Link>
 
       {/* Nav links */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingTop: '8px' }}>
         {tabs.map(tab => {
           const active = pathname === tab.href;
+          const isWow = tab.label === 'JOUER À W.O.W';
           return (
             <Link
               key={tab.href}
@@ -92,18 +99,25 @@ export default function ExcelNav() {
                 if (!active) {
                   e.currentTarget.style.color = '#A8D8FF';
                   e.currentTarget.style.background = 'rgba(0,71,171,0.12)';
-                  e.currentTarget.style.textShadow = '0 0 8px rgba(168,216,255,.3)';
                 }
               }}
               onMouseLeave={e => {
                 if (!active) {
                   e.currentTarget.style.color = '#3C5A7A';
                   e.currentTarget.style.background = 'transparent';
-                  e.currentTarget.style.textShadow = 'none';
                 }
               }}
             >
-              {tab.label}
+              {isWow ? (
+                <>
+                  JOUER À{' '}
+                  <span style={{
+                    color: '#7AEC7A',
+                    textShadow: '0 0 8px rgba(122,236,122,.5)',
+                    marginLeft: '4px',
+                  }}>W.O.W</span>
+                </>
+              ) : tab.label}
             </Link>
           );
         })}
@@ -124,8 +138,8 @@ export default function ExcelNav() {
             alignItems: 'center',
             justifyContent: 'center',
             fontFamily: "'Lilita One', cursive",
-            fontSize: '15px',
-            letterSpacing: '4px',
+            fontSize: '13px',
+            letterSpacing: '2px',
             color: '#fff',
             textDecoration: 'none',
             background: 'linear-gradient(135deg, #0047AB, #007B8A)',
@@ -133,6 +147,7 @@ export default function ExcelNav() {
             padding: '10px 12px',
             boxShadow: '0 0 14px rgba(0,71,171,.25)',
             transition: 'all 0.2s ease',
+            gap: '4px',
           }}
           onMouseEnter={e => {
             e.currentTarget.style.background = 'linear-gradient(135deg, #1B5EBB, #008B9A)';
@@ -143,7 +158,7 @@ export default function ExcelNav() {
             e.currentTarget.style.boxShadow = '0 0 14px rgba(0,71,171,.25)';
           }}
         >
-          JOUER
+          JOUER À <span style={{ color: '#7AEC7A', marginLeft: '4px', textShadow: '0 0 6px rgba(122,236,122,.5)' }}>W.O.W</span>
         </Link>
       </div>
     </nav>

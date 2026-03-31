@@ -79,20 +79,20 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
       position: 'fixed',
       inset: 0,
       zIndex: 100,
-      background: '#080F08',
+      background: '#0A1628',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '20px 20px 20px 68px', // leave room for sidebar
+      padding: '20px 20px 20px 68px',
       overflow: 'auto',
     }}>
-      {/* Green grid background */}
+      {/* Blue grid background */}
       <div style={{
         position: 'absolute',
         inset: 0,
         backgroundImage:
-          'linear-gradient(rgba(44,95,46,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(44,95,46,.08) 1px, transparent 1px)',
+          'linear-gradient(rgba(0,72,171,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(0,72,171,.09) 1px, transparent 1px)',
         backgroundSize: '56px 34px',
         pointerEvents: 'none',
       }} />
@@ -102,16 +102,16 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
       <div style={{
         position: 'relative',
         zIndex: 2,
-        background: '#060E00',
-        border: '1px solid #1B4332',
+        background: '#0D2B5E',
+        border: '1px solid #1B3A6B',
         padding: '5px 16px',
         display: 'inline-flex',
         alignItems: 'center',
         gap: '10px',
         marginBottom: '24px',
       }}>
-        <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '12px', color: '#5CDB5C', fontWeight: 700 }}>fx</span>
-        <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '10px', color: '#4CAF50', letterSpacing: '1px' }}>
+        <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '12px', color: '#00D4CC', fontWeight: 700 }}>fx</span>
+        <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '10px', color: '#5B9BD5', letterSpacing: '1px' }}>
           =SELECT(&quot;PERSONNAGE&quot;) → CHOOSE_YOUR_FIGHTER
         </span>
       </div>
@@ -119,18 +119,18 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
       {/* Title */}
       <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', marginBottom: '28px' }}>
         <div style={{
-          fontFamily: "'Bangers', cursive",
+          fontFamily: "'Lilita One', cursive",
           fontSize: 'clamp(22px, 4vw, 36px)',
-          color: '#5CDB5C',
+          color: '#A8D8FF',
           letterSpacing: '5px',
-          textShadow: '2px 2px 0 #1B4332',
+          textShadow: '2px 2px 0 #0D2B5E',
         }}>
           SÉLECTION DU PERSONNEL
         </div>
         <div style={{
           fontFamily: "'Share Tech Mono', monospace",
           fontSize: '10px',
-          color: '#4CAF50',
+          color: '#5B9BD5',
           letterSpacing: '3px',
           marginTop: '4px',
         }}>
@@ -157,35 +157,35 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
               onClick={() => !char.locked && setSelectedId(char.id)}
               style={{
                 width: '160px',
-                border: isSelected ? '2px solid #5CDB5C' : '2px solid #1B4332',
+                border: isSelected ? '2px solid #0047AB' : '2px solid #1B3A6B',
                 borderRadius: '8px',
                 overflow: 'hidden',
-                boxShadow: isSelected ? '0 0 20px rgba(92,219,92,.25)' : 'none',
+                boxShadow: isSelected ? '0 0 20px rgba(0,71,171,.3)' : 'none',
                 cursor: char.locked ? 'not-allowed' : 'pointer',
                 transition: 'all 0.2s ease',
                 opacity: char.locked ? 0.45 : 1,
               }}
               onMouseEnter={e => {
                 if (!char.locked && !isSelected) {
-                  e.currentTarget.style.borderColor = '#2C5F2E';
-                  e.currentTarget.style.boxShadow = '0 0 12px rgba(92,219,92,.1)';
+                  e.currentTarget.style.borderColor = '#2B5090';
+                  e.currentTarget.style.boxShadow = '0 0 12px rgba(0,71,171,.15)';
                 }
               }}
               onMouseLeave={e => {
                 if (!char.locked && !isSelected) {
-                  e.currentTarget.style.borderColor = '#1B4332';
+                  e.currentTarget.style.borderColor = '#1B3A6B';
                   e.currentTarget.style.boxShadow = 'none';
                 }
               }}
             >
               {/* Status bar */}
               <div style={{
-                background: char.locked ? '#7B241C' : isSelected ? '#2C5F2E' : '#1B4332',
+                background: char.locked ? '#4A1010' : isSelected ? '#0047AB' : '#1B3A6B',
                 padding: '4px',
                 fontFamily: "'Share Tech Mono', monospace",
                 fontSize: '9px',
                 textAlign: 'center',
-                color: char.locked ? '#FF4444' : isSelected ? '#5CDB5C' : '#4CAF50',
+                color: char.locked ? '#FF6B6B' : isSelected ? '#A8D8FF' : '#5B9BD5',
                 letterSpacing: '2px',
                 transition: 'background 0.2s ease',
               }}>
@@ -195,7 +195,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
               {/* Avatar */}
               <div style={{
                 height: '110px',
-                background: isSelected ? '#1B4332' : '#0D2B0D',
+                background: isSelected ? '#12274A' : '#0D1E38',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -206,11 +206,11 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
               </div>
 
               {/* Info */}
-              <div style={{ background: '#0D2B0D', padding: '12px' }}>
+              <div style={{ background: '#0D1E38', padding: '12px' }}>
                 <div style={{
-                  fontFamily: "'Bangers', cursive",
+                  fontFamily: "'Lilita One', cursive",
                   fontSize: '16px',
-                  color: '#5CDB5C',
+                  color: '#A8D8FF',
                   letterSpacing: '2px',
                 }}>
                   {char.name}
@@ -218,7 +218,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
                 <div style={{
                   fontFamily: "'Share Tech Mono', monospace",
                   fontSize: '8px',
-                  color: char.locked ? '#FF4444' : '#FFE033',
+                  color: char.locked ? '#FF6B6B' : '#00D4CC',
                   letterSpacing: '1px',
                   marginBottom: '8px',
                 }}>
@@ -229,12 +229,12 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
                 <div style={{
                   display: 'flex',
                   gap: '1px',
-                  background: '#1B4332',
-                  border: '1px solid #1B4332',
+                  background: '#1B3A6B',
+                  border: '1px solid #1B3A6B',
                 }}>
                   {char.stats.map(stat => (
                     <div key={stat.label} style={{
-                      background: '#0A1400',
+                      background: '#0A1628',
                       padding: '4px 0',
                       textAlign: 'center',
                       flex: 1,
@@ -242,12 +242,12 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
                       <div style={{
                         fontFamily: "'Share Tech Mono', monospace",
                         fontSize: '7px',
-                        color: '#4CAF50',
+                        color: '#3C5A7A',
                       }}>{stat.label}</div>
                       <div style={{
                         fontFamily: "'Luckiest Guy', cursive",
                         fontSize: '13px',
-                        color: isSelected ? '#FFE033' : '#5CDB5C',
+                        color: isSelected ? '#00D4CC' : '#5B9BD5',
                         transition: 'color 0.2s ease',
                       }}>{stat.value}</div>
                     </div>
@@ -274,20 +274,20 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
             fontFamily: "'Share Tech Mono', monospace",
             fontSize: '11px',
             letterSpacing: '3px',
-            color: '#2C5F2E',
+            color: '#3C5A7A',
             background: 'transparent',
-            border: '1px solid #1B4332',
+            border: '1px solid #1B3A6B',
             padding: '10px 24px',
             cursor: 'pointer',
             transition: 'all 0.2s ease',
           }}
           onMouseEnter={e => {
-            e.currentTarget.style.color = '#5CDB5C';
-            e.currentTarget.style.borderColor = '#2C5F2E';
+            e.currentTarget.style.color = '#A8D8FF';
+            e.currentTarget.style.borderColor = '#2B5090';
           }}
           onMouseLeave={e => {
-            e.currentTarget.style.color = '#2C5F2E';
-            e.currentTarget.style.borderColor = '#1B4332';
+            e.currentTarget.style.color = '#3C5A7A';
+            e.currentTarget.style.borderColor = '#1B3A6B';
           }}
         >
           ← RETOUR
@@ -297,27 +297,27 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
           onClick={handleConfirm}
           disabled={!selectedId}
           style={{
-            fontFamily: "'Bangers', cursive",
+            fontFamily: "'Lilita One', cursive",
             fontSize: '18px',
-            letterSpacing: '5px',
-            color: selectedId ? '#5CDB5C' : '#1B4332',
-            background: selectedId ? '#1B4332' : 'rgba(27,67,50,0.2)',
-            border: `2px solid ${selectedId ? '#5CDB5C' : '#1B4332'}`,
+            letterSpacing: '4px',
+            color: selectedId ? '#fff' : '#1B3A6B',
+            background: selectedId ? 'linear-gradient(135deg, #0047AB, #007B8A)' : 'rgba(27,58,107,0.2)',
+            border: `2px solid ${selectedId ? '#5B9BD5' : '#1B3A6B'}`,
             padding: '12px 44px',
             cursor: selectedId ? 'pointer' : 'not-allowed',
-            boxShadow: selectedId ? '0 0 16px rgba(92,219,92,.2)' : 'none',
+            boxShadow: selectedId ? '0 0 16px rgba(0,71,171,.25)' : 'none',
             transition: 'all 0.2s ease',
           }}
           onMouseEnter={e => {
             if (selectedId) {
-              e.currentTarget.style.background = '#2C5F2E';
-              e.currentTarget.style.boxShadow = '0 0 24px rgba(92,219,92,.35)';
+              e.currentTarget.style.background = 'linear-gradient(135deg, #1B5EBB, #008B9A)';
+              e.currentTarget.style.boxShadow = '0 0 24px rgba(0,71,171,.4)';
             }
           }}
           onMouseLeave={e => {
             if (selectedId) {
-              e.currentTarget.style.background = '#1B4332';
-              e.currentTarget.style.boxShadow = '0 0 16px rgba(92,219,92,.2)';
+              e.currentTarget.style.background = 'linear-gradient(135deg, #0047AB, #007B8A)';
+              e.currentTarget.style.boxShadow = '0 0 16px rgba(0,71,171,.25)';
             }
           }}
         >
