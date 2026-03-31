@@ -206,7 +206,7 @@ export default function ShoppingPage() {
               fontFamily: "'Share Tech Mono', monospace",
               fontSize: '7px', color: '#8FA5B8', letterSpacing: '2px',
             }}>
-              =CATALOGUE() // DISPONIBLE SUR COMMANDE — LIVRAISON GUIBOUR CORP. EXPRESS
+              =CATALOGUE() // DISPONIBLE SUR COMMANDE — LIVRAISON GUIBOUR EXPRESS
             </div>
           </div>
         </div>

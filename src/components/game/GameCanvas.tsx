@@ -276,7 +276,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
           color: '#FFE033',
           letterSpacing: '6px',
         }}>
-          WORLD OF WORK
+          WORK OR WINDOW
         </div>
         <div style={{
           fontFamily: "'Share Tech Mono', monospace",
@@ -285,7 +285,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
           letterSpacing: '2px',
           marginTop: '-4px',
         }}>
-          25 ÉTAGES — SURVIVEZ À GUIBOUR CORP.
+          25 ÉTAGES — SURVIVEZ AUX 25 ÉTAGES
         </div>
         {/* fx progress bar */}
         <div style={{ width: 'clamp(280px, 40vw, 420px)', marginTop: '8px' }}>
@@ -375,10 +375,10 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
                   W.O.W
                 </div>
                 <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '14px', color: '#FFE033', letterSpacing: '6px', marginTop: '6px' }}>
-                  WORLD OF WORK
+                  WORK OR WINDOW
                 </div>
                 <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '11px', color: '#4CAF50', letterSpacing: '2px', marginTop: '8px' }}>
-                  25 ÉTAGES — SURVIVEZ À GUIBOUR CORP.
+                  25 ÉTAGES — SURVIVEZ AUX 25 ÉTAGES
                 </div>
               </div>
               <button
@@ -411,7 +411,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
                       <span className="block h-2.5 w-2.5 rounded-full" style={{ background: '#27C93F' }} />
                     </div>
                     <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '13px', fontWeight: 700, color: '#fff', letterSpacing: '1px' }}>
-                      GUIBOUR CORP. — EMBAUCHE
+                      W.O.W — EMBAUCHE
                     </span>
                   </div>
                   <div className="flex gap-2 text-white/60" style={{ fontSize: '12px' }}>

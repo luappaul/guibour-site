@@ -104,7 +104,7 @@ export default function GameOverScreen({ state, onRestart }: Props) {
             letterSpacing: '2px',
             marginTop: '8px',
           }}>
-            Vous avez survecu aux 25 etages de Guibour Corp.
+            Vous avez survecu aux 25 etages de W.O.W.
           </p>
         )}
       </div>
@@ -132,7 +132,7 @@ export default function GameOverScreen({ state, onRestart }: Props) {
                 color: '#fff',
                 letterSpacing: '1px',
               }}>
-                {isVictory ? 'GUIBOUR CORP. — LIBERATION' : 'GUIBOUR CORP. — FIN DE CONTRAT'}
+                {isVictory ? 'W.O.W — LIBERATION' : 'W.O.W — FIN DE CONTRAT'}
               </span>
             </div>
             <div className="flex gap-2 text-white/60" style={{ fontSize: '10px' }}>

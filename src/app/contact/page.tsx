@@ -41,7 +41,7 @@ export default function ContactPage() {
                   fontFamily: "'Share Tech Mono', monospace",
                   fontSize: '8px', color: '#3C5A7A',
                   letterSpacing: '4px', marginTop: '4px',
-                }}>03 / GUIBOUR CORP. — FORMULAIRE INTERNE</div>
+                }}>03 / W.O.W — FORMULAIRE INTERNE</div>
               </div>
             </div>
 
@@ -228,7 +228,7 @@ export default function ContactPage() {
                     fontFamily: "'Share Tech Mono', monospace",
                     fontSize: '7px', color: '#C8D8E8', letterSpacing: '2px',
                   }}>
-                    © 2026 GUIBOUR CORP. — REF: GS-CONTACT-001
+                    © 2026 GUIBOUR — REF: GS-CONTACT-001
                   </div>
                   <button
                     type="submit"

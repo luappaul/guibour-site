@@ -11,7 +11,7 @@ const BOOT_LINES = [
   { text: 'C:\\GUIBOUR\\SYSTEM> init.exe', color: '#2B5090', delay: 400 },
   { text: '✓ Chargement des dossiers administratifs...', color: '#5B9BD5', delay: 800 },
   { text: '✓ Module RTT initialisé — 3 unités disponibles', color: '#5B9BD5', delay: 1400 },
-  { text: '✓ Connexion Guibour Corp. établie', color: '#5B9BD5', delay: 2000 },
+  { text: '✓ Connexion W.O.W établie', color: '#5B9BD5', delay: 2000 },
   { text: '▶ Préparation de l\'espace de travail...', color: '#3A78C9', delay: 2600, cursor: true },
 ];
 
@@ -79,7 +79,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           letterSpacing: '4px',
           marginBottom: '28px',
         }}>
-          EMPLOYEE ID: GS-4891 // INITIALIZING...
+          W.O.W // WORK OR WINDOW // INITIALIZING...
         </div>
 
         {/* Logo horizontal : sphère + texte */}
@@ -93,27 +93,27 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           <Sphere size={90} />
 
           <div style={{ textAlign: 'center' }}>
-            {/* GUIBOUR — même couleur que SYSTEM */}
+            {/* GUIBOUR — vert lime comme W.O.W */}
             <div style={{
               fontFamily: "'Lilita One', cursive",
               fontSize: 'clamp(48px, 9vw, 76px)',
-              color: '#00D4CC',
+              color: '#5CDB5C',
               letterSpacing: '5px',
               lineHeight: 1,
-              textShadow: '3px 3px 0 #003A40, 0 0 40px rgba(0,212,204,.4)',
+              textShadow: '3px 3px 0 #1B4332, 0 0 40px rgba(92,219,92,.4)',
               animation: 'glowBlue 3s ease-in-out infinite',
             }}>
               GUIBOUR
             </div>
 
-            {/* SYSTEM */}
+            {/* SYSTEM — cyan, plus petit */}
             <div style={{
               fontFamily: "'Lilita One', cursive",
-              fontSize: 'clamp(26px, 4.5vw, 40px)',
+              fontSize: 'clamp(16px, 2.8vw, 26px)',
               color: '#00D4CC',
               letterSpacing: '10px',
-              textShadow: '2px 2px 0 rgba(0,80,80,.55), 0 0 20px rgba(0,212,204,.25)',
-              marginTop: '-8px',
+              textShadow: '1px 1px 0 rgba(0,80,80,.55)',
+              marginTop: '-12px',
             }}>
               SYSTEM
             </div>
@@ -126,7 +126,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
               letterSpacing: '7px',
               marginTop: '8px',
             }}>
-              W . O . W — WORLD OF WORK
+              W . O . W — WORK OR WINDOW
             </div>
           </div>
         </div>

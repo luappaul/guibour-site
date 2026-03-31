@@ -46,7 +46,7 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
         position: 'relative',
         zIndex: 2,
       }}>
-        EMPLOYEE ID: GS-4891 // GUIBOUR CORP. // 2026
+        EMPLOYEE ID: GS-4891 // W.O.W // 2026
       </div>
 
       {/* Logo horizontal — sphère + texte centré */}
@@ -62,27 +62,27 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
         <Sphere size={80} />
 
         <div style={{ textAlign: 'center' }}>
-          {/* GUIBOUR — même couleur que SYSTEM */}
+          {/* GUIBOUR — vert lime comme W.O.W */}
           <div style={{
             fontFamily: "'Lilita One', cursive",
             fontSize: 'clamp(48px, 9vw, 82px)',
-            color: '#00D4CC',
+            color: '#5CDB5C',
             letterSpacing: '5px',
             lineHeight: 1,
-            textShadow: '3px 3px 0 #003A40, 0 0 30px rgba(0,212,204,.4)',
+            textShadow: '3px 3px 0 #1B4332, 0 0 30px rgba(92,219,92,.4)',
             animation: 'glowBlue 3s ease-in-out infinite',
           }}>
             GUIBOUR
           </div>
 
-          {/* SYSTEM */}
+          {/* SYSTEM — cyan, plus petit */}
           <div style={{
             fontFamily: "'Lilita One', cursive",
-            fontSize: 'clamp(26px, 4.5vw, 44px)',
+            fontSize: 'clamp(16px, 2.8vw, 26px)',
             color: '#00D4CC',
             letterSpacing: '8px',
-            textShadow: '2px 2px 0 rgba(0,80,80,.55)',
-            marginTop: '-8px',
+            textShadow: '1px 1px 0 rgba(0,80,80,.55)',
+            marginTop: '-12px',
           }}>
             SYSTEM
           </div>
@@ -100,44 +100,7 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
         zIndex: 2,
         textAlign: 'center',
       }}>
-        NOUVEAU SINGLE // JOUE ET GRIMPE DANS LA HIÉRARCHIE
-      </div>
-
-      {/* Excel cells */}
-      <div style={{
-        display: 'flex',
-        gap: '1px',
-        marginTop: '24px',
-        background: '#1E3F6E',
-        border: '1px solid #2B5090',
-        position: 'relative',
-        zIndex: 2,
-      }}>
-        {[
-          { label: 'LVL', value: '1', gold: false },
-          { label: 'SALAIRE', value: '0€', gold: true },
-          { label: 'RTT', value: '3', gold: false },
-          { label: 'FORMULE', value: '=SUM(AMBITION)', gold: true },
-        ].map(cell => (
-          <div key={cell.label} style={{
-            background: '#12274A',
-            padding: '8px 18px',
-            textAlign: 'center',
-          }}>
-            <div style={{
-              fontFamily: "'Share Tech Mono', monospace",
-              fontSize: '7px',
-              color: '#5B9BD5',
-              letterSpacing: '2px',
-              marginBottom: '3px',
-            }}>{cell.label}</div>
-            <div style={{
-              fontFamily: "'Luckiest Guy', cursive",
-              fontSize: '14px',
-              color: cell.gold ? '#00D4CC' : '#A8D8FF',
-            }}>{cell.value}</div>
-          </div>
-        ))}
+        WORK OR WINDOW // GRIMPE LES 25 ÉTAGES
       </div>
 
       {/* CTA JOUER À W.O.W */}
@@ -174,7 +137,6 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
         <span style={{ position: 'relative', zIndex: 1 }}>
           JOUER À <WowSpan />
         </span>
-        {/* shimmer */}
         <span style={{
           position: 'absolute', top: 0, left: '-100%', width: '50%', height: '100%',
           background: 'linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent)',
@@ -182,26 +144,36 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
         }} />
       </button>
 
-      {/* Invitation discrète — Boutique */}
+      {/* Bouton Boutique — gros et visible */}
       <Link
         href="/shopping"
         style={{
-          marginTop: '20px',
-          fontFamily: "'Share Tech Mono', monospace",
-          fontSize: '9px',
-          letterSpacing: '3px',
-          color: '#3C5A7A',
+          marginTop: '16px',
+          fontFamily: "'Lilita One', cursive",
+          fontSize: '18px',
+          letterSpacing: '4px',
+          color: '#A8D8FF',
           textDecoration: 'none',
-          borderBottom: '1px solid #1E3F6E',
-          paddingBottom: '2px',
+          background: 'transparent',
+          border: '2px solid #1E3F6E',
+          padding: '12px 40px',
           position: 'relative',
           zIndex: 2,
-          transition: 'color 0.2s ease',
+          transition: 'all 0.2s ease',
+          display: 'inline-block',
         }}
-        onMouseEnter={e => { e.currentTarget.style.color = '#5B9BD5'; }}
-        onMouseLeave={e => { e.currentTarget.style.color = '#3C5A7A'; }}
+        onMouseEnter={e => {
+          e.currentTarget.style.borderColor = '#5B9BD5';
+          e.currentTarget.style.color = '#fff';
+          e.currentTarget.style.background = 'rgba(0,71,171,0.15)';
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.borderColor = '#1E3F6E';
+          e.currentTarget.style.color = '#A8D8FF';
+          e.currentTarget.style.background = 'transparent';
+        }}
       >
-        ↗ VOIR LA BOUTIQUE GUIBOUR CORP.
+        ALLER À LA BOUTIQUE
       </Link>
     </div>
   );
