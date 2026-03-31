@@ -8,11 +8,11 @@ interface LoadingScreenProps {
 }
 
 const BOOT_LINES = [
-  { text: 'C:\\GUIBOUR\\SYSTEM> init.exe', color: '#2B5090', delay: 400 },
-  { text: '✓ Chargement des dossiers administratifs...', color: '#5B9BD5', delay: 800 },
-  { text: '✓ Module RTT initialisé — 3 unités disponibles', color: '#5B9BD5', delay: 1400 },
-  { text: '✓ Connexion W.O.W établie', color: '#5B9BD5', delay: 2000 },
-  { text: '▶ Préparation de l\'espace de travail...', color: '#3A78C9', delay: 2600, cursor: true },
+  { text: 'C:\\GUIBOUR\\SYSTEM> init.exe', color: '#2B5090', delay: 200 },
+  { text: '✓ Chargement des dossiers administratifs...', color: '#5B9BD5', delay: 500 },
+  { text: '✓ Module RTT initialisé — 3 unités disponibles', color: '#5B9BD5', delay: 850 },
+  { text: '✓ Connexion W.O.W établie', color: '#00C8BE', delay: 1200 },
+  { text: '▶ Préparation de l\'espace de travail...', color: '#3A78C9', delay: 1550, cursor: true },
 ];
 
 export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
@@ -26,14 +26,14 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         if (prev >= 100) { clearInterval(interval); return 100; }
         return prev + 1;
       });
-    }, 35);
+    }, 18); // 18ms × 100 = ~1.8s to fill
 
     BOOT_LINES.forEach((line, i) => {
       setTimeout(() => setVisibleLines(i + 1), line.delay);
     });
 
-    const fadeTimer = setTimeout(() => setFadeOut(true), 3800);
-    const completeTimer = setTimeout(() => onComplete(), 4300);
+    const fadeTimer = setTimeout(() => setFadeOut(true), 2000);
+    const completeTimer = setTimeout(() => onComplete(), 2500);
 
     return () => {
       clearInterval(interval);
@@ -97,10 +97,10 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             <div style={{
               fontFamily: "'Lilita One', cursive",
               fontSize: 'clamp(48px, 9vw, 76px)',
-              color: '#3DCA3D',
+              color: '#00C8BE',
               letterSpacing: '5px',
               lineHeight: 1,
-              animation: 'glowGreen 3s ease-in-out infinite',
+              animation: 'glowTurquoise 3s ease-in-out infinite',
             }}>
               GUIBOUR
             </div>

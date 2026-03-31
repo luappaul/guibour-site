@@ -75,15 +75,28 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
     stateRef.current = createInitialState(canvas.width, canvas.height);
     const ctx = canvas.getContext('2d')!;
     renderGame(ctx, stateRef.current);
-    // Use ResizeObserver for accurate size tracking (handles flex layout settling)
     const ro = new ResizeObserver(() => resize());
     ro.observe(canvas.parentElement!);
     window.addEventListener('resize', resize);
+
+    // Auto-start when character pre-selected — wait 1 rAF so flex layout settles
+    if (characterName) {
+      requestAnimationFrame(() => {
+        resize();
+        if (stateRef.current) {
+          stateRef.current = startGame(stateRef.current, characterName);
+          setCurrentLevel(0);
+          setGameStatus('playing');
+          try { audioManager.play('gameplay'); } catch (_) {}
+        }
+      });
+    }
+
     return () => {
       ro.disconnect();
       window.removeEventListener('resize', resize);
     };
-  }, [resize, assetsLoaded]);
+  }, [resize, assetsLoaded]); // eslint-disable-line
 
   // Game loop
   useEffect(() => {
@@ -263,10 +276,10 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
         <div style={{
           fontFamily: "'Lilita One', cursive",
           fontSize: 'clamp(52px, 10vw, 80px)',
-          color: '#3DCA3D',
+          color: '#00C8BE',
           letterSpacing: '6px',
           lineHeight: 1,
-          animation: 'glowGreen 3s ease-in-out infinite',
+          animation: 'glowTurquoise 3s ease-in-out infinite',
         }}>
           W.O.W
         </div>
@@ -371,31 +384,63 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
           {/* IDLE overlay */}
           {gameStatus === 'idle' && (
             <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-6"
-                 style={{ background: 'rgba(8,15,8,0.75)', backdropFilter: 'blur(3px)' }}>
+                 style={{ background: 'rgba(4,12,24,0.82)', backdropFilter: 'blur(3px)' }}>
               <div className="text-center">
-                <div style={{ fontFamily: "'Lilita One', cursive", fontSize: 'clamp(40px, 8vw, 72px)', color: '#5CDB5C', letterSpacing: '8px', textShadow: '3px 3px 0 #1B4332, 0 0 30px rgba(92,219,92,.35)', lineHeight: 1 }}>
+                <div style={{ fontFamily: "'Lilita One', cursive", fontSize: 'clamp(40px, 8vw, 72px)', color: '#00C8BE', letterSpacing: '8px', animation: 'glowTurquoise 3s ease-in-out infinite', lineHeight: 1 }}>
                   W.O.W
                 </div>
-                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '14px', color: '#FFE033', letterSpacing: '6px', marginTop: '6px' }}>
+                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '14px', color: '#A8D8FF', letterSpacing: '6px', marginTop: '6px' }}>
                   WORK OR WINDOW
                 </div>
-                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#4CAF50', letterSpacing: '2px', marginTop: '8px' }}>
-                  25 ÉTAGES — SURVIVEZ AUX 25 ÉTAGES
+                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#5B9BD5', letterSpacing: '2px', marginTop: '8px' }}>
+                  25 ÉTAGES — SURVIVEZ AUX DOSSIERS VOLANTS
                 </div>
               </div>
               <button
                 onClick={handlePlay}
                 className="cursor-pointer active:scale-95"
-                style={{ fontFamily: "'Lilita One', cursive", fontSize: '20px', letterSpacing: '4px', color: '#fff', background: 'linear-gradient(135deg, #0047AB, #007B8A)', border: '2px solid #5B9BD5', padding: '14px 48px', boxShadow: '0 0 16px rgba(0,71,171,.3)', transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '6px' }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(135deg, #1B5EBB, #008B9A)'; e.currentTarget.style.boxShadow = '0 0 28px rgba(0,71,171,.5)'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg, #0047AB, #007B8A)'; e.currentTarget.style.boxShadow = '0 0 16px rgba(0,71,171,.3)'; }}
+                style={{ fontFamily: "'Lilita One', cursive", fontSize: '20px', letterSpacing: '4px', color: '#fff', background: 'linear-gradient(135deg, #0047AB, #007B8A)', border: '2px solid #00C8BE', padding: '14px 48px', boxShadow: '0 0 16px rgba(0,200,190,.25)', transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '6px' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(135deg, #1B5EBB, #008B9A)'; e.currentTarget.style.boxShadow = '0 0 28px rgba(0,200,190,.45)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg, #0047AB, #007B8A)'; e.currentTarget.style.boxShadow = '0 0 16px rgba(0,200,190,.25)'; }}
               >
-                JOUER À <span style={{ color: '#7AEC7A', textShadow: '0 0 8px rgba(122,236,122,.5)', marginLeft: '6px' }}>W.O.W</span>
+                JOUER À <span style={{ color: '#00C8BE', textShadow: '0 0 10px rgba(0,200,190,.6)', marginLeft: '6px' }}>W.O.W</span>
               </button>
-              <div className="text-center" style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#2C5F2E', letterSpacing: '1px' }}>
+              <div className="text-center" style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#3C5A7A', letterSpacing: '1px' }}>
                 <p>FLÈCHES / ZQSD POUR BOUGER — ESPACE POUR TIRER</p>
-                <p style={{ marginTop: '4px' }}>MOBILE : GAUCHE/DROITE POUR BOUGER, CENTRE POUR TIRER</p>
               </div>
+            </div>
+          )}
+
+          {/* ── BOUTONS MOBILES ── visibles pendant la partie */}
+          {(gameStatus === 'playing' || gameStatus === 'burnout') && (
+            <div style={{ position: 'absolute', bottom: '10px', left: 0, right: 0, display: 'flex', justifyContent: 'space-between', padding: '0 10px', zIndex: 15, pointerEvents: 'none' }}>
+              {/* Gauche */}
+              <button style={{ pointerEvents: 'auto', width: '72px', height: '72px', background: 'rgba(0,200,190,.12)', border: '2px solid rgba(0,200,190,.3)', borderRadius: '10px', color: '#00C8BE', fontSize: '32px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', userSelect: 'none', WebkitUserSelect: 'none', touchAction: 'none', transition: 'background .1s' }}
+                onTouchStart={e => { e.preventDefault(); if(stateRef.current) stateRef.current.touchLeft = true; }}
+                onTouchEnd={e => { e.preventDefault(); if(stateRef.current) stateRef.current.touchLeft = false; }}
+                onMouseDown={() => { if(stateRef.current) stateRef.current.touchLeft = true; }}
+                onMouseUp={() => { if(stateRef.current) stateRef.current.touchLeft = false; }}
+                onMouseLeave={() => { if(stateRef.current) stateRef.current.touchLeft = false; }}
+              >←</button>
+              {/* Tir */}
+              <button style={{ pointerEvents: 'auto', width: '72px', height: '72px', background: 'rgba(0,71,171,.18)', border: '2px solid rgba(91,155,213,.4)', borderRadius: '10px', color: '#A8D8FF', fontSize: '26px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', userSelect: 'none', WebkitUserSelect: 'none', touchAction: 'none', flexDirection: 'column', gap: '2px' }}
+                onTouchStart={e => { e.preventDefault(); if(stateRef.current) stateRef.current.touchShoot = true; }}
+                onTouchEnd={e => { e.preventDefault(); if(stateRef.current) stateRef.current.touchShoot = false; }}
+                onMouseDown={() => { if(stateRef.current) stateRef.current.touchShoot = true; }}
+                onMouseUp={() => { if(stateRef.current) stateRef.current.touchShoot = false; }}
+                onMouseLeave={() => { if(stateRef.current) stateRef.current.touchShoot = false; }}
+              >
+                <span style={{ fontSize: '18px' }}>↑</span>
+                <span style={{ fontFamily: "'Orbitron',sans-serif", fontSize: '7px', letterSpacing: '1px', color: '#5B9BD5' }}>TIRER</span>
+              </button>
+              {/* Droite */}
+              <button style={{ pointerEvents: 'auto', width: '72px', height: '72px', background: 'rgba(0,200,190,.12)', border: '2px solid rgba(0,200,190,.3)', borderRadius: '10px', color: '#00C8BE', fontSize: '32px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', userSelect: 'none', WebkitUserSelect: 'none', touchAction: 'none', transition: 'background .1s' }}
+                onTouchStart={e => { e.preventDefault(); if(stateRef.current) stateRef.current.touchRight = true; }}
+                onTouchEnd={e => { e.preventDefault(); if(stateRef.current) stateRef.current.touchRight = false; }}
+                onMouseDown={() => { if(stateRef.current) stateRef.current.touchRight = true; }}
+                onMouseUp={() => { if(stateRef.current) stateRef.current.touchRight = false; }}
+                onMouseLeave={() => { if(stateRef.current) stateRef.current.touchRight = false; }}
+              >→</button>
             </div>
           )}
 

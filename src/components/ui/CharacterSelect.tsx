@@ -69,11 +69,6 @@ interface CharacterSelectProps {
 export default function CharacterSelect({ onSelect, onBack }: CharacterSelectProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const handleConfirm = () => {
-    const char = CHARACTERS.find(c => c.id === selectedId && !c.locked);
-    if (char) onSelect(char);
-  };
-
   return (
     <div style={{
       position: 'fixed',
@@ -154,7 +149,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
           return (
             <div
               key={char.id}
-              onClick={() => !char.locked && setSelectedId(char.id)}
+              onClick={() => { if (!char.locked) { setSelectedId(char.id); onSelect(char); } }}
               style={{
                 width: '160px',
                 border: isSelected ? '2px solid #0047AB' : '2px solid #1B3A6B',
@@ -259,69 +254,28 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
         })}
       </div>
 
-      {/* Actions */}
-      <div style={{
-        position: 'relative',
-        zIndex: 2,
-        display: 'flex',
-        gap: '14px',
-        marginTop: '32px',
-        alignItems: 'center',
-      }}>
+      {/* Actions — confirm removed: clicking card starts immediately */}
+      <div style={{ position: 'relative', zIndex: 2, marginTop: '28px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+        <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#3C5A7A', letterSpacing: '3px' }}>
+          CLIQUEZ SUR UN PERSONNAGE POUR COMMENCER
+        </div>
         <button
           onClick={onBack}
           style={{
             fontFamily: "'Orbitron', sans-serif",
-            fontSize: '11px',
+            fontSize: '10px',
             letterSpacing: '3px',
             color: '#3C5A7A',
             background: 'transparent',
             border: '1px solid #1B3A6B',
-            padding: '10px 24px',
+            padding: '8px 20px',
             cursor: 'pointer',
             transition: 'all 0.2s ease',
           }}
-          onMouseEnter={e => {
-            e.currentTarget.style.color = '#A8D8FF';
-            e.currentTarget.style.borderColor = '#2B5090';
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.color = '#3C5A7A';
-            e.currentTarget.style.borderColor = '#1B3A6B';
-          }}
+          onMouseEnter={e => { e.currentTarget.style.color = '#A8D8FF'; e.currentTarget.style.borderColor = '#2B5090'; }}
+          onMouseLeave={e => { e.currentTarget.style.color = '#3C5A7A'; e.currentTarget.style.borderColor = '#1B3A6B'; }}
         >
           ← RETOUR
-        </button>
-
-        <button
-          onClick={handleConfirm}
-          disabled={!selectedId}
-          style={{
-            fontFamily: "'Lilita One', cursive",
-            fontSize: '18px',
-            letterSpacing: '4px',
-            color: selectedId ? '#fff' : '#1B3A6B',
-            background: selectedId ? 'linear-gradient(135deg, #0047AB, #007B8A)' : 'rgba(27,58,107,0.2)',
-            border: `2px solid ${selectedId ? '#5B9BD5' : '#1B3A6B'}`,
-            padding: '12px 44px',
-            cursor: selectedId ? 'pointer' : 'not-allowed',
-            boxShadow: selectedId ? '0 0 16px rgba(0,71,171,.25)' : 'none',
-            transition: 'all 0.2s ease',
-          }}
-          onMouseEnter={e => {
-            if (selectedId) {
-              e.currentTarget.style.background = 'linear-gradient(135deg, #1B5EBB, #008B9A)';
-              e.currentTarget.style.boxShadow = '0 0 24px rgba(0,71,171,.4)';
-            }
-          }}
-          onMouseLeave={e => {
-            if (selectedId) {
-              e.currentTarget.style.background = 'linear-gradient(135deg, #0047AB, #007B8A)';
-              e.currentTarget.style.boxShadow = '0 0 16px rgba(0,71,171,.25)';
-            }
-          }}
-        >
-          CONFIRMER L&apos;EMBAUCHE →
         </button>
       </div>
     </div>

@@ -66,10 +66,10 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
           <div style={{
             fontFamily: "'Lilita One', cursive",
             fontSize: 'clamp(48px, 9vw, 82px)',
-            color: '#3DCA3D',
+            color: '#00C8BE',
             letterSpacing: '5px',
             lineHeight: 1,
-            animation: 'glowGreen 3s ease-in-out infinite',
+            animation: 'glowTurquoise 3s ease-in-out infinite',
           }}>
             GUIBOUR
           </div>
@@ -204,10 +204,23 @@ export default function Home() {
   }, []);
 
   const handlePlay = useCallback(() => {
-    setShowCharacterSelect(true);
+    // If a character was saved from a previous visit, skip CharacterSelect
+    const savedName = typeof window !== 'undefined'
+      ? sessionStorage.getItem('guibour-character')
+      : null;
+    if (savedName) {
+      setSelectedCharacter({ id: 'saved', name: savedName, title: 'EMPLOYÉ', emoji: '🧑‍💼', stats: [] });
+      setShowGame(true);
+    } else {
+      setShowCharacterSelect(true);
+    }
   }, []);
 
   const handleCharacterSelect = useCallback((character: CharacterData) => {
+    // Persist chosen character so next JOUER skips the selector
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('guibour-character', character.name);
+    }
     setSelectedCharacter(character);
     setShowCharacterSelect(false);
     setShowGame(true);

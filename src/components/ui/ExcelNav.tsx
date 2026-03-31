@@ -56,10 +56,10 @@ export default function ExcelNav() {
           <div style={{
             fontFamily: "'Lilita One', cursive",
             fontSize: '13px',
-            color: '#3DCA3D',
+            color: '#00C8BE',
             letterSpacing: '2px',
             lineHeight: 1.1,
-            textShadow: '0 0 8px rgba(61,202,61,.6)',
+            textShadow: '0 0 10px rgba(0,200,190,.7)',
           }}>GUIBOUR</div>
           <div style={{
             fontFamily: "'Orbitron', sans-serif",

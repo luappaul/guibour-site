@@ -84,9 +84,9 @@ html, body {
   0%,100%{text-shadow:3px 3px 0 #0D2B5E, 0 0 20px rgba(90,160,255,.35)}
   50%{text-shadow:3px 3px 0 #0D2B5E, 0 0 50px rgba(90,160,255,.65)}
 }
-@keyframes glowGreen {
-  0%,100%{text-shadow:2px 2px 0 #0A1A0A, 0 0 12px #3DCA3D, 0 0 28px rgba(61,202,61,.65), 0 0 60px rgba(61,202,61,.35)}
-  50%{text-shadow:2px 2px 0 #0A1A0A, 0 0 20px #3DCA3D, 0 0 50px rgba(61,202,61,.85), 0 0 100px rgba(61,202,61,.45)}
+@keyframes glowTurquoise {
+  0%,100%{text-shadow:2px 2px 0 #041818, 0 0 12px #00C8BE, 0 0 28px rgba(0,200,190,.65), 0 0 60px rgba(0,200,190,.35)}
+  50%{text-shadow:2px 2px 0 #041818, 0 0 22px #00C8BE, 0 0 55px rgba(0,200,190,.85), 0 0 110px rgba(0,200,190,.45)}
 }
 @keyframes walkCycle {
   0%{transform:translateX(-100%)}

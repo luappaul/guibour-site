@@ -1,13 +1,15 @@
 'use client';
 
+import { useState } from 'react';
 import ExcelNav from '@/components/ui/ExcelNav';
 import ExcelChrome from '@/components/ui/ExcelChrome';
+import Sphere from '@/components/ui/Sphere';
 
 const products = [
-  { name: 'T-SHIRT GS', ref: 'GS-TS-001', desc: 'UNISEX', price: '29', cell: 'B4', svgType: 'tshirt' },
-  { name: 'MUG CORPORATE', ref: 'GS-MG-001', desc: '30CL', price: '18', cell: 'C4', svgType: 'mug' },
-  { name: 'CRAVATE GS', ref: 'GS-CV-001', desc: 'BLEU', price: '24', cell: 'D4', svgType: 'tie' },
-  { name: 'CLÉ USB EP', ref: 'GS-USB-001', desc: '8GB', price: '22', cell: 'E4', svgType: 'usb' },
+  { name: 'T-SHIRT GS', ref: 'GS-TS-001', desc: 'UNISEX · COTON BIO', price: '29', cell: 'B4', svgType: 'tshirt', tag: 'BEST SELLER' },
+  { name: 'MUG CORPORATE', ref: 'GS-MG-001', desc: '30CL · CÉRAMIQUE', price: '18', cell: 'C4', svgType: 'mug', tag: null },
+  { name: 'CRAVATE GS', ref: 'GS-CV-001', desc: 'BLEU MARINE · SOIE', price: '24', cell: 'D4', svgType: 'tie', tag: 'NOUVEAU' },
+  { name: 'CLÉ USB EP', ref: 'GS-USB-001', desc: '8GB · USB-A', price: '22', cell: 'E4', svgType: 'usb', tag: null },
 ];
 
 function ProductSVG({ type }: { type: string }) {
@@ -56,158 +58,196 @@ function ProductSVG({ type }: { type: string }) {
   );
 }
 
+function ProductCard({ p }: { p: typeof products[0] }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: '#fff',
+        border: `2px solid ${hovered ? '#0047AB' : '#C8D8E8'}`,
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+        boxShadow: hovered ? '0 8px 32px rgba(0,71,171,.13)' : '0 2px 8px rgba(0,47,94,.05)',
+      }}
+    >
+      {/* Top stripe — dark ref bar */}
+      <div style={{
+        background: hovered ? '#0047AB' : '#0D2B5E',
+        padding: '5px 10px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        transition: 'background 0.2s ease',
+      }}>
+        <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#5B9BD5', letterSpacing: '2px' }}>{p.cell}</span>
+        <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#3C5A7A', letterSpacing: '1px' }}>REF: {p.ref}</span>
+      </div>
+
+      {/* Tag badge */}
+      {p.tag && (
+        <div style={{
+          position: 'absolute',
+          top: '40px',
+          left: '10px',
+          background: p.tag === 'NOUVEAU' ? '#00C8BE' : '#C8960A',
+          color: '#fff',
+          fontFamily: "'Orbitron', sans-serif",
+          fontSize: '7px',
+          letterSpacing: '2px',
+          padding: '3px 8px',
+          zIndex: 2,
+        }}>{p.tag}</div>
+      )}
+
+      {/* Product image area */}
+      <div style={{
+        height: '140px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: hovered ? '#EEF3F8' : '#F7FAFD',
+        borderBottom: '1px solid #E0EAF4',
+        transition: 'background 0.2s ease',
+      }}>
+        <ProductSVG type={p.svgType} />
+      </div>
+
+      {/* Product info */}
+      <div style={{ padding: '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <h3 style={{
+          fontFamily: "'Lilita One', cursive",
+          fontSize: '16px',
+          color: '#0D2B5E',
+          letterSpacing: '2px',
+          marginBottom: '2px',
+        }}>{p.name}</h3>
+
+        <span style={{
+          fontFamily: "'Orbitron', sans-serif",
+          fontSize: '7px',
+          color: '#8FA5B8',
+          letterSpacing: '2px',
+          display: 'block',
+          marginBottom: '12px',
+        }}>{p.desc}</span>
+
+        {/* Price row */}
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: 'auto', marginBottom: '14px' }}>
+          <span style={{
+            fontFamily: "'Luckiest Guy', cursive",
+            fontSize: '26px',
+            color: '#0047AB',
+          }}>{p.price}€</span>
+          <span style={{
+            fontFamily: "'Orbitron', sans-serif",
+            fontSize: '7px',
+            color: '#8FA5B8',
+            letterSpacing: '1px',
+          }}>TVA INCL.</span>
+        </div>
+
+        <button style={{
+          width: '100%',
+          fontFamily: "'Orbitron', sans-serif",
+          fontSize: '9px',
+          letterSpacing: '3px',
+          color: '#fff',
+          background: hovered ? 'linear-gradient(135deg,#0047AB,#007B8A)' : '#0D2B5E',
+          border: 'none',
+          padding: '11px 0',
+          cursor: 'pointer',
+          boxShadow: hovered ? '0 4px 14px rgba(0,71,171,.3)' : 'none',
+          transition: 'all 0.2s ease',
+        }}>COMMANDER →</button>
+      </div>
+    </div>
+  );
+}
+
 export default function ShoppingPage() {
   return (
     <div className="min-h-screen" style={{ background: '#EEF3F8' }}>
       <ExcelNav />
-      <ExcelChrome formulaText='=CATALOGUE(MERCH,"GUIBOUR") // ARTICLES: 4'>
-        <div style={{ background: '#EEF3F8', minHeight: 'calc(100vh - 52px)' }}>
-          <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '24px 24px' }}>
+      <ExcelChrome formulaText='=CATALOGUE(MERCH,"GUIBOUR") // ARTICLES: 4 // LIVRAISON EXPRESS'>
+        <div style={{
+          background: '#EEF3F8',
+          backgroundImage: 'linear-gradient(rgba(0,71,171,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,71,171,.03) 1px,transparent 1px)',
+          backgroundSize: '56px 34px',
+          minHeight: 'calc(100vh - 52px)',
+        }}>
 
-            {/* Breadcrumb */}
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: '10px 0',
-              borderBottom: '1px solid #C8D8E8',
-              marginBottom: '32px',
-            }}>
-              <span style={{
-                fontFamily: "'Orbitron', sans-serif",
-                fontSize: '8px',
-                color: '#8FA5B8',
-                letterSpacing: '2px',
-              }}>
-                GUIBOUR.FR / CATALOGUE / TOUS LES ARTICLES
-              </span>
+          {/* HEADER */}
+          <div style={{ background: 'linear-gradient(135deg,#0B1F3A 0%,#0D2B5E 60%,#0047AB 100%)', padding: '28px 48px', borderBottom: '3px solid #00C8BE', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '24px', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+              <Sphere size={52} />
+              <div>
+                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#3C5A7A', letterSpacing: '5px', marginBottom: '4px' }}>02 / BOUTIQUE</div>
+                <div style={{ fontFamily: "'Lilita One', cursive", fontSize: 'clamp(22px,4vw,36px)', color: '#F2F8FF', letterSpacing: '4px', lineHeight: 1 }}>BOUTIQUE MERCH</div>
+                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#00C8BE', letterSpacing: '4px', marginTop: '4px' }}>W.O.W — COLLECTION OFFICIELLE</div>
+              </div>
             </div>
+            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+              {[
+                { label: 'ARTICLES', value: '004' },
+                { label: 'LIVRAISON', value: 'EXPRESS' },
+                { label: 'STOCK', value: '● DISPO' },
+              ].map(s => (
+                <div key={s.label} style={{ textAlign: 'center', padding: '8px 16px', background: 'rgba(255,255,255,.06)', border: '1px solid rgba(0,200,190,.15)' }}>
+                  <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#3C5A7A', letterSpacing: '3px' }}>{s.label}</div>
+                  <div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '20px', color: '#00C8BE', marginTop: '2px' }}>{s.value}</div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-            {/* Page title */}
-            <div style={{ marginBottom: '32px' }}>
-              <span style={{
-                fontFamily: "'Orbitron', sans-serif",
-                fontSize: '8px',
-                color: '#8FA5B8',
-                letterSpacing: '6px',
-              }}>02 / BOUTIQUE MERCH</span>
-              <h1 style={{
-                fontFamily: "'Lilita One', cursive",
-                fontSize: '36px',
-                color: '#0D2B5E',
-                letterSpacing: '4px',
-                marginTop: '6px',
-              }}>BOUTIQUE</h1>
-              <div style={{
-                width: '60px',
-                height: '2px',
-                background: 'linear-gradient(90deg, #0047AB, transparent)',
-                marginTop: '6px',
-              }} />
+          {/* PROMO STRIP */}
+          <div style={{
+            background: '#0047AB',
+            padding: '10px 48px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '32px',
+            flexWrap: 'wrap',
+          }}>
+            {['📦 LIVRAISON GUIBOUR EXPRESS', '🏅 QUALITÉ CORPORATE CERTIFIÉE', '🔒 PAIEMENT SÉCURISÉ GS-4891'].map(item => (
+              <span key={item} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#A8D8FF', letterSpacing: '3px' }}>{item}</span>
+            ))}
+          </div>
+
+          <div style={{ maxWidth: '960px', margin: '0 auto', padding: '40px 24px' }}>
+
+            {/* Section label */}
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#8FA5B8', letterSpacing: '5px', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+              CATALOGUE COMPLET <span style={{ flex: 1, height: '1px', background: 'linear-gradient(to right,rgba(0,71,171,.3),transparent)' }} />
+              <span style={{ fontSize: '7px' }}>=CATALOGUE() // 4 RÉFÉRENCES</span>
             </div>
 
             {/* Products grid */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
-              gap: '1px',
-              background: '#C8D8E8',
-              border: '1px solid #C8D8E8',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+              gap: '16px',
             }}>
-              {products.map(p => (
-                <div key={p.ref} style={{
-                  background: '#fff',
-                  padding: '20px',
-                  position: 'relative',
-                  transition: 'background 0.15s ease',
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#F0F7FF'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#fff'; }}
-                >
-                  {/* Cell ref */}
-                  <span style={{
-                    position: 'absolute', top: '8px', right: '8px',
-                    fontFamily: "'Orbitron', sans-serif",
-                    fontSize: '7px', color: '#C8D8E8', letterSpacing: '1px',
-                  }}>
-                    {p.cell}
-                  </span>
-
-                  {/* Product SVG */}
-                  <div style={{
-                    height: '120px',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    background: '#EEF3F8',
-                    border: '1px solid #C8D8E8',
-                    marginBottom: '16px',
-                  }}>
-                    <ProductSVG type={p.svgType} />
-                  </div>
-
-                  {/* Product name */}
-                  <h3 style={{
-                    fontFamily: "'Lilita One', cursive",
-                    fontSize: '14px',
-                    color: '#0D2B5E',
-                    letterSpacing: '2px',
-                    textTransform: 'uppercase',
-                    marginBottom: '4px',
-                  }}>
-                    {p.name}
-                  </h3>
-
-                  {/* SKU */}
-                  <span style={{
-                    fontFamily: "'Orbitron', sans-serif",
-                    fontSize: '7px', color: '#8FA5B8',
-                    display: 'block', marginTop: '4px', letterSpacing: '1px',
-                  }}>
-                    REF: {p.ref} / {p.desc}
-                  </span>
-
-                  {/* Price */}
-                  <span style={{
-                    fontFamily: "'Luckiest Guy', cursive",
-                    fontSize: '22px', color: '#007B8A',
-                    display: 'block', marginTop: '12px',
-                  }}>
-                    {p.price}&euro;
-                  </span>
-
-                  {/* Button */}
-                  <button style={{
-                    marginTop: '12px', width: '100%',
-                    fontFamily: "'Orbitron', sans-serif",
-                    fontSize: '8px', letterSpacing: '2px',
-                    color: '#fff',
-                    background: '#0D2B5E',
-                    border: '1px solid #3A78C9',
-                    padding: '8px', cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.background = '#0047AB';
-                    e.currentTarget.style.borderColor = '#5B9BD5';
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.background = '#0D2B5E';
-                    e.currentTarget.style.borderColor = '#3A78C9';
-                  }}
-                  >
-                    COMMANDER
-                  </button>
-                </div>
-              ))}
+              {products.map(p => <ProductCard key={p.ref} p={p} />)}
             </div>
 
-            {/* Footer */}
-            <div style={{
-              marginTop: '16px',
-              fontFamily: "'Orbitron', sans-serif",
-              fontSize: '7px', color: '#8FA5B8', letterSpacing: '2px',
-            }}>
-              =CATALOGUE() // DISPONIBLE SUR COMMANDE — LIVRAISON GUIBOUR EXPRESS
+            {/* Footer note */}
+            <div style={{ marginTop: '40px', padding: '20px 24px', background: '#fff', border: '1px solid #C8D8E8', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+              <div>
+                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#0D2B5E', letterSpacing: '2px', marginBottom: '4px' }}>COMMANDES SUR DEVIS</div>
+                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#8FA5B8', letterSpacing: '1px' }}>Pour toute commande en volume, contactez le département RH.</div>
+              </div>
+              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#C8D8E8', letterSpacing: '2px', textAlign: 'right' }}>
+                <div>=CATALOGUE() // DISPONIBLE SUR COMMANDE</div>
+                <div style={{ marginTop: '3px' }}>W.O.W · WORK OR WINDOW · 2026</div>
+              </div>
             </div>
+
           </div>
         </div>
       </ExcelChrome>
