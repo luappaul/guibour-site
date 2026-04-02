@@ -47,7 +47,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       position: 'fixed',
       inset: 0,
       zIndex: 9999,
-      background: '#162840',
+      background: '#1E3A5E',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -150,7 +150,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             }}>fx</span>
             <div style={{
               flex: 1,
-              background: '#12274A',
+              background: '#1C3660',
               border: '1px solid #1E3F6E',
               height: '13px',
               borderRadius: '3px',

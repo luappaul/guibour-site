@@ -64,11 +64,11 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          opacity: 0.18,
+          opacity: 0.48,
           animation: 'float 6s ease-in-out infinite',
           pointerEvents: 'none',
         }}>
-          <GlobeIcon size={220} color="#00C8BE" />
+          <GlobeIcon size={260} color="#00C8BE" />
         </div>
 
         {/* Texte en avant-plan */}
@@ -238,7 +238,7 @@ export default function Home() {
     return (
       <div
         className="flex flex-col overflow-hidden"
-        style={{ background: '#162840', height: '100dvh', paddingLeft: '48px' }}
+        style={{ background: '#1E3A5E', height: '100dvh', paddingLeft: '48px' }}
       >
         <main
           className="flex-1"
@@ -252,7 +252,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: '#162840' }}>
+    <div className="min-h-screen" style={{ background: '#1E3A5E' }}>
       <ExcelNav />
       <ExcelChrome formulaText='=LAUNCH_GAME("GUIBOUR","SINGLE_2026") → WELCOME_TO_THE_SYSTEM'>
         <HeroContent onPlay={handlePlay} />

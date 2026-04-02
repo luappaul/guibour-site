@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Sphere from './Sphere';
+import GlobeIcon from './GlobeIcon';
 
 const tabs = [
   { href: '/', label: 'JOUER À W.O.W' },
@@ -51,7 +51,7 @@ export default function ExcelNav() {
           cursor: 'pointer',
         }}
       >
-        <Sphere size={28} />
+        <GlobeIcon size={28} color="#00C8BE" />
         <div style={{ overflow: 'hidden' }}>
           <div style={{
             fontFamily: "'Lilita One', cursive",

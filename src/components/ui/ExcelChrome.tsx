@@ -13,7 +13,7 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
       position: 'relative',
       minHeight: '100vh',
       paddingLeft: '48px', // leave room for sidebar nav
-      backgroundColor: '#0A1628',
+      backgroundColor: '#1E3A5E',
       backgroundImage:
         'linear-gradient(rgba(0,72,171,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(0,72,171,.09) 1px, transparent 1px)',
       backgroundSize: '56px 34px',

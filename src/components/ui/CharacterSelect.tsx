@@ -139,7 +139,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
       position: 'fixed',
       inset: 0,
       zIndex: 100,
-      background: 'linear-gradient(160deg, #162840 0%, #0F1E32 60%, #1A2F48 100%)',
+      background: 'linear-gradient(160deg, #1E3A5E 0%, #1E3A5E 60%, #253D60 100%)',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',

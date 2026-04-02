@@ -2,9 +2,9 @@
 
 @theme {
   /* V8 palette — Corporate 90s */
-  --color-game-bg:   #162840;
+  --color-game-bg:   #1E3A5E;
   --color-game-bg2:  #0D1E38;
-  --color-game-card: #12274A;
+  --color-game-card: #1C3660;
   --color-game-bdr:  #1E3F6E;
   --color-navy:      #0D2B5E;
   --color-navy2:     #1B3A6B;
@@ -39,7 +39,7 @@
 
 html, body {
   font-family: var(--font-body);
-  background: #162840;
+  background: #1E3A5E;
   color: #A8D8FF;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -89,8 +89,8 @@ html, body {
   50%{text-shadow:2px 2px 0 #041818, 0 0 22px #00C8BE, 0 0 55px rgba(0,200,190,.85), 0 0 110px rgba(0,200,190,.45)}
 }
 @keyframes glowWhite {
-  0%,100%{text-shadow:2px 2px 0 #162840, 0 0 14px rgba(255,255,255,.8), 0 0 32px rgba(255,255,255,.4), 0 0 64px rgba(0,71,171,.3)}
-  50%{text-shadow:2px 2px 0 #162840, 0 0 26px rgba(255,255,255,1), 0 0 60px rgba(255,255,255,.55), 0 0 120px rgba(0,71,171,.4)}
+  0%,100%{text-shadow:2px 2px 0 #1E3A5E, 0 0 14px rgba(255,255,255,.8), 0 0 32px rgba(255,255,255,.4), 0 0 64px rgba(0,71,171,.3)}
+  50%{text-shadow:2px 2px 0 #1E3A5E, 0 0 26px rgba(255,255,255,1), 0 0 60px rgba(255,255,255,.55), 0 0 120px rgba(0,71,171,.4)}
 }
 @keyframes walkCycle {
   0%{transform:translateX(-100%)}
@@ -103,7 +103,7 @@ html, body {
 
 /* ===== EXCEL BLUE GRID ===== */
 .excel-bg {
-  background-color: #162840;
+  background-color: #1E3A5E;
   background-image:
     linear-gradient(rgba(0,72,171,.09) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0,72,171,.09) 1px, transparent 1px);
