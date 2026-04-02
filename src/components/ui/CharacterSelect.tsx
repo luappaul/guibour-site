@@ -94,7 +94,7 @@ function StatBar({ value, max = 5 }: { value: number; max?: number }) {
       {Array.from({ length: max }).map((_, i) => (
         <div key={i} style={{
           width: '14px', height: '6px',
-          background: i < value ? '#00C8BE' : '#1B3A6B',
+          background: i < value ? '#00C8BE' : '#1A3E7A',
           borderRadius: '1px',
           boxShadow: i < value ? '0 0 4px rgba(0,200,190,.5)' : 'none',
           transition: 'background 0.3s',
@@ -139,7 +139,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
       position: 'fixed',
       inset: 0,
       zIndex: 100,
-      background: 'linear-gradient(160deg, #1E3A5E 0%, #1E3A5E 60%, #253D60 100%)',
+      background: 'linear-gradient(160deg, #1A3F78 0%, #1A3F78 60%, #264D82 100%)',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -168,8 +168,8 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
       {/* Formula bar */}
       <div style={{
         position: 'relative', zIndex: 2,
-        background: '#0D2B5E',
-        border: '1px solid #1B3A6B',
+        background: '#0C2A62',
+        border: '1px solid #1A3E7A',
         padding: '5px 18px',
         display: 'inline-flex', alignItems: 'center', gap: '10px',
         marginBottom: '22px',
@@ -182,7 +182,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
 
       {/* Title */}
       <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', marginBottom: '36px' }}>
-        <div style={{ fontFamily: "'Lilita One', cursive", fontSize: 'clamp(20px,3.5vw,32px)', color: '#A8D8FF', letterSpacing: '5px', textShadow: '2px 2px 0 #0D2B5E' }}>
+        <div style={{ fontFamily: "'Lilita One', cursive", fontSize: 'clamp(20px,3.5vw,32px)', color: '#A8D8FF', letterSpacing: '5px', textShadow: '2px 2px 0 #0C2A62' }}>
           SÉLECTION DU PERSONNEL
         </div>
         <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#5B9BD5', letterSpacing: '3px', marginTop: '5px' }}>
@@ -199,14 +199,14 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
           style={{
             width: '48px', height: '48px', flexShrink: 0,
             background: 'rgba(0,71,171,.18)',
-            border: '2px solid #1B3A6B',
+            border: '2px solid #1A3E7A',
             color: '#5B9BD5', fontSize: '22px', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             transition: 'all .2s',
             borderRadius: '4px',
           }}
           onMouseEnter={e => { e.currentTarget.style.borderColor = '#00C8BE'; e.currentTarget.style.color = '#00C8BE'; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = '#1B3A6B'; e.currentTarget.style.color = '#5B9BD5'; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = '#1A3E7A'; e.currentTarget.style.color = '#5B9BD5'; }}
         >‹</button>
 
         {/* Carousel viewport */}
@@ -232,7 +232,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
                   background: isFront
                     ? 'linear-gradient(180deg, #1A3560 0%, #0D2040 100%)'
                     : 'linear-gradient(180deg, #152644 0%, #0A1828 100%)',
-                  border: `2px solid ${isFront ? '#00C8BE' : '#1B3A6B'}`,
+                  border: `2px solid ${isFront ? '#00C8BE' : '#1A3E7A'}`,
                   borderRadius: '10px',
                   overflow: 'hidden',
                   boxShadow: isFront
@@ -243,12 +243,12 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
                 }}>
                   {/* Status strip */}
                   <div style={{
-                    background: char.locked ? '#3A0A0A' : isFront ? '#00C8BE' : '#1B3A6B',
+                    background: char.locked ? '#3A0A0A' : isFront ? '#00C8BE' : '#1A3E7A',
                     padding: '5px',
                     fontFamily: "'Orbitron', sans-serif",
                     fontSize: '8px',
                     textAlign: 'center',
-                    color: char.locked ? '#FF6B6B' : isFront ? '#0D2B5E' : '#5B9BD5',
+                    color: char.locked ? '#FF6B6B' : isFront ? '#0C2A62' : '#5B9BD5',
                     letterSpacing: '2px',
                     fontWeight: isFront ? 700 : 400,
                   }}>
@@ -300,14 +300,14 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
           style={{
             width: '48px', height: '48px', flexShrink: 0,
             background: 'rgba(0,71,171,.18)',
-            border: '2px solid #1B3A6B',
+            border: '2px solid #1A3E7A',
             color: '#5B9BD5', fontSize: '22px', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             transition: 'all .2s',
             borderRadius: '4px',
           }}
           onMouseEnter={e => { e.currentTarget.style.borderColor = '#00C8BE'; e.currentTarget.style.color = '#00C8BE'; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = '#1B3A6B'; e.currentTarget.style.color = '#5B9BD5'; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = '#1A3E7A'; e.currentTarget.style.color = '#5B9BD5'; }}
         >›</button>
       </div>
 
@@ -327,7 +327,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
             style={{
               width: i === activeIndex ? '24px' : '8px',
               height: '8px',
-              background: i === activeIndex ? '#00C8BE' : '#1B3A6B',
+              background: i === activeIndex ? '#00C8BE' : '#1A3E7A',
               border: 'none',
               borderRadius: '4px',
               cursor: 'pointer',
@@ -372,11 +372,11 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
           position: 'relative', zIndex: 2,
           fontFamily: "'Orbitron', sans-serif", fontSize: '9px',
           letterSpacing: '3px', color: '#3C5A7A',
-          background: 'transparent', border: '1px solid #1B3A6B',
+          background: 'transparent', border: '1px solid #1A3E7A',
           padding: '7px 18px', cursor: 'pointer', transition: 'all .2s',
         }}
         onMouseEnter={e => { e.currentTarget.style.color = '#A8D8FF'; e.currentTarget.style.borderColor = '#2B5090'; }}
-        onMouseLeave={e => { e.currentTarget.style.color = '#3C5A7A'; e.currentTarget.style.borderColor = '#1B3A6B'; }}
+        onMouseLeave={e => { e.currentTarget.style.color = '#3C5A7A'; e.currentTarget.style.borderColor = '#1A3E7A'; }}
       >← RETOUR</button>
 
     </div>

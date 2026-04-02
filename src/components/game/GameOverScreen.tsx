@@ -66,45 +66,60 @@ export default function GameOverScreen({ state, onRestart }: Props) {
 
   return (
     <div className="absolute inset-0 z-30 flex flex-col items-center justify-center"
-         style={{ background: 'rgba(10,26,18,0.85)', backdropFilter: 'blur(4px)' }}>
+         style={{
+           background: isVictory
+             ? 'rgba(0,8,20,0.88)'
+             : 'rgba(8,2,2,0.90)',
+           backdropFilter: 'blur(5px)',
+         }}>
 
-      {/* Big announcement text */}
-      <div className="mb-8 text-center" style={{
-        animation: 'fadeIn 0.5s ease-out',
-      }}>
+      {/* ── GRAND TEXTE CHOC ── */}
+      <div className="mb-8 text-center" style={{ pointerEvents: 'none' }}>
+
+        {/* Titre principal — énorme, effrayant */}
         <h1 style={{
-          fontFamily: "'Orbitron', sans-serif",
-          fontSize: isVictory ? 'clamp(28px, 5vw, 52px)' : 'clamp(24px, 4vw, 44px)',
-          fontWeight: 900,
-          color: isVictory ? '#00C9C8' : '#FF4444',
-          letterSpacing: '4px',
-          textShadow: isVictory
-            ? '0 0 30px rgba(0,168,157,0.5)'
-            : '0 0 30px rgba(255,68,68,0.5)',
+          fontFamily: "'Luckiest Guy', cursive",
+          fontSize: isVictory
+            ? 'clamp(58px, 10vw, 108px)'
+            : 'clamp(64px, 12vw, 130px)',
+          color: isVictory ? '#00C9C8' : '#FF2020',
+          letterSpacing: isVictory ? '6px' : '3px',
+          lineHeight: 0.92,
+          display: 'block',
+          animation: isVictory
+            ? 'victorySlam 0.65s cubic-bezier(.15,0,.25,1) both, victoryGlow 2s ease-in-out infinite 0.7s'
+            : 'scareSlam 0.65s cubic-bezier(.15,0,.25,1) both, scareGlow 2s ease-in-out infinite 0.7s',
         }}>
-          {isVictory ? 'VOUS ETES LIBRE' : 'CAREER FAILED'}
+          {isVictory ? 'VOUS ÊTES\nLIBRE' : 'CAREER\nFAILED'}
         </h1>
+
+        {/* Sous-titre GAME OVER */}
         {!isVictory && (
           <p style={{
-            fontFamily: "'Orbitron', sans-serif",
-            fontSize: 'clamp(16px, 3vw, 28px)',
-            fontWeight: 700,
-            color: '#FF6666',
-            letterSpacing: '6px',
-            marginTop: '8px',
+            fontFamily: "'Luckiest Guy', cursive",
+            fontSize: 'clamp(32px, 6vw, 64px)',
+            color: '#FF5050',
+            letterSpacing: '8px',
+            marginTop: '10px',
+            display: 'block',
+            animation: 'scareSlam 0.65s cubic-bezier(.15,0,.25,1) 0.18s both, scarePulse 1.8s ease-in-out infinite 0.85s',
           }}>
             GAME OVER
           </p>
         )}
+
+        {/* Sous-titre victoire */}
         {isVictory && (
           <p style={{
             fontFamily: "'Orbitron', sans-serif",
-            fontSize: '12px',
-            color: '#607888',
-            letterSpacing: '2px',
-            marginTop: '8px',
+            fontSize: 'clamp(11px, 1.8vw, 16px)',
+            color: '#00C8BE',
+            letterSpacing: '4px',
+            marginTop: '16px',
+            opacity: 0.8,
+            animation: 'fadeIn 0.6s ease 0.8s both',
           }}>
-            Vous avez survecu aux 25 etages de W.O.W.
+            25 ÉTAGES — MISSION ACCOMPLIE
           </p>
         )}
       </div>

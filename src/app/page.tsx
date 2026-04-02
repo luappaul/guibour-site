@@ -6,7 +6,7 @@ import ExcelNav from '@/components/ui/ExcelNav';
 import ExcelChrome from '@/components/ui/ExcelChrome';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import CharacterSelect, { CharacterData } from '@/components/ui/CharacterSelect';
-import GlobeIcon from '@/components/ui/GlobeIcon';
+import LogoSphere from '@/components/ui/LogoSphere';
 
 const GameCanvas = dynamic(() => import('@/components/game/GameCanvas'), {
   ssr: false,
@@ -58,17 +58,17 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
         marginBottom: '4px',
         zIndex: 2,
       }}>
-        {/* Globe en arrière-plan, centré */}
+        {/* Sphère 3D style logo années 90 — centrée derrière le texte */}
         <div style={{
           position: 'absolute',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          opacity: 0.48,
+          opacity: 0.78,
           animation: 'float 6s ease-in-out infinite',
           pointerEvents: 'none',
         }}>
-          <GlobeIcon size={260} color="#00C8BE" />
+          <LogoSphere size={270} />
         </div>
 
         {/* Texte en avant-plan */}
@@ -79,7 +79,7 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
             color: '#FFFFFF',
             letterSpacing: '5px',
             lineHeight: 1,
-            animation: 'glowWhite 3s ease-in-out infinite',
+            animation: 'glowWhite3D 3s ease-in-out infinite',
           }}>
             GUIBOUR
           </div>
@@ -238,7 +238,7 @@ export default function Home() {
     return (
       <div
         className="flex flex-col overflow-hidden"
-        style={{ background: '#1E3A5E', height: '100dvh', paddingLeft: '48px' }}
+        style={{ background: '#1A3F78', height: '100dvh', paddingLeft: '48px' }}
       >
         <main
           className="flex-1"
@@ -252,7 +252,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: '#1E3A5E' }}>
+    <div className="min-h-screen" style={{ background: '#1A3F78' }}>
       <ExcelNav />
       <ExcelChrome formulaText='=LAUNCH_GAME("GUIBOUR","SINGLE_2026") → WELCOME_TO_THE_SYSTEM'>
         <HeroContent onPlay={handlePlay} />

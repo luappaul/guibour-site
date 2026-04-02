@@ -47,7 +47,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       position: 'fixed',
       inset: 0,
       zIndex: 9999,
-      background: '#1E3A5E',
+      background: '#1A3F78',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -134,8 +134,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         {/* Progress bar — fx Excel style */}
         <div style={{ width: '340px', margin: '28px auto 0' }}>
           <div style={{
-            background: '#0D2B5E',
-            border: '1px solid #1B3A6B',
+            background: '#0C2A62',
+            border: '1px solid #1A3E7A',
             padding: '6px 12px',
             display: 'flex',
             alignItems: 'center',
@@ -189,7 +189,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         flexDirection: 'column',
         alignItems: 'center',
       }}>
-        <div style={{ width: '2px', height: '20px', background: '#1B3A6B' }} />
+        <div style={{ width: '2px', height: '20px', background: '#1A3E7A' }} />
         <div style={{
           width: '60px',
           height: '80px',
@@ -209,7 +209,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           <div style={{
             fontFamily: "'Orbitron', sans-serif",
             fontSize: '6px',
-            color: '#0D2B5E',
+            color: '#0C2A62',
             letterSpacing: '1px',
           }}>GUIBOUR</div>
           <div style={{

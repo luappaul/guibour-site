@@ -13,11 +13,12 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
       position: 'relative',
       minHeight: '100vh',
       paddingLeft: '48px', // leave room for sidebar nav
-      backgroundColor: '#1E3A5E',
+      backgroundColor: '#1A3F78',
       backgroundImage:
-        'linear-gradient(rgba(0,72,171,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(0,72,171,.09) 1px, transparent 1px)',
+        'linear-gradient(rgba(60,130,240,.16) 1px, transparent 1px), linear-gradient(90deg, rgba(60,130,240,.16) 1px, transparent 1px)',
       backgroundSize: '56px 34px',
-      backgroundPosition: '0px 48px',
+      // aligné avec les en-têtes de colonnes (28px header + 24px formula bar = 52px chrome total)
+      backgroundPosition: '48px 52px',
     }}>
       {/* Column headers row */}
       <div style={{
@@ -26,8 +27,8 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
         zIndex: 20,
         display: 'flex',
         height: '28px',
-        background: '#1B3A6B',
-        borderBottom: '1px solid #2B5090',
+        background: '#1A3E7A',
+        borderBottom: '1px solid #2B5490',
       }}>
         {COLUMNS.map(col => (
           <div key={col} style={{
@@ -54,8 +55,8 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
         display: 'flex',
         alignItems: 'center',
         height: '24px',
-        background: '#0D2B5E',
-        borderBottom: '2px solid #1B3A6B',
+        background: '#0C2A62',
+        borderBottom: '2px solid #1A3E7A',
         paddingLeft: '8px',
         gap: '12px',
       }}>

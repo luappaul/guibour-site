@@ -269,7 +269,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center gap-5"
            style={{
-             background: '#1E3A5E',
+             background: '#1A3F78',
              backgroundImage: 'linear-gradient(rgba(0,72,171,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(0,72,171,.09) 1px, transparent 1px)',
              backgroundSize: '52px 32px',
            }}>
@@ -305,8 +305,8 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
         {/* fx progress bar */}
         <div style={{ width: 'clamp(280px, 40vw, 420px)', marginTop: '8px' }}>
           <div style={{
-            background: '#0D2B5E',
-            border: '1px solid #1B3A6B',
+            background: '#0C2A62',
+            border: '1px solid #1A3E7A',
             padding: '5px 10px',
             display: 'flex',
             alignItems: 'center',
@@ -349,7 +349,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
 
   return (
     <div className="flex flex-col h-full w-full" style={{
-      background: '#1E3A5E',
+      background: '#1A3F78',
       gap: '0',
       padding: '8px 8px',
     }}>
@@ -371,7 +371,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
           {/* Elevator transition */}
           {elevatorActive && (
             <div className="pointer-events-none absolute inset-0 z-15"
-                 style={{ background: '#1E3A5E', animation: 'elevatorSlide 1.5s ease-in-out forwards' }}>
+                 style={{ background: '#1A3F78', animation: 'elevatorSlide 1.5s ease-in-out forwards' }}>
               <div className="flex h-full items-center justify-center">
                 <div className="text-center">
                   <p style={{ fontFamily: "'Lilita One', cursive", fontSize: '28px', color: '#00C8BE', letterSpacing: '4px', animation: 'pulse 1s ease-in-out infinite', textShadow: '0 0 16px rgba(0,200,190,.5)' }}>▲ MONTÉE</p>
@@ -513,14 +513,14 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
 
       {/* ── TIMER / FORMULA BAR ROW ── */}
       {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete') && (
-        <div style={{ flexShrink: 0, background: '#1E3A5E', borderTop: '2px solid #1B3A6B', fontFamily: "'Orbitron', sans-serif", marginTop: '6px' }}>
+        <div style={{ flexShrink: 0, background: '#1A3F78', borderTop: '2px solid #1A3E7A', fontFamily: "'Orbitron', sans-serif", marginTop: '6px' }}>
           {/* Formula row */}
           <div style={{ display: 'flex', alignItems: 'center', height: '28px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '100%', borderRight: '1px solid #1B3A6B', background: '#0D2B5E', flexShrink: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '100%', borderRight: '1px solid #1A3E7A', background: '#0C2A62', flexShrink: 0 }}>
               <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '13px', color: '#00D4CC', fontWeight: 700 }}>fx</span>
             </div>
             <div style={{ flex: 1, padding: '0 10px', overflow: 'hidden', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div style={{ flex: 1, background: '#0D2B5E', border: '1px solid #1B3A6B', height: '12px', borderRadius: '2px', overflow: 'hidden' }}>
+              <div style={{ flex: 1, background: '#0C2A62', border: '1px solid #1A3E7A', height: '12px', borderRadius: '2px', overflow: 'hidden' }}>
                 <div ref={timerFillRef} style={{ height: '100%', width: '100%', background: 'linear-gradient(90deg, #0047AB, #00C8BE)', boxShadow: '0 0 6px rgba(0,200,190,.4)', transition: 'background 0.3s ease' }} />
               </div>
               <span ref={timerFormulaRef} style={{ fontSize: '10px', color: '#5B9BD5', whiteSpace: 'nowrap', letterSpacing: '0.5px' }}>
@@ -534,19 +534,19 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
 
       {/* ── HUD ROW: lives + level name + score + mute ── */}
       {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete') && (
-        <div style={{ flexShrink: 0, background: '#1E3A5E', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '2px solid #00C8BE', marginTop: '4px' }}>
+        <div style={{ flexShrink: 0, background: '#1A3F78', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '2px solid #00C8BE', marginTop: '4px' }}>
 
           {/* Left: RTT lives — Excel cells */}
-          <div style={{ display: 'flex', gap: '1px', background: '#1B3A6B', border: '1px solid #1B3A6B' }}>
-            <div style={{ background: '#0D2B5E', padding: '6px 14px', textAlign: 'center' }}>
+          <div style={{ display: 'flex', gap: '1px', background: '#1A3E7A', border: '1px solid #1A3E7A' }}>
+            <div style={{ background: '#0C2A62', padding: '6px 14px', textAlign: 'center' }}>
               <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#5B9BD5', letterSpacing: '2px' }}>ÉTAGE</div>
               <div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '16px', color: '#FFE033' }}>{String(currentLevel + 1).padStart(2, '0')}</div>
             </div>
-            <div style={{ background: '#0D2B5E', padding: '6px 14px', textAlign: 'center' }}>
+            <div style={{ background: '#0C2A62', padding: '6px 14px', textAlign: 'center' }}>
               <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#5B9BD5', letterSpacing: '2px' }}>SALAIRE</div>
               <div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '16px', color: '#00C8BE' }}>{hudInfo.score.toLocaleString('fr-FR')}€</div>
             </div>
-            <div style={{ background: '#0D2B5E', padding: '6px 14px', textAlign: 'center' }}>
+            <div style={{ background: '#0C2A62', padding: '6px 14px', textAlign: 'center' }}>
               <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#5B9BD5', letterSpacing: '2px' }}>RTT</div>
               <div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '16px', color: '#FF4444' }}>{'❤'.repeat(hudInfo.lives)}</div>
             </div>
@@ -569,7 +569,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
             <button
               onClick={handleToggleMute}
               className="pointer-events-auto cursor-pointer"
-              style={{ background: '#0D2B5E', padding: '6px 10px', border: '1px solid #1B3A6B', fontSize: '20px', color: isMuted ? '#FF4444' : '#00C8BE', lineHeight: 1 }}
+              style={{ background: '#0C2A62', padding: '6px 10px', border: '1px solid #1A3E7A', fontSize: '20px', color: isMuted ? '#FF4444' : '#00C8BE', lineHeight: 1 }}
             >
               {isMuted ? '🔇' : '🔊'}
             </button>
