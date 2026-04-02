@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import ExcelNav from '@/components/ui/ExcelNav';
 import ExcelChrome from '@/components/ui/ExcelChrome';
-import Sphere from '@/components/ui/Sphere';
+import GlobeIcon from '@/components/ui/GlobeIcon';
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
@@ -23,7 +23,7 @@ export default function ContactPage() {
           {/* HEADER */}
           <div style={{ background:'linear-gradient(135deg,#0B1F3A 0%,#0D2B5E 60%,#0047AB 100%)', padding:'28px 48px', borderBottom:'3px solid #00C8BE', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'24px', flexWrap:'wrap' }}>
             <div style={{ display:'flex', alignItems:'center', gap:'20px' }}>
-              <Sphere size={52} />
+              <GlobeIcon size={52} color="#00C8BE" />
               <div>
                 <div style={{ fontFamily:"'Orbitron', sans-serif", fontSize:'9px', color:'#3C5A7A', letterSpacing:'5px', marginBottom:'4px' }}>03 / CONTACT</div>
                 <div style={{ fontFamily:"'Lilita One', cursive", fontSize:'clamp(22px,4vw,36px)', color:'#F2F8FF', letterSpacing:'4px', lineHeight:1 }}>NOUS CONTACTER</div>
@@ -60,7 +60,7 @@ export default function ContactPage() {
               {/* COLONNE GAUCHE — carte identité */}
               <div style={{ background:'#0D2B5E', borderRight:'2px solid #1B3A6B', padding:'40px 28px', display:'flex', flexDirection:'column', gap:'24px' }}>
                 <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'12px', paddingBottom:'24px', borderBottom:'1px solid rgba(255,255,255,.08)' }}>
-                  <Sphere size={64} />
+                  <GlobeIcon size={64} color="#00C8BE" />
                   <div style={{ textAlign:'center' }}>
                     <div style={{ fontFamily:"'Lilita One', cursive", fontSize:'22px', color:'#FFFFFF', letterSpacing:'3px', animation:'glowWhite 3s ease-in-out infinite' }}>GUIBOUR</div>
                     <div style={{ fontFamily:"'Orbitron', sans-serif", fontSize:'8px', color:'#00D4CC', letterSpacing:'5px', marginTop:'2px' }}>SYSTEM</div>

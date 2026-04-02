@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import ExcelNav from '@/components/ui/ExcelNav';
 import ExcelChrome from '@/components/ui/ExcelChrome';
-import Sphere from '@/components/ui/Sphere';
+import GlobeIcon from '@/components/ui/GlobeIcon';
 
 // ─── Catalogue ────────────────────────────────────────────────
 const PRODUCTS = [
@@ -428,7 +428,7 @@ export default function ShoppingPage() {
           {/* HEADER commun */}
           <div style={{ background: 'linear-gradient(135deg,#0B1F3A 0%,#0D2B5E 60%,#0047AB 100%)', padding: '20px 48px', borderBottom: '3px solid #00C8BE', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <Sphere size={44} />
+              <GlobeIcon size={44} color="#00C8BE" />
               <div>
                 <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#3C5A7A', letterSpacing: '4px', marginBottom: '2px' }}>02 / BOUTIQUE</div>
                 <div style={{ fontFamily: "'Lilita One', cursive", fontSize: 'clamp(18px,3.5vw,30px)', color: '#F2F8FF', letterSpacing: '3px', lineHeight: 1 }}>BOUTIQUE MERCH</div>

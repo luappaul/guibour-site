@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import ExcelNav from '@/components/ui/ExcelNav';
 import ExcelChrome from '@/components/ui/ExcelChrome';
-import Sphere from '@/components/ui/Sphere';
+import GlobeIcon from '@/components/ui/GlobeIcon';
 import { getLeaderboard, formatSalary } from '@/lib/leaderboard';
 import { LeaderboardEntry } from '@/lib/gameTypes';
 
@@ -57,7 +57,7 @@ export default function ResultatsPage() {
           {/* HEADER */}
           <div style={{ background:'linear-gradient(135deg,#0B1F3A 0%,#0D2B5E 60%,#0047AB 100%)', padding:'28px 48px', borderBottom:'3px solid #00C8BE', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'24px', flexWrap:'wrap' }}>
             <div style={{ display:'flex', alignItems:'center', gap:'20px' }}>
-              <Sphere size={52} />
+              <GlobeIcon size={52} color="#00C8BE" />
               <div>
                 <div style={{ fontFamily:"'Orbitron', sans-serif", fontSize:'9px', color:'#3C5A7A', letterSpacing:'5px', marginBottom:'4px' }}>01 / CLASSEMENT</div>
                 <div style={{ fontFamily:"'Lilita One', cursive", fontSize:'clamp(22px,4vw,36px)', color:'#F2F8FF', letterSpacing:'4px', lineHeight:1 }}>RÉSULTATS</div>

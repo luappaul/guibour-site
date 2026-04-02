@@ -6,7 +6,7 @@ import ExcelNav from '@/components/ui/ExcelNav';
 import ExcelChrome from '@/components/ui/ExcelChrome';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import CharacterSelect, { CharacterData } from '@/components/ui/CharacterSelect';
-import Sphere from '@/components/ui/Sphere';
+import GlobeIcon from '@/components/ui/GlobeIcon';
 
 const GameCanvas = dynamic(() => import('@/components/game/GameCanvas'), {
   ssr: false,
@@ -18,8 +18,8 @@ import Link from 'next/link';
 function WowSpan() {
   return (
     <span style={{
-      color: '#7AEC7A',
-      textShadow: '0 0 10px rgba(122,236,122,.55)',
+      color: '#00C8BE',
+      textShadow: '0 0 10px rgba(0,200,190,.55)',
     }}>W.O.W</span>
   );
 }
@@ -49,20 +49,30 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
         EMPLOYEE ID: GS-4891 // W.O.W // 2026
       </div>
 
-      {/* Logo horizontal — sphère + texte centré */}
+      {/* Logo centré — globe derrière GUIBOUR SYSTEM */}
       <div style={{
+        position: 'relative',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: '24px',
         marginBottom: '4px',
-        position: 'relative',
         zIndex: 2,
       }}>
-        <Sphere size={80} />
+        {/* Globe en arrière-plan, centré */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          opacity: 0.18,
+          animation: 'float 6s ease-in-out infinite',
+          pointerEvents: 'none',
+        }}>
+          <GlobeIcon size={220} color="#00C8BE" />
+        </div>
 
-        <div style={{ textAlign: 'center' }}>
-          {/* GUIBOUR — vert néon intense */}
+        {/* Texte en avant-plan */}
+        <div style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <div style={{
             fontFamily: "'Lilita One', cursive",
             fontSize: 'clamp(48px, 9vw, 82px)',
@@ -73,8 +83,6 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
           }}>
             GUIBOUR
           </div>
-
-          {/* SYSTEM — Orbitron, cyan, plus petit */}
           <div style={{
             fontFamily: "'Orbitron', sans-serif",
             fontSize: 'clamp(13px, 2.2vw, 22px)',
@@ -204,23 +212,11 @@ export default function Home() {
   }, []);
 
   const handlePlay = useCallback(() => {
-    // If a character was saved from a previous visit, skip CharacterSelect
-    const savedName = typeof window !== 'undefined'
-      ? sessionStorage.getItem('guibour-character')
-      : null;
-    if (savedName) {
-      setSelectedCharacter({ id: 'saved', name: savedName, title: 'EMPLOYÉ', emoji: '🧑‍💼', stats: [] });
-      setShowGame(true);
-    } else {
-      setShowCharacterSelect(true);
-    }
+    // Toujours afficher CharacterSelect pour identifier le joueur
+    setShowCharacterSelect(true);
   }, []);
 
   const handleCharacterSelect = useCallback((character: CharacterData) => {
-    // Persist chosen character so next JOUER skips the selector
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem('guibour-character', character.name);
-    }
     setSelectedCharacter(character);
     setShowCharacterSelect(false);
     setShowGame(true);
@@ -242,7 +238,7 @@ export default function Home() {
     return (
       <div
         className="flex flex-col overflow-hidden"
-        style={{ background: '#0A1628', height: '100dvh', paddingLeft: '48px' }}
+        style={{ background: '#162840', height: '100dvh', paddingLeft: '48px' }}
       >
         <main
           className="flex-1"
@@ -256,7 +252,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: '#0A1628' }}>
+    <div className="min-h-screen" style={{ background: '#162840' }}>
       <ExcelNav />
       <ExcelChrome formulaText='=LAUNCH_GAME("GUIBOUR","SINGLE_2026") → WELCOME_TO_THE_SYSTEM'>
         <HeroContent onPlay={handlePlay} />

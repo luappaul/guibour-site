@@ -269,7 +269,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center gap-5"
            style={{
-             background: '#0A1628',
+             background: '#162840',
              backgroundImage: 'linear-gradient(rgba(0,72,171,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(0,72,171,.09) 1px, transparent 1px)',
              backgroundSize: '52px 32px',
            }}>
@@ -349,7 +349,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
 
   return (
     <div className="flex flex-col h-full w-full" style={{
-      background: '#060E00',
+      background: '#162840',
       gap: '0',
       padding: '8px 8px',
     }}>
@@ -371,11 +371,11 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
           {/* Elevator transition */}
           {elevatorActive && (
             <div className="pointer-events-none absolute inset-0 z-15"
-                 style={{ background: '#080F08', animation: 'elevatorSlide 1.5s ease-in-out forwards' }}>
+                 style={{ background: '#0A1628', animation: 'elevatorSlide 1.5s ease-in-out forwards' }}>
               <div className="flex h-full items-center justify-center">
                 <div className="text-center">
-                  <p style={{ fontFamily: "'Lilita One', cursive", fontSize: '28px', color: '#5CDB5C', letterSpacing: '4px', animation: 'pulse 1s ease-in-out infinite', textShadow: '0 0 16px rgba(92,219,92,.5)' }}>▲ MONTÉE</p>
-                  <p style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '12px', color: '#4CAF50', letterSpacing: '2px', marginTop: '8px' }}>ASCENSEUR EN COURS...</p>
+                  <p style={{ fontFamily: "'Lilita One', cursive", fontSize: '28px', color: '#00C8BE', letterSpacing: '4px', animation: 'pulse 1s ease-in-out infinite', textShadow: '0 0 16px rgba(0,200,190,.5)' }}>▲ MONTÉE</p>
+                  <p style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '12px', color: '#5B9BD5', letterSpacing: '2px', marginTop: '8px' }}>ASCENSEUR EN COURS...</p>
                 </div>
               </div>
             </div>
@@ -513,17 +513,17 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
 
       {/* ── TIMER / FORMULA BAR ROW ── */}
       {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete') && (
-        <div style={{ flexShrink: 0, background: '#060E00', borderTop: '2px solid #1B4332', fontFamily: "'Orbitron', sans-serif", marginTop: '6px' }}>
+        <div style={{ flexShrink: 0, background: '#162840', borderTop: '2px solid #1B3A6B', fontFamily: "'Orbitron', sans-serif", marginTop: '6px' }}>
           {/* Formula row */}
           <div style={{ display: 'flex', alignItems: 'center', height: '28px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '100%', borderRight: '1px solid #1B4332', background: '#0D2B0D', flexShrink: 0 }}>
-              <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '13px', color: '#5CDB5C', fontWeight: 700 }}>fx</span>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '100%', borderRight: '1px solid #1B3A6B', background: '#0D2B5E', flexShrink: 0 }}>
+              <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '13px', color: '#00D4CC', fontWeight: 700 }}>fx</span>
             </div>
             <div style={{ flex: 1, padding: '0 10px', overflow: 'hidden', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div style={{ flex: 1, background: '#0D2B0D', border: '1px solid #1B4332', height: '12px', borderRadius: '2px', overflow: 'hidden' }}>
-                <div ref={timerFillRef} style={{ height: '100%', width: '100%', background: 'linear-gradient(90deg, #5CDB5C, #FFE033)', boxShadow: '0 0 6px rgba(92,219,92,.4)', transition: 'background 0.3s ease' }} />
+              <div style={{ flex: 1, background: '#0D2B5E', border: '1px solid #1B3A6B', height: '12px', borderRadius: '2px', overflow: 'hidden' }}>
+                <div ref={timerFillRef} style={{ height: '100%', width: '100%', background: 'linear-gradient(90deg, #0047AB, #00C8BE)', boxShadow: '0 0 6px rgba(0,200,190,.4)', transition: 'background 0.3s ease' }} />
               </div>
-              <span ref={timerFormulaRef} style={{ fontSize: '10px', color: '#4CAF50', whiteSpace: 'nowrap', letterSpacing: '0.5px' }}>
+              <span ref={timerFormulaRef} style={{ fontSize: '10px', color: '#5B9BD5', whiteSpace: 'nowrap', letterSpacing: '0.5px' }}>
                 =TEMPS(90s)
               </span>
               <span ref={timerTextRef} style={{ fontSize: '12px', color: '#FFE033', flexShrink: 0, fontFamily: "'Luckiest Guy', cursive" }}>90s</span>
@@ -534,7 +534,7 @@ export default function GameCanvas({ characterName = '' }: GameCanvasProps) {
 
       {/* ── HUD ROW: lives + level name + score + mute ── */}
       {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete') && (
-        <div style={{ flexShrink: 0, background: '#0A1628', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '2px solid #00C8BE', marginTop: '4px' }}>
+        <div style={{ flexShrink: 0, background: '#162840', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '2px solid #00C8BE', marginTop: '4px' }}>
 
           {/* Left: RTT lives — Excel cells */}
           <div style={{ display: 'flex', gap: '1px', background: '#1B3A6B', border: '1px solid #1B3A6B' }}>

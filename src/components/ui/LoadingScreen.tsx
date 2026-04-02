@@ -47,7 +47,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       position: 'fixed',
       inset: 0,
       zIndex: 9999,
-      background: '#0A1628',
+      background: '#162840',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
