@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
+import { playClick } from '@/lib/sounds';
 
 export interface CharacterData {
   id: string;
@@ -162,6 +163,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
 
   const spin = useCallback((dir: 1 | -1) => {
     if (spinning) return;
+    playClick();
     setSpinning(true);
     setActiveIndex(i => ((i + dir + N) % N));
     setTimeout(() => setSpinning(false), 520);
@@ -188,6 +190,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
 
   // ── Identity step handlers ──────────────────────────────────────────────────
   const handleIdentitySubmit = () => {
+    playClick();
     if (!pseudo.trim()) {
       setPseudoError('Un pseudo est obligatoire pour jouer.');
       return;
@@ -200,6 +203,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
   };
 
   const handlePlayAsExisting = () => {
+    playClick();
     setStep('character');
   };
 
@@ -420,7 +424,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
         </div>
 
         <button
-          onClick={onBack}
+          onClick={() => { playClick(); onBack(); }}
           style={{
             position: 'relative', zIndex: 2, marginTop: '16px',
             fontFamily: "'Orbitron', sans-serif", fontSize: '9px', letterSpacing: '3px', color: '#3C5A7A',
@@ -574,6 +578,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
         ) : (
           <button
             onClick={() => {
+              playClick();
               const identity: PlayerIdentity = {
                 pseudo,
                 email: email || existingIdentity?.email,
@@ -597,7 +602,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
         )}
       </div>
 
-      <button onClick={() => setStep('identity')} style={{
+      <button onClick={() => { playClick(); setStep('identity'); }} style={{
         position: 'relative', zIndex: 2,
         fontFamily: "'Orbitron', sans-serif", fontSize: '9px', letterSpacing: '3px', color: '#3C5A7A',
         background: 'transparent', border: '1px solid #1A3E7A', padding: '7px 18px', cursor: 'pointer',

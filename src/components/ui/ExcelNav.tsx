@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import GlobeIcon from './GlobeIcon';
+import { playClick } from '@/lib/sounds';
 
 const tabs = [
   { href: '/', label: 'JOUER À W.O.W' },
@@ -40,6 +41,7 @@ export default function ExcelNav() {
       {/* Logo area — hard navigation pour quitter le jeu et revenir à l'accueil */}
       <a
         href="/"
+        onClick={playClick}
         style={{
           padding: '12px 0',
           borderBottom: '1px solid #1B3A6B',
@@ -84,6 +86,7 @@ export default function ExcelNav() {
             <Link
               key={tab.href}
               href={tab.href}
+              onClick={playClick}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -138,6 +141,7 @@ export default function ExcelNav() {
       }}>
         <Link
           href="/"
+          onClick={playClick}
           style={{
             display: 'flex',
             alignItems: 'center',

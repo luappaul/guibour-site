@@ -690,15 +690,17 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
   ctx.save();
 
   if (isMoving && walkVideo && walkVideo.readyState >= 2) {
-    // Draw video frame — video is natively facing left
-    // For right movement: flip horizontally
+    // Draw video frame — video is natively facing left (1280×720)
+    // Character occupies x=401..857 (sw=456) of the full frame (with ~20px padding)
+    const sx = 401, sy = 0, sw = 456, sh = 720;
     if (player.direction === 'right') {
-      ctx.translate(player.x, player.y - player.height);
+      // Flip horizontally for right movement
+      ctx.translate(player.x + player.width / 2, player.y - player.height);
       ctx.scale(-1, 1);
-      ctx.drawImage(walkVideo, -player.width / 2, 0, player.width, player.height);
+      ctx.drawImage(walkVideo, sx, sy, sw, sh, -player.width, 0, player.width, player.height);
     } else {
       // Left = native direction
-      ctx.drawImage(walkVideo, player.x - player.width / 2, player.y - player.height, player.width, player.height);
+      ctx.drawImage(walkVideo, sx, sy, sw, sh, player.x - player.width / 2, player.y - player.height, player.width, player.height);
     }
   } else if (idleImg) {
     // Idle: draw static image

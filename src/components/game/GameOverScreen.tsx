@@ -4,6 +4,7 @@ import { GameState } from '@/lib/gameTypes';
 import { addScore, formatDuration, formatSalary, getShareText } from '@/lib/leaderboard';
 import { useEffect, useState, useRef } from 'react';
 import { PlayerIdentity } from '@/components/ui/CharacterSelect';
+import { playClick } from '@/lib/sounds';
 
 interface Props {
   state: GameState;
@@ -223,6 +224,7 @@ export default function GameOverScreen({ state, onRestart, playerIdentity, repla
   }, [playerIdentity]);
 
   const handleDownloadCertificate = async () => {
+    playClick();
     const { generateCertificate } = await import('@/lib/generateCertificate');
     await generateCertificate({
       pseudo,
@@ -234,6 +236,7 @@ export default function GameOverScreen({ state, onRestart, playerIdentity, repla
   };
 
   const handleShare = async () => {
+    playClick();
     const text = getShareText(pseudo, level, player.score, durationMs);
     if (navigator.share) {
       try { await navigator.share({ text }); } catch {}
@@ -245,6 +248,7 @@ export default function GameOverScreen({ state, onRestart, playerIdentity, repla
   };
 
   const handleWhatsAppShare = () => {
+    playClick();
     if (waShareCount >= 3) return;
     const text = encodeURIComponent(
       `🎮 J'ai joué à W.O.W (Work Or Window) de Guibour !\n` +
@@ -257,6 +261,7 @@ export default function GameOverScreen({ state, onRestart, playerIdentity, repla
   };
 
   const handleInstagramShare = () => {
+    playClick();
     if (!shareImageUrl) return;
     const link = document.createElement('a');
     link.href = shareImageUrl;
@@ -268,6 +273,7 @@ export default function GameOverScreen({ state, onRestart, playerIdentity, repla
   };
 
   const handleDownloadImage = () => {
+    playClick();
     if (!shareImageUrl) return;
     const link = document.createElement('a');
     link.href = shareImageUrl;
@@ -368,7 +374,7 @@ export default function GameOverScreen({ state, onRestart, playerIdentity, repla
               </div>
 
               <div className="flex gap-2 flex-wrap">
-                <button onClick={onRestart} className="flex-1 cursor-pointer py-3 text-xs font-bold tracking-widest text-white transition-all hover:brightness-110 active:scale-[0.98]" style={{ fontFamily: "'Orbitron', sans-serif", background: '#0047AB', border: '1px solid #0A1520', minWidth: '80px' }}>
+                <button onClick={() => { playClick(); onRestart(); }} className="flex-1 cursor-pointer py-3 text-xs font-bold tracking-widest text-white transition-all hover:brightness-110 active:scale-[0.98]" style={{ fontFamily: "'Orbitron', sans-serif", background: '#0047AB', border: '1px solid #0A1520', minWidth: '80px' }}>
                   REJOUER
                 </button>
                 <button onClick={handleShare} className="flex-1 cursor-pointer py-3 text-xs font-bold tracking-widest transition-all hover:brightness-110 active:scale-[0.98]" style={{ fontFamily: "'Orbitron', sans-serif", background: '#00A89D', color: '#fff', border: '1px solid #0047AB', minWidth: '80px' }}>
@@ -541,6 +547,7 @@ export default function GameOverScreen({ state, onRestart, playerIdentity, repla
                         />
                         <button
                           onClick={() => {
+                            playClick();
                             const input = document.getElementById('rtt-email-input') as HTMLInputElement;
                             if (input?.value?.includes('@')) {
                               // Save to identity
@@ -583,7 +590,7 @@ export default function GameOverScreen({ state, onRestart, playerIdentity, repla
                   )}
 
                   <button
-                    onClick={onRestart}
+                    onClick={() => { playClick(); onRestart(); }}
                     style={{
                       width: '100%', fontFamily: "'Luckiest Guy', cursive", fontSize: '16px', letterSpacing: '3px',
                       color: '#fff', background: 'linear-gradient(135deg,#0047AB,#007B8A)',

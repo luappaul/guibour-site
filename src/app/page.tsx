@@ -8,6 +8,7 @@ import LoadingScreen from '@/components/ui/LoadingScreen';
 import CharacterSelect, { CharacterData, PlayerIdentity } from '@/components/ui/CharacterSelect';
 import LogoSphere from '@/components/ui/LogoSphere';
 import { useDayNight, getDayNightTheme } from '@/hooks/useDayNight';
+import { playClick } from '@/lib/sounds';
 
 const GameCanvas = dynamic(() => import('@/components/game/GameCanvas'), {
   ssr: false,
@@ -115,7 +116,7 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
 
       {/* CTA JOUER À W.O.W */}
       <button
-        onClick={onPlay}
+        onClick={() => { playClick(); onPlay(); }}
         style={{
           marginTop: '36px',
           fontFamily: "'Lilita One', cursive",
@@ -160,6 +161,7 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
       {/* Bouton Boutique — gros et visible */}
       <Link
         href="/shopping"
+        onClick={playClick}
         style={{
           marginTop: '16px',
           fontFamily: "'Lilita One', cursive",

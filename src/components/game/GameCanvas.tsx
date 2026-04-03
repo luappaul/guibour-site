@@ -9,6 +9,7 @@ import { audioManager } from '@/lib/audioManager';
 import SponsoredSidebar from './SponsoredSidebar';
 import GameOverScreen from './GameOverScreen';
 import { PlayerIdentity } from '@/components/ui/CharacterSelect';
+import { playClick } from '@/lib/sounds';
 
 interface GameCanvasProps {
   characterName?: string;
@@ -344,6 +345,7 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
   }, [gameStatus]);
 
   const handleToggleMute = () => {
+    playClick();
     const muted = audioManager.toggleMute();
     setIsMuted(muted);
   };
@@ -619,7 +621,7 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
                     style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '16px', width: '100%', padding: '10px 12px', border: '1px solid #C8D8E8', background: '#fff', color: '#0A1520', outline: 'none', marginBottom: '14px' }}
                   />
                   <button
-                    onClick={handleStart}
+                    onClick={() => { playClick(); handleStart(); }}
                     className="w-full cursor-pointer py-3 transition-all hover:brightness-110 active:scale-[0.98]"
                     style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '14px', fontWeight: 700, letterSpacing: '4px', color: '#fff', background: '#0047AB', border: '1px solid #0A1520' }}
                   >
@@ -654,7 +656,7 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
                   <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#fff', letterSpacing: '2px', fontWeight: 700 }}>
                     ▶ GUIBOUR — YOUTUBE
                   </span>
-                  <button onClick={() => setShowYouTubePopup(false)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '16px', lineHeight: 1 }}>✕</button>
+                  <button onClick={() => { playClick(); setShowYouTubePopup(false); }} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '16px', lineHeight: 1 }}>✕</button>
                 </div>
                 <div style={{ padding: '20px', textAlign: 'center' }}>
                   <div style={{ fontSize: '36px', marginBottom: '10px' }}>▶</div>
@@ -669,7 +671,7 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
                       href="https://www.youtube.com/@Guibour?sub_confirmation=1"
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={() => setShowYouTubePopup(false)}
+                      onClick={() => { playClick(); setShowYouTubePopup(false); }}
                       style={{
                         fontFamily: "'Orbitron', sans-serif", fontSize: '10px', letterSpacing: '2px',
                         padding: '10px 20px', background: 'linear-gradient(135deg,#FF0000,#CC0000)',
@@ -680,7 +682,7 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
                       S&apos;ABONNER →
                     </a>
                     <button
-                      onClick={() => setShowYouTubePopup(false)}
+                      onClick={() => { playClick(); setShowYouTubePopup(false); }}
                       style={{
                         fontFamily: "'Orbitron', sans-serif", fontSize: '9px', letterSpacing: '2px',
                         padding: '10px 14px', background: 'transparent',
