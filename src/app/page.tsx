@@ -84,15 +84,15 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
 
         {/* Sous-titre SYSTEM */}
         <div style={{
-          fontFamily  : "'Orbitron', sans-serif",
-          fontSize    : 'clamp(13px, 2.2vw, 22px)',
-          color       : '#00FFEE',
-          letterSpacing: '10px',
-          fontWeight  : 400,
-          textShadow  : '0 0 14px rgba(0,255,238,.5)',
-          marginTop   : '-4px',
+          fontFamily   : "'Orbitron', sans-serif",
+          fontSize     : 'clamp(11px, 1.8vw, 16px)',
+          color        : '#00FFEE',
+          letterSpacing: '8px',
+          fontWeight   : 700,
+          textShadow   : '0 0 14px rgba(0,255,238,.5)',
+          marginTop    : '4px',
         }}>
-          SYSTEM
+          S Y S T E M
         </div>
       </div>
 
