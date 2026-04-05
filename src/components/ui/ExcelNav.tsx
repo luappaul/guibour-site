@@ -1,16 +1,17 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import GlobeIcon from './GlobeIcon';
 import { playClick } from '@/lib/sounds';
 
 const mainTabs = [
-  { href: '/', label: 'JOUER À W.O.W' },
-  { href: '/resultats', label: 'CLASSEMENT' },
-  { href: '/jukebox', label: '🎵 SALLE D\'ÉCOUTE' },
-  { href: '/shopping', label: 'BOUTIQUE' },
-  { href: '/contact', label: 'CONTACT' },
+  { href: '/',          label: 'JOUER À W.O.W',  icon: '/icons/icon-play.png'    },
+  { href: '/resultats', label: 'CLASSEMENT',       icon: '/icons/icon-trophy.png'  },
+  { href: '/jukebox',   label: 'SALLE D\'ÉCOUTE',  icon: '/icons/icon-music.png'   },
+  { href: '/shopping',  label: 'BOUTIQUE',          icon: '/icons/icon-shop.png'    },
+  { href: '/contact',   label: 'CONTACT',           icon: '/icons/icon-contact.png' },
 ];
 
 const legalLinks = [
@@ -57,8 +58,8 @@ export default function ExcelNav() {
           const isWow = tab.label === 'JOUER À W.O.W';
           return (
             <Link key={tab.href} href={tab.href} onClick={playClick} style={{
-              display: 'flex', alignItems: 'center',
-              padding: '12px 14px',
+              display: 'flex', alignItems: 'center', gap: '12px',
+              padding: '10px 0 10px 11px',
               fontFamily: "'Lilita One', cursive", fontSize: '13px', letterSpacing: '2px',
               color: active ? '#A8D8FF' : '#3C5A7A',
               textDecoration: 'none',
@@ -70,9 +71,16 @@ export default function ExcelNav() {
             onMouseEnter={e => { if (!active) { e.currentTarget.style.color = '#A8D8FF'; e.currentTarget.style.background = 'rgba(0,71,171,0.12)'; } }}
             onMouseLeave={e => { if (!active) { e.currentTarget.style.color = '#3C5A7A'; e.currentTarget.style.background = 'transparent'; } }}
             >
-              {isWow ? (
-                <>JOUER À{' '}<span style={{ color: '#00C8BE', textShadow: '0 0 8px rgba(0,200,190,.5)', marginLeft: '4px' }}>W.O.W</span></>
-              ) : tab.label}
+              {/* Icône PNG — visible collapsed + expanded */}
+              <span className={active ? 'nav-icon nav-icon--active' : 'nav-icon'} style={{ flexShrink: 0 }}>
+                <Image src={tab.icon} alt="" width={22} height={22} style={{ display: 'block' }} />
+              </span>
+              {/* Label — masqué collapsed */}
+              <span style={{ overflow: 'hidden' }}>
+                {isWow ? (
+                  <>JOUER À{' '}<span style={{ color: '#00C8BE', textShadow: '0 0 8px rgba(0,200,190,.5)' }}>W.O.W</span></>
+                ) : tab.label}
+              </span>
             </Link>
           );
         })}

@@ -169,18 +169,18 @@ html, body {
   background-size: 56px 34px;
 }
 
-/* ===== GRID — REFLET NEON SUR LES LIGNES ===== */
+/* ===== GRID — NEON GLOW SUR LES LIGNES ===== */
 /*
-  Masque composite = fenêtre glissante × ellipse centre-atténuée
-  → L'effet est quasi-invisible au centre (derrière logo/textes)
-     et plus perceptible sur les bords/coins
-  → Couleur cyan neon pour cohérence avec le globe
+  Technique : mix-blend-mode screen + filter blur
+  → screen additionne la couleur sans blanchir (neon qui brille, pas surbrillance)
+  → blur(1px) étale le glow autour de chaque ligne comme un tube néon
+  → masque composite glissant × ellipse : quasi-invisible au centre (logo/textes)
 */
 
 @keyframes maskSlide {
-  0%   { mask-position: -55% 0, 0 0; }
-  70%  { mask-position: 155% 0, 0 0; }
-  100% { mask-position: 155% 0, 0 0; }
+  0%   { mask-position: -60% 0, 0 0; }
+  65%  { mask-position: 160% 0, 0 0; }
+  100% { mask-position: 160% 0, 0 0; }
 }
 
 .grid-shimmer {
@@ -195,64 +195,90 @@ html, body {
   content: '';
   position: absolute;
   inset: 0;
-  /* Même grille, lignes cyan neon — opacité réduite */
+  /* Même grille en cyan pur — screen ne blanchit pas, il fait briller */
   background-image:
-    linear-gradient(rgba(0, 240, 225, 0.72) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 240, 225, 0.72) 1px, transparent 1px);
+    linear-gradient(rgba(0, 255, 235, 0.9) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 235, 0.9) 1px, transparent 1px);
   background-size: 56px 34px;
   background-position: 48px 52px;
+  /* Blur : étale le glow autour des lignes → effet tube néon */
+  filter: blur(0.8px);
+  /* Screen : ajoute de la lumière colorée sans blanchir */
+  mix-blend-mode: screen;
+  /* Masque : fenêtre glissante × ellipse centre-atténuée */
   mask-image:
     linear-gradient(
       90deg,
-      transparent     0%,
-      rgba(0,0,0,.14) 20%,
-      rgba(0,0,0,.70) 50%,
-      rgba(0,0,0,.14) 80%,
-      transparent     100%
+      transparent      0%,
+      rgba(0,0,0,.10)  18%,
+      rgba(0,0,0,.55)  50%,
+      rgba(0,0,0,.10)  82%,
+      transparent      100%
     ),
     radial-gradient(
-      ellipse 65% 55% at 50% 48%,
-      rgba(0,0,0,.05) 0%,
-      rgba(0,0,0,.42) 45%,
-      rgba(0,0,0,.95) 100%
+      ellipse 60% 52% at 50% 47%,
+      rgba(0,0,0,.03)  0%,
+      rgba(0,0,0,.30)  40%,
+      rgba(0,0,0,.92)  100%
     );
-  mask-size: 50% 100%, 100% 100%;
+  mask-size: 48% 100%, 100% 100%;
   mask-repeat: no-repeat, no-repeat;
   mask-composite: intersect;
-  mask-position: -55% 0, 0 0;
-  animation: maskSlide 15s ease-in-out infinite;
+  mask-position: -60% 0, 0 0;
+  animation: maskSlide 16s ease-in-out infinite;
 }
 
-/* Passe secondaire — plus fine, décalée de 7.5s */
+/* Passe secondaire — plus fine, décalée de 8s */
 .grid-shimmer::after {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(0, 220, 210, 0.52) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 220, 210, 0.52) 1px, transparent 1px);
+    linear-gradient(rgba(0, 240, 220, 0.75) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 220, 0.75) 1px, transparent 1px);
   background-size: 56px 34px;
   background-position: 48px 52px;
+  filter: blur(1.2px);
+  mix-blend-mode: screen;
   mask-image:
     linear-gradient(
       90deg,
-      transparent     0%,
-      rgba(0,0,0,.09) 25%,
-      rgba(0,0,0,.48) 50%,
-      rgba(0,0,0,.09) 75%,
-      transparent     100%
+      transparent      0%,
+      rgba(0,0,0,.06)  22%,
+      rgba(0,0,0,.38)  50%,
+      rgba(0,0,0,.06)  78%,
+      transparent      100%
     ),
     radial-gradient(
-      ellipse 60% 50% at 50% 48%,
-      rgba(0,0,0,.04) 0%,
-      rgba(0,0,0,.36) 42%,
-      rgba(0,0,0,.90) 100%
+      ellipse 58% 50% at 50% 47%,
+      rgba(0,0,0,.02)  0%,
+      rgba(0,0,0,.22)  38%,
+      rgba(0,0,0,.88)  100%
     );
-  mask-size: 32% 100%, 100% 100%;
+  mask-size: 30% 100%, 100% 100%;
   mask-repeat: no-repeat, no-repeat;
   mask-composite: intersect;
-  mask-position: -55% 0, 0 0;
-  animation: maskSlide 15s ease-in-out 7.5s infinite;
+  mask-position: -60% 0, 0 0;
+  animation: maskSlide 16s ease-in-out 8s infinite;
+}
+
+/* ===== NAV ICONS — glow cyan pulsé très léger ===== */
+@keyframes iconGlow {
+  0%, 100% { filter: drop-shadow(0 0 2px rgba(0,255,238,0.25)); }
+  50%       { filter: drop-shadow(0 0 5px rgba(0,255,238,0.55)) drop-shadow(0 0 10px rgba(0,255,238,0.20)); }
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: iconGlow 4s ease-in-out infinite;
+}
+
+/* Onglet actif : glow un peu plus marqué */
+.nav-icon--active {
+  animation: iconGlow 2.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(0,255,238,0.6));
 }
 
 /* ===== FONDUS DE BORD — dégradé vers le fond à droite et en bas ===== */
