@@ -120,4 +120,5 @@ export interface LeaderboardEntry {
   score: number;
   level: number;
   date: string;
+  employeeId?: string;
 }
