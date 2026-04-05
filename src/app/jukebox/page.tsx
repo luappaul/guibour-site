@@ -57,26 +57,60 @@ export default function JukeboxPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: 'var(--bg, #1A3F78)' }}>
+    <div className="min-h-screen" style={{ background: '#0E2660' }}>
       <ExcelNav />
       <ExcelChrome formulaText='=PLAY("GUIBOUR_EP","VIDEO_MUSIC_BOX_2026") → BROADCAST_MODE_ON'>
-        <div style={{ padding: '32px 24px 60px', maxWidth: '900px', margin: '0 auto' }}>
+        {/* global dark grid bg */}
+        <div style={{
+          backgroundImage: 'linear-gradient(rgba(0,255,235,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,235,.04) 1px,transparent 1px)',
+          backgroundSize: '56px 34px',
+          minHeight: 'calc(100vh - 52px)',
+        }}>
 
-          {/* ── HEADER ── */}
-          <div style={{ marginBottom: '28px' }}>
-            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#5B9BD5', letterSpacing: '4px', marginBottom: '6px' }}>
-              GUIBOUR SYSTEM // 2026
+        {/* ── HERO HEADER ── */}
+        <div style={{
+          background: 'linear-gradient(135deg,#06101F 0%,#0B1E4A 60%,#0A2C70 100%)',
+          padding: '36px 48px 28px',
+          borderBottom: '2px solid rgba(0,255,235,.15)',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          gap: '24px', flexWrap: 'wrap',
+          position: 'relative', overflow: 'hidden',
+        }}>
+          {/* CSS audio visualiser bars (pure decoration) */}
+          <div style={{
+            position: 'absolute', right: '48px', bottom: 0,
+            display: 'flex', alignItems: 'flex-end', gap: '3px', height: '56px',
+            opacity: 0.18,
+          }}>
+            {[22,38,18,50,30,44,24,48,16,36,28,42,20,46,32].map((h, i) => (
+              <div key={i} style={{
+                width: '4px', height: `${h}px`,
+                background: '#00FFEE',
+                borderRadius: '2px 2px 0 0',
+                animation: `barBounce ${0.6 + (i % 5) * 0.12}s ease-in-out ${i * 0.05}s infinite alternate`,
+              }} />
+            ))}
+          </div>
+
+          <div>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#2A4060', letterSpacing: '5px', marginBottom: '6px' }}>
+              02 / SALLE D&apos;ÉCOUTE
             </div>
             <h1 style={{
               fontFamily: "'Lilita One', cursive",
-              fontSize: 'clamp(32px, 6vw, 60px)',
+              fontSize: 'clamp(28px,5vw,52px)',
               color: '#FFFFFF', letterSpacing: '4px', lineHeight: 1,
-              textShadow: '3px 4px 0 #0C2A62, 0 0 30px rgba(0,200,190,.25)', marginBottom: '4px',
+              textShadow: '0 0 30px rgba(0,255,235,.2)', marginBottom: '6px',
             }}>VIDEO &amp; MUSIC BOX</h1>
-            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#00D4CC', letterSpacing: '3px' }}>
-              ÉCOUTER · REGARDER · PARTAGER
-            </div>
+            <div style={{
+              fontFamily: "'Orbitron', sans-serif", fontSize: '9px',
+              color: '#00FFEE', letterSpacing: '4px',
+              textShadow: '0 0 8px rgba(0,255,235,.6)',
+            }}>ÉCOUTER · REGARDER · PARTAGER</div>
           </div>
+        </div>
+
+        <div style={{ padding: '28px 24px 60px', maxWidth: '940px', margin: '0 auto' }}>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: '20px' }}>
 
@@ -341,7 +375,7 @@ export default function JukeboxPage() {
                 </div>
                 <div style={{ padding: '16px' }}>
                   <div style={{ fontSize: '42px', textAlign: 'center', marginBottom: '8px' }}>🎤</div>
-                  <div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '28px', color: '#FFFFFF', textAlign: 'center', letterSpacing: '4px', textShadow: '2px 3px 0 #0C2A62' }}>
+                  <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '28px', color: '#FFFFFF', textAlign: 'center', letterSpacing: '4px', textShadow: '0 0 18px rgba(0,255,235,.2)' }}>
                     GUIBOUR
                   </div>
                   <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#00D4CC', textAlign: 'center', letterSpacing: '4px', marginBottom: '16px' }}>
@@ -406,14 +440,22 @@ export default function JukeboxPage() {
                 onMouseLeave={e => { e.currentTarget.style.borderColor = '#CC0000'; e.currentTarget.style.boxShadow = 'none'; }}>
                 <span style={{ fontSize: '22px' }}>▶</span>
                 <div>
-                  <div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '13px', color: '#FF4444', letterSpacing: '2px' }}>S&apos;ABONNER</div>
+                  <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '13px', color: '#FF4444', letterSpacing: '2px', textShadow: '0 0 8px rgba(255,68,68,.6)' }}>S&apos;ABONNER</div>
                   <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#884444', letterSpacing: '1px' }}>@GUIBOUR</div>
                 </div>
                 <span style={{ marginLeft: 'auto', color: '#FF4444', fontSize: '16px' }}>→</span>
               </a>
             </div>
           </div>
-        </div>
+        </div>{/* maxWidth container */}
+
+        <style>{`
+          @keyframes barBounce {
+            0%   { transform: scaleY(0.4); }
+            100% { transform: scaleY(1);   }
+          }
+        `}</style>
+        </div>{/* dark grid bg */}
       </ExcelChrome>
     </div>
   );
