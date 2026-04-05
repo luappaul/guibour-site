@@ -68,7 +68,7 @@ export default function JukeboxPage() {
               GUIBOUR SYSTEM // 2026
             </div>
             <h1 style={{
-              fontFamily: "'Luckiest Guy', cursive",
+              fontFamily: "'Lilita One', cursive",
               fontSize: 'clamp(32px, 6vw, 60px)',
               color: '#FFFFFF', letterSpacing: '4px', lineHeight: 1,
               textShadow: '3px 4px 0 #0C2A62, 0 0 30px rgba(0,200,190,.25)', marginBottom: '4px',

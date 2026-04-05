@@ -20,8 +20,10 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
       // aligné avec les en-têtes de colonnes (28px header + 24px formula bar = 52px chrome total)
       backgroundPosition: '48px 52px',
     }}>
-      {/* Shimmer overlay — reflet lumineux sur la grille */}
+      {/* Shimmer — lumière glissant sur les lignes de la grille */}
       <div className="grid-shimmer" />
+      {/* Fondus de bord — dégradé vers le noir à droite et en bas */}
+      <div className="grid-edge-fades" />
 
       {/* Column headers row */}
       <div style={{

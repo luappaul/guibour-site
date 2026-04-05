@@ -151,9 +151,6 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
         }} />
       </button>
 
-      {/* Countdown rouge vers le 1er juin 2026 */}
-      <Countdown />
-
       {/* Bouton Boutique — gros et visible */}
       <Link
         href="/shopping"
@@ -267,6 +264,8 @@ export default function Home() {
       <ExcelChrome formulaText='=LAUNCH_GAME("GUIBOUR","SINGLE_2026") → WELCOME_TO_THE_SYSTEM'>
         <HeroContent onPlay={handlePlay} />
       </ExcelChrome>
+      {/* Countdown fixed en bas — concert privé */}
+      <Countdown />
       {/* Indicateur mode jour/nuit discret */}
       <div style={{
         position: 'fixed', bottom: '12px', right: '12px',
