@@ -21,7 +21,7 @@ export const LEVELS: LevelConfig[] = [
   {
     id: 0, name: 'Etage 00 — Accueil',
     background: '/game/backgrounds/bg-00.png',
-    phrase: 'Bienvenue chez Guibour Corp. Voici votre badge.',
+    phrase: 'Bienvenue chez Guibour. Voici votre badge.',
     bubbles: [b(4, 0.5, 0.8)],
     timeLimit: 90, bonusWeights: defaultWeights, hasCeilingSpikes: false,
   },

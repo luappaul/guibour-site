@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUIBOUR SYSTEM — Globe Logo Moodboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Lilita+One&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #060E1F;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 56px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid #1E3F6E;
+  }
+  header .eyebrow {
+    font-size: 9px;
+    letter-spacing: 6px;
+    color: #2B5090;
+    margin-bottom: 10px;
+  }
+  header h1 {
+    font-family: 'Lilita One', cursive;
+    font-size: 28px;
+    letter-spacing: 6px;
+    color: #fff;
+  }
+  header .sub {
+    font-size: 9px;
+    color: #5B9BD5;
+    letter-spacing: 3px;
+    margin-top: 8px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 36px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .logo-card {
+    background: #0A1628;
+    border: 1px solid #1E3F6E;
+    padding: 44px 24px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    transition: border-color .3s;
+  }
+  .logo-card:hover { border-color: #00D4FF; }
+
+  .card-num {
+    position: absolute;
+    top: 12px; left: 14px;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: #1E3F6E;
+  }
+  .card-tag {
+    position: absolute;
+    top: 12px; right: 14px;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: #1E3F6E;
+  }
+
+  /* ── Logo text layout ── */
+  .logo-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+    min-height: 120px;
+    justify-content: center;
+  }
+  .logo-row {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    line-height: 1;
+  }
+  .lt {
+    font-family: 'Lilita One', cursive;
+    font-size: 58px;
+    color: #FFFFFF;
+    letter-spacing: 2px;
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(0,180,180,.15);
+  }
+  .g-sys {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 10px;
+    margin-top: 4px;
+  }
+
+  /* Globe canvas — sits inline at text height */
+  .globe-canvas {
+    display: block;
+    /* width/height set per variant via JS */
+  }
+
+  /* ── Card meta ── */
+  .card-name {
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: #3A6698;
+    text-align: center;
+  }
+  .card-desc {
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    color: #2B5090;
+    text-align: center;
+    line-height: 1.9;
+  }
+
+  footer-note {
+    display: block;
+    text-align: center;
+    margin-top: 56px;
+    font-size: 8px;
+    letter-spacing: 5px;
+    color: #1E3F6E;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">GUIBOUR SYSTEM // GLOBE LOGO // SÉRIE 2</div>
+  <h1>GLOBE AS "O" — 6 MOTIONS</h1>
+  <div class="sub">SPHÈRE-GLOBE INTÉGRÉE DANS LA LETTRE O // ANIMATIONS MOTION DESIGN</div>
+</header>
+
+<div class="grid">
+
+  <!-- 01 -->
+  <div class="logo-card">
+    <div class="card-num">01</div>
+    <div class="card-tag">WIREFRAME SPIN</div>
+    <div class="logo-wrap">
+      <div class="logo-row">
+        <span class="lt">GUIB</span>
+        <canvas id="g1" class="globe-canvas"></canvas>
+        <span class="lt">UR</span>
+      </div>
+      <div class="g-sys" style="color:#00D4FF;text-shadow:0 0 10px rgba(0,212,204,.4);">S Y S T E M</div>
+    </div>
+    <div class="card-name">ROTATION LENTE — WIREFRAME PUR</div>
+    <div class="card-desc">Lignes cyan fines sur fond transparent.<br>Rotation Y continue à vitesse douce.</div>
+  </div>
+
+  <!-- 02 -->
+  <div class="logo-card">
+    <div class="card-num">02</div>
+    <div class="card-tag">NEON GLOW</div>
+    <div class="logo-wrap">
+      <div class="logo-row">
+        <span class="lt">GUIB</span>
+        <canvas id="g2" class="globe-canvas"></canvas>
+        <span class="lt">UR</span>
+      </div>
+      <div class="g-sys" style="color:#00FFEE;text-shadow:0 0 14px rgba(0,255,238,.5);">S Y S T E M</div>
+    </div>
+    <div class="card-name">NEON GLOW — BLOOM PULSÉ</div>
+    <div class="card-desc">Même rotation + halo lumineux qui pulse.<br>Effet néon fort, très visible sur dark bg.</div>
+  </div>
+
+  <!-- 03 -->
+  <div class="logo-card">
+    <div class="card-num">03</div>
+    <div class="card-tag">OCEAN FILL</div>
+    <div class="logo-wrap">
+      <div class="logo-row">
+        <span class="lt">GUIB</span>
+        <canvas id="g3" class="globe-canvas"></canvas>
+        <span class="lt">UR</span>
+      </div>
+      <div class="g-sys" style="color:#5BE8FF;text-shadow:0 0 10px rgba(91,232,255,.35);">S Y S T E M</div>
+    </div>
+    <div class="card-name">OCEAN FILL — FOND DÉGRADÉ</div>
+    <div class="card-desc">Globe rempli d'un dégradé bleu océan.<br>Les lignes flottent sur un fond liquide.</div>
+  </div>
+
+  <!-- 04 -->
+  <div class="logo-card">
+    <div class="card-num">04</div>
+    <div class="card-tag">DASHED ORBIT</div>
+    <div class="logo-wrap">
+      <div class="logo-row">
+        <span class="lt">GUIB</span>
+        <canvas id="g4" class="globe-canvas"></canvas>
+        <span class="lt">UR</span>
+      </div>
+      <div class="g-sys" style="color:#7DD3FC;text-shadow:0 0 10px rgba(125,211,252,.3);">S Y S T E M</div>
+    </div>
+    <div class="card-name">POINTILLÉS — STYLE COSMIQUE</div>
+    <div class="card-desc">Lignes en tirets, rotation lente.<br>Rappelle une orbite stellaire, léger et aérien.</div>
+  </div>
+
+  <!-- 05 -->
+  <div class="logo-card">
+    <div class="card-num">05</div>
+    <div class="card-tag">SCAN PULSE</div>
+    <div class="logo-wrap">
+      <div class="logo-row">
+        <span class="lt">GUIB</span>
+        <canvas id="g5" class="globe-canvas"></canvas>
+        <span class="lt">UR</span>
+      </div>
+      <div class="g-sys" style="color:#00D4FF;text-shadow:0 0 10px rgba(0,212,255,.4);">S Y S T E M</div>
+    </div>
+    <div class="card-name">SCAN LINE — BALAYAGE TECH</div>
+    <div class="card-desc">Une barre lumineuse balaye le globe de haut en bas.<br>Style radar / interface tech, très dynamique.</div>
+  </div>
+
+  <!-- 06 -->
+  <div class="logo-card">
+    <div class="card-num">06</div>
+    <div class="card-tag">GOLDEN GLOBE</div>
+    <div class="logo-wrap">
+      <div class="logo-row">
+        <span class="lt" style="color:#FFF0C0;text-shadow:0 0 16px rgba(255,210,80,.15);">GUIB</span>
+        <canvas id="g6" class="globe-canvas"></canvas>
+        <span class="lt" style="color:#FFF0C0;text-shadow:0 0 16px rgba(255,210,80,.15);">UR</span>
+      </div>
+      <div class="g-sys" style="color:#FFD24D;text-shadow:0 0 12px rgba(255,210,60,.4);">S Y S T E M</div>
+    </div>
+    <div class="card-name">GOLDEN EDITION — VARIANTE OR</div>
+    <div class="card-desc">Globe en or avec rotation + reflet shimmer.<br>Version premium, alternative couleur chaude.</div>
+  </div>
+
+</div>
+
+<footer-note>GUIBOUR SYSTEM // CHOISISSEZ UNE DIRECTION // 2026</footer-note>
+
+<script>
+// ─────────────────────────────────────────────────
+// GLOBE ENGINE
+// ─────────────────────────────────────────────────
+
+const FONT_SIZE = 58;  // px — must match .lt font-size
+const GLOBE_W = 54;    // canvas width (≈ width of "O" in Lilita One at 58px)
+const GLOBE_H = 68;    // canvas height (≈ full cap height)
+const R = 26;          // sphere radius
+const CX = GLOBE_W / 2;
+const CY = GLOBE_H / 2 + 2; // slight offset to align baseline
+
+// Number of grid lines
+const N_MERIDIANS = 6;   // vertical great circles
+const N_PARALLELS = 5;   // horizontal small circles
+
+function setupCanvas(id) {
+  const c = document.getElementById(id);
+  c.width = GLOBE_W;
+  c.height = GLOBE_H;
+  c.style.width = GLOBE_W + 'px';
+  c.style.height = GLOBE_H + 'px';
+  return c.getContext('2d');
+}
+
+// Draw a single globe frame
+// t       = rotation angle (radians) for Y-axis spin
+// options = { color, lineWidth, glow, fill, dashed, scanY }
+function drawGlobe(ctx, t, opts) {
+  const { color = '#00D4FF', lineWidth = 1.4, glow = 0, fill = null, dashed = false, scanY = null, shimmer = 0 } = opts;
+
+  ctx.clearRect(0, 0, GLOBE_W, GLOBE_H);
+
+  // ── Optional fill ──────────────────────────
+  if (fill) {
+    const grad = ctx.createRadialGradient(CX - R*0.25, CY - R*0.25, R*0.05, CX, CY, R);
+    if (Array.isArray(fill)) {
+      fill.forEach(([stop, col]) => grad.addColorStop(stop, col));
+    }
+    ctx.beginPath();
+    ctx.arc(CX, CY, R, 0, Math.PI * 2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+  }
+
+  // Clip to sphere for scan line
+  if (scanY !== null) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(CX, CY, R, 0, Math.PI * 2);
+    ctx.clip();
+    const scanH = 4;
+    const scanGrad = ctx.createLinearGradient(CX - R, scanY, CX + R, scanY);
+    scanGrad.addColorStop(0, 'transparent');
+    scanGrad.addColorStop(0.3, color + '55');
+    scanGrad.addColorStop(0.5, color + 'CC');
+    scanGrad.addColorStop(0.7, color + '55');
+    scanGrad.addColorStop(1, 'transparent');
+    ctx.fillStyle = scanGrad;
+    ctx.fillRect(CX - R, scanY - scanH/2, R*2, scanH);
+    ctx.restore();
+  }
+
+  ctx.lineCap = 'round';
+
+  // ── Parallels (horizontal circles) ─────────
+  for (let i = 1; i <= N_PARALLELS; i++) {
+    const p = (i / (N_PARALLELS + 1)) * 2 - 1; // range -0.83 to +0.83
+    const py = CY + p * R;
+    const rxP = R * Math.sqrt(1 - p * p);
+    const ryP = rxP * 0.22;
+
+    if (glow) { ctx.shadowBlur = glow * 0.6; ctx.shadowColor = color; }
+    ctx.beginPath();
+    ctx.ellipse(CX, py, rxP, ryP, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
+    ctx.globalAlpha = 0.9;
+    if (dashed) ctx.setLineDash([3, 3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+  }
+
+  // ── Meridians (great circles through poles) ─
+  for (let i = 0; i < N_MERIDIANS; i++) {
+    const angle = (i / N_MERIDIANS) * Math.PI + t;
+    const sinA = Math.sin(angle);
+    const cosA = Math.cos(angle);
+    const rxM = R * Math.abs(sinA);
+    const isFront = cosA >= 0;
+
+    if (rxM < 0.5) continue; // skip degenerate
+
+    if (glow) { ctx.shadowBlur = glow; ctx.shadowColor = color; }
+
+    ctx.beginPath();
+    ctx.ellipse(CX, CY, rxM, R, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
+    ctx.globalAlpha = isFront ? 1.0 : 0.22;
+    if (dashed) ctx.setLineDash(isFront ? [3, 3] : [2, 5]);
+    else if (!isFront) ctx.setLineDash([2, 4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+  }
+
+  // ── Outer circle ──────────────────────────
+  if (glow) { ctx.shadowBlur = glow * 1.2; ctx.shadowColor = color; }
+  ctx.beginPath();
+  ctx.arc(CX, CY, R, 0, Math.PI * 2);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = lineWidth * 1.1;
+  ctx.globalAlpha = 1;
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+
+  // ── Shimmer highlight (gold variant) ──────
+  if (shimmer) {
+    const hl = ctx.createRadialGradient(CX - R*0.35, CY - R*0.38, 1, CX - R*0.2, CY - R*0.2, R*0.5);
+    hl.addColorStop(0, 'rgba(255,255,220,' + (shimmer * 0.22) + ')');
+    hl.addColorStop(1, 'transparent');
+    ctx.beginPath();
+    ctx.arc(CX, CY, R, 0, Math.PI * 2);
+    ctx.fillStyle = hl;
+    ctx.fill();
+  }
+}
+
+// ─────────────────────────────────────────────────
+// ANIMATION LOOPS
+// ─────────────────────────────────────────────────
+
+// 01 — Wireframe classique, rotation lente
+;(function() {
+  const ctx = setupCanvas('g1');
+  let t = 0;
+  function frame() {
+    t += 0.008;
+    drawGlobe(ctx, t, { color: '#00D4FF', lineWidth: 1.4, glow: 0 });
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+// 02 — Neon Glow, rotation + pulse
+;(function() {
+  const ctx = setupCanvas('g2');
+  let t = 0;
+  function frame() {
+    t += 0.009;
+    const pulse = 8 + Math.sin(t * 3) * 5;
+    drawGlobe(ctx, t, { color: '#00FFEE', lineWidth: 1.6, glow: pulse });
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+// 03 — Ocean fill + wireframe
+;(function() {
+  const ctx = setupCanvas('g3');
+  let t = 0;
+  function frame() {
+    t += 0.007;
+    drawGlobe(ctx, t, {
+      color: '#5BE8FF',
+      lineWidth: 1.3,
+      glow: 4,
+      fill: [
+        [0,   'rgba(0,60,100,0.85)'],
+        [0.5, 'rgba(0,30,80,0.9)'],
+        [1,   'rgba(0,10,40,0.95)']
+      ]
+    });
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+// 04 — Dashed orbit, rotation lente
+;(function() {
+  const ctx = setupCanvas('g4');
+  let t = 0;
+  function frame() {
+    t += 0.006;
+    drawGlobe(ctx, t, { color: '#7DD3FC', lineWidth: 1.2, glow: 0, dashed: true });
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+// 05 — Scan line, rotation + balayage
+;(function() {
+  const ctx = setupCanvas('g5');
+  let t = 0;
+  let scanT = 0;
+  function frame() {
+    t += 0.008;
+    scanT += 0.018;
+    // scan oscillates from top to bottom of globe
+    const scanY = CY + Math.sin(scanT) * (R - 2);
+    drawGlobe(ctx, t, { color: '#00D4FF', lineWidth: 1.4, glow: 3, scanY });
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+// 06 — Golden globe, rotation + shimmer
+;(function() {
+  const ctx = setupCanvas('g6');
+  let t = 0;
+  function frame() {
+    t += 0.009;
+    const shimmer = 0.5 + Math.sin(t * 2) * 0.5;
+    drawGlobe(ctx, t, {
+      color: '#FFD24D',
+      lineWidth: 1.4,
+      glow: 6 + shimmer * 4,
+      fill: [
+        [0,   'rgba(80,50,0,0.7)'],
+        [0.5, 'rgba(40,25,0,0.8)'],
+        [1,   'rgba(10,5,0,0.9)']
+      ],
+      shimmer
+    });
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
+</body>
+</html>

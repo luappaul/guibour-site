@@ -2,14 +2,147 @@
 
 import { GameState } from '@/lib/gameTypes';
 import { addScore, formatDuration, formatSalary, getShareText } from '@/lib/leaderboard';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { PlayerIdentity } from '@/components/ui/CharacterSelect';
+import { playClick } from '@/lib/sounds';
 
 interface Props {
   state: GameState;
   onRestart: () => void;
+  playerIdentity?: PlayerIdentity | null;
+  replayUrl?: string | null;
 }
 
-export default function GameOverScreen({ state, onRestart }: Props) {
+// ── WhatsApp share RTT tracker ────────────────────────────────────────────────
+const WA_SHARE_KEY = 'guibour-wa-shares';
+function getWaShares(): number {
+  if (typeof window === 'undefined') return 0;
+  return parseInt(localStorage.getItem(WA_SHARE_KEY) ?? '0', 10);
+}
+function incWaShares(): number {
+  const n = Math.min(getWaShares() + 1, 3);
+  localStorage.setItem(WA_SHARE_KEY, String(n));
+  return n;
+}
+
+// ── Instagram share image via Canvas ────────────────────────────────────────
+function generateShareImage(pseudo: string, level: number, score: number): string {
+  const w = 1080, h = 1080;
+  const canvas = document.createElement('canvas');
+  canvas.width = w; canvas.height = h;
+  const ctx = canvas.getContext('2d')!;
+
+  // Background gradient
+  const grad = ctx.createLinearGradient(0, 0, w, h);
+  grad.addColorStop(0, '#0C2A62');
+  grad.addColorStop(0.6, '#1A3F78');
+  grad.addColorStop(1, '#264D82');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(0,120,220,0.12)';
+  ctx.lineWidth = 1;
+  for (let x = 0; x < w; x += 56) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+  for (let y = 0; y < h; y += 34) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+
+  // Border
+  ctx.strokeStyle = '#00C8BE';
+  ctx.lineWidth = 6;
+  ctx.strokeRect(20, 20, w - 40, h - 40);
+  ctx.strokeStyle = 'rgba(0,200,190,0.25)';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(32, 32, w - 64, h - 64);
+
+  // Header bar
+  ctx.fillStyle = '#0047AB';
+  ctx.fillRect(20, 20, w - 40, 60);
+
+  ctx.fillStyle = '#A8D8FF';
+  ctx.font = 'bold 22px Orbitron, monospace';
+  ctx.letterSpacing = '4px';
+  ctx.fillText('GUIBOUR SYSTEM // W.O.W // 2026', 48, 58);
+
+  // Title
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = 'bold 110px Arial Black';
+  ctx.textAlign = 'center';
+  ctx.fillText('GUIBOUR', w / 2, 220);
+
+  ctx.fillStyle = '#00D4CC';
+  ctx.font = 'bold 36px Orbitron, monospace';
+  ctx.letterSpacing = '16px';
+  ctx.fillText('SYSTEM', w / 2, 270);
+
+  // Divider
+  ctx.fillStyle = '#00C8BE';
+  ctx.fillRect(100, 295, w - 200, 3);
+
+  // Employee ID
+  ctx.fillStyle = '#5B9BD5';
+  ctx.font = '20px monospace';
+  ctx.letterSpacing = '3px';
+  ctx.fillText(`EMPLOYÉ`, w / 2, 340);
+
+  // Pseudo
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = 'bold 72px Arial';
+  ctx.letterSpacing = '4px';
+  ctx.fillText(pseudo.toUpperCase(), w / 2, 440);
+
+  // Stats grid
+  const stats = [
+    { label: 'ÉTAGE ATTEINT', value: String(level).padStart(2, '0') + ' / 25', color: '#FFE033' },
+    { label: 'SALAIRE CUMULÉ', value: formatSalary(score), color: '#00C8BE' },
+    { label: 'STATUT', value: level >= 25 ? 'LIBÉRÉ ✓' : 'CAREER FAILED', color: level >= 25 ? '#27C93F' : '#FF4444' },
+  ];
+
+  stats.forEach((stat, i) => {
+    const x = 100 + i * 296;
+    const y = 500;
+    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+    ctx.fillRect(x, y, 276, 130);
+    ctx.strokeStyle = stat.color + '60';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y, 276, 130);
+
+    ctx.fillStyle = '#5B9BD5';
+    ctx.font = '14px monospace';
+    ctx.letterSpacing = '2px';
+    ctx.textAlign = 'center';
+    ctx.fillText(stat.label, x + 138, y + 30);
+
+    ctx.fillStyle = stat.color;
+    ctx.font = 'bold 34px monospace';
+    ctx.letterSpacing = '1px';
+    ctx.fillText(stat.value, x + 138, y + 90);
+  });
+
+  // CTA
+  ctx.fillStyle = '#0047AB';
+  ctx.fillRect(200, 680, w - 400, 80);
+  ctx.strokeStyle = '#00C8BE';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(200, 680, w - 400, 80);
+
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = 'bold 26px Orbitron, monospace';
+  ctx.letterSpacing = '4px';
+  ctx.textAlign = 'center';
+  ctx.fillText('JOUE SUR GUIBOUR.FR', w / 2, 728);
+
+  // Footer
+  ctx.fillStyle = '#00C8BE';
+  ctx.fillRect(20, h - 80, w - 40, 60);
+  ctx.fillStyle = '#0C2A62';
+  ctx.font = 'bold 22px monospace';
+  ctx.letterSpacing = '6px';
+  ctx.fillText('GUIBOUR.FR // W.O.W // #GUIBOUR2026', w / 2, h - 42);
+
+  return canvas.toDataURL('image/png');
+}
+
+export default function GameOverScreen({ state, onRestart, playerIdentity, replayUrl }: Props) {
   const { player, level, status } = state;
   const isVictory = status === 'victory';
   const [rank, setRank] = useState(0);
@@ -17,30 +150,94 @@ export default function GameOverScreen({ state, onRestart }: Props) {
   const [copied, setCopied] = useState(false);
   const [showContent, setShowContent] = useState(false);
 
+  // RTT bonus UI
+  const [showRTTPanel, setShowRTTPanel] = useState(false);
+  const [waShareCount, setWaShareCount] = useState(0);
+  const [emailGiven, setEmailGiven] = useState(false);
+
+  // Share image
+  const [shareImageUrl, setShareImageUrl] = useState<string | null>(null);
+  const canvasGenerated = useRef(false);
+
   const durationMs = state.endTime && state.startTime ? state.endTime - state.startTime : 0;
   const durationText = formatDuration(durationMs);
+  const pseudo = playerIdentity?.pseudo || player.name || 'EMPLOYÉ';
 
+  // Submit score to global API leaderboard + register player counter
   useEffect(() => {
     if (!saved) {
-      const r = addScore({
-        name: player.name,
-        score: player.score,
-        level,
-        date: new Date().toISOString(),
-      });
-      setRank(r);
       setSaved(true);
+      // Local leaderboard (legacy fallback)
+      const r = addScore({ name: pseudo, score: player.score, level, date: new Date().toISOString() });
+      setRank(r);
+      // Global API leaderboard
+      fetch('/api/leaderboard', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: pseudo,
+          score: player.score,
+          level,
+          employeeId: playerIdentity?.employeeId || `GS-${Math.random().toString(36).slice(2,8).toUpperCase()}`,
+        }),
+      })
+        .then(res => res.json())
+        .then(d => { if (d.rank) setRank(d.rank); })
+        .catch(() => {});
+      // Increment active player counter
+      fetch('/api/players', { method: 'POST' }).catch(() => {});
     }
-  }, [saved, player, level]);
+  }, [saved, pseudo, player, level, playerIdentity]);
 
-  // Show big text first, then modal after 2s
+  // Show big text, then content after 2.5s
   useEffect(() => {
-    const timer = setTimeout(() => setShowContent(true), 2000);
-    return () => clearTimeout(timer);
+    const t1 = setTimeout(() => setShowContent(true), 2500);
+    return () => clearTimeout(t1);
   }, []);
 
+  // Show RTT panel 500ms after content appears (only on game over)
+  useEffect(() => {
+    if (!isVictory && showContent) {
+      const t = setTimeout(() => {
+        setShowRTTPanel(true);
+        setWaShareCount(getWaShares());
+      }, 600);
+      return () => clearTimeout(t);
+    }
+  }, [isVictory, showContent]);
+
+  // Generate share image once
+  useEffect(() => {
+    if (showContent && !canvasGenerated.current) {
+      canvasGenerated.current = true;
+      try {
+        const url = generateShareImage(pseudo, level, player.score);
+        setShareImageUrl(url);
+      } catch (_) {}
+    }
+  }, [showContent, pseudo, level, player.score]);
+
+  useEffect(() => {
+    if (playerIdentity) {
+      setEmailGiven(!!(playerIdentity.email));
+    }
+  }, [playerIdentity]);
+
+  const handleDownloadCertificate = async () => {
+    playClick();
+    const { generateCertificate } = await import('@/lib/generateCertificate');
+    await generateCertificate({
+      pseudo,
+      employeeId: playerIdentity?.employeeId || 'GS-000000',
+      level,
+      score: player.score,
+      rank: rank > 0 ? rank : undefined,
+    });
+  };
+
   const handleShare = async () => {
-    const text = getShareText(player.name, level, player.score, durationMs);
+    playClick();
+    const text = getShareText(pseudo, level, player.score, durationMs);
     if (navigator.share) {
       try { await navigator.share({ text }); } catch {}
     } else {
@@ -50,221 +247,206 @@ export default function GameOverScreen({ state, onRestart }: Props) {
     }
   };
 
-  const handleChallenge = async () => {
-    const text = getShareText(player.name, level, player.score, durationMs);
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: 'W.O.W - Defi', text, url: 'https://guibour.fr' });
-      } catch {}
-    } else {
-      const challengeText = `${text}\n\nguibour.fr`;
-      await navigator.clipboard.writeText(challengeText);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
+  const handleWhatsAppShare = () => {
+    playClick();
+    if (waShareCount >= 3) return;
+    const text = encodeURIComponent(
+      `🎮 J'ai joué à W.O.W (Work Or Window) de Guibour !\n` +
+      `Étage ${level} | ${formatSalary(player.score)} de salaire\n` +
+      `Bats mon score → guibour.fr`
+    );
+    window.open(`https://wa.me/?text=${text}`, '_blank');
+    const newCount = incWaShares();
+    setWaShareCount(newCount);
+  };
+
+  const handleInstagramShare = () => {
+    playClick();
+    if (!shareImageUrl) return;
+    const link = document.createElement('a');
+    link.href = shareImageUrl;
+    link.download = `guibour-wow-${pseudo.toLowerCase()}-lvl${level}.png`;
+    link.click();
+    setTimeout(() => {
+      window.open('https://www.instagram.com/', '_blank');
+    }, 500);
+  };
+
+  const handleDownloadImage = () => {
+    playClick();
+    if (!shareImageUrl) return;
+    const link = document.createElement('a');
+    link.href = shareImageUrl;
+    link.download = `guibour-wow-score.png`;
+    link.click();
   };
 
   return (
     <div className="absolute inset-0 z-30 flex flex-col items-center justify-center"
-         style={{ background: 'rgba(10,26,18,0.85)', backdropFilter: 'blur(4px)' }}>
+         style={{
+           background: isVictory ? 'rgba(0,8,20,0.88)' : 'rgba(8,2,2,0.90)',
+           backdropFilter: 'blur(5px)',
+           overflowY: 'auto',
+         }}>
 
-      {/* Big announcement text */}
-      <div className="mb-8 text-center" style={{
-        animation: 'fadeIn 0.5s ease-out',
-      }}>
+      {/* ── BIG SLAM TEXT ── */}
+      <div className="mb-6 text-center" style={{ pointerEvents: 'none', flexShrink: 0 }}>
         <h1 style={{
-          fontFamily: "'Oxanium', sans-serif",
-          fontSize: isVictory ? 'clamp(28px, 5vw, 52px)' : 'clamp(24px, 4vw, 44px)',
-          fontWeight: 900,
-          color: isVictory ? '#3CB371' : '#FF4444',
-          letterSpacing: '4px',
-          textShadow: isVictory
-            ? '0 0 30px rgba(60,179,113,0.5)'
-            : '0 0 30px rgba(255,68,68,0.5)',
+          fontFamily: "'Luckiest Guy', cursive",
+          fontSize: isVictory ? 'clamp(58px, 10vw, 108px)' : 'clamp(52px, 9vw, 100px)',
+          color: isVictory ? '#00C9C8' : '#FF2020',
+          letterSpacing: isVictory ? '6px' : '3px',
+          lineHeight: 0.92, display: 'block',
+          animation: isVictory
+            ? 'victorySlam 0.65s cubic-bezier(.15,0,.25,1) both, victoryGlow 2s ease-in-out infinite 0.7s'
+            : 'scareSlam 0.65s cubic-bezier(.15,0,.25,1) both, scareGlow 2s ease-in-out infinite 0.7s',
         }}>
-          {isVictory ? 'VOUS ETES LIBRE' : 'CAREER FAILED'}
+          {isVictory ? 'VOUS ÊTES\nLIBRE' : 'CAREER\nFAILED'}
         </h1>
         {!isVictory && (
           <p style={{
-            fontFamily: "'Oxanium', sans-serif",
-            fontSize: 'clamp(16px, 3vw, 28px)',
-            fontWeight: 700,
-            color: '#FF6666',
-            letterSpacing: '6px',
-            marginTop: '8px',
+            fontFamily: "'Luckiest Guy', cursive",
+            fontSize: 'clamp(28px, 5vw, 58px)',
+            color: '#FF5050', letterSpacing: '4px', marginTop: '8px', display: 'block',
+            animation: 'scareSlam 0.65s cubic-bezier(.15,0,.25,1) 0.18s both, scarePulse 1.8s ease-in-out infinite 0.85s',
           }}>
-            GAME OVER
+            TU ES UN LOOSER
           </p>
         )}
         {isVictory && (
           <p style={{
-            fontFamily: "'Share Tech Mono', monospace",
-            fontSize: '12px',
-            color: '#607888',
-            letterSpacing: '2px',
-            marginTop: '8px',
+            fontFamily: "'Orbitron', sans-serif", fontSize: 'clamp(11px, 1.8vw, 16px)',
+            color: '#00C8BE', letterSpacing: '4px', marginTop: '16px', opacity: 0.8,
+            animation: 'fadeIn 0.6s ease 0.8s both',
           }}>
-            Vous avez survecu aux 25 etages de Guibour Corp.
+            25 ÉTAGES — MISSION ACCOMPLIE
           </p>
         )}
       </div>
 
-      {/* Stats modal (appears after 2s) */}
+      {/* ── STATS MODAL ── */}
       {showContent && (
-        <div className="w-[440px] max-w-[92vw] overflow-hidden shadow-2xl"
-             style={{
-               animation: 'slideUp 0.4s ease-out',
-               border: '2px solid #1A5C38',
-               background: '#fff',
-             }}>
-          <div className="flex items-center justify-between px-3 py-2"
-               style={{ background: '#1A5C38' }}>
-            <div className="flex items-center gap-2">
-              <div className="flex gap-1.5">
-                <span className="block h-2.5 w-2.5 rounded-full" style={{ background: '#FF5F56' }} />
-                <span className="block h-2.5 w-2.5 rounded-full" style={{ background: '#FFBD2E' }} />
-                <span className="block h-2.5 w-2.5 rounded-full" style={{ background: '#27C93F' }} />
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center', padding: '0 16px 16px', width: '100%', maxWidth: '960px' }}>
+
+          {/* ── STATS CARD ── */}
+          <div style={{
+            width: '400px', maxWidth: '92vw',
+            background: '#0C1E40',
+            border: '2px solid #0047AB',
+            animation: 'slideUp 0.4s ease-out',
+            flexShrink: 0,
+            overflow: 'hidden',
+          }}>
+            {/* Title bar */}
+            <div style={{ background: '#0047AB', padding: '8px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', gap: '5px' }}>
+                <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#FF5F56', display: 'inline-block' }} />
+                <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#FFBD2E', display: 'inline-block' }} />
+                <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#27C93F', display: 'inline-block' }} />
               </div>
-              <span style={{
-                fontFamily: "'Oxanium', sans-serif",
-                fontSize: '11px',
-                fontWeight: 700,
-                color: '#fff',
-                letterSpacing: '1px',
-              }}>
-                {isVictory ? 'GUIBOUR CORP. — LIBERATION' : 'GUIBOUR CORP. — FIN DE CONTRAT'}
+              <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#fff', letterSpacing: '2px' }}>
+                {isVictory ? 'LIBERTÉ OBTENUE' : 'DOSSIER CLASSÉ'}
               </span>
+              <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: 'rgba(255,255,255,.4)' }}>✕</span>
             </div>
-            <div className="flex gap-2 text-white/60" style={{ fontSize: '10px' }}>
-              <span>—</span><span>□</span><span>&#10005;</span>
-            </div>
-          </div>
 
-          <div className="flex items-center border-b" style={{ borderColor: '#C0D0DE', background: '#FAFAFA' }}>
-            <div className="flex items-center justify-center border-r px-2 py-1" style={{ borderColor: '#C0D0DE', background: '#E8E8E8' }}>
-              <span style={{ fontFamily: 'monospace', fontSize: '9px', color: '#777' }}>fx</span>
-            </div>
-            <span style={{
-              fontFamily: "'Share Tech Mono', monospace",
-              fontSize: '10px',
-              color: '#1A5C38',
-              padding: '4px 8px',
-            }}>
-              =BILAN(&quot;{player.name}&quot;, DUREE({durationText}), SALAIRE({formatSalary(player.score)}))
-            </span>
-          </div>
-
-          <div className="p-5 text-center" style={{ background: '#F5F5F5' }}>
-            {/* Duration */}
-            <div style={{
-              background: '#fff',
-              border: '1px solid #C8D8E8',
-              padding: '10px',
-              marginBottom: '12px',
-            }}>
-              <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '10px', color: '#607888' }}>
-                DUREE DANS LE SYSTEME
-              </span>
-              <div style={{
-                fontFamily: "'Oxanium', sans-serif",
-                fontSize: '32px',
-                fontWeight: 800,
-                color: '#1A5C38',
-                lineHeight: 1.2,
-              }}>
-                {durationText}
+            {/* Stats */}
+            <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {/* Employee row */}
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '22px', color: '#FFFFFF', letterSpacing: '4px' }}>{pseudo}</div>
+                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#3C5A7A', letterSpacing: '3px' }}>EMPLOYÉ(E) DU MOIS</div>
               </div>
-            </div>
 
-            {/* Stats grid */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr 1fr',
-              gap: '1px',
-              background: '#C8D8E8',
-              border: '1px solid #C8D8E8',
-              marginBottom: '12px',
-            }}>
-              {[
-                { label: 'ETAGE', value: String(level).padStart(2, '0'), color: '#0A1A12' },
-                { label: 'SALAIRE', value: formatSalary(player.score), color: '#1A5C38' },
-                { label: 'CLASSEMENT', value: `#${rank}`, color: '#D4A020' },
-              ].map(cell => (
-                <div key={cell.label} style={{ background: '#fff', padding: '8px 6px', textAlign: 'center' }}>
-                  <div style={{
-                    fontFamily: "'Share Tech Mono', monospace",
-                    fontSize: '8px',
-                    color: '#607888',
-                    letterSpacing: '2px',
-                    marginBottom: '2px',
-                  }}>{cell.label}</div>
-                  <div style={{
-                    fontFamily: "'Oxanium', sans-serif",
-                    fontSize: '18px',
-                    fontWeight: 700,
-                    color: cell.color,
-                  }}>{cell.value}</div>
+              {/* 3 stats */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }}>
+                {[
+                  { label: 'ÉTAGE', value: `${String(level).padStart(2,'0')}/25`, color: '#FFE033' },
+                  { label: 'SALAIRE', value: formatSalary(player.score), color: '#00C8BE' },
+                  { label: 'RANG', value: rank > 0 ? `#${rank}` : '—', color: '#FF7744' },
+                ].map(s => (
+                  <div key={s.label} style={{ background: '#091E4A', border: '1px solid #1A3E7A', padding: '10px 6px', textAlign: 'center' }}>
+                    <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#3C5A7A', letterSpacing: '2px', marginBottom: '4px' }}>{s.label}</div>
+                    <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '16px', fontWeight: 700, color: s.color }}>{s.value}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Duration */}
+              <div style={{ background: '#091E4A', border: '1px solid #1A3E7A', padding: '8px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#3C5A7A', letterSpacing: '2px' }}>DURÉE</span>
+                <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '14px', color: '#A8D8FF', fontWeight: 700 }}>{durationText}</span>
+              </div>
+
+              {/* Actions */}
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button onClick={() => { playClick(); onRestart(); }}
+                  style={{ flex: 1, fontFamily: "'Luckiest Guy', cursive", fontSize: '15px', letterSpacing: '3px', color: '#fff', background: 'linear-gradient(135deg,#0047AB,#007B8A)', border: '2px solid #00C8BE', padding: '12px', cursor: 'pointer', transition: 'all .2s' }}>
+                  REJOUER
+                </button>
+                <button onClick={handleShare}
+                  style={{ padding: '12px 14px', fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#00C8BE', background: 'transparent', border: '1px solid #1A3E7A', cursor: 'pointer' }}>
+                  {copied ? '✓' : '↗'}
+                </button>
+                <button onClick={handleDownloadCertificate}
+                  title="Certificat PDF"
+                  style={{ padding: '12px 14px', fontFamily: "'Orbitron', sans-serif", fontSize: '14px', color: '#FFE033', background: 'transparent', border: '1px solid #3A2A00', cursor: 'pointer' }}>
+                  📜
+                </button>
+              </div>
+
+              {/* Instagram share — compact */}
+              {shareImageUrl && (
+                <div style={{ display: 'flex', gap: '6px', alignItems: 'center', padding: '8px 10px', background: '#0A1828', border: '1px solid #2A1830' }}>
+                  <img src={shareImageUrl} alt="Score" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '2px' }} />
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#C13584', letterSpacing: '1px', marginBottom: '4px' }}>PARTAGER LE SCORE</div>
+                    <div style={{ display: 'flex', gap: '4px' }}>
+                      <button onClick={handleInstagramShare} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', padding: '4px 8px', background: 'linear-gradient(135deg,#C13584,#E1306C)', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '2px' }}>INSTA</button>
+                      <button onClick={handleWhatsAppShare} disabled={waShareCount >= 3} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', padding: '4px 8px', background: waShareCount >= 3 ? '#1A3E7A' : '#25D366', color: '#fff', border: 'none', cursor: waShareCount >= 3 ? 'not-allowed' : 'pointer', borderRadius: '2px', opacity: waShareCount >= 3 ? 0.5 : 1 }}>WA {waShareCount}/3</button>
+                      <button onClick={handleDownloadImage} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', padding: '4px 6px', background: 'transparent', color: '#5B9BD5', border: '1px solid #1A3E7A', cursor: 'pointer', borderRadius: '2px' }}>↓</button>
+                    </div>
+                  </div>
                 </div>
-              ))}
+              )}
+
+              {/* Replay — compact */}
+              {replayUrl && (
+                <div style={{ background: '#091E4A', border: '1px solid #1A3E7A', padding: '8px 10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#00C8BE', letterSpacing: '1px' }}>🎬 REPLAY</span>
+                  <a href={replayUrl} download={`wow-replay-${pseudo}.webm`} style={{ marginLeft: 'auto', fontFamily: "'Orbitron', sans-serif", fontSize: '8px', padding: '5px 10px', background: 'rgba(0,200,190,.12)', color: '#00C8BE', border: '1px solid #1A3E7A', textDecoration: 'none', borderRadius: '2px' }}>↓ DL</a>
+                </div>
+              )}
+
+              {/* RTT bonus (only if game over) */}
+              {showRTTPanel && !isVictory && !emailGiven && (
+                <div style={{ background: '#1A1000', border: '1px solid #3A2A00', padding: '10px 12px' }}>
+                  <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#FFE033', letterSpacing: '2px', marginBottom: '6px' }}>💼 +1 RTT — LAISSE TON EMAIL</div>
+                  <div style={{ display: 'flex', gap: '4px' }}>
+                    <input type="email" placeholder="ton@email.com" id="rtt-email-input"
+                      style={{ flex: 1, padding: '6px 8px', fontFamily: "'Orbitron', sans-serif", fontSize: '9px', background: '#091E4A', color: '#fff', border: '1px solid #1A3E7A', outline: 'none' }} />
+                    <button onClick={() => {
+                      playClick();
+                      const input = document.getElementById('rtt-email-input') as HTMLInputElement;
+                      if (input?.value?.includes('@')) {
+                        const stored = localStorage.getItem('guibour-identity');
+                        if (stored) { const id = JSON.parse(stored); id.email = input.value; id.bonusRTT = (id.bonusRTT ?? 0) + 1; localStorage.setItem('guibour-identity', JSON.stringify(id)); }
+                        fetch('/api/email-collect', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: input.value, pseudo, source: 'rtt-bonus' }) }).catch(() => {});
+                        setEmailGiven(true);
+                      }
+                    }} style={{ padding: '6px 12px', background: '#FFE033', color: '#0A1520', border: 'none', cursor: 'pointer', fontFamily: "'Orbitron', sans-serif", fontSize: '9px', fontWeight: 700 }}>OK</button>
+                  </div>
+                </div>
+              )}
+              {emailGiven && !isVictory && (
+                <div style={{ textAlign: 'center', fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#00C8BE', padding: '6px', border: '1px solid rgba(0,200,190,.2)' }}>✓ EMAIL ENREGISTRÉ — +1 RTT AU PROCHAIN RUN</div>
+              )}
             </div>
 
-            <p style={{
-              fontFamily: "'Share Tech Mono', monospace",
-              fontSize: '10px',
-              color: '#1A5C38',
-              letterSpacing: '2px',
-              marginBottom: '14px',
-            }}>
-              PEUX-TU BATTRE MON SCORE ?
-            </p>
-
-            <div className="flex gap-2">
-              <button
-                onClick={onRestart}
-                className="flex-1 cursor-pointer py-3 text-xs font-bold tracking-widest text-white transition-all hover:brightness-110 active:scale-[0.98]"
-                style={{
-                  fontFamily: "'Oxanium', sans-serif",
-                  background: '#1A5C38',
-                  border: '1px solid #0A1A12',
-                }}
-              >
-                REJOUER
-              </button>
-              <button
-                onClick={handleChallenge}
-                className="flex-1 cursor-pointer py-3 text-xs font-bold tracking-widest transition-all hover:brightness-110 active:scale-[0.98]"
-                style={{
-                  fontFamily: "'Oxanium', sans-serif",
-                  background: '#2E8B57',
-                  color: '#fff',
-                  border: '1px solid #1A5C38',
-                }}
-              >
-                {copied ? 'COPIE !' : 'DEFIER UN AMI'}
-              </button>
-              <button
-                onClick={handleShare}
-                className="cursor-pointer px-4 py-3 text-xs font-bold tracking-widest transition-all hover:bg-[#E8E8E8] active:scale-[0.98]"
-                style={{
-                  fontFamily: "'Oxanium', sans-serif",
-                  background: '#fff',
-                  color: '#0A1A12',
-                  border: '1px solid #C8D8E8',
-                }}
-              >
-                PARTAGER
-              </button>
+            <div style={{ background: '#0047AB', padding: '5px 14px', display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: 'rgba(255,255,255,.5)' }}>guibour.fr</span>
+              <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: 'rgba(255,255,255,.5)' }}>#WOW2026</span>
             </div>
-          </div>
-
-          <div className="flex items-center justify-between px-3 py-1"
-               style={{ background: '#1A5C38', borderTop: '1px solid #0F3320' }}>
-            <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '8px', color: 'rgba(255,255,255,0.6)' }}>
-              guibour.fr
-            </span>
-            <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: '8px', color: 'rgba(255,255,255,0.6)' }}>
-              #WOW #guibour
-            </span>
           </div>
         </div>
       )}

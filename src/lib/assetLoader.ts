@@ -77,9 +77,9 @@ export async function loadAllAssets(
     loadImage(`/game/bonuses/${name}.png`).then(img => { bonusMap.set(name, img); tick(); })
   );
 
-  // Priority: player idle image + walk video
-  const playerIdlePromise = loadImage('/game/player/guibour-idle.jpg').then(img => { tick(); return img; });
-  const playerWalkPromise = loadVideo('/game/player/guibour-walk-left.mp4').then(v => { tick(); return v; })
+  // Priority: player idle image + walk video (WebM VP9 with alpha channel)
+  const playerIdlePromise = loadImage('/game/player/guibour-idle.png').then(img => { tick(); return img; });
+  const playerWalkPromise = loadVideo('/game/player/guibour-walk-left.webm').then(v => { tick(); return v; })
     .catch(() => { tick(); return document.createElement('video'); });
 
   // Priority: tower

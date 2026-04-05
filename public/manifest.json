@@ -1,0 +1,37 @@
+{
+  "name": "GUIBOUR SYSTEM — W.O.W",
+  "short_name": "W.O.W",
+  "description": "Work Or Window — Le jeu bureaucratique de Guibour. Survivez aux 25 étages.",
+  "start_url": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "fullscreen"],
+  "orientation": "portrait",
+  "background_color": "#1A3F78",
+  "theme_color": "#00C8BE",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "GUIBOUR SYSTEM W.O.W"
+    }
+  ],
+  "categories": ["games", "entertainment"],
+  "lang": "fr-FR",
+  "prefer_related_applications": false
+}

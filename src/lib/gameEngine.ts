@@ -13,16 +13,17 @@ const PLAYER_H = 90;
 const PLAYER_W = 40;
 
 // 7 bubble sizes: radius, bounceVy, speedX, divisionVy, score
+// SPEC: plus la balle est grosse, MOINS elle rebondit (bounceVy proche de 0 = rebond faible)
 const SIZE_CONFIG: Record<BubbleSize, {
   radius: number; bounceVy: number; speedX: number; divisionVy: number; score: number;
 }> = {
-  7: { radius: 50, bounceVy: -13.5, speedX: 1.0, divisionVy: -6.0, score: 50 },
-  6: { radius: 40, bounceVy: -12.5, speedX: 1.2, divisionVy: -6.5, score: 100 },
-  5: { radius: 32, bounceVy: -11.5, speedX: 1.4, divisionVy: -7.0, score: 150 },
-  4: { radius: 25, bounceVy: -10.5, speedX: 1.6, divisionVy: -7.5, score: 250 },
-  3: { radius: 18, bounceVy: -9.2,  speedX: 1.8, divisionVy: -8.0, score: 400 },
-  2: { radius: 12, bounceVy: -8.0,  speedX: 2.0, divisionVy: -8.5, score: 600 },
-  1: { radius: 8,  bounceVy: -6.5,  speedX: 2.2, divisionVy: 0,   score: 1000 },
+  7: { radius: 80, bounceVy: -6.5,  speedX: 0.8, divisionVy: -7.5,  score: 50 },
+  6: { radius: 62, bounceVy: -7.5,  speedX: 1.0, divisionVy: -8.5,  score: 100 },
+  5: { radius: 48, bounceVy: -8.5,  speedX: 1.2, divisionVy: -9.5,  score: 150 },
+  4: { radius: 36, bounceVy: -9.5,  speedX: 1.4, divisionVy: -10.5, score: 250 },
+  3: { radius: 26, bounceVy: -10.5, speedX: 1.6, divisionVy: -11.5, score: 400 },
+  2: { radius: 16, bounceVy: -11.5, speedX: 1.8, divisionVy: -13.0, score: 600 },
+  1: { radius: 10, bounceVy: -13.0, speedX: 2.0, divisionVy: 0,     score: 1000 },
 };
 
 const SPLIT_MAP: Record<BubbleSize, BubbleSize | null> = {
@@ -91,7 +92,7 @@ export function createInitialState(cw: number, ch: number): GameState {
 function createPlayer(cw: number, ch: number, name: string): Player {
   return {
     x: cw / 2,
-    y: ch - GROUND_MARGIN, // feet on the ground line
+    y: ch, // feet on the ground line (canvas bottom)
     width: PLAYER_W,
     height: PLAYER_H,
     speed: PLAYER_SPEED,
@@ -168,7 +169,7 @@ export function updateGame(state: GameState): GameState {
         state.activeEffects = [];
         state.cgtShield = false;
         state.player.x = state.canvasWidth / 2;
-        state.player.y = state.canvasHeight - GROUND_MARGIN;
+        state.player.y = state.canvasHeight;
         state.player.invincible = 120;
       }
     }
@@ -193,7 +194,7 @@ export function updateGame(state: GameState): GameState {
       state.activeEffects = [];
       state.cgtShield = false;
       state.player.x = state.canvasWidth / 2;
-      state.player.y = state.canvasHeight - GROUND_MARGIN;
+      state.player.y = state.canvasHeight;
       state.player.invincible = 0;
       state.status = 'playing';
     }
@@ -232,7 +233,7 @@ export function updateGame(state: GameState): GameState {
 }
 
 function updatePlayer(state: GameState) {
-  const { player, keys, canvasWidth } = state;
+  const { player, keys, canvasWidth, canvasHeight } = state;
   const cafeActive = state.activeEffects.some(e => e.type === 'cafe');
   const biereActive = state.activeEffects.some(e => e.type === 'biere');
 
@@ -248,6 +249,8 @@ function updatePlayer(state: GameState) {
   else { player.direction = 'idle'; }
 
   player.x = Math.max(player.width / 2, Math.min(canvasWidth - player.width / 2, player.x));
+  // Always keep player feet on the floor — handles canvas resize mid-game
+  player.y = canvasHeight;
 
   const wantsShoot = keys.has(' ') || keys.has('ArrowUp') || keys.has('z') || keys.has('w') || state.touchShoot;
   const activeProjectiles = state.projectiles.filter(p => p.active);
@@ -259,7 +262,8 @@ function updatePlayer(state: GameState) {
     state.projectiles.push({
       id: state.nextId++,
       x: player.x,
-      y: player.y - player.height / 2,
+      // Spawn at top of character (head/shoulder level) so arrow appears to come FROM the player
+      y: player.y - player.height + 10,
       height: 0,
       active: true,
       piercing: piluleActive,
@@ -281,7 +285,7 @@ function updateProjectiles(state: GameState) {
 }
 
 function updateBubbles(state: GameState) {
-  const floorY = state.canvasHeight - GROUND_MARGIN;
+  const floorY = state.canvasHeight; // bubbles land at canvas bottom, same as player feet
   const ceilingY = TIMER_BAR_H + (state.ceilingSpikes ? SPIKE_H : 0);
 
   for (const b of state.bubbles) {
@@ -321,7 +325,7 @@ function updateBubbles(state: GameState) {
 }
 
 function updateBonusItems(state: GameState) {
-  const floorY = state.canvasHeight - GROUND_MARGIN;
+  const floorY = state.canvasHeight; // bonus items land at canvas bottom, same as player feet
   for (const b of state.bonuses) {
     if (!b.active) continue;
     b.vy += 0.06;
@@ -571,7 +575,9 @@ export function renderGame(ctx: CanvasRenderingContext2D, state: GameState) {
 function drawBackground(ctx: CanvasRenderingContext2D, w: number, h: number, state: GameState) {
   const bg = assets?.backgrounds.get(state.level);
   if (bg) {
+    ctx.globalAlpha = 0.88;
     ctx.drawImage(bg, 0, 0, w, h);
+    ctx.globalAlpha = 1;
   } else {
     // Fallback: solid color
     ctx.fillStyle = '#1a1a2e';
@@ -579,27 +585,10 @@ function drawBackground(ctx: CanvasRenderingContext2D, w: number, h: number, sta
   }
 }
 
-function drawTimerGauge(ctx: CanvasRenderingContext2D, w: number, state: GameState) {
-  const { timer } = state;
-  const ratio = Math.max(0, timer.remaining / timer.total);
-
-  // Background
-  ctx.fillStyle = 'rgba(60,60,60,0.7)';
-  ctx.fillRect(0, 0, w, TIMER_BAR_H);
-
-  // Fill
-  let color = '#3CB371'; // green
-  if (ratio < 0.15) color = '#FF4444'; // red
-  else if (ratio < 0.30) color = '#FFA500'; // orange
-
-  ctx.fillStyle = color;
-  ctx.fillRect(0, 0, w * ratio, TIMER_BAR_H);
-
-  // Pulse when red
-  if (ratio < 0.15 && state.frameCount % 30 < 15) {
-    ctx.fillStyle = 'rgba(255,68,68,0.3)';
-    ctx.fillRect(0, 0, w, TIMER_BAR_H);
-  }
+function drawTimerGauge(ctx: CanvasRenderingContext2D, w: number, _state: GameState) {
+  // Timer is now rendered as HTML overlay (Excel formula bar) in GameCanvas.tsx
+  // Keep zone transparent to preserve physics offsets (TIMER_BAR_H = 8px)
+  ctx.clearRect(0, 0, w, TIMER_BAR_H);
 }
 
 function drawCeilingSpikes(ctx: CanvasRenderingContext2D, w: number) {
@@ -638,7 +627,7 @@ function drawBubbles(ctx: CanvasRenderingContext2D, state: GameState) {
 }
 
 function drawProjectiles(ctx: CanvasRenderingContext2D, state: GameState) {
-  ctx.strokeStyle = '#3CB371';
+  ctx.strokeStyle = '#00C9C8';
   ctx.lineWidth = 3;
   for (const p of state.projectiles) {
     if (!p.active) continue;
@@ -649,7 +638,7 @@ function drawProjectiles(ctx: CanvasRenderingContext2D, state: GameState) {
     ctx.stroke();
 
     // Arrow tip
-    ctx.fillStyle = '#3CB371';
+    ctx.fillStyle = '#00C9C8';
     ctx.beginPath();
     ctx.moveTo(p.x - 5, topY + 5);
     ctx.lineTo(p.x, topY - 3);
@@ -687,13 +676,17 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
   const walkVideo = assets?.player.walkVideo;
   const idleImg = assets?.player.idle;
   const isMoving = player.direction === 'left' || player.direction === 'right';
+  // Show idle/front-facing when shooting (has active projectile)
+  const isShooting = state.projectiles.some(p => p.active);
+  // Use walk animation only when moving AND not shooting
+  const useWalk = isMoving && !isShooting;
 
   // Manage video play/pause
   if (walkVideo && walkVideo.readyState >= 2) {
-    if (isMoving && !walkVideoPlaying) {
+    if (useWalk && !walkVideoPlaying) {
       walkVideo.play().catch(() => {});
       walkVideoPlaying = true;
-    } else if (!isMoving && walkVideoPlaying) {
+    } else if (!useWalk && walkVideoPlaying) {
       walkVideo.pause();
       walkVideoPlaying = false;
     }
@@ -701,23 +694,25 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
 
   ctx.save();
 
-  if (isMoving && walkVideo && walkVideo.readyState >= 2) {
-    // Draw video frame — video is natively facing left
-    // For right movement: flip horizontally
+  if (useWalk && walkVideo && walkVideo.readyState >= 2) {
+    // Draw video frame — video is natively facing left (1280×720), trimmed from 1.0s
+    // Character occupies x=356..935 (sw=579) of the full hflipped frame
+    const sx = 356, sy = 0, sw = 579, sh = 720;
     if (player.direction === 'right') {
-      ctx.translate(player.x, player.y - player.height);
+      // Flip horizontally for right movement
+      ctx.translate(player.x + player.width / 2, player.y - player.height);
       ctx.scale(-1, 1);
-      ctx.drawImage(walkVideo, -player.width / 2, 0, player.width, player.height);
+      ctx.drawImage(walkVideo, sx, sy, sw, sh, -player.width, 0, player.width, player.height);
     } else {
       // Left = native direction
-      ctx.drawImage(walkVideo, player.x - player.width / 2, player.y - player.height, player.width, player.height);
+      ctx.drawImage(walkVideo, sx, sy, sw, sh, player.x - player.width / 2, player.y - player.height, player.width, player.height);
     }
   } else if (idleImg) {
-    // Idle: draw static image
+    // Idle or shooting: draw face-forward static image
     ctx.drawImage(idleImg, player.x - player.width / 2, player.y - player.height, player.width, player.height);
   } else {
     // Fallback rectangle
-    ctx.fillStyle = '#3CB371';
+    ctx.fillStyle = '#00C9C8';
     ctx.fillRect(player.x - player.width / 2, player.y - player.height, player.width, player.height);
   }
 
@@ -750,14 +745,14 @@ function drawLevelComplete(ctx: CanvasRenderingContext2D, state: GameState) {
   ctx.fillStyle = 'rgba(10,26,18,0.5)';
   ctx.fillRect(0, 0, w, h);
 
-  ctx.fillStyle = '#3CB371';
-  ctx.font = 'bold 32px "Oxanium", sans-serif';
+  ctx.fillStyle = '#00C9C8';
+  ctx.font = 'bold 32px "Orbitron", sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText('DOSSIER CLASSE !', w / 2, h / 2 - 15);
 
   ctx.fillStyle = '#fff';
-  ctx.font = '16px "Share Tech Mono", monospace';
+  ctx.font = '16px "Orbitron", sans-serif';
   ctx.fillText(`Etage ${state.level} termine`, w / 2, h / 2 + 20);
   ctx.textBaseline = 'alphabetic';
 }
@@ -770,13 +765,13 @@ function drawBurnout(ctx: CanvasRenderingContext2D, w: number, h: number, state:
 
   // BURN OUT text
   ctx.fillStyle = '#FF4444';
-  ctx.font = 'bold 48px "Oxanium", sans-serif';
+  ctx.font = 'bold 48px "Orbitron", sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText('BURN OUT !', w / 2, h / 2);
 
   ctx.fillStyle = '#fff';
-  ctx.font = '18px "Share Tech Mono", monospace';
+  ctx.font = '18px "Orbitron", sans-serif';
   ctx.fillText(`RTT restants : ${state.player.lives}`, w / 2, h / 2 + 40);
   ctx.textBaseline = 'alphabetic';
 }
