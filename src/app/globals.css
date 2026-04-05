@@ -169,20 +169,18 @@ html, body {
   background-size: 56px 34px;
 }
 
-/* ===== GRID — REFLET LUMINEUX SUR LES LIGNES ===== */
+/* ===== GRID — REFLET NEON SUR LES LIGNES ===== */
 /*
-  Principe :
-  - On superpose la même grille mais en version très lumineuse (lignes blanches/cyan)
-  - Un masque en dégradé doux se déplace de gauche à droite
-  - Le masque révèle progressivement les lignes brillantes, simulant
-    un éclairage qui passe sur des barreaux en acier
-  - Aucune ligne ne bouge, aucune ligne supplémentaire n'apparaît
+  Masque composite = fenêtre glissante × ellipse centre-atténuée
+  → L'effet est quasi-invisible au centre (derrière logo/textes)
+     et plus perceptible sur les bords/coins
+  → Couleur cyan neon pour cohérence avec le globe
 */
 
 @keyframes maskSlide {
-  0%   { mask-position: -55% 0; }
-  70%  { mask-position: 155% 0; }
-  100% { mask-position: 155% 0; } /* pause hors-écran avant de recommencer */
+  0%   { mask-position: -55% 0, 0 0; }
+  70%  { mask-position: 155% 0, 0 0; }
+  100% { mask-position: 155% 0, 0 0; }
 }
 
 .grid-shimmer {
@@ -192,53 +190,74 @@ html, body {
   z-index: 1;
 }
 
-/* Passe principale — reflet chaud et large */
+/* Passe principale */
 .grid-shimmer::before {
   content: '';
   position: absolute;
   inset: 0;
-  /* Exactement la même grille que le fond, mais lignes très lumineuses */
+  /* Même grille, lignes cyan neon — opacité réduite */
   background-image:
-    linear-gradient(rgba(210, 235, 255, 0.85) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(210, 235, 255, 0.85) 1px, transparent 1px);
+    linear-gradient(rgba(0, 230, 215, 0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 230, 215, 0.5) 1px, transparent 1px);
   background-size: 56px 34px;
-  background-position: 48px 52px; /* aligné sur la grille du fond */
-  /* Masque : fenêtre douce qui glisse — ne révèle les lignes qu'à son passage */
-  mask-image: linear-gradient(
-    90deg,
-    transparent    0%,
-    rgba(0,0,0,.12) 22%,
-    rgba(0,0,0,.75) 50%,
-    rgba(0,0,0,.12) 78%,
-    transparent    100%
-  );
-  mask-size: 50% 100%;
-  mask-repeat: no-repeat;
-  mask-position: -55% 0;
+  background-position: 48px 52px;
+  /*
+    Masque double :
+    [1] Fenêtre glissante gauche→droite (animée)
+    [2] Ellipse fixe : très sombre au centre, plus ouvert sur les bords
+    → mask-composite: intersect multiplie les deux → centre ultra-léger
+  */
+  mask-image:
+    linear-gradient(
+      90deg,
+      transparent     0%,
+      rgba(0,0,0,.08) 20%,
+      rgba(0,0,0,.48) 50%,
+      rgba(0,0,0,.08) 80%,
+      transparent     100%
+    ),
+    radial-gradient(
+      ellipse 65% 55% at 50% 48%,
+      rgba(0,0,0,.04) 0%,
+      rgba(0,0,0,.35) 45%,
+      rgba(0,0,0,.90) 100%
+    );
+  mask-size: 50% 100%, 100% 100%;
+  mask-repeat: no-repeat, no-repeat;
+  mask-composite: intersect;
+  mask-position: -55% 0, 0 0;
   animation: maskSlide 15s ease-in-out infinite;
 }
 
-/* Passe secondaire — reflet plus étroit, décalé de 7.5s */
+/* Passe secondaire — plus fine, décalée de 7.5s */
 .grid-shimmer::after {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(180, 220, 255, 0.6) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(180, 220, 255, 0.6) 1px, transparent 1px);
+    linear-gradient(rgba(0, 210, 200, 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 210, 200, 0.35) 1px, transparent 1px);
   background-size: 56px 34px;
   background-position: 48px 52px;
-  mask-image: linear-gradient(
-    90deg,
-    transparent    0%,
-    rgba(0,0,0,.07) 25%,
-    rgba(0,0,0,.45) 50%,
-    rgba(0,0,0,.07) 75%,
-    transparent    100%
-  );
-  mask-size: 32% 100%;
-  mask-repeat: no-repeat;
-  mask-position: -55% 0;
+  mask-image:
+    linear-gradient(
+      90deg,
+      transparent     0%,
+      rgba(0,0,0,.05) 25%,
+      rgba(0,0,0,.30) 50%,
+      rgba(0,0,0,.05) 75%,
+      transparent     100%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 50% 48%,
+      rgba(0,0,0,.03) 0%,
+      rgba(0,0,0,.28) 42%,
+      rgba(0,0,0,.85) 100%
+    );
+  mask-size: 32% 100%, 100% 100%;
+  mask-repeat: no-repeat, no-repeat;
+  mask-composite: intersect;
+  mask-position: -55% 0, 0 0;
   animation: maskSlide 15s ease-in-out 7.5s infinite;
 }
 
