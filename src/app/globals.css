@@ -169,18 +169,20 @@ html, body {
   background-size: 56px 34px;
 }
 
-/* ===== GRID — SHIMMER SUR LES LIGNES + FONDUS DE BORD ===== */
-
+/* ===== GRID — REFLET LUMINEUX SUR LES LIGNES ===== */
 /*
-  Principe : on surimprime la grille avec une version plus lumineuse
-  de la même grille (lignes légèrement plus claires) sur un masque
-  qui se déplace. Ça illumine les lignes, pas le fond.
+  Principe :
+  - On superpose la même grille mais en version très lumineuse (lignes blanches/cyan)
+  - Un masque en dégradé doux se déplace de gauche à droite
+  - Le masque révèle progressivement les lignes brillantes, simulant
+    un éclairage qui passe sur des barreaux en acier
+  - Aucune ligne ne bouge, aucune ligne supplémentaire n'apparaît
 */
-@keyframes lineShimmer {
-  0%   { background-position: -200px 0, -200px 0; opacity: 0; }
-  8%   { opacity: 1; }
-  92%  { opacity: 1; }
-  100% { background-position: 2000px 0, 2000px 0; opacity: 0; }
+
+@keyframes maskSlide {
+  0%   { mask-position: -55% 0; }
+  70%  { mask-position: 155% 0; }
+  100% { mask-position: 155% 0; } /* pause hors-écran avant de recommencer */
 }
 
 .grid-shimmer {
@@ -188,53 +190,56 @@ html, body {
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  overflow: hidden;
 }
 
-/* Passe A : lignes lumineuses qui glissent de gauche à droite */
+/* Passe principale — reflet chaud et large */
 .grid-shimmer::before {
   content: '';
   position: absolute;
   inset: 0;
-  /* Même grille, lignes plus lumineuses */
+  /* Exactement la même grille que le fond, mais lignes très lumineuses */
   background-image:
-    linear-gradient(rgba(140,200,255,0.55) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(140,200,255,0.55) 1px, transparent 1px);
+    linear-gradient(rgba(210, 235, 255, 0.85) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(210, 235, 255, 0.85) 1px, transparent 1px);
   background-size: 56px 34px;
-  background-position: 0 52px;
-  /* Masque horizontal qui révèle les lignes au passage */
+  background-position: 48px 52px; /* aligné sur la grille du fond */
+  /* Masque : fenêtre douce qui glisse — ne révèle les lignes qu'à son passage */
   mask-image: linear-gradient(
     90deg,
-    transparent 0%,
-    rgba(0,0,0,0.08) 15%,
-    rgba(0,0,0,0.18) 50%,
-    rgba(0,0,0,0.08) 85%,
-    transparent 100%
+    transparent    0%,
+    rgba(0,0,0,.12) 22%,
+    rgba(0,0,0,.75) 50%,
+    rgba(0,0,0,.12) 78%,
+    transparent    100%
   );
-  mask-size: 400px 100%;
-  animation: lineShimmer 12s ease-in-out infinite;
+  mask-size: 50% 100%;
+  mask-repeat: no-repeat;
+  mask-position: -55% 0;
+  animation: maskSlide 15s ease-in-out infinite;
 }
 
-/* Passe B : 2e balayage décalé de 6s */
+/* Passe secondaire — reflet plus étroit, décalé de 7.5s */
 .grid-shimmer::after {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(120,180,255,0.4) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(120,180,255,0.4) 1px, transparent 1px);
+    linear-gradient(rgba(180, 220, 255, 0.6) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180, 220, 255, 0.6) 1px, transparent 1px);
   background-size: 56px 34px;
-  background-position: 0 52px;
+  background-position: 48px 52px;
   mask-image: linear-gradient(
     90deg,
-    transparent 0%,
-    rgba(0,0,0,0.06) 20%,
-    rgba(0,0,0,0.12) 50%,
-    rgba(0,0,0,0.06) 80%,
-    transparent 100%
+    transparent    0%,
+    rgba(0,0,0,.07) 25%,
+    rgba(0,0,0,.45) 50%,
+    rgba(0,0,0,.07) 75%,
+    transparent    100%
   );
-  mask-size: 300px 100%;
-  animation: lineShimmer 12s ease-in-out 6s infinite;
+  mask-size: 32% 100%;
+  mask-repeat: no-repeat;
+  mask-position: -55% 0;
+  animation: maskSlide 15s ease-in-out 7.5s infinite;
 }
 
 /* ===== FONDUS DE BORD — dégradé vers le fond à droite et en bas ===== */
