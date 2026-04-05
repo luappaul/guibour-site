@@ -171,6 +171,7 @@ export default function JukeboxPage() {
                 <div style={{ position: 'relative' }}>
                   {view === 'audio' && activeTrack.spotifyId ? (
                     <iframe
+                      key={activeTrack.spotifyId}
                       src={`https://open.spotify.com/embed/track/${activeTrack.spotifyId}?utm_source=generator&theme=0`}
                       width="100%"
                       height="152"
@@ -281,12 +282,12 @@ export default function JukeboxPage() {
                 {/* Header */}
                 <div style={{
                   display: 'grid',
-                  gridTemplateColumns: '32px 1fr 60px 60px 80px',
+                  gridTemplateColumns: '32px 1fr 80px',
                   padding: '8px 16px',
                   background: '#1A3E7A',
                   borderBottom: '1px solid #2B5090',
                 }}>
-                  {['#', 'TITRE', 'BPM', 'MOOD', ''].map((h, i) => (
+                  {['#', 'TITRE', ''].map((h, i) => (
                     <div key={i} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#5B9BD5', letterSpacing: '2px' }}>
                       {h}
                     </div>
@@ -302,7 +303,7 @@ export default function JukeboxPage() {
                       onClick={() => track.released && setActiveTrack(track)}
                       style={{
                         display: 'grid',
-                        gridTemplateColumns: '32px 1fr 60px 60px 80px',
+                        gridTemplateColumns: '32px 1fr 80px',
                         padding: '12px 16px',
                         background: isActive ? 'rgba(0,71,171,.22)' : 'transparent',
                         borderBottom: '1px solid rgba(26,62,122,.4)',
@@ -324,19 +325,6 @@ export default function JukeboxPage() {
                         <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#3C5A7A', marginTop: '2px' }}>
                           GUIBOUR {track.hasClip ? '· CLIP DISPO' : ''}
                         </div>
-                      </div>
-                      <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#5B9BD5', alignSelf: 'center' }}>
-                        {track.bpm ?? '—'}
-                      </div>
-                      <div style={{
-                        fontFamily: "'Orbitron', sans-serif", fontSize: '8px', fontWeight: 700,
-                        color: track.moodColor, alignSelf: 'center',
-                        padding: '2px 6px', border: `1px solid ${track.moodColor}22`,
-                        background: `${track.moodColor}18`,
-                        borderRadius: '2px', letterSpacing: '1px',
-                        width: 'fit-content',
-                      }}>
-                        {track.mood}
                       </div>
                       <div style={{ alignSelf: 'center' }}>
                         {track.spotifyId && (
@@ -363,7 +351,7 @@ export default function JukeboxPage() {
             {/* ── RIGHT COLUMN — INFO + LINKS ── */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
-              {/* About card */}
+              {/* About card — photo artiste */}
               <div style={{
                 background: '#0C2A62',
                 border: '2px solid #1A3E7A',
@@ -373,14 +361,29 @@ export default function JukeboxPage() {
                 <div style={{ background: '#1A3E7A', padding: '8px 14px', borderBottom: '1px solid #2B5090' }}>
                   <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#A8D8FF', letterSpacing: '3px' }}>DOSSIER ARTISTE</span>
                 </div>
-                <div style={{ padding: '16px' }}>
-                  <div style={{ fontSize: '42px', textAlign: 'center', marginBottom: '8px' }}>🎤</div>
-                  <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '28px', color: '#FFFFFF', textAlign: 'center', letterSpacing: '4px', textShadow: '0 0 18px rgba(0,255,235,.2)' }}>
-                    GUIBOUR
+                {/* Photo */}
+                <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', overflow: 'hidden' }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/artist-photo.jpg"
+                    alt="Guibour"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
+                  />
+                  {/* Overlay gradient + name */}
+                  <div style={{
+                    position: 'absolute', bottom: 0, left: 0, right: 0,
+                    background: 'linear-gradient(transparent, rgba(6,16,40,.92))',
+                    padding: '24px 14px 14px',
+                  }}>
+                    <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '22px', color: '#FFF', letterSpacing: '4px', textShadow: '0 0 14px rgba(0,255,235,.2)' }}>
+                      GUIBOUR
+                    </div>
+                    <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#00D4CC', letterSpacing: '4px', textShadow: '0 0 6px rgba(0,200,190,.5)' }}>
+                      ARTISTE · EP 2026
+                    </div>
                   </div>
-                  <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#00D4CC', textAlign: 'center', letterSpacing: '4px', marginBottom: '16px' }}>
-                    ARTISTE · EP 2026
-                  </div>
+                </div>
+                <div style={{ padding: '12px 14px' }}>
                   <p style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#5B9BD5', lineHeight: 1.7, letterSpacing: '0.5px' }}>
                     Artiste indépendant. Un EP en cours de sortie. Un jeu web. Une satire du monde du travail.
                     Work Or Window — le son du bureau qui brûle.
