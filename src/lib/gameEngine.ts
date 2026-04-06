@@ -1,7 +1,8 @@
 import {
   GameState, Bubble, BubbleSize, Projectile, Bonus, BonusType, Player,
-  RoundTimer, ElevatorAnim,
+  RoundTimer, ElevatorAnim, FloatingText,
 } from './gameTypes';
+import { playBonusSound } from './sounds';
 import { LEVELS } from './levels';
 import { GameAssets } from './assetLoader';
 
@@ -85,6 +86,7 @@ export function createInitialState(cw: number, ch: number): GameState {
     levelTransitionTimer: 0,
     startTime: 0,
     endTime: 0,
+    floatingTexts: [],
     frameCount: 0,
   };
 }
@@ -218,6 +220,7 @@ export function updateGame(state: GameState): GameState {
   updateBonusItems(state);
   updateEffects(state);
   updateParticles();
+  updateFloatingTexts(state);
   checkCollisions(state);
 
   // Level complete
@@ -458,7 +461,7 @@ function checkCollisions(state: GameState) {
     if (!b.active) continue;
     if (Math.sqrt((player.x - b.x) ** 2 + ((player.y - player.height / 3) - b.y) ** 2) < 35) {
       b.active = false;
-      applyBonus(state, b.type);
+      applyBonus(state, b.type, b.x, b.y);
     }
   }
 }
@@ -495,7 +498,25 @@ function spawnBonus(state: GameState, x: number, y: number, weights: Partial<Rec
   });
 }
 
-function applyBonus(state: GameState, type: BonusType) {
+function applyBonus(state: GameState, type: BonusType, bx = 0, by = 0) {
+  playBonusSound(type);
+  const BONUS_LABELS: Partial<Record<BonusType, string>> = {
+    argent: '+500 €', rtt: '+1 RTT', temps: '+15s', cgt: 'SHIELD!',
+    cafe: 'SPEED!', biere: 'SLOW…', pilule: 'x2 TIR', stagiaire: '+STAG!',
+  };
+  const BONUS_COLORS: Partial<Record<BonusType, string>> = {
+    argent: '#FFD700', rtt: '#FF4444', temps: '#00C8BE', cgt: '#27C93F',
+    cafe: '#C87A3C', biere: '#90C840', pilule: '#CC22FF', stagiaire: '#5B9BD5',
+  };
+  state.floatingTexts.push({
+    id: state.nextId++,
+    x: bx, y: by - 10,
+    text: BONUS_LABELS[type] || type.toUpperCase(),
+    color: BONUS_COLORS[type] || '#FFFFFF',
+    opacity: 1,
+    vy: -1.5,
+    life: 60, maxLife: 60,
+  });
   switch (type) {
     case 'rtt':
       state.player.lives++;
@@ -549,6 +570,8 @@ export function renderGame(ctx: CanvasRenderingContext2D, state: GameState) {
 
     // 6. Bonus items
     drawBonusItems(ctx, state);
+    // 6b. Floating text pop-ups
+    drawFloatingTexts(ctx, state);
 
     // 7. Projectiles
     drawProjectiles(ctx, state);
@@ -854,4 +877,30 @@ function drawBurnout(ctx: CanvasRenderingContext2D, w: number, h: number, state:
   ctx.font = '18px "Orbitron", sans-serif';
   ctx.fillText(`RTT restants : ${state.player.lives}`, w / 2, h / 2 + 40);
   ctx.textBaseline = 'alphabetic';
+}
+// ===== FLOATING TEXT =====
+function updateFloatingTexts(state: GameState) {
+  for (const ft of state.floatingTexts) {
+    ft.y += ft.vy;
+    ft.life--;
+    ft.opacity = ft.life / ft.maxLife;
+  }
+  state.floatingTexts = state.floatingTexts.filter(ft => ft.life > 0);
+}
+
+function drawFloatingTexts(ctx: CanvasRenderingContext2D, state: GameState) {
+  for (const ft of state.floatingTexts) {
+    ctx.save();
+    ctx.globalAlpha = ft.opacity;
+    const scale = 1 + (1 - ft.life / ft.maxLife) * 0.4;
+    ctx.font = `bold ${Math.round(14 * scale)}px "Orbitron", monospace`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.strokeStyle = 'rgba(0,0,0,0.7)';
+    ctx.lineWidth = 3;
+    ctx.strokeText(ft.text, ft.x, ft.y);
+    ctx.fillStyle = ft.color;
+    ctx.fillText(ft.text, ft.x, ft.y);
+    ctx.restore();
+  }
 }
