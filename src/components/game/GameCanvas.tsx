@@ -441,13 +441,10 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
 
   return (
     <div className="flex flex-col h-full w-full" style={{
-      background: '#1A3F78',
-      gap: '0',
-      padding: '8px 8px',
-    }}>
+      background: '#1A3F78' }}>
 
       {/* ── TOP ROW: game canvas + tower ── */}
-      <div className="flex flex-1" style={{ gap: '8px', minHeight: 0 }}>
+      <div className="flex flex-1" style={{ minHeight: 0 }}>
         {/* Left column: canvas + timer bar */}
         <div className="flex flex-col flex-1" style={{ minWidth: 0 }}>
 {/* Game canvas area */}
@@ -776,34 +773,38 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
         </div>{/* end left column */}
 
         {/* Sponsored sidebar on RIGHT — tower progress + satirical ads */}
+        {/* Right column: tower full height + SALAIRE */}
         {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete') && (
-          <SponsoredSidebar currentLevel={currentLevel} totalLevels={25} assets={assetsRef} />
+          <div style={{ display: 'flex', flexDirection: 'column', flexShrink: 0, width: '185px', background: '#0D1F3C', borderLeft: '2px solid #1A3E7A' }}>
+            <div style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
+              <SponsoredSidebar currentLevel={currentLevel} totalLevels={25} assets={assetsRef} />
+            </div>
+            <div style={{ flexShrink: 0, background: '#0A1628', borderTop: '2px solid #00C8BE', padding: '8px 4px', textAlign: 'center', fontFamily: "'Orbitron', sans-serif" }}>
+              <div style={{ fontSize: '9px', color: '#5B9BD5', letterSpacing: '3px', marginBottom: '2px' }}>SALAIRE</div>
+              <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '22px', color: '#00C8BE', lineHeight: 1, textShadow: '0 0 14px rgba(0,200,190,.6)' }}>{hudInfo.score.toLocaleString('fr-FR')}€</div>
+            </div>
+          </div>
         )}
       </div>
 
       
       {/* ── HUD ROW: lives + level name + score + mute ── */}
       {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete') && (
-        <div style={{ flexShrink: 0, background: '#1A3F78', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '2px solid #00C8BE', marginTop: '4px' }}>
-
-        {/* ── HUD: RTT | ETAGE (centre) | SALAIRE ── */}
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
-          <div style={{ background: '#0C2A62', padding: '6px 20px', textAlign: 'center', borderRight: '1px solid #1A3E7A' }}>
-            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#5B9BD5', letterSpacing: '3px', marginBottom: '2px' }}>RTT</div>
-            <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '38px', color: '#FF4444', lineHeight: 1, textShadow: '0 0 14px rgba(255,68,68,.6)' }}>{'\u2764'.repeat(Math.max(0, hudInfo.lives))}</div>
+        <div style={{ flexShrink: 0, background: '#1A3F78', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '2px solid #00C8BE' }}>
+          <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
+            <div style={{ background: '#0C2A62', padding: '6px 20px', textAlign: 'center', borderRight: '1px solid #1A3E7A' }}>
+              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#5B9BD5', letterSpacing: '3px', marginBottom: '2px' }}>RTT</div>
+              <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '38px', color: '#FF4444', lineHeight: 1, textShadow: '0 0 14px rgba(255,68,68,.6)' }}>{'❤'.repeat(Math.max(0, hudInfo.lives))}</div>
+            </div>
           </div>
-        </div>
-        <div key={currentLevel} style={{ flex: 2, textAlign: 'center', padding: '6px 16px', animation: 'elevatorFloorIn .35s cubic-bezier(.15,0,.25,1) both' }}>
-          <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#5B9BD5', letterSpacing: '4px', marginBottom: '2px' }}>ETAGE</div>
-          <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '38px', color: '#FFE033', lineHeight: 1, textShadow: '0 0 14px rgba(255,224,51,.6)' }}>{String(currentLevel + 1).padStart(2, '0')}</div>
-          <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#A8D8FF', letterSpacing: '2px', marginTop: '3px', opacity: 0.85, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{hudInfo.levelName}</div>
-        </div>
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-          <div style={{ background: '#0C2A62', padding: '6px 20px', textAlign: 'center', borderLeft: '1px solid #1A3E7A' }}>
-            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#5B9BD5', letterSpacing: '3px', marginBottom: '2px' }}>SALAIRE</div>
-            <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '38px', color: '#00C8BE', lineHeight: 1, textShadow: '0 0 14px rgba(0,200,190,.6)' }}>{hudInfo.score.toLocaleString('fr-FR')}€</div>
+          <div key={currentLevel} style={{ flex: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px 8px', animation: 'elevatorFloorIn .35s cubic-bezier(.15,0,.25,1) both' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: '#050E1F', border: '1px solid #1A3E7A', borderRadius: '4px', padding: '4px 20px', position: 'relative', overflow: 'hidden', minWidth: '90px' }}>
+              <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 7px, rgba(26,62,122,0.3) 7px, rgba(26,62,122,0.3) 8px)', pointerEvents: 'none' }} />
+              <div style={{ fontSize: '7px', fontFamily: "'Orbitron', sans-serif", color: '#5B9BD5', letterSpacing: '3px', position: 'relative', marginBottom: '1px' }}>ÉTAGE</div>
+              <div style={{ fontSize: '28px', fontFamily: "'Orbitron', sans-serif", fontWeight: 'bold', color: '#00C8BE', lineHeight: 1, textShadow: '0 0 12px rgba(0,200,190,0.9)', position: 'relative' }}>{String(currentLevel + 1).padStart(2, '0')}</div>
+              <div style={{ fontSize: '7px', fontFamily: "'Orbitron', sans-serif", color: '#A8D8FF', letterSpacing: '1px', position: 'relative', marginTop: '2px', opacity: 0.8, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '120px' }}>{hudInfo.levelName}</div>
+            </div>
           </div>
-        </div>
         </div>
       )}
     </div>
