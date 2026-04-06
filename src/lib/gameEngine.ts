@@ -17,13 +17,13 @@ const PLAYER_W = 40;
 const SIZE_CONFIG: Record<BubbleSize, {
   radius: number; bounceVy: number; speedX: number; divisionVy: number; score: number;
 }> = {
-  7: { radius: 80, bounceVy: -6.5,  speedX: 0.8, divisionVy: -7.5,  score: 50 },
-  6: { radius: 62, bounceVy: -7.5,  speedX: 1.0, divisionVy: -8.5,  score: 100 },
-  5: { radius: 48, bounceVy: -8.5,  speedX: 1.2, divisionVy: -9.5,  score: 150 },
-  4: { radius: 36, bounceVy: -9.5,  speedX: 1.4, divisionVy: -10.5, score: 250 },
-  3: { radius: 26, bounceVy: -10.5, speedX: 1.6, divisionVy: -11.5, score: 400 },
-  2: { radius: 16, bounceVy: -11.5, speedX: 1.8, divisionVy: -13.0, score: 600 },
-  1: { radius: 10, bounceVy: -13.0, speedX: 2.0, divisionVy: 0,     score: 1000 },
+  7: { radius: 80, bounceVy: -4.2,  speedX: 0.8, divisionVy: -4.9,  score: 50 },
+  6: { radius: 62, bounceVy: -4.9,  speedX: 1.0, divisionVy: -5.5,  score: 100 },
+  5: { radius: 48, bounceVy: -5.5,  speedX: 1.2, divisionVy: -6.2,  score: 150 },
+  4: { radius: 36, bounceVy: -6.2,  speedX: 1.4, divisionVy: -6.8,  score: 250 },
+  3: { radius: 26, bounceVy: -6.8,  speedX: 1.6, divisionVy: -7.5,  score: 400 },
+  2: { radius: 16, bounceVy: -7.5,  speedX: 1.8, divisionVy: -8.5,  score: 600 },
+  1: { radius: 10, bounceVy: -8.5,  speedX: 2.0, divisionVy: 0,    score: 1000 },
 };
 
 const SPLIT_MAP: Record<BubbleSize, BubbleSize | null> = {
@@ -303,6 +303,7 @@ function updateBubbles(state: GameState) {
     if (b.y - b.radius <= ceilingY) {
       if (state.ceilingSpikes) {
         // Spikes destroy bubble on contact
+        state.player.score += SIZE_CONFIG[b.size].score * 2; // bonus for ceiling kill
         b.radius = -1; // mark for destruction
       } else {
         b.y = ceilingY + b.radius;
