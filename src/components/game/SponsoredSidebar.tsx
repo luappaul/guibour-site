@@ -1,5 +1,4 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import { GameAssets } from '@/lib/assetLoader';
 
@@ -116,11 +115,11 @@ export default function SponsoredSidebar({ currentLevel, totalLevels, assets }: 
       )}
 
       {/* ── PROGRESS TOWER (top 55%) ── */}
-      <div style={{ position: 'relative', flex: '0 0 55%', padding: '6px 4px', overflowY: 'hidden', zIndex: 1 }}>
+      <div style={{ position: 'relative', flex: '0 0 72%', padding: '6px 4px', overflowY: 'hidden', zIndex: 1 }}>
         {/* Header */}
         <div style={{
           fontFamily: "'Orbitron', sans-serif",
-          fontSize: '7px',
+          fontSize: '9px',
           color: '#00C8BE',
           letterSpacing: '2px',
           textAlign: 'center',
@@ -179,7 +178,7 @@ export default function SponsoredSidebar({ currentLevel, totalLevels, assets }: 
                   boxShadow: isCurrent ? '0 0 8px rgba(0,200,190,.5)' : 'none',
                   borderRadius: '1px',
                   transition: 'all 0.3s ease',
-                  lineHeight: '10px',
+                  lineHeight: '14px',
                 }}>
                   {isCurrent ? `▶ ${String(i + 1).padStart(2, '0')}` : String(i + 1).padStart(2, '0')}
                 </div>
@@ -198,7 +197,7 @@ export default function SponsoredSidebar({ currentLevel, totalLevels, assets }: 
 
       {/* ── AD SLOT (bottom 45%) ── */}
       <div style={{
-        flex: '0 0 45%',
+        flex: '0 0 28%',
         display: 'flex',
         flexDirection: 'column',
         padding: '8px 6px',
