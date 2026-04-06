@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GameAssets } from '@/lib/assetLoader';
 
 interface Props {
@@ -62,7 +62,7 @@ const ADS = [
   },
 ];
 
-export default function SponsoredSidebar({ currentLevel, totalLevels, assets }: Props) {
+function SponsoredSidebar({ currentLevel, totalLevels, assets }: Props) {
   const [adIndex, setAdIndex] = useState(0);
   const [fade, setFade] = useState(true);
   const [showAdPopup, setShowAdPopup] = useState(false);
@@ -231,3 +231,5 @@ export default function SponsoredSidebar({ currentLevel, totalLevels, assets }: 
     </div>
   );
 }
+
+export default React.memo(SponsoredSidebar);
