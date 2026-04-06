@@ -65,6 +65,7 @@ const ADS = [
 export default function SponsoredSidebar({ currentLevel, totalLevels, assets }: Props) {
   const [adIndex, setAdIndex] = useState(0);
   const [fade, setFade] = useState(true);
+  const [showAdPopup, setShowAdPopup] = useState(false);
   const towerImg = assets?.tower;
 
   // Rotate ads every 8 seconds
@@ -78,6 +79,13 @@ export default function SponsoredSidebar({ currentLevel, totalLevels, assets }: 
     }, 8000);
     return () => clearInterval(interval);
   }, []);
+
+  // Show ad popup for 5s on each new level
+  useEffect(() => {
+    setShowAdPopup(true);
+    const t = setTimeout(() => setShowAdPopup(false), 5000);
+    return () => clearTimeout(t);
+  }, [currentLevel]);
 
   const ad = ADS[adIndex];
   const progress = Math.round((currentLevel / totalLevels) * 100);
@@ -115,7 +123,7 @@ export default function SponsoredSidebar({ currentLevel, totalLevels, assets }: 
       )}
 
       {/* ── PROGRESS TOWER (top 55%) ── */}
-      <div style={{ position: 'relative', flex: '0 0 72%', padding: '6px 4px', overflowY: 'hidden', zIndex: 1 }}>
+      <div style={{ position: 'relative', flex: 1, padding: '6px 4px', overflowY: 'hidden', zIndex: 1 }}>
         {/* Header */}
         <div style={{
           fontFamily: "'Orbitron', sans-serif",
@@ -188,142 +196,38 @@ export default function SponsoredSidebar({ currentLevel, totalLevels, assets }: 
         </div>
       </div>
 
-      {/* ── SEPARATOR ── */}
-      <div style={{
-        height: '2px',
-        background: 'linear-gradient(90deg, transparent, #1A3E7A, transparent)',
-        flexShrink: 0,
-      }} />
-
-      {/* ── AD SLOT (bottom 45%) ── */}
-      <div style={{
-        flex: '0 0 28%',
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '8px 6px',
-        overflow: 'hidden',
-        zIndex: 1,
-        opacity: fade ? 1 : 0,
-        transition: 'opacity 0.3s ease',
-      }}>
-        {/* AD label */}
+      {/* ── AD POPUP OVERLAY ── */}
+      {showAdPopup && (
         <div style={{
-          fontFamily: "'Orbitron', sans-serif",
-          fontSize: '6px',
-          color: '#2B5090',
-          letterSpacing: '2px',
-          marginBottom: '6px',
-          textAlign: 'center',
-          background: '#0C2A62',
-          padding: '3px',
-          border: '1px solid #1A3E7A',
+          position: 'absolute',
+          inset: 0,
+          zIndex: 10,
+          background: 'linear-gradient(180deg, #0A1520 0%, #0C2A62 100%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '16px 10px',
+          gap: '8px',
+          animation: 'adSlideIn 0.35s ease both',
         }}>
-          PUB / AD
-        </div>
-
-        {/* Badge */}
-        <div style={{
-          fontFamily: "'Orbitron', sans-serif",
-          fontSize: '6px',
-          color: ad.color,
-          letterSpacing: '1px',
-          marginBottom: '4px',
-          textAlign: 'center',
-        }}>
-          {ad.badge}
-        </div>
-
-        {/* Brand */}
-        <div style={{
-          fontFamily: "'Luckiest Guy', cursive",
-          fontSize: 'clamp(10px, 1.4vw, 14px)',
-          color: '#FFFFFF',
-          letterSpacing: '2px',
-          textAlign: 'center',
-          lineHeight: 1.1,
-          marginBottom: '4px',
-          textShadow: `0 0 8px ${ad.color}44`,
-        }}>
-          {ad.brand}
-        </div>
-
-        {/* Tagline */}
-        <div style={{
-          fontFamily: "'Orbitron', sans-serif",
-          fontSize: '7px',
-          color: ad.color,
-          textAlign: 'center',
-          lineHeight: 1.3,
-          marginBottom: '4px',
-          fontStyle: 'italic',
-        }}>
-          &ldquo;{ad.tagline}&rdquo;
-        </div>
-
-        {/* Sub */}
-        <div style={{
-          fontFamily: "'Orbitron', sans-serif",
-          fontSize: '6px',
-          color: '#3C5A7A',
-          textAlign: 'center',
-          lineHeight: 1.4,
-          marginBottom: '6px',
-          flex: 1,
-          overflow: 'hidden',
-        }}>
-          {ad.sub}
-        </div>
-
-        {/* CTA */}
-        {ad.isCtaLink ? (
-          <a
-            href={ad.ctaHref}
-            style={{
-              fontFamily: "'Orbitron', sans-serif",
-              fontSize: '7px',
-              color: '#FFFFFF',
-              background: `linear-gradient(135deg, ${ad.color}44, ${ad.color}22)`,
-              border: `1px solid ${ad.color}66`,
-              padding: '5px 6px',
-              textAlign: 'center',
-              textDecoration: 'none',
-              letterSpacing: '1px',
-              display: 'block',
-              flexShrink: 0,
-            }}
-          >
-            {ad.cta}
-          </a>
-        ) : (
-          <div style={{
-            fontFamily: "'Orbitron', sans-serif",
-            fontSize: '7px',
-            color: '#FFFFFF',
-            background: `linear-gradient(135deg, ${ad.color}44, ${ad.color}22)`,
-            border: `1px solid ${ad.color}66`,
-            padding: '5px 6px',
-            textAlign: 'center',
-            letterSpacing: '1px',
-            cursor: 'default',
-            flexShrink: 0,
-          }}>
+          <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#5B9BD5', letterSpacing: '3px', textAlign: 'center' }}>
+            PUB
+          </div>
+          <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '18px', color: ad.color, textAlign: 'center', lineHeight: 1.1 }}>
+            {ad.brand}
+          </div>
+          <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#E8F4FF', textAlign: 'center', lineHeight: 1.4 }}>
+            {ad.tagline}
+          </div>
+          <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#A8D8FF', textAlign: 'center', opacity: 0.75, lineHeight: 1.3 }}>
+            {ad.sub}
+          </div>
+          <div style={{ marginTop: '4px', padding: '4px 10px', background: ad.color, borderRadius: '2px', fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#0A1520', letterSpacing: '1px', textAlign: 'center' }}>
             {ad.cta}
           </div>
-        )}
-
-        {/* Ad counter dots */}
-        <div style={{ display: 'flex', gap: '3px', justifyContent: 'center', marginTop: '5px' }}>
-          {ADS.map((_, i) => (
-            <div key={i} style={{
-              width: '4px',
-              height: '4px',
-              borderRadius: '50%',
-              background: i === adIndex ? '#00C8BE' : '#1A3E7A',
-              transition: 'background 0.3s ease',
-            }} />
-          ))}
         </div>
-      </div>
+      )}
     </div>
   );
 }
