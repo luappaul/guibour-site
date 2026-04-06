@@ -627,6 +627,16 @@ function drawGlossyBubble(ctx: CanvasRenderingContext2D, x: number, y: number, r
   const lc = 'rgb(' + L(rv,.5) + ',' + L(gv,.5) + ',' + L(bv,.5) + ')';
   const dc = 'rgb(' + D(rv,.62) + ',' + D(gv,.62) + ',' + D(bv,.62) + ')';
 
+  // ── 3-D shadow (cast shadow behind bubble) ──
+  const _shadowG = ctx.createRadialGradient(x + r*0.28, y + r*0.38, 0, x + r*0.28, y + r*0.38, r*1.35);
+  _shadowG.addColorStop(0, 'rgba(0,0,0,0.60)');
+  _shadowG.addColorStop(0.5, 'rgba(0,0,0,0.25)');
+  _shadowG.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = _shadowG;
+  ctx.beginPath();
+  ctx.arc(x, y, r * 1.25, 0, Math.PI * 2);
+  ctx.fill();
+
   ctx.save();
   ctx.beginPath();
   ctx.arc(x, y, r, 0, Math.PI * 2);
