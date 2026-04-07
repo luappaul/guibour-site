@@ -18,6 +18,7 @@ const QUICK_TOPICS = [
 
 export default function GuibourChat() {
   const [open, setOpen] = useState(false);
+  const [showBubble, setShowBubble] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: WELCOME },
   ]);
@@ -67,8 +68,63 @@ export default function GuibourChat() {
 
   const showQuickTopics = messages.length === 1;
 
+  // Bulle BD
+  useEffect(() => {
+    if (open) { setShowBubble(false); return; }
+    let timer: ReturnType<typeof setTimeout>;
+    const tick = (visible: boolean) => {
+      setShowBubble(visible);
+      timer = setTimeout(() => tick(!visible), visible ? 4000 : 12000);
+    };
+    timer = setTimeout(() => tick(true), 3000);
+    return () => clearTimeout(timer);
+  }, [open]);
+
   return (
     <>
+      {/* Bulle BD */}
+      {showBubble && !open && (
+        <div style={{
+          position: 'fixed',
+          bottom: '88px',
+          right: '24px',
+          background: 'white',
+          color: '#1a1a1a',
+          padding: '10px 14px',
+          borderRadius: '16px',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+          fontSize: '13px',
+          fontWeight: 600,
+          maxWidth: '200px',
+          lineHeight: '1.4',
+          zIndex: 9998,
+          animation: 'bubblePop 0.3s ease-out',
+          border: '2px solid #1a1a1a',
+          pointerEvents: 'none',
+        }}>
+          Une question ? Demande à Guibot !
+          <div style={{
+            position: 'absolute',
+            bottom: '-12px',
+            right: '20px',
+            width: 0,
+            height: 0,
+            borderLeft: '8px solid transparent',
+            borderRight: '8px solid transparent',
+            borderTop: '12px solid #1a1a1a',
+          }} />
+          <div style={{
+            position: 'absolute',
+            bottom: '-9px',
+            right: '21px',
+            width: 0,
+            height: 0,
+            borderLeft: '7px solid transparent',
+            borderRight: '7px solid transparent',
+            borderTop: '10px solid white',
+          }} />
+        </div>
+      )}
       {/* Bouton flottant */}
       <button
         onClick={() => setOpen((o) => !o)}
@@ -390,6 +446,10 @@ export default function GuibourChat() {
         @keyframes guibourDot {
           0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
           30%            { transform: translateY(-4px); opacity: 1; }
+        }
+        @keyframes bubblePop {
+          from { opacity: 0; transform: scale(0.8) translateY(8px); }
+          to { opacity: 1; transform: scale(1) translateY(0); }
         }
       `}</style>
     </>
