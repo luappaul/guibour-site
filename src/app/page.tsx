@@ -260,6 +260,7 @@ export default function Home() {
   }
 
   return (
+    <>
     <div className="min-h-screen" style={{ background: theme.bg, transition: 'background 2s ease' }}>
       <ExcelNav />
       <ExcelChrome formulaText='=LAUNCH_GAME("GUIBOUR","SINGLE_2026") → WELCOME_TO_THE_SYSTEM'>
