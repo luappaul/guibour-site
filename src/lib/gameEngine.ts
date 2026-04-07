@@ -12,6 +12,17 @@ const PLAYER_SPEED = 3;
 const PROJECTILE_SPEED = 5;
 const PLAYER_H = 90;
 const PLAYER_W = 75;
+// Visual draw scale (draw character larger than physics hitbox for better appearance)
+const PLAYER_DRAW_SCALE = 1.35;
+
+// ===== HITBOX (precise capsule — fractions of player.height, 0=feet, 1=top) =====
+const HB = {
+  headFrac: 0.88,    // head circle center Y (fraction from bottom)
+  headR:    9,       // head radius (px)
+  bodyTopFrac: 0.68, // body capsule top endpoint Y fraction
+  bodyBotFrac: 0.15, // body capsule bottom endpoint Y fraction
+  bodyR:    13,      // body capsule half-width (px)
+};
 
 // 7 bubble sizes: radius, bounceVy, speedX, divisionVy, score
 // SPEC: plus la balle est grosse, MOINS elle rebondit (bounceVy proche de 0 = rebond faible)
@@ -51,6 +62,10 @@ interface Particle {
 let particles: Particle[] = [];
 let walkLeftPlaying = false;
 let walkRightPlaying = false;
+
+// ── Offscreen canvas for magenta-key (runtime background removal) ──
+let chromaCanvas: HTMLCanvasElement | null = null;
+let chromaCtx: CanvasRenderingContext2D | null = null;
 
 // ===== ASSETS (set from component) =====
 let assets: GameAssets | null = null;
@@ -378,6 +393,30 @@ function spawnHitParticles(x: number, y: number, color: string) {
 }
 
 // ===== COLLISIONS =====
+/**
+ * Tests if a circle (cx, cy, cr) intersects the player's compound hitbox.
+ * Hitbox = head circle + body capsule (vertical segment with radius).
+ * Much more precise than a single bounding circle.
+ */
+function playerCircleCollision(player: Player, cx: number, cy: number, cr: number): boolean {
+  const px = player.x, py = player.y, ph = player.height;
+
+  // 1. Head circle
+  const headY = py - ph * HB.headFrac;
+  const dh2 = (px - cx) ** 2 + (headY - cy) ** 2;
+  if (dh2 < (cr + HB.headR) ** 2) return true;
+
+  // 2. Body capsule: vertical segment from capTop to capBot with radius HB.bodyR
+  const capTop = py - ph * HB.bodyTopFrac;
+  const capBot = py - ph * HB.bodyBotFrac;
+  // Closest point on segment to circle center
+  const clampedY = Math.max(capTop, Math.min(capBot, cy));
+  const db2 = (px - cx) ** 2 + (clampedY - cy) ** 2;
+  if (db2 < (cr + HB.bodyR) ** 2) return true;
+
+  return false;
+}
+
 function checkCollisions(state: GameState) {
   const { player, bubbles, projectiles, bonuses } = state;
 
@@ -434,22 +473,18 @@ function checkCollisions(state: GameState) {
     }
   }
 
-  // Bubble vs Player
+  // Bubble vs Player — precise capsule hitbox
   if (player.invincible <= 0) {
     for (const b of bubbles) {
-      const dx = player.x - b.x;
-      const dy = (player.y - player.height * 0.45) - b.y;
-      if (Math.sqrt(dx * dx + dy * dy) < b.radius + player.width / 2) {
+      if (playerCircleCollision(player, b.x, b.y, b.radius)) {
         if (state.cgtShield) {
-          // CGT shield absorbs hit
           state.cgtShield = false;
           player.invincible = 60;
           spawnHitParticles(player.x, player.y - player.height / 2, '#27C93F');
         } else {
-          // BURN OUT
           player.lives--;
           state.burnout = true;
-          state.burnoutTimer = 60; // 1 second flash
+          state.burnoutTimer = 60;
           state.status = 'burnout';
         }
         break;
@@ -457,11 +492,14 @@ function checkCollisions(state: GameState) {
     }
   }
 
-  // Player vs Bonus
+  // Player vs Bonus — generous collection zone (cylinder centered on torso)
   for (let i = bonuses.length - 1; i >= 0; i--) {
     const b = bonuses[i];
     if (!b.active) continue;
-    if (Math.sqrt((player.x - b.x) ** 2 + ((player.y - player.height * 0.45) - b.y) ** 2) < 40) {
+    const bCenterY = player.y - player.height * 0.45;
+    const dx = player.x - b.x;
+    const dy = bCenterY - b.y;
+    if (dx * dx + dy * dy < 38 * 38) {
       b.active = false;
       applyBonus(state, b.type, b.x, b.y);
     }
@@ -794,6 +832,31 @@ function drawBonusIcon(ctx: CanvasRenderingContext2D, x: number, y: number, type
   ctx.restore();
 }
 
+function drawVideoMagentaKey(
+  ctx: CanvasRenderingContext2D,
+  video: HTMLVideoElement,
+  dx: number, dy: number, dw: number, dh: number,
+) {
+  const idw = Math.max(1, Math.round(dw));
+  const idh = Math.max(1, Math.round(dh));
+  if (!chromaCanvas) chromaCanvas = document.createElement('canvas');
+  if (chromaCanvas.width !== idw || chromaCanvas.height !== idh) {
+    chromaCanvas.width = idw;
+    chromaCanvas.height = idh;
+    chromaCtx = chromaCanvas.getContext('2d', { willReadFrequently: true }) as CanvasRenderingContext2D;
+  }
+  if (!chromaCtx) return;
+  chromaCtx.clearRect(0, 0, idw, idh);
+  chromaCtx.drawImage(video, 0, 0, video.videoWidth || 504, video.videoHeight || 607, 0, 0, idw, idh);
+  const imgData = chromaCtx.getImageData(0, 0, idw, idh);
+  const d = imgData.data;
+  for (let i = 0; i < d.length; i += 4) {
+    if (d[i] > 180 && d[i + 1] < 70 && d[i + 2] > 180) d[i + 3] = 0;
+  }
+  chromaCtx.putImageData(imgData, 0, 0);
+  ctx.drawImage(chromaCanvas, Math.round(dx), Math.round(dy));
+}
+
 function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
   const { player } = state;
 
@@ -831,17 +894,21 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
 
   ctx.save();
 
+  // Draw at scaled size (larger visual, same physics hitbox)
+  const drawH = Math.round(player.height * PLAYER_DRAW_SCALE);
+  const drawY = player.y - drawH;
+
   if (useWalk && activeWalkVideo && activeWalkVideo.readyState >= 2) {
-    // Vidéo VP9 avec canal alpha — fond transparent, dessin direct
+    // Vidéo avec fond magenta — suppression à l'exécution (chroma key)
     const vw = activeWalkVideo.videoWidth || 504;
     const vh = activeWalkVideo.videoHeight || 607;
-    const drawW = Math.round(player.height * vw / vh);
-    ctx.drawImage(activeWalkVideo, player.x - drawW / 2, player.y - player.height, drawW, player.height);
+    const drawW = Math.round(drawH * vw / vh);
+    drawVideoMagentaKey(ctx, activeWalkVideo, player.x - drawW / 2, drawY, drawW, drawH);
   } else if (idleImg) {
     // Idle : respecter le ratio naturel de l'image (has alpha transparency)
     const idleAR = idleImg.naturalWidth / idleImg.naturalHeight;
-    const idleDrawW = Math.round(player.height * idleAR);
-    ctx.drawImage(idleImg, player.x - idleDrawW / 2, player.y - player.height, idleDrawW, player.height);
+    const idleDrawW = Math.round(drawH * idleAR);
+    ctx.drawImage(idleImg, player.x - idleDrawW / 2, drawY, idleDrawW, drawH);
   } else {
     // Fallback rectangle
     ctx.fillStyle = '#00C9C8';
