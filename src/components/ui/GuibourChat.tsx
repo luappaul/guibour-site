@@ -98,7 +98,7 @@ export default function GuibourChat() {
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.background = '#0B2818';
-     0    e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)';
+          e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)';
         }}
       >
         <span
@@ -331,7 +331,7 @@ export default function GuibourChat() {
                 }
               }}
               placeholder="Votre message..."
-    0         disabled={loading}
+              disabled={loading}
               style={{
                 flex: 1,
                 border: '1px solid #e0e0e0',
