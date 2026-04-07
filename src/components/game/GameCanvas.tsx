@@ -795,6 +795,15 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
           </div>
         )}
       </div>{/* end LEFT COL */}
+
+      {/* ── RIGHT COL: sponsored sidebar + tower ── */}
+      {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete') && (
+        <SponsoredSidebar
+          currentLevel={currentLevel}
+          totalLevels={25}
+          assets={assetsRef}
+        />
+      )}
     </div>
   );
 }
