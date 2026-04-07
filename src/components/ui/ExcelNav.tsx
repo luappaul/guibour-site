@@ -132,7 +132,7 @@ export default function ExcelNav() {
               display: 'flex', alignItems: 'center', gap: '12px',
               padding: '10px 0 10px 11px',
               fontFamily: "'Lilita One', cursive", fontSize: '13px', letterSpacing: '2px',
-              color: active ? '#A8D8FF' : '#3C5A7A',
+              color: active ? '#A8D8FF' : '#7AAFD4',
               textDecoration: 'none',
               borderLeft: active ? '3px solid #0047AB' : '3px solid transparent',
               background: active ? 'rgba(0,71,171,0.22)' : 'transparent',
@@ -140,7 +140,7 @@ export default function ExcelNav() {
               textShadow: '1px 2px 0 rgba(0,0,0,0.55)',
             }}
             onMouseEnter={e => { if (!active) { e.currentTarget.style.color = '#A8D8FF'; e.currentTarget.style.background = 'rgba(0,71,171,0.12)'; } }}
-            onMouseLeave={e => { if (!active) { e.currentTarget.style.color = '#3C5A7A'; e.currentTarget.style.background = 'transparent'; } }}
+            onMouseLeave={e => { if (!active) { e.currentTarget.style.color = '#7AAFD4'; e.currentTarget.style.background = 'transparent'; } }}
             >
               {/* Icône SVG — visible collapsed + expanded */}
               <span className={active ? 'nav-icon nav-icon--active' : 'nav-icon'} style={{ flexShrink: 0 }}>
@@ -166,7 +166,7 @@ export default function ExcelNav() {
             color: '#1E3F6E', textDecoration: 'none', overflow: 'hidden',
             transition: 'color 0.15s',
           }}
-          onMouseEnter={e => { e.currentTarget.style.color = '#3C5A7A'; }}
+          onMouseEnter={e => { e.currentTarget.style.color = '#7AAFD4'; }}
           onMouseLeave={e => { e.currentTarget.style.color = '#1E3F6E'; }}
           >
             {link.label}
