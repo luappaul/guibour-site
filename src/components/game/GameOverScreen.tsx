@@ -436,13 +436,13 @@ return (
 
 <div className="absolute inset-0 z-30 flex flex-col items-center justify-center"
 
-style={{ background: isVictory ? 'rgba(0,8,20,0.88)' : 'rgba(8,2,2,0.90)', backdropFilter: 'blur(5px)', overflowY: 'auto' }}>
+style={{ background: isVictory ? 'rgba(0,8,20,0.88)' : 'rgba(4,0,0,0.95)', backdropFilter: 'blur(5px)', overflowY: 'auto' }}>
 
 <div className="mb-6 text-center" style={{ pointerEvents: 'none', flexShrink: 0 }}>
 
 <h1 style={{ fontFamily: "'Lilita One', cursive", fontSize: isVictory ? 'clamp(64px, 11vw, 116px)' : 'clamp(58px, 10vw, 108px)', color: isVictory ? '#00FFEE' : '#FF2020', letterSpacing: isVictory ? '8px' : '4px', lineHeight: 0.9, display: 'block', textShadow: isVictory ? '3px 4px 0 #002A28, 6px 8px 0 rgba(0,30,28,.7), 9px 12px 0 rgba(0,0,0,.4), 0 0 40px rgba(0,255,235,.7)' : '3px 4px 0 #2A0000, 6px 8px 0 rgba(40,0,0,.7), 9px 12px 0 rgba(0,0,0,.4), 0 0 40px rgba(255,30,30,.7)', animation: isVictory ? 'victorySlam 0.7s cubic-bezier(.15,0,.25,1) both, victoryGlow 2s ease-in-out infinite 0.8s' : 'scareSlam 0.7s cubic-bezier(.15,0,.25,1) both, scareGlow 2s ease-in-out infinite 0.8s' }}>
 
-{isVictory ? 'VOUS ÊTES\nLIBRE' : 'CAREER\nFAILED'}
+{isVictory ? 'VOUS ÊTES\nLIBRE' : 'FIN DE\nCARRIÈRE'}
 
 </h1>
 
