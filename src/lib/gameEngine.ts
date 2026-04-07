@@ -851,8 +851,9 @@ function drawVideoMagentaKey(
   const imgData = chromaCtx.getImageData(0, 0, idw, idh);
   const d = imgData.data;
   for (let i = 0; i < d.length; i += 4) {
-    // Magenta key: R≈B >> G (catches pure #FF00FF and slightly compressed variants)
-    if (d[i] > 140 && d[i + 1] < 80 && d[i + 2] > 140 && Math.abs(d[i] - d[i + 2]) < 50) d[i + 3] = 0;
+    // Magenta key: R≈B >> G — catches pure #FF00FF AND dark VP9-compressed variants (r≈129,g≈7,b≈129)
+    // Condition: r and b both > 80, g < half of both r and b, and r≈b (within 50)
+    if (d[i] > 80 && d[i + 2] > 80 && d[i + 1] < d[i] * 0.5 && d[i + 1] < d[i + 2] * 0.5 && Math.abs(d[i] - d[i + 2]) < 50) d[i + 3] = 0;
   }
   chromaCtx.putImageData(imgData, 0, 0);
   ctx.drawImage(chromaCanvas, Math.round(dx), Math.round(dy));
@@ -864,21 +865,35 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
   // Blinking when invincible
   if (player.invincible > 0 && state.frameCount % 8 < 4) return;
 
-  // Use only walkLeft video for BOTH directions — flip canvas for right.
-  // This guarantees identical chroma key for both directions (same source pixels).
-  const walkVideo = assets?.player.walkLeft;
+  // Two separate videos: walkLeft for LEFT direction, walkRight for RIGHT direction.
+  // Each video already has the correct visual orientation — no canvas flip needed.
+  const walkLeft = assets?.player.walkLeft;
+  const walkRight = assets?.player.walkRight;
   const idleImg = assets?.player.idle;
   const isMoving = player.direction === 'left' || player.direction === 'right';
   const useWalk = isMoving;
 
-  // Play/pause the single walk video
-  if (walkVideo && walkVideo.readyState >= 2) {
-    if (useWalk && !walkLeftPlaying) {
-      walkVideo.play().catch(() => {});
+  // Active video = the one matching the current direction
+  const activeWalkVideo = player.direction === 'left' ? walkLeft : walkRight;
+
+  // Play/pause left video
+  if (walkLeft && walkLeft.readyState >= 2) {
+    if (player.direction === 'left' && useWalk && !walkLeftPlaying) {
+      walkLeft.play().catch(() => {});
       walkLeftPlaying = true;
-    } else if (!useWalk && walkLeftPlaying) {
-      walkVideo.pause();
+    } else if ((player.direction !== 'left' || !useWalk) && walkLeftPlaying) {
+      walkLeft.pause();
       walkLeftPlaying = false;
+    }
+  }
+  // Play/pause right video
+  if (walkRight && walkRight.readyState >= 2) {
+    if (player.direction === 'right' && useWalk && !walkRightPlaying) {
+      walkRight.play().catch(() => {});
+      walkRightPlaying = true;
+    } else if ((player.direction !== 'right' || !useWalk) && walkRightPlaying) {
+      walkRight.pause();
+      walkRightPlaying = false;
     }
   }
 
@@ -888,17 +903,11 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
   const drawH = Math.round(player.height * PLAYER_DRAW_SCALE);
   const drawY = player.y - drawH;
 
-  if (useWalk && walkVideo && walkVideo.readyState >= 2) {
-    const vw = walkVideo.videoWidth || 537;
-    const vh = walkVideo.videoHeight || 607;
+  if (useWalk && activeWalkVideo && activeWalkVideo.readyState >= 2) {
+    const vw = activeWalkVideo.videoWidth || 537;
+    const vh = activeWalkVideo.videoHeight || 607;
     const drawW = Math.round(drawH * vw / vh);
-
-    if (player.direction === 'right') {
-      // Mirror horizontally around player.x so the same video works for right direction
-      ctx.translate(player.x * 2, 0);
-      ctx.scale(-1, 1);
-    }
-    drawVideoMagentaKey(ctx, walkVideo, player.x - drawW / 2, drawY, drawW, drawH);
+    drawVideoMagentaKey(ctx, activeWalkVideo, player.x - drawW / 2, drawY, drawW, drawH);
   } else if (idleImg) {
     // Idle : respecter le ratio naturel de l'image (has alpha transparency)
     const idleAR = idleImg.naturalWidth / idleImg.naturalHeight;
