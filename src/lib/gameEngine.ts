@@ -756,24 +756,83 @@ function drawGlossyBubble(ctx: CanvasRenderingContext2D, x: number, y: number, r
 }
 
 function drawProjectiles(ctx: CanvasRenderingContext2D, state: GameState) {
-  ctx.strokeStyle = '#00C9C8';
-  ctx.lineWidth = 3;
   for (const p of state.projectiles) {
     if (!p.active) continue;
     const topY = p.y - p.height;
+
+    ctx.save();
+
+    // Outer glow trail (wide, semi-transparent)
+    ctx.shadowColor = '#00FFEE';
+    ctx.shadowBlur = 18;
+    ctx.strokeStyle = 'rgba(0, 255, 238, 0.25)';
+    ctx.lineWidth = 10;
     ctx.beginPath();
     ctx.moveTo(p.x, p.y);
     ctx.lineTo(p.x, topY);
     ctx.stroke();
 
-    // Arrow tip
-    ctx.fillStyle = '#00C9C8';
+    // Mid glow
+    ctx.shadowBlur = 12;
+    ctx.strokeStyle = 'rgba(0, 255, 238, 0.5)';
+    ctx.lineWidth = 5;
     ctx.beginPath();
-    ctx.moveTo(p.x - 5, topY + 5);
-    ctx.lineTo(p.x, topY - 3);
-    ctx.lineTo(p.x + 5, topY + 5);
+    ctx.moveTo(p.x, p.y);
+    ctx.lineTo(p.x, topY);
+    ctx.stroke();
+
+    // Core bright line
+    ctx.shadowColor = '#00FFEE';
+    ctx.shadowBlur = 8;
+    ctx.strokeStyle = '#00FFEE';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+    ctx.lineTo(p.x, topY);
+    ctx.stroke();
+
+    // White-hot center
+    ctx.shadowBlur = 4;
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+    ctx.lineTo(p.x, topY);
+    ctx.stroke();
+
+    // Arrow tip — larger and glowing
+    ctx.shadowColor = '#00FFEE';
+    ctx.shadowBlur = 16;
+    ctx.fillStyle = '#00FFEE';
+    ctx.beginPath();
+    ctx.moveTo(p.x - 7, topY + 8);
+    ctx.lineTo(p.x, topY - 5);
+    ctx.lineTo(p.x + 7, topY + 8);
     ctx.closePath();
     ctx.fill();
+
+    // White-hot tip center
+    ctx.shadowBlur = 6;
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    ctx.beginPath();
+    ctx.moveTo(p.x - 3, topY + 5);
+    ctx.lineTo(p.x, topY);
+    ctx.lineTo(p.x + 3, topY + 5);
+    ctx.closePath();
+    ctx.fill();
+
+    // Sparkle particles at tip
+    const time = state.frameCount || 0;
+    for (let s = 0; s < 3; s++) {
+      const angle = (time * 0.15 + s * 2.1) % (Math.PI * 2);
+      const dist = 4 + Math.sin(time * 0.2 + s) * 3;
+      const sx = p.x + Math.cos(angle) * dist;
+      const sy = topY + Math.sin(angle) * dist;
+      ctx.fillStyle = 'rgba(0, 255, 238, 0.7)';
+      ctx.fillRect(sx - 1, sy - 1, 2, 2);
+    }
+
+    ctx.restore();
   }
 }
 
@@ -832,7 +891,7 @@ function drawBonusIcon(ctx: CanvasRenderingContext2D, x: number, y: number, type
   ctx.restore();
 }
 
-function drawVideoMagentaKey(
+function drawVideoChromaKey(
   ctx: CanvasRenderingContext2D,
   video: HTMLVideoElement,
   dx: number, dy: number, dw: number, dh: number,
@@ -851,9 +910,20 @@ function drawVideoMagentaKey(
   const imgData = chromaCtx.getImageData(0, 0, idw, idh);
   const d = imgData.data;
   for (let i = 0; i < d.length; i += 4) {
-    // Magenta key: R≈B >> G — catches pure #FF00FF AND dark VP9-compressed variants (r≈129,g≈7,b≈129)
-    // Condition: r and b both > 80, g < half of both r and b, and r≈b (within 50)
-    if (d[i] > 80 && d[i + 2] > 80 && d[i + 1] < d[i] * 0.5 && d[i + 1] < d[i + 2] * 0.5 && Math.abs(d[i] - d[i + 2]) < 50) d[i + 3] = 0;
+    const r = d[i], g = d[i + 1], b = d[i + 2];
+    // Green screen key: G is dominant, R and B are significantly lower
+    // Handles pure green (#3bc321) AND VP9-compressed variants
+    // Condition: g > 100, g > r * 1.3, g > b * 1.3
+    if (g > 100 && g > r * 1.3 && g > b * 1.3) {
+      d[i + 3] = 0; // fully transparent
+    }
+    // Soft edge: partial transparency for near-green pixels (anti-aliasing)
+    else if (g > 80 && g > r * 1.1 && g > b * 1.1) {
+      const greenness = (g - Math.max(r, b)) / g;
+      if (greenness > 0.15) {
+        d[i + 3] = Math.round(255 * (1 - greenness * 2));
+      }
+    }
   }
   chromaCtx.putImageData(imgData, 0, 0);
   ctx.drawImage(chromaCanvas, Math.round(dx), Math.round(dy));
@@ -907,7 +977,7 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
     const vw = activeWalkVideo.videoWidth || 537;
     const vh = activeWalkVideo.videoHeight || 607;
     const drawW = Math.round(drawH * vw / vh);
-    drawVideoMagentaKey(ctx, activeWalkVideo, player.x - drawW / 2, drawY, drawW, drawH);
+    drawVideoChromaKey(ctx, activeWalkVideo, player.x - drawW / 2, drawY, drawW, drawH);
   } else if (idleImg) {
     // Idle : respecter le ratio naturel de l'image (has alpha transparency)
     const idleAR = idleImg.naturalWidth / idleImg.naturalHeight;

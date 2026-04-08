@@ -215,33 +215,56 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
     return (
       <div style={{
         position: 'fixed', inset: 0, zIndex: 100,
-        background: 'linear-gradient(160deg, #0D1F45 0%, #1A3F78 100%)',
+        backgroundColor: '#0E2660',
+        backgroundImage:
+          'linear-gradient(rgba(60,130,240,.18) 1px, transparent 1px), linear-gradient(90deg, rgba(60,130,240,.18) 1px, transparent 1px)',
+        backgroundSize: '56px 34px',
+        backgroundPosition: '48px 52px',
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
         padding: '20px',
       }}>
-        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', backgroundImage: 'linear-gradient(rgba(0,200,190,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,190,.10) 1px,transparent 1px)', backgroundSize: '56px 34px' }} />
+        {/* Grid shimmer + edge fades — same as homepage */}
+        <div className="grid-shimmer" />
+        <div className="grid-edge-fades" />
 
         <div style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: '380px', animation: 'slideUp 0.3s ease-out' }}>
 
-          {/* Title */}
+          {/* Title — uses Lilita One like the logo */}
           <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-            <div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '32px', color: '#FFFFFF', letterSpacing: '5px', textShadow: '2px 3px 0 #0C2A62' }}>
+            <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '36px', color: '#FFFFFF', letterSpacing: '5px', animation: 'glowWhite3D 3s ease-in-out infinite' }}>
               GUIBOUR SYSTEM
             </div>
-            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#00C8BE', letterSpacing: '4px', marginTop: '4px' }}>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#00C8BE', letterSpacing: '4px', marginTop: '6px' }}>
               IDENTIFICATION EMPLOYÉ
             </div>
           </div>
 
-          {/* Existing identity shortcut */}
+          {/* Existing identity shortcut — clear single CTA */}
           {existingIdentity && (
-            <div style={{ marginBottom: '16px', background: 'rgba(0,200,190,.08)', border: '1px solid rgba(0,200,190,.25)', padding: '14px 16px' }}>
-              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#00C8BE', letterSpacing: '2px', marginBottom: '6px' }}>✓ PROFIL SAUVEGARDÉ</div>
-              <div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '20px', color: '#fff', letterSpacing: '3px', marginBottom: '8px' }}>{existingIdentity.pseudo}</div>
-              <button onClick={handlePlayAsExisting} style={{ width: '100%', fontFamily: "'Lilita One', cursive", fontSize: '15px', letterSpacing: '3px', color: '#fff', background: 'linear-gradient(135deg,#0047AB,#007B8A)', border: '2px solid #00C8BE', padding: '11px', cursor: 'pointer' }}>
-                CONTINUER →
+            <div style={{ marginBottom: '20px', background: 'rgba(0,200,190,.06)', border: '2px solid rgba(0,200,190,.3)', padding: '16px 18px', borderRadius: '4px' }}>
+              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#00C8BE', letterSpacing: '2px', marginBottom: '8px' }}>✓ PROFIL SAUVEGARDÉ</div>
+              <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '22px', color: '#fff', letterSpacing: '3px', marginBottom: '12px' }}>{existingIdentity.pseudo}</div>
+              <button onClick={handlePlayAsExisting} style={{
+                width: '100%', fontFamily: "'Lilita One', cursive", fontSize: '18px', letterSpacing: '4px', color: '#fff',
+                background: 'linear-gradient(135deg,#0047AB,#007B8A)', border: '2px solid #00C8BE',
+                padding: '14px', cursor: 'pointer',
+                boxShadow: '0 0 20px rgba(0,200,190,.3)',
+                transition: 'all 0.2s',
+              }}
+                onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 0 32px rgba(0,200,190,.55)'; e.currentTarget.style.background = 'linear-gradient(135deg,#1B5EBB,#008B9A)'; }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 0 20px rgba(0,200,190,.3)'; e.currentTarget.style.background = 'linear-gradient(135deg,#0047AB,#007B8A)'; }}
+              >
+                JOUER →
               </button>
-              <div style={{ textAlign: 'center', marginTop: '10px', fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#2B4060' }}>— ou crée un nouveau profil —</div>
+            </div>
+          )}
+
+          {/* Divider if existing identity */}
+          {existingIdentity && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+              <div style={{ flex: 1, height: '1px', background: '#1A3E7A' }} />
+              <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#2B5090', letterSpacing: '2px' }}>NOUVEAU PROFIL</span>
+              <div style={{ flex: 1, height: '1px', background: '#1A3E7A' }} />
             </div>
           )}
 
@@ -249,7 +272,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
           <div style={{ marginBottom: '12px' }}>
             <input
               type="text"
-              value={pseudo}
+              value={existingIdentity ? pseudo : pseudo}
               onChange={e => { setPseudo(e.target.value); setPseudoError(''); }}
               placeholder="TON PSEUDO *"
               maxLength={20}
@@ -259,7 +282,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
                 fontFamily: "'Orbitron', sans-serif", fontSize: '14px', letterSpacing: '2px',
                 background: '#091E4A', color: '#FFFFFF',
                 border: `2px solid ${pseudoError ? '#FF4444' : '#1A3E7A'}`,
-                outline: 'none', textAlign: 'center',
+                outline: 'none', textAlign: 'center', borderRadius: '3px',
               }}
               onFocus={e => e.target.style.borderColor = '#00C8BE'}
               onBlur={e => e.target.style.borderColor = pseudoError ? '#FF4444' : '#1A3E7A'}
@@ -274,11 +297,11 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
               <input
                 type="email" value={email} onChange={e => setEmail(e.target.value)}
                 placeholder="EMAIL (facultatif)"
-                style={{ width: '100%', padding: '11px 16px', boxSizing: 'border-box', fontFamily: "'Orbitron', sans-serif", fontSize: '11px', background: '#091E4A', color: '#FFFFFF', border: '1px solid #1A3E7A', outline: 'none' }}
+                style={{ width: '100%', padding: '11px 16px', boxSizing: 'border-box', fontFamily: "'Orbitron', sans-serif", fontSize: '11px', background: '#091E4A', color: '#FFFFFF', border: '1px solid #1A3E7A', outline: 'none', borderRadius: '3px' }}
                 onFocus={e => e.target.style.borderColor = '#00C8BE'}
                 onBlur={e => e.target.style.borderColor = '#1A3E7A'}
               />
-              <span style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#00C8BE', background: 'rgba(0,200,190,.15)', border: '1px solid #00C8BE', padding: '2px 6px', borderRadius: '2px' }}>+1 RTT ❤</span>
+              <span style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#00C8BE', background: 'rgba(0,200,190,.15)', border: '1px solid #00C8BE', padding: '2px 6px', borderRadius: '2px' }}>+1 RTT</span>
             </div>
           )}
           {!phoneGiven && (
@@ -286,18 +309,24 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
               <input
                 type="tel" value={phone} onChange={e => setPhone(e.target.value)}
                 placeholder="TÉLÉPHONE (facultatif)"
-                style={{ width: '100%', padding: '11px 16px', boxSizing: 'border-box', fontFamily: "'Orbitron', sans-serif", fontSize: '11px', background: '#091E4A', color: '#FFFFFF', border: '1px solid #1A3E7A', outline: 'none' }}
+                style={{ width: '100%', padding: '11px 16px', boxSizing: 'border-box', fontFamily: "'Orbitron', sans-serif", fontSize: '11px', background: '#091E4A', color: '#FFFFFF', border: '1px solid #1A3E7A', outline: 'none', borderRadius: '3px' }}
                 onFocus={e => e.target.style.borderColor = '#00C8BE'}
                 onBlur={e => e.target.style.borderColor = '#1A3E7A'}
               />
-              <span style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#00C8BE', background: 'rgba(0,200,190,.15)', border: '1px solid #00C8BE', padding: '2px 6px', borderRadius: '2px' }}>+1 RTT ❤</span>
+              <span style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#00C8BE', background: 'rgba(0,200,190,.15)', border: '1px solid #00C8BE', padding: '2px 6px', borderRadius: '2px' }}>+1 RTT</span>
             </div>
           )}
 
-          <button onClick={handleIdentitySubmit} style={{ width: '100%', fontFamily: "'Lilita One', cursive", fontSize: '20px', letterSpacing: '4px', color: '#fff', background: 'linear-gradient(135deg,#0047AB,#007B8A)', border: '2px solid #00C8BE', padding: '16px', cursor: 'pointer', boxShadow: '0 0 20px rgba(0,200,190,.3)' }}
-            onMouseEnter={e => e.currentTarget.style.boxShadow = '0 0 32px rgba(0,200,190,.55)'}
-            onMouseLeave={e => e.currentTarget.style.boxShadow = '0 0 20px rgba(0,200,190,.3)'}>
-            ENTRER →
+          <button onClick={handleIdentitySubmit} style={{
+            width: '100%', fontFamily: "'Lilita One', cursive", fontSize: '20px', letterSpacing: '4px', color: '#fff',
+            background: 'linear-gradient(135deg,#0047AB,#007B8A)', border: '2px solid #00C8BE',
+            padding: '16px', cursor: 'pointer', boxShadow: '0 0 20px rgba(0,200,190,.3)',
+            borderRadius: '3px', transition: 'all 0.2s',
+          }}
+            onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 0 32px rgba(0,200,190,.55)'; e.currentTarget.style.background = 'linear-gradient(135deg,#1B5EBB,#008B9A)'; }}
+            onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 0 20px rgba(0,200,190,.3)'; e.currentTarget.style.background = 'linear-gradient(135deg,#0047AB,#007B8A)'; }}
+          >
+            {existingIdentity ? 'CRÉER & JOUER →' : 'JOUER →'}
           </button>
 
           <div style={{ textAlign: 'center', marginTop: '10px', fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#1E3252' }}>
@@ -305,7 +334,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
           </div>
         </div>
 
-        <button onClick={() => { playClick(); onBack(); }} style={{ position: 'relative', zIndex: 2, marginTop: '16px', fontFamily: "'Orbitron', sans-serif", fontSize: '9px', letterSpacing: '3px', color: '#3C5A7A', background: 'transparent', border: '1px solid #1A3E7A', padding: '7px 18px', cursor: 'pointer' }}>← RETOUR</button>
+        <button onClick={() => { playClick(); onBack(); }} style={{ position: 'relative', zIndex: 2, marginTop: '16px', fontFamily: "'Orbitron', sans-serif", fontSize: '9px', letterSpacing: '3px', color: '#3C5A7A', background: 'transparent', border: '1px solid #1A3E7A', padding: '7px 18px', cursor: 'pointer', borderRadius: '3px' }}>← RETOUR</button>
       </div>
     );
   }
@@ -314,22 +343,23 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
   return (
     <div style={{
       position: 'fixed', inset: 0, zIndex: 100,
-      background: 'linear-gradient(160deg, #1A3F78 0%, #1A3F78 60%, #264D82 100%)',
+      backgroundColor: '#0E2660',
+      backgroundImage:
+        'linear-gradient(rgba(60,130,240,.18) 1px, transparent 1px), linear-gradient(90deg, rgba(60,130,240,.18) 1px, transparent 1px)',
+      backgroundSize: '56px 34px',
+      backgroundPosition: '48px 52px',
       display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
       padding: '20px 20px 20px 68px', overflow: 'hidden',
     }}>
-      {/* Grid texture */}
-      <div style={{
-        position: 'absolute', inset: 0, pointerEvents: 'none',
-        backgroundImage: 'linear-gradient(rgba(0,200,190,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,190,.10) 1px,transparent 1px)',
-        backgroundSize: '56px 34px',
-      }} />
+      {/* Grid shimmer + edge fades — same as homepage */}
+      <div className="grid-shimmer" />
+      <div className="grid-edge-fades" />
 
       {/* Glow */}
       <div style={{
         position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
         width: '600px', height: '400px',
-        background: 'radial-gradient(ellipse at center, rgba(0,71,171,.12) 0%, transparent 70%)',
+        background: 'radial-gradient(ellipse at center, rgba(0,200,190,.08) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
 
