@@ -944,7 +944,8 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
     const idleH = Math.round(drawH * idleScale);
     const idleAR = idleImg.naturalWidth / idleImg.naturalHeight;
     const idleW = Math.round(idleH * idleAR);
-    const idleY = player.y - idleH;
+    // Shift down so feet touch the floor bar (source image has padding below feet)
+    const idleY = player.y - idleH + Math.round(idleH * 0.06);
     ctx.drawImage(idleImg, player.x - idleW / 2, idleY, idleW, idleH);
   } else {
     // Fallback rectangle
