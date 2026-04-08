@@ -1,3 +1,12 @@
+export interface SpriteSheet {
+  image: HTMLImageElement;
+  frameWidth: number;
+  frameHeight: number;
+  totalFrames: number;
+  columns: number;
+  fps: number;
+}
+
 export interface GameAssets {
   backgrounds: Map<number, HTMLImageElement>;  // 25 images (0-24)
   bubbles: Map<number, HTMLImageElement>;       // 7 sprites (1-7)
@@ -11,8 +20,8 @@ export interface GameAssets {
   };
   player: {
     idle: HTMLImageElement;
-    walkLeft: HTMLVideoElement;  // marche vers la gauche (VP9 alpha)
-    walkRight: HTMLVideoElement; // marche vers la droite (VP9 alpha)
+    walkLeft: SpriteSheet;
+    walkRight: SpriteSheet;
   };
 }
 
@@ -25,19 +34,17 @@ function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
-function loadVideo(src: string): Promise<HTMLVideoElement> {
-  return new Promise((resolve, reject) => {
-    const video = document.createElement('video');
-    video.muted = true;
-    video.loop = true;
-    video.playsInline = true;
-    video.preload = 'auto';
-    const timeout = setTimeout(() => reject(new Error(`Timeout loading video: ` + src)), 3000);
-    video.oncanplaythrough = () => { clearTimeout(timeout); resolve(video); };
-    video.onerror = () => { clearTimeout(timeout); reject(new Error(`Failed to load video: ` + src)); };
-    video.src = src;
-    video.load();
-  });
+function loadSpriteSheet(
+  src: string,
+  frameWidth: number,
+  frameHeight: number,
+  totalFrames: number,
+  columns: number,
+  fps: number,
+): Promise<SpriteSheet> {
+  return loadImage(src).then(image => ({
+    image, frameWidth, frameHeight, totalFrames, columns, fps,
+  }));
 }
 
 function loadAudio(src: string): Promise<HTMLAudioElement> {
@@ -51,11 +58,21 @@ function loadAudio(src: string): Promise<HTMLAudioElement> {
   });
 }
 
+// Empty sprite sheet fallback (used if loading fails)
+function emptySpriteSheet(): SpriteSheet {
+  const canvas = document.createElement('canvas');
+  canvas.width = 1;
+  canvas.height = 1;
+  const img = new Image();
+  img.src = canvas.toDataURL();
+  return { image: img, frameWidth: 1, frameHeight: 1, totalFrames: 1, columns: 1, fps: 1 };
+}
+
 export async function loadAllAssets(
   onProgress?: (loaded: number, total: number) => void
 ): Promise<GameAssets> {
   let loaded = 0;
-  // 7 bubbles + 9 bonuses + 1 player idle + 2 player videos + 1 tower = 20
+  // 7 bubbles + 9 bonuses + 1 player idle + 2 player sprite sheets + 1 tower = 20
   // Backgrounds: 25, Audio: 4
   const total = 20 + 25 + 4;
 
@@ -80,12 +97,15 @@ export async function loadAllAssets(
     loadImage(`/game/bonuses/${name}.png`).then(img => { bonusMap.set(name, img); tick(); })
   );
 
-  // Priority: player idle image + walk videos (WebM VP9 with alpha channel)
+  // Player: idle PNG + walk sprite sheets (pre-rendered with alpha, no chroma key needed)
   const playerIdlePromise = loadImage('/game/player/guibour-idle-v5.png').then(img => { tick(); return img; });
-  const playerWalkLeftPromise = loadVideo('/game/player/guibour-walk-left-v5.webm').then(v => { tick(); return v; })
-    .catch(() => { tick(); return document.createElement('video'); });
-  const playerWalkRightPromise = loadVideo('/game/player/guibour-walk-right-v5.webm').then(v => { tick(); return v; })
-    .catch(() => { tick(); return document.createElement('video'); });
+  // Sprite sheets: 65 frames each, 248x301 per frame, 8 columns, 12 fps
+  const walkRightPromise = loadSpriteSheet('/game/player/walk-right-sprite.png', 248, 301, 65, 8, 12)
+    .then(s => { tick(); return s; })
+    .catch(() => { tick(); return emptySpriteSheet(); });
+  const walkLeftPromise = loadSpriteSheet('/game/player/walk-left-sprite.png', 248, 301, 65, 8, 12)
+    .then(s => { tick(); return s; })
+    .catch(() => { tick(); return emptySpriteSheet(); });
 
   // Priority: tower
   const towerPromise = loadImage('/game/tower/tower.png').then(img => { tick(); return img; });
@@ -93,8 +113,8 @@ export async function loadAllAssets(
   // Wait for priority assets
   await Promise.all([...bubblePromises, ...bonusPromises]);
   const playerIdle = await playerIdlePromise;
-  const walkLeft = await playerWalkLeftPromise;
-  const walkRight = await playerWalkRightPromise;
+  const walkRight = await walkRightPromise;
+  const walkLeft = await walkLeftPromise;
   const tower = await towerPromise;
 
   // Audio

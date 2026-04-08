@@ -4,7 +4,7 @@ import {
 } from './gameTypes';
 import { playBonusSound } from './sounds';
 import { LEVELS } from './levels';
-import { GameAssets } from './assetLoader';
+import { GameAssets, SpriteSheet } from './assetLoader';
 
 // ===== PHYSICS =====
 const GRAVITY = 0.15;
@@ -60,12 +60,8 @@ interface Particle {
 }
 
 let particles: Particle[] = [];
-let walkLeftPlaying = false;
-let walkRightPlaying = false;
-
-// ── Offscreen canvas for magenta-key (runtime background removal) ──
-let chromaCanvas: HTMLCanvasElement | null = null;
-let chromaCtx: CanvasRenderingContext2D | null = null;
+// Sprite sheet animation frame counter
+let spriteFrameCounter = 0;
 
 // ===== ASSETS (set from component) =====
 let assets: GameAssets | null = null;
@@ -77,8 +73,7 @@ export function setGameAssets(a: GameAssets) {
 // ===== INIT =====
 export function createInitialState(cw: number, ch: number): GameState {
   particles = [];
-  walkLeftPlaying = false;
-  walkRightPlaying = false;
+  spriteFrameCounter = 0;
   return {
     status: 'idle',
     level: 0,
@@ -891,44 +886,22 @@ function drawBonusIcon(ctx: CanvasRenderingContext2D, x: number, y: number, type
   ctx.restore();
 }
 
-function drawVideoChromaKey(
+// Draw a single frame from a sprite sheet
+function drawSpriteFrame(
   ctx: CanvasRenderingContext2D,
-  video: HTMLVideoElement,
+  sprite: SpriteSheet,
+  frameIndex: number,
   dx: number, dy: number, dw: number, dh: number,
 ) {
-  const idw = Math.max(1, Math.round(dw));
-  const idh = Math.max(1, Math.round(dh));
-  if (!chromaCanvas) chromaCanvas = document.createElement('canvas');
-  if (chromaCanvas.width !== idw || chromaCanvas.height !== idh) {
-    chromaCanvas.width = idw;
-    chromaCanvas.height = idh;
-    chromaCtx = chromaCanvas.getContext('2d', { willReadFrequently: true }) as CanvasRenderingContext2D;
-  }
-  if (!chromaCtx) return;
-  chromaCtx.clearRect(0, 0, idw, idh);
-  chromaCtx.drawImage(video, 0, 0, video.videoWidth || 504, video.videoHeight || 607, 0, 0, idw, idh);
-  const imgData = chromaCtx.getImageData(0, 0, idw, idh);
-  const d = imgData.data;
-
-  // Green-screen removal: target color #3bc321 = RGB(59, 195, 33)
-  // Thresholds tuned from pixel analysis of the actual video frames:
-  //   dist 0-60:  pure green screen (173k pixels) → fully transparent
-  //   dist 60-100: blended edge pixels (~4k)      → gradual fade
-  //   dist 100+:  character pixels (120k+)         → untouched
-  for (let i = 0; i < d.length; i += 4) {
-    const r = d[i], g = d[i + 1], b = d[i + 2];
-    const dr = r - 59, dg = g - 195, db = b - 33;
-    const distSq = dr * dr + dg * dg + db * db;
-
-    if (distSq < 3600) {          // dist < 60 → fully transparent
-      d[i + 3] = 0;
-    } else if (distSq < 10000) {  // dist < 100 → soft edge
-      const dist = Math.sqrt(distSq);
-      d[i + 3] = Math.min(d[i + 3], Math.round(255 * (dist - 60) / 40));
-    }
-  }
-  chromaCtx.putImageData(imgData, 0, 0);
-  ctx.drawImage(chromaCanvas, Math.round(dx), Math.round(dy));
+  const col = frameIndex % sprite.columns;
+  const row = Math.floor(frameIndex / sprite.columns);
+  const sx = col * sprite.frameWidth;
+  const sy = row * sprite.frameHeight;
+  ctx.drawImage(
+    sprite.image,
+    sx, sy, sprite.frameWidth, sprite.frameHeight,
+    Math.round(dx), Math.round(dy), Math.round(dw), Math.round(dh),
+  );
 }
 
 function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
@@ -937,37 +910,20 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
   // Blinking when invincible
   if (player.invincible > 0 && state.frameCount % 8 < 4) return;
 
-  // Two separate videos: walkLeft for LEFT direction, walkRight for RIGHT direction.
-  // Each video already has the correct visual orientation — no canvas flip needed.
   const walkLeft = assets?.player.walkLeft;
   const walkRight = assets?.player.walkRight;
   const idleImg = assets?.player.idle;
   const isMoving = player.direction === 'left' || player.direction === 'right';
-  const useWalk = isMoving;
 
-  // Active video = the one matching the current direction
-  const activeWalkVideo = player.direction === 'left' ? walkLeft : walkRight;
+  // Advance sprite animation counter when moving
+  if (isMoving) {
+    spriteFrameCounter++;
+  } else {
+    spriteFrameCounter = 0;
+  }
 
-  // Play/pause left video
-  if (walkLeft && walkLeft.readyState >= 2) {
-    if (player.direction === 'left' && useWalk && !walkLeftPlaying) {
-      walkLeft.play().catch(() => {});
-      walkLeftPlaying = true;
-    } else if ((player.direction !== 'left' || !useWalk) && walkLeftPlaying) {
-      walkLeft.pause();
-      walkLeftPlaying = false;
-    }
-  }
-  // Play/pause right video
-  if (walkRight && walkRight.readyState >= 2) {
-    if (player.direction === 'right' && useWalk && !walkRightPlaying) {
-      walkRight.play().catch(() => {});
-      walkRightPlaying = true;
-    } else if ((player.direction !== 'right' || !useWalk) && walkRightPlaying) {
-      walkRight.pause();
-      walkRightPlaying = false;
-    }
-  }
+  // Active sprite sheet = the one matching the current direction
+  const activeSprite = player.direction === 'left' ? walkLeft : walkRight;
 
   ctx.save();
 
@@ -975,13 +931,15 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
   const drawH = Math.round(player.height * PLAYER_DRAW_SCALE);
   const drawY = player.y - drawH;
 
-  if (useWalk && activeWalkVideo && activeWalkVideo.readyState >= 2) {
-    const vw = activeWalkVideo.videoWidth || 537;
-    const vh = activeWalkVideo.videoHeight || 607;
-    const drawW = Math.round(drawH * vw / vh);
-    drawVideoChromaKey(ctx, activeWalkVideo, player.x - drawW / 2, drawY, drawW, drawH);
+  if (isMoving && activeSprite && activeSprite.totalFrames > 1) {
+    // Compute which frame to show based on sprite FPS vs game FPS (60)
+    const gameFramesPerSpriteFrame = Math.round(60 / activeSprite.fps);
+    const frameIndex = Math.floor(spriteFrameCounter / gameFramesPerSpriteFrame) % activeSprite.totalFrames;
+    const ar = activeSprite.frameWidth / activeSprite.frameHeight;
+    const drawW = Math.round(drawH * ar);
+    drawSpriteFrame(ctx, activeSprite, frameIndex, player.x - drawW / 2, drawY, drawW, drawH);
   } else if (idleImg) {
-    // Idle : respecter le ratio naturel de l'image (has alpha transparency)
+    // Idle: respect natural aspect ratio (already has alpha transparency)
     const idleAR = idleImg.naturalWidth / idleImg.naturalHeight;
     const idleDrawW = Math.round(drawH * idleAR);
     ctx.drawImage(idleImg, player.x - idleDrawW / 2, drawY, idleDrawW, drawH);
