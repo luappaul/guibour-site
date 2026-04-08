@@ -81,10 +81,10 @@ export async function loadAllAssets(
   );
 
   // Priority: player idle image + walk videos (WebM VP9 with alpha channel)
-  const playerIdlePromise = loadImage('/game/player/guibour-idle-v4-transparent.png').then(img => { tick(); return img; });
-  const playerWalkLeftPromise = loadVideo('/game/player/guibour-walk-left-v4.webm').then(v => { tick(); return v; })
+  const playerIdlePromise = loadImage('/game/player/guibour-idle-v5.png').then(img => { tick(); return img; });
+  const playerWalkLeftPromise = loadVideo('/game/player/guibour-walk-left-v5.webm').then(v => { tick(); return v; })
     .catch(() => { tick(); return document.createElement('video'); });
-  const playerWalkRightPromise = loadVideo('/game/player/guibour-walk-right-v4.webm').then(v => { tick(); return v; })
+  const playerWalkRightPromise = loadVideo('/game/player/guibour-walk-right-v5.webm').then(v => { tick(); return v; })
     .catch(() => { tick(); return document.createElement('video'); });
 
   // Priority: tower

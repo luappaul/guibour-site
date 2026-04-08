@@ -910,24 +910,21 @@ function drawVideoChromaKey(
   const imgData = chromaCtx.getImageData(0, 0, idw, idh);
   const d = imgData.data;
 
-  // Target green-screen color: #3bc321 = RGB(59, 195, 33)
-  const keyR = 59, keyG = 195, keyB = 33;
-
+  // Green-screen removal: target color #3bc321 = RGB(59, 195, 33)
+  // Thresholds tuned from pixel analysis of the actual video frames:
+  //   dist 0-60:  pure green screen (173k pixels) → fully transparent
+  //   dist 60-100: blended edge pixels (~4k)      → gradual fade
+  //   dist 100+:  character pixels (120k+)         → untouched
   for (let i = 0; i < d.length; i += 4) {
     const r = d[i], g = d[i + 1], b = d[i + 2];
+    const dr = r - 59, dg = g - 195, db = b - 33;
+    const distSq = dr * dr + dg * dg + db * db;
 
-    // Color distance from the exact green-screen color
-    const dr = r - keyR, dg = g - keyG, db = b - keyB;
-    const dist = Math.sqrt(dr * dr + dg * dg + db * db);
-
-    // Hard removal: pixels very close to the green screen color
-    if (dist < 80) {
+    if (distSq < 3600) {          // dist < 60 → fully transparent
       d[i + 3] = 0;
-    }
-    // Soft edge: gradual fade for compressed/blended border pixels
-    else if (dist < 130) {
-      const alpha = Math.round(255 * ((dist - 80) / 50));
-      d[i + 3] = Math.min(d[i + 3], alpha);
+    } else if (distSq < 10000) {  // dist < 100 → soft edge
+      const dist = Math.sqrt(distSq);
+      d[i + 3] = Math.min(d[i + 3], Math.round(255 * (dist - 60) / 40));
     }
   }
   chromaCtx.putImageData(imgData, 0, 0);
