@@ -15,12 +15,16 @@ export default function TowerProgress({ currentLevel, totalLevels, assets }: Pro
     <div
       className="relative flex-shrink-0 overflow-hidden"
       style={{
-        width: '80px',
+        width: '18%',
+        minWidth: '80px',
+        maxWidth: '180px',
         height: '100%',
-        background: '#0A1A12',
+        background: '#0A1520',
+        border: '2px solid #00C9C8',
+        boxSizing: 'border-box',
       }}
     >
-      {/* Tower background image */}
+      {/* Tower background image — NO dark filter */}
       {towerImg && (
         <img
           src={towerImg.src}
@@ -31,7 +35,7 @@ export default function TowerProgress({ currentLevel, totalLevels, assets }: Pro
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            opacity: 0.3,
+            opacity: 0.85,
           }}
         />
       )}
@@ -44,7 +48,6 @@ export default function TowerProgress({ currentLevel, totalLevels, assets }: Pro
         {Array.from({ length: totalLevels }, (_, i) => {
           const isCompleted = i < currentLevel;
           const isCurrent = i === currentLevel;
-          const isFuture = i > currentLevel;
 
           return (
             <div
@@ -58,22 +61,25 @@ export default function TowerProgress({ currentLevel, totalLevels, assets }: Pro
               <div
                 style={{
                   width: '90%',
-                  padding: '1px 0',
+                  padding: '2px 4px',
                   textAlign: 'center',
-                  fontSize: '8px',
-                  fontFamily: "'Share Tech Mono', monospace",
-                  fontWeight: isCurrent ? 800 : 400,
-                  letterSpacing: '0.5px',
-                  borderRadius: '2px',
-                  color: isCurrent ? '#0A1A12' : isCompleted ? '#fff' : '#607888',
+                  fontSize: '10px',
+                  fontFamily: "'Orbitron', sans-serif",
+                  fontWeight: isCurrent ? 900 : 600,
+                  letterSpacing: '1px',
+                  borderRadius: '3px',
+                  color: isCurrent ? '#0A1520' : isCompleted ? '#FFFFFF' : '#D0E0F0',
                   background: isCurrent
-                    ? '#3CB371'
+                    ? '#00C9C8'
                     : isCompleted
-                    ? 'rgba(60,179,113,0.4)'
-                    : isFuture
-                    ? 'rgba(96,120,136,0.2)'
-                    : 'transparent',
-                  boxShadow: isCurrent ? '0 0 8px rgba(60,179,113,0.6)' : 'none',
+                    ? 'rgba(0,168,157,0.55)'
+                    : 'rgba(10,21,32,0.7)',
+                  boxShadow: isCurrent
+                    ? '0 0 10px rgba(0,201,200,0.7), 0 0 4px rgba(0,201,200,0.4)'
+                    : 'none',
+                  textShadow: isCurrent
+                    ? 'none'
+                    : '0 1px 3px rgba(0,0,0,0.9), 0 0 6px rgba(0,0,0,0.5)',
                   transition: 'all 0.3s ease',
                 }}
               >
