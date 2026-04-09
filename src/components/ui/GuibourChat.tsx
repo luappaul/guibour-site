@@ -81,8 +81,7 @@ export default function GuibourChat() {
     return () => clearTimeout(timer);
   }, [open]);
 
-  // Ne pas afficher sur la page d'accueil/jeu (/)
-  if (pathname === '/') return null;
+  // Guibot visible sur toutes les pages y compris l'accueil
 
   return (
     <>

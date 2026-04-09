@@ -110,20 +110,6 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
         WORK OR WINDOW // GRIMPE LES 25 ÉTAGES
       </div>
 
-      {/* Guibour character */}
-      <div style={{ position: 'relative', zIndex: 2, marginTop: '20px', marginBottom: '-10px' }}>
-        <img
-          src="/game/player/guibour-idle-v5.png"
-          alt="Guibour"
-          style={{
-            height: 'clamp(120px, 20vh, 200px)',
-            width: 'auto',
-            filter: 'drop-shadow(0 0 20px rgba(0,200,190,0.3)) drop-shadow(0 4px 12px rgba(0,0,0,0.5))',
-            animation: 'floatGuibour 3s ease-in-out infinite',
-          }}
-        />
-      </div>
-
       {/* CTA JOUER À W.O.W */}
       <button
         onClick={() => { playClick(); onPlay(); }}
