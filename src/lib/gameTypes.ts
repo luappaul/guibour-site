@@ -101,7 +101,7 @@ export interface LevelConfig {
 
 // ===== GAME STATE =====
 export interface GameState {
-  status: 'idle' | 'playing' | 'paused' | 'levelComplete' | 'gameOver' | 'victory' | 'burnout';
+  status: 'idle' | 'playing' | 'paused' | 'levelComplete' | 'gameOver' | 'victory' | 'burnout' | 'victoryAnim' | 'elevatorClose' | 'elevatorOpen';
   level: number;         // 0-24
   player: Player;
   bubbles: Bubble[];
@@ -124,8 +124,14 @@ export interface GameState {
   levelTransitionTimer: number;
   startTime: number;
   endTime: number;
-
-  floatingTexts: FloatingText[];  frameCount: number;
+  // Victory animation + elevator transition
+  victoryAnimTimer: number;        // frames for victory dance
+  elevatorDoorProgress: number;    // 0-1 for door close/open
+  timeToMoneyRemaining: number;    // seconds left to convert
+  timeToMoneyTotal: number;        // total seconds at start of conversion
+  moneyEarnedThisRound: number;    // money from time conversion
+  floatingTexts: FloatingText[];
+  frameCount: number;
 }
 
 // ===== LEADERBOARD =====

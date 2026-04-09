@@ -74,6 +74,7 @@ html, body {
 @keyframes shake { 0%,100%{transform:rotate(0)} 25%{transform:rotate(-5deg)} 75%{transform:rotate(5deg)} }
 @keyframes swing { 0%,100%{transform:rotate(-8deg)} 50%{transform:rotate(8deg)} }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes floatGuibour { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 @keyframes bootLine { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
 @keyframes cursorBlink { 0%,100%{opacity:1} 50%{opacity:0} }
 @keyframes elevatorSlide {

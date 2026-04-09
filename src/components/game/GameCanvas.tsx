@@ -117,7 +117,7 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
 
   // Game loop
   useEffect(() => {
-    if (gameStatus !== 'playing' && gameStatus !== 'burnout' && gameStatus !== 'levelComplete') return;
+    if (gameStatus !== 'playing' && gameStatus !== 'burnout' && gameStatus !== 'levelComplete' && gameStatus !== 'elevatorClose' && gameStatus !== 'elevatorOpen') return;
 
     let lastLevel = -1;
     const loop = () => {
@@ -133,10 +133,21 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
         setGameStatus('burnout');
       } else if (s.status === 'levelComplete' && gameStatus !== 'levelComplete') {
         setGameStatus('levelComplete');
+        // Stop background music, play slot machine sound (solo)
+        audioManager.pauseGameplay();
+        audioManager.play('slot-machine');
+      } else if (s.status === 'elevatorClose' && gameStatus !== 'elevatorClose') {
+        setGameStatus('elevatorClose');
+        // Play elevator bell when doors start closing
+        audioManager.play('elevator-bell');
+      } else if (s.status === 'elevatorOpen' && gameStatus !== 'elevatorOpen') {
+        setGameStatus('elevatorOpen');
         setElevatorActive(true);
-        setTimeout(() => setElevatorActive(false), 1500);
-      } else if (s.status === 'playing' && (gameStatus === 'burnout' || gameStatus === 'levelComplete')) {
+      } else if (s.status === 'playing' && (gameStatus === 'burnout' || gameStatus === 'levelComplete' || gameStatus === 'elevatorOpen' || gameStatus === 'elevatorClose')) {
         setGameStatus('playing');
+        setElevatorActive(false);
+        // Resume background music
+        audioManager.resumeGameplay();
       }
 
       // Apply bonus RTT on first frame of playing
@@ -458,7 +469,7 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
           />
 
           {/* ── MUTE BUTTON — top right of game area ── */}
-          {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete') && (
+          {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete' || gameStatus === 'elevatorClose' || gameStatus === 'elevatorOpen') && (
             <div style={{ position: 'absolute', top: '12px', right: '12px', zIndex: 20 }}>
               <button
                 onClick={handleToggleMute}
@@ -758,7 +769,7 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
           )}
         </div>
         {/* ── TIMER BAR (canvas-width only) ── */}
-        {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete') && (
+        {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete' || gameStatus === 'elevatorClose' || gameStatus === 'elevatorOpen') && (
           <div style={{ flexShrink: 0, background: '#0D1F3C', borderTop: '2px solid #1A3E7A', fontFamily: "'Orbitron', sans-serif" }}>
             <div style={{ display: 'flex', alignItems: 'center', height: '32px' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '30px', height: '100%', borderRight: '1px solid #1A3E7A', background: '#0C2A62', flexShrink: 0 }}>
@@ -776,7 +787,7 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
         )}
 
         {/* ── HUD ROW: RTT + elevator + SALAIRE (collé tour) ── */}
-        {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete') && (
+        {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete' || gameStatus === 'elevatorClose' || gameStatus === 'elevatorOpen') && (
           <div style={{ flexShrink: 0, background: '#1A3F78', display: 'flex', alignItems: 'center', borderTop: '2px solid #00C8BE' }}>
             {/* RTT */}
             <div style={{ background: '#0C2A62', padding: '6px 20px', textAlign: 'center', borderRight: '1px solid #1A3E7A', flexShrink: 0 }}>
@@ -802,7 +813,7 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
       </div>{/* end LEFT COL */}
 
       {/* ── RIGHT COL: sponsored sidebar + tower ── */}
-      {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete') && (
+      {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete' || gameStatus === 'elevatorClose' || gameStatus === 'elevatorOpen') && (
         <SponsoredSidebar
           currentLevel={currentLevel}
           totalLevels={25}

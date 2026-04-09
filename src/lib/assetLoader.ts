@@ -17,11 +17,14 @@ export interface GameAssets {
     gameover: HTMLAudioElement;
     bonusArgent: HTMLAudioElement;
     bonusCgt: HTMLAudioElement;
+    slotMachine: HTMLAudioElement;
+    elevatorBell: HTMLAudioElement;
   };
   player: {
     idle: HTMLImageElement;
     walkLeft: SpriteSheet;
     walkRight: SpriteSheet;
+    victory: SpriteSheet;
   };
 }
 
@@ -72,9 +75,9 @@ export async function loadAllAssets(
   onProgress?: (loaded: number, total: number) => void
 ): Promise<GameAssets> {
   let loaded = 0;
-  // 7 bubbles + 9 bonuses + 1 player idle + 2 player sprite sheets + 1 tower = 20
-  // Backgrounds: 25, Audio: 4
-  const total = 20 + 25 + 4;
+  // 7 bubbles + 9 bonuses + 1 player idle + 3 player sprite sheets + 1 tower = 21
+  // Backgrounds: 25, Audio: 6
+  const total = 21 + 25 + 6;
 
   const tick = () => {
     loaded++;
@@ -97,13 +100,17 @@ export async function loadAllAssets(
     loadImage(`/game/bonuses/${name}.png`).then(img => { bonusMap.set(name, img); tick(); })
   );
 
-  // Player: idle PNG + walk sprite sheets (pre-rendered with alpha, no chroma key needed)
+  // Player: idle PNG + walk sprite sheets + victory sprite sheet
   const playerIdlePromise = loadImage('/game/player/guibour-idle-v5.png').then(img => { tick(); return img; });
   // Sprite sheets: 65 frames each, 372x451 per frame, 8 columns, 12 fps
   const walkRightPromise = loadSpriteSheet('/game/player/walk-right-v2.png', 372, 451, 65, 8, 12)
     .then(s => { tick(); return s; })
     .catch(() => { tick(); return emptySpriteSheet(); });
   const walkLeftPromise = loadSpriteSheet('/game/player/walk-left-v2.png', 372, 451, 65, 8, 12)
+    .then(s => { tick(); return s; })
+    .catch(() => { tick(); return emptySpriteSheet(); });
+  // Victory: 96 frames, 281x500 per frame, 8 columns, 12 fps
+  const victoryPromise = loadSpriteSheet('/game/player/victory-v1.png', 281, 500, 96, 8, 12)
     .then(s => { tick(); return s; })
     .catch(() => { tick(); return emptySpriteSheet(); });
 
@@ -115,6 +122,7 @@ export async function loadAllAssets(
   const playerIdle = await playerIdlePromise;
   const walkRight = await walkRightPromise;
   const walkLeft = await walkLeftPromise;
+  const victory = await victoryPromise;
   const tower = await towerPromise;
 
   // Audio
@@ -123,8 +131,10 @@ export async function loadAllAssets(
     loadAudio('/game/audio/gameover.mp3').then(a => { tick(); return a; }).catch(() => { tick(); return new Audio(); }),
     loadAudio('/game/audio/bonus-argent.mp3').then(a => { tick(); return a; }).catch(() => { tick(); return new Audio(); }),
     loadAudio('/game/audio/bonus-cgt.mp3').then(a => { tick(); return a; }).catch(() => { tick(); return new Audio(); }),
+    loadAudio('/game/audio/slot-machine.mp3').then(a => { tick(); return a; }).catch(() => { tick(); return new Audio(); }),
+    loadAudio('/game/audio/elevator-bell.mp3').then(a => { tick(); return a; }).catch(() => { tick(); return new Audio(); }),
   ];
-  const [gameplay, gameover, bonusArgent, bonusCgt] = await Promise.all(audioPromises);
+  const [gameplay, gameover, bonusArgent, bonusCgt, slotMachine, elevatorBell] = await Promise.all(audioPromises);
 
   // Backgrounds: load in batches of 5
   const backgrounds = new Map<number, HTMLImageElement>();
@@ -146,7 +156,7 @@ export async function loadAllAssets(
     bubbles,
     bonuses: bonusMap,
     tower,
-    audio: { gameplay, gameover, bonusArgent, bonusCgt },
-    player: { idle: playerIdle, walkLeft, walkRight },
+    audio: { gameplay, gameover, bonusArgent, bonusCgt, slotMachine, elevatorBell },
+    player: { idle: playerIdle, walkLeft, walkRight, victory },
   };
 }

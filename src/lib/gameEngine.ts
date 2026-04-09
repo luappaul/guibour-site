@@ -29,13 +29,13 @@ const HB = {
 const SIZE_CONFIG: Record<BubbleSize, {
   radius: number; bounceVy: number; speedX: number; divisionVy: number; score: number;
 }> = {
-  7: { radius: 80, bounceVy: -11.0, speedX: 0.8, divisionVy: -9.0, score: 50 },
-  6: { radius: 62, bounceVy: -10.0, speedX: 1.0, divisionVy: -8.0, score: 100 },
-  5: { radius: 48, bounceVy: -9.0,  speedX: 1.2, divisionVy: -7.0, score: 150 },
-  4: { radius: 36, bounceVy: -8.0,  speedX: 1.4, divisionVy: -6.5, score: 250 },
-  3: { radius: 26, bounceVy: -7.0,  speedX: 1.6, divisionVy: -6.0, score: 400 },
-  2: { radius: 16, bounceVy: -8.0,  speedX: 1.8, divisionVy: -5.5, score: 600 },
-  1: { radius: 10, bounceVy: -7.5,  speedX: 2.0, divisionVy: 0,    score: 1000 },
+  7: { radius: 80, bounceVy: -11.0, speedX: 0.8, divisionVy: -9.0, score: 10 },
+  6: { radius: 62, bounceVy: -10.0, speedX: 1.0, divisionVy: -8.0, score: 15 },
+  5: { radius: 48, bounceVy: -9.0,  speedX: 1.2, divisionVy: -7.0, score: 25 },
+  4: { radius: 36, bounceVy: -8.0,  speedX: 1.4, divisionVy: -6.5, score: 40 },
+  3: { radius: 26, bounceVy: -7.0,  speedX: 1.6, divisionVy: -6.0, score: 65 },
+  2: { radius: 16, bounceVy: -8.0,  speedX: 1.8, divisionVy: -5.5, score: 100 },
+  1: { radius: 10, bounceVy: -7.5,  speedX: 2.0, divisionVy: 0,    score: 150 },
 };
 
 const SPLIT_MAP: Record<BubbleSize, BubbleSize | null> = {
@@ -98,6 +98,11 @@ export function createInitialState(cw: number, ch: number): GameState {
     levelTransitionTimer: 0,
     startTime: 0,
     endTime: 0,
+    victoryAnimTimer: 0,
+    elevatorDoorProgress: 0,
+    timeToMoneyRemaining: 0,
+    timeToMoneyTotal: 0,
+    moneyEarnedThisRound: 0,
     floatingTexts: [],
     frameCount: 0,
   };
@@ -190,9 +195,33 @@ export function updateGame(state: GameState): GameState {
     return state;
   }
 
+  // Phase 1: Victory animation + time→money conversion (levelComplete)
   if (state.status === 'levelComplete') {
     state.levelTransitionTimer--;
+    // Drain timer into money (like Bubble Trouble) — drains over the animation duration
+    if (state.timeToMoneyRemaining > 0) {
+      const drainRate = state.timeToMoneyTotal / (60 * 4); // drain over ~4 seconds
+      const drained = Math.min(drainRate, state.timeToMoneyRemaining);
+      state.timeToMoneyRemaining -= drained;
+      const moneyGained = Math.round(drained * 5); // 5€ per second remaining
+      state.player.score += moneyGained;
+      state.moneyEarnedThisRound += moneyGained;
+      state.timer.remaining = Math.max(0, state.timeToMoneyRemaining);
+    }
+    // After victory anim (4s = 240 frames), switch to elevator close
     if (state.levelTransitionTimer <= 0) {
+      state.status = 'elevatorClose';
+      state.elevatorDoorProgress = 0;
+    }
+    return state;
+  }
+
+  // Phase 2: Elevator doors closing
+  if (state.status === 'elevatorClose') {
+    state.elevatorDoorProgress += 1 / 30; // close in 0.5s (30 frames)
+    if (state.elevatorDoorProgress >= 1) {
+      state.elevatorDoorProgress = 1;
+      // Doors fully closed — change floor
       if (state.level >= 24) {
         state.status = 'victory';
         state.endTime = Date.now();
@@ -210,6 +239,19 @@ export function updateGame(state: GameState): GameState {
       state.player.x = state.canvasWidth / 2;
       state.player.y = state.canvasHeight;
       state.player.invincible = 0;
+      state.moneyEarnedThisRound = 0;
+      // Switch to opening doors
+      state.status = 'elevatorOpen';
+      state.elevatorDoorProgress = 1;
+    }
+    return state;
+  }
+
+  // Phase 3: Elevator doors opening
+  if (state.status === 'elevatorOpen') {
+    state.elevatorDoorProgress -= 1 / 30; // open in 0.5s
+    if (state.elevatorDoorProgress <= 0) {
+      state.elevatorDoorProgress = 0;
       state.status = 'playing';
     }
     return state;
@@ -221,8 +263,11 @@ export function updateGame(state: GameState): GameState {
   state.timer.remaining -= 1 / 60;
   if (state.timer.remaining <= 0) {
     state.timer.remaining = 0;
-    state.status = 'gameOver';
-    state.endTime = Date.now();
+    // Timer expiry = lose a life (burnout), NOT instant game over
+    state.player.lives--;
+    state.burnout = true;
+    state.burnoutTimer = 60;
+    state.status = 'burnout';
     return state;
   }
 
@@ -235,13 +280,17 @@ export function updateGame(state: GameState): GameState {
   updateFloatingTexts(state);
   checkCollisions(state);
 
-  // Level complete
+  // Level complete — start victory animation sequence
   if (state.bubbles.length === 0 && state.status === 'playing') {
     state.status = 'levelComplete';
-    state.levelTransitionTimer = 90; // 1.5s
-    // Time bonus
-    state.player.score += Math.floor(state.timer.remaining) * 10;
-    state.player.score += (state.level + 1) * 500;
+    state.levelTransitionTimer = 240; // 4s for victory anim + time drain
+    state.timeToMoneyTotal = state.timer.remaining;
+    state.timeToMoneyRemaining = state.timer.remaining;
+    state.moneyEarnedThisRound = 0;
+    // Level completion bonus
+    state.player.score += (state.level + 1) * 100;
+    // Victory anim sprite starts (rendered in drawPlayer)
+    state.victoryAnimTimer = 0;
   }
 
   return state;
@@ -318,7 +367,7 @@ function updateBubbles(state: GameState) {
     if (b.y - b.radius <= ceilingY) {
       if (state.ceilingSpikes) {
         // Spikes destroy bubble on contact
-        state.player.score += SIZE_CONFIG[b.size].score * 2; // bonus for ceiling kill
+        state.player.score += SIZE_CONFIG[b.size].score; // ceiling kill
         b.radius = -1; // mark for destruction
       } else {
         b.y = ceilingY + b.radius;
@@ -536,7 +585,7 @@ function spawnBonus(state: GameState, x: number, y: number, weights: Partial<Rec
 function applyBonus(state: GameState, type: BonusType, bx = 0, by = 0) {
   playBonusSound(type);
   const BONUS_LABELS: Partial<Record<BonusType, string>> = {
-    argent: '+500 €', rtt: '+1 RTT', temps: '+15s', cgt: 'SHIELD!',
+    argent: '+100 €', rtt: '+1 RTT', temps: '+15s', cgt: 'SHIELD!',
     cafe: 'SPEED!', biere: 'SLOW…', pilule: 'x2 TIR', stagiaire: '+STAG!',
   };
   const BONUS_COLORS: Partial<Record<BonusType, string>> = {
@@ -557,7 +606,7 @@ function applyBonus(state: GameState, type: BonusType, bx = 0, by = 0) {
       state.player.lives++;
       break;
     case 'argent':
-      state.player.score += 500;
+      state.player.score += 100;
       break;
     case 'temps':
       state.timer.remaining = Math.min(state.timer.remaining + 15, state.timer.total);
@@ -586,17 +635,20 @@ export function renderGame(ctx: CanvasRenderingContext2D, state: GameState) {
   // 1. Background
   drawBackground(ctx, w, h, state);
 
+  const activeStates = ['playing', 'levelComplete', 'burnout', 'elevatorClose', 'elevatorOpen'];
+  const isActive = activeStates.includes(state.status);
+
   // 2. Ceiling spikes
-  if (state.ceilingSpikes && (state.status === 'playing' || state.status === 'levelComplete' || state.status === 'burnout')) {
+  if (state.ceilingSpikes && isActive) {
     drawCeilingSpikes(ctx, w);
   }
 
   // 3. Timer gauge
-  if (state.status === 'playing' || state.status === 'levelComplete' || state.status === 'burnout') {
+  if (isActive) {
     drawTimerGauge(ctx, w, state);
   }
 
-  if (state.status === 'playing' || state.status === 'levelComplete' || state.status === 'burnout') {
+  if (isActive) {
     // 4. Particles (behind everything)
     drawParticles(ctx);
 
@@ -629,7 +681,99 @@ export function renderGame(ctx: CanvasRenderingContext2D, state: GameState) {
     if (state.status === 'burnout') {
       drawBurnout(ctx, w, h, state);
     }
+
+    // 12. Victory animation overlay — "TIME = MONEY" message + money counter
+    if (state.status === 'levelComplete') {
+      drawVictoryOverlay(ctx, w, h, state);
+    }
+
+    // 13. Elevator doors (close/open)
+    if (state.status === 'elevatorClose' || state.status === 'elevatorOpen') {
+      drawElevatorDoors(ctx, w, h, state.elevatorDoorProgress);
+    }
   }
+}
+
+function drawVictoryOverlay(ctx: CanvasRenderingContext2D, w: number, h: number, state: GameState) {
+  // Semi-dark overlay
+  ctx.save();
+  ctx.fillStyle = 'rgba(0,0,0,0.35)';
+  ctx.fillRect(0, 0, w, h);
+
+  // "TIME = MONEY" message — malicious/corporate vibe
+  const messages = [
+    'TIME IS MONEY',
+    'LE TEMPS C\'EST DE L\'ARGENT',
+    'CHAQUE SECONDE COMPTE...',
+    'CASH CASH CASH',
+  ];
+  const msg = messages[state.level % messages.length];
+
+  ctx.font = 'bold 28px "Orbitron", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = '#FFD700';
+  ctx.shadowColor = '#FFD700';
+  ctx.shadowBlur = 20;
+  ctx.fillText(msg, w / 2, h / 2 - 40);
+
+  // Money earned counter
+  if (state.moneyEarnedThisRound > 0) {
+    ctx.font = 'bold 36px "Orbitron", sans-serif';
+    ctx.fillStyle = '#00FF88';
+    ctx.shadowColor = '#00FF88';
+    ctx.shadowBlur = 16;
+    ctx.fillText(`+${state.moneyEarnedThisRound.toLocaleString('fr-FR')} €`, w / 2, h / 2 + 20);
+  }
+
+  ctx.shadowBlur = 0;
+  ctx.restore();
+}
+
+function drawElevatorDoors(ctx: CanvasRenderingContext2D, w: number, h: number, progress: number) {
+  // Two doors closing/opening from left and right toward center
+  ctx.save();
+  const doorWidth = (w / 2) * progress;
+
+  // Left door
+  const lgr = ctx.createLinearGradient(0, 0, doorWidth, 0);
+  lgr.addColorStop(0, '#1A2A40');
+  lgr.addColorStop(0.8, '#2A3A55');
+  lgr.addColorStop(1, '#4A5A70');
+  ctx.fillStyle = lgr;
+  ctx.fillRect(0, 0, doorWidth, h);
+
+  // Right door
+  const rgr = ctx.createLinearGradient(w, 0, w - doorWidth, 0);
+  rgr.addColorStop(0, '#1A2A40');
+  rgr.addColorStop(0.8, '#2A3A55');
+  rgr.addColorStop(1, '#4A5A70');
+  ctx.fillStyle = rgr;
+  ctx.fillRect(w - doorWidth, 0, doorWidth, h);
+
+  // Door edges / trim
+  ctx.strokeStyle = '#5B9BD5';
+  ctx.lineWidth = 3;
+  if (doorWidth > 2) {
+    ctx.beginPath();
+    ctx.moveTo(doorWidth, 0);
+    ctx.lineTo(doorWidth, h);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(w - doorWidth, 0);
+    ctx.lineTo(w - doorWidth, h);
+    ctx.stroke();
+  }
+
+  // Door handles when nearly closed
+  if (progress > 0.6) {
+    ctx.fillStyle = '#8AA8C8';
+    const handleY = h / 2;
+    ctx.fillRect(doorWidth - 12, handleY - 15, 6, 30);
+    ctx.fillRect(w - doorWidth + 6, handleY - 15, 6, 30);
+  }
+
+  ctx.restore();
 }
 
 function drawBackground(ctx: CanvasRenderingContext2D, w: number, h: number, state: GameState) {
@@ -832,7 +976,7 @@ function drawProjectiles(ctx: CanvasRenderingContext2D, state: GameState) {
 }
 
 const BONUS_ICON_STYLES: Record<BonusType, { bg: string; border: string; glow: string; sym: string; label: string }> = {
-  argent:    { bg: '#0C2240', border: '#FFD700', glow: '#FFD700', sym: '+500',  label: 'ARGENT' },
+  argent:    { bg: '#0C2240', border: '#FFD700', glow: '#FFD700', sym: '+100',  label: 'ARGENT' },
   rtt:       { bg: '#200A14', border: '#FF4444', glow: '#FF4444', sym: '+RTT',  label: 'RTT' },
   temps:     { bg: '#041820', border: '#00C8BE', glow: '#00C8BE', sym: '+15s',  label: 'TEMPS' },
   cafe:      { bg: '#2A1000', border: '#C87A3C', glow: '#C87A3C', sym: 'CAFE',  label: 'SPEED' },
@@ -904,6 +1048,9 @@ function drawSpriteFrame(
   );
 }
 
+// Victory animation frame counter (separate from walk)
+let victoryFrameCounter = 0;
+
 function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
   const { player } = state;
 
@@ -913,13 +1060,22 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
   const walkLeft = assets?.player.walkLeft;
   const walkRight = assets?.player.walkRight;
   const idleImg = assets?.player.idle;
+  const victorySpr = assets?.player.victory;
   const isMoving = player.direction === 'left' || player.direction === 'right';
+  const isVictoryAnim = state.status === 'levelComplete';
 
   // Advance sprite animation counter when moving
   if (isMoving) {
     spriteFrameCounter++;
   } else {
     spriteFrameCounter = 0;
+  }
+
+  // Victory animation counter
+  if (isVictoryAnim) {
+    victoryFrameCounter++;
+  } else {
+    victoryFrameCounter = 0;
   }
 
   // Active sprite sheet (swapped: "COURT VERS SA DROITE" video = right-arrow key = walkRight)
@@ -929,14 +1085,24 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
 
   // Draw at scaled size (larger visual, same physics hitbox)
   const drawH = Math.round(player.height * PLAYER_DRAW_SCALE);
-  const drawY = player.y - drawH;
 
-  if (isMoving && activeSprite && activeSprite.totalFrames > 1) {
+  // Victory animation — play victory sprite at player position
+  if (isVictoryAnim && victorySpr && victorySpr.totalFrames > 1) {
+    const gameFramesPerSpriteFrame = Math.round(60 / victorySpr.fps);
+    const frameIndex = Math.floor(victoryFrameCounter / gameFramesPerSpriteFrame) % victorySpr.totalFrames;
+    const idleScale = 1.15;
+    const victH = Math.round(drawH * idleScale);
+    const ar = victorySpr.frameWidth / victorySpr.frameHeight;
+    const victW = Math.round(victH * ar);
+    const victY = player.y - victH + Math.round(victH * 0.06);
+    drawSpriteFrame(ctx, victorySpr, frameIndex, player.x - victW / 2, victY, victW, victH);
+  } else if (isMoving && activeSprite && activeSprite.totalFrames > 1) {
     // Compute which frame to show based on sprite FPS vs game FPS (60)
     const gameFramesPerSpriteFrame = Math.round(60 / activeSprite.fps);
     const frameIndex = Math.floor(spriteFrameCounter / gameFramesPerSpriteFrame) % activeSprite.totalFrames;
     const ar = activeSprite.frameWidth / activeSprite.frameHeight;
     const drawW = Math.round(drawH * ar);
+    const drawY = player.y - drawH;
     drawSpriteFrame(ctx, activeSprite, frameIndex, player.x - drawW / 2, drawY, drawW, drawH);
   } else if (idleImg) {
     // Idle: scale up slightly to match walk sprite visual size
