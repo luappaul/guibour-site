@@ -208,6 +208,19 @@ export default function Home() {
     }
   }, []);
 
+  // Masquer Guibot pendant le jeu
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    if (showGame || showCharacterSelect || showLoading) {
+      document.body.dataset.gameActive = 'true';
+    } else {
+      delete document.body.dataset.gameActive;
+    }
+    return () => {
+      delete document.body.dataset.gameActive;
+    };
+  }, [showGame, showCharacterSelect, showLoading]);
+
   const handleLoadingComplete = useCallback(() => {
     setShowLoading(false);
     setLoadingDone(true);

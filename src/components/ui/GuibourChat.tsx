@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { usePathname } from 'next/navigation';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -18,9 +17,19 @@ const QUICK_TOPICS = [
 ];
 
 export default function GuibourChat() {
-  const pathname = usePathname();
+  const [gameActive, setGameActive] = useState(false);
   const [open, setOpen] = useState(false);
   const [showBubble, setShowBubble] = useState(false);
+
+  useEffect(() => {
+    const onChange = () => {
+      setGameActive(document.body.dataset.gameActive === 'true');
+    };
+    onChange();
+    const observer = new MutationObserver(onChange);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['data-game-active'] });
+    return () => observer.disconnect();
+  }, []);
   const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: WELCOME },
   ]);
@@ -81,7 +90,8 @@ export default function GuibourChat() {
     return () => clearTimeout(timer);
   }, [open]);
 
-  // Guibot visible sur toutes les pages y compris l'accueil
+  // Guibot masqué pendant le jeu
+  if (gameActive) return null;
 
   return (
     <>
