@@ -24,7 +24,7 @@ export default function TowerProgress({ currentLevel, totalLevels, assets }: Pro
         boxSizing: 'border-box',
       }}
     >
-      {/* Tower background image — bright & luminous */}
+      {/* Tower background image — full brightness, no filter */}
       {towerImg && (
         <img
           src={towerImg.src}
@@ -36,28 +36,9 @@ export default function TowerProgress({ currentLevel, totalLevels, assets }: Pro
             height: '100%',
             objectFit: 'cover',
             opacity: 1,
-            filter: 'brightness(1.35) saturate(1.15) contrast(1.05)',
           }}
         />
       )}
-      {/* Subtle teal glow overlay */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'radial-gradient(ellipse at center, rgba(0,201,200,0.12) 0%, rgba(0,201,200,0) 70%)',
-          pointerEvents: 'none',
-        }}
-      />
-      {/* Left edge scanline effect */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(90deg, rgba(0,201,200,0.15) 0%, transparent 15%, transparent 85%, rgba(0,201,200,0.15) 100%)',
-          pointerEvents: 'none',
-        }}
-      />
 
       {/* Floor markers */}
       <div
@@ -79,41 +60,43 @@ export default function TowerProgress({ currentLevel, totalLevels, assets }: Pro
             >
               <div
                 style={{
-                  width: '92%',
-                  padding: isCurrent ? '3px 4px' : '2px 4px',
+                  width: '94%',
+                  padding: isCurrent ? '5px 4px' : '3px 4px',
                   textAlign: 'center',
-                  fontSize: isCurrent ? '15px' : '13px',
                   fontFamily: "'Orbitron', sans-serif",
                   fontWeight: 900,
-                  letterSpacing: '1.5px',
-                  borderRadius: '4px',
+                  letterSpacing: '1px',
+                  borderRadius: '5px',
                   color: isCurrent
-                    ? '#0A1520'
+                    ? '#001A1A'
                     : isCompleted
                     ? '#FFFFFF'
                     : '#FFFFFF',
                   background: isCurrent
-                    ? '#00FFFC'
+                    ? 'linear-gradient(180deg, #00FFFC 0%, #00C8BE 100%)'
                     : isCompleted
-                    ? 'rgba(0,168,157,0.75)'
-                    : 'rgba(10,21,32,0.85)',
+                    ? 'rgba(0,168,157,0.85)'
+                    : 'rgba(10,21,32,0.88)',
                   border: isCurrent
-                    ? '1px solid #FFFFFF'
+                    ? '2px solid #FFFFFF'
                     : isCompleted
-                    ? '1px solid rgba(0,201,200,0.5)'
-                    : '1px solid rgba(0,201,200,0.35)',
+                    ? '1.5px solid rgba(0,255,252,0.6)'
+                    : '1.5px solid rgba(0,255,252,0.45)',
                   boxShadow: isCurrent
-                    ? '0 0 18px rgba(0,255,252,0.95), 0 0 8px rgba(0,255,252,0.7), inset 0 0 6px rgba(255,255,255,0.4)'
+                    ? '0 0 22px rgba(0,255,252,1), 0 0 10px rgba(0,255,252,0.8), inset 0 0 8px rgba(255,255,255,0.5)'
                     : isCompleted
-                    ? '0 0 4px rgba(0,201,200,0.4)'
-                    : '0 1px 2px rgba(0,0,0,0.5)',
+                    ? '0 0 6px rgba(0,201,200,0.5)'
+                    : '0 2px 4px rgba(0,0,0,0.6), inset 0 0 2px rgba(0,255,252,0.2)',
                   textShadow: isCurrent
-                    ? '0 0 6px rgba(255,255,255,0.8)'
-                    : '0 1px 2px rgba(0,0,0,1), 0 0 8px rgba(0,201,200,0.6)',
+                    ? '0 0 8px rgba(255,255,255,0.9)'
+                    : '0 1px 2px rgba(0,0,0,1), 0 0 10px rgba(0,201,200,0.8)',
                   transition: 'all 0.3s ease',
+                  lineHeight: 1.1,
                 }}
               >
-                {String(i).padStart(2, '0')}
+                <div style={{ fontSize: isCurrent ? '18px' : '15px', lineHeight: 1 }}>
+                  {String(i).padStart(2, '0')}
+                </div>
               </div>
             </div>
           );

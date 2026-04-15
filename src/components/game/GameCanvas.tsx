@@ -789,10 +789,10 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
         {/* ── HUD ROW: RTT + elevator + SALAIRE (collé tour) ── */}
         {(gameStatus === 'playing' || gameStatus === 'burnout' || gameStatus === 'levelComplete' || gameStatus === 'elevatorClose' || gameStatus === 'elevatorOpen') && (
           <div style={{ flexShrink: 0, background: '#1A3F78', display: 'flex', alignItems: 'center', borderTop: '2px solid #00C8BE' }}>
-            {/* RTT */}
-            <div style={{ background: '#0C2A62', padding: '6px 20px', textAlign: 'center', borderRight: '1px solid #1A3E7A', flexShrink: 0 }}>
-              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#5B9BD5', letterSpacing: '3px', marginBottom: '2px' }}>RTT</div>
-              <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '38px', color: '#FF4444', lineHeight: 1, textShadow: '0 0 14px rgba(255,68,68,.6)' }}>{'\u2764'.repeat(Math.max(0, hudInfo.lives))}</div>
+            {/* RTT - label et valeur alignés horizontalement */}
+            <div style={{ background: '#0C2A62', padding: '10px 18px', display: 'flex', alignItems: 'center', gap: '12px', borderRight: '1px solid #1A3E7A', flexShrink: 0 }}>
+              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '12px', fontWeight: 700, color: '#5B9BD5', letterSpacing: '3px' }}>RTT</div>
+              <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '30px', color: '#FF4444', lineHeight: 1, textShadow: '0 0 14px rgba(255,68,68,.6)' }}>{'\u2764'.repeat(Math.max(0, hudInfo.lives))}</div>
             </div>
             {/* Ascenseur: nom + numéro d'étage */}
             <div key={currentLevel} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px 8px', animation: 'elevatorFloorIn .35s cubic-bezier(.15,0,.25,1) both' }}>
@@ -803,10 +803,10 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
                 <div style={{ fontSize: '7px', fontFamily: "'Orbitron', sans-serif", color: '#A8D8FF', letterSpacing: '1px', position: 'relative', marginTop: '2px', opacity: 0.8, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '120px' }}>{hudInfo.levelName}</div>
               </div>
             </div>
-            {/* SALAIRE - collé à la tour */}
-            <div style={{ flexShrink: 0, background: '#0A1628', borderLeft: '2px solid #1A3E7A', padding: '8px 14px', textAlign: 'center', fontFamily: "'Orbitron', sans-serif" }}>
-              <div style={{ fontSize: '9px', color: '#5B9BD5', letterSpacing: '3px', marginBottom: '2px' }}>SALAIRE</div>
-              <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '22px', color: '#00C8BE', lineHeight: 1, textShadow: '0 0 14px rgba(0,200,190,.6)' }}>{hudInfo.score.toLocaleString('fr-FR')}€</div>
+            {/* SALAIRE - collé à la tour, label et valeur alignés horizontalement */}
+            <div style={{ flexShrink: 0, background: '#0A1628', borderLeft: '2px solid #1A3E7A', padding: '10px 18px', display: 'flex', alignItems: 'center', gap: '12px', fontFamily: "'Orbitron', sans-serif" }}>
+              <div style={{ fontSize: '12px', fontWeight: 700, color: '#5B9BD5', letterSpacing: '3px' }}>SALAIRE</div>
+              <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '26px', color: '#00C8BE', lineHeight: 1, textShadow: '0 0 14px rgba(0,200,190,.6)' }}>{hudInfo.score.toLocaleString('fr-FR')}€</div>
             </div>
           </div>
         )}

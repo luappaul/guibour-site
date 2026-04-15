@@ -101,7 +101,7 @@ export async function loadAllAssets(
   );
 
   // Player: idle PNG + walk sprite sheets + victory sprite sheet
-  const playerIdlePromise = loadImage('/game/player/guibour-idle-v5.png').then(img => { tick(); return img; });
+  const playerIdlePromise = loadImage('/game/player/guibour-idle-v6.png').then(img => { tick(); return img; });
   // Sprite sheets: 65 frames each, 372x451 per frame, 8 columns, 12 fps
   const walkRightPromise = loadSpriteSheet('/game/player/walk-right-v2.png', 372, 451, 65, 8, 12)
     .then(s => { tick(); return s; })
