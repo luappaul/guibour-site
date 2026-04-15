@@ -434,203 +434,208 @@ link.click();
 
 return (
 
-<div className="absolute inset-0 z-30 flex flex-col items-center justify-center"
+<div className="absolute inset-0 z-30 flex items-center justify-center"
+  style={{ background: isVictory ? 'rgba(0,8,20,0.65)' : 'rgba(4,0,0,0.60)', backdropFilter: 'blur(4px)', overflowY: 'auto' }}>
 
-style={{ background: isVictory ? 'rgba(0,8,20,0.88)' : 'rgba(4,0,0,0.95)', backdropFilter: 'blur(5px)', overflowY: 'auto' }}>
-
-<div className="mb-6 text-center" style={{ pointerEvents: 'none', flexShrink: 0 }}>
-
-<h1 style={{ fontFamily: "'Lilita One', cursive", fontSize: isVictory ? 'clamp(64px, 11vw, 116px)' : 'clamp(58px, 10vw, 108px)', color: isVictory ? '#00FFEE' : '#FF2020', letterSpacing: isVictory ? '8px' : '4px', lineHeight: 0.9, display: 'block', textShadow: isVictory ? '3px 4px 0 #002A28, 6px 8px 0 rgba(0,30,28,.7), 9px 12px 0 rgba(0,0,0,.4), 0 0 40px rgba(0,255,235,.7)' : '3px 4px 0 #2A0000, 6px 8px 0 rgba(40,0,0,.7), 9px 12px 0 rgba(0,0,0,.4), 0 0 40px rgba(255,30,30,.7)', animation: isVictory ? 'victorySlam 0.7s cubic-bezier(.15,0,.25,1) both, victoryGlow 2s ease-in-out infinite 0.8s' : 'scareSlam 0.7s cubic-bezier(.15,0,.25,1) both, scareGlow 2s ease-in-out infinite 0.8s' }}>
-
-{isVictory ? 'VOUS ÊTES\nLIBRE' : 'FIN DE\nCARRIÈRE'}
-
-</h1>
-
-{!isVictory && (<p style={{ fontFamily: "'Lilita One', cursive", fontSize: 'clamp(30px, 5.5vw, 62px)', color: '#FF5050', letterSpacing: '5px', marginTop: '10px', display: 'block', textShadow: '2px 3px 0 #2A0000, 4px 6px 0 rgba(40,0,0,.6), 0 0 20px rgba(255,60,60,.5)', animation: 'scareSlam 0.7s cubic-bezier(.15,0,.25,1) 0.2s both, scarePulse 1.8s ease-in-out infinite 0.9s' }}>TU ES UN LOOSER</p>)}
-
-{isVictory && (<p style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 'clamp(11px, 1.8vw, 16px)', color: '#00C8BE', letterSpacing: '5px', marginTop: '18px', opacity: 0.8, animation: 'fadeIn 0.6s ease 0.9s both' }}>25 ÉTAGES — MISSION ACCOMPLIE</p>)}
-
-</div>
-
-      {/* GUIBOUR DEFAITE */}
+  {/* Central popup card */}
+  <div style={{
+    width: '380px', maxWidth: '92vw',
+    background: 'rgba(12,30,64,0.95)',
+    border: `2px solid ${isVictory ? '#00C8BE' : '#FF4444'}`,
+    borderRadius: '8px',
+    animation: 'slideUp 0.4s ease-out',
+    overflow: 'hidden',
+    boxShadow: isVictory
+      ? '0 0 60px rgba(0,200,190,.3), 0 20px 60px rgba(0,0,0,.6)'
+      : '0 0 60px rgba(255,40,40,.3), 0 20px 60px rgba(0,0,0,.6)',
+  }}>
+    {/* Title bar */}
+    <div style={{
+      background: isVictory ? '#006B66' : '#8B0000',
+      padding: '14px 18px',
+      textAlign: 'center',
+    }}>
+      <div style={{
+        fontFamily: "'Lilita One', cursive",
+        fontSize: 'clamp(28px, 6vw, 38px)',
+        color: '#FFFFFF',
+        letterSpacing: '3px',
+        lineHeight: 1.1,
+        textShadow: '2px 3px 0 rgba(0,0,0,.4)',
+      }}>
+        {isVictory ? 'VOUS ÊTES LIBRE' : 'FIN DE CARRIÈRE'}
+      </div>
       {!isVictory && (
+        <div style={{
+          fontFamily: "'Orbitron', sans-serif",
+          fontSize: '11px',
+          color: '#FF9999',
+          letterSpacing: '4px',
+          marginTop: '4px',
+        }}>
+          TU ES UN LOOSER
+        </div>
+      )}
+      {isVictory && (
+        <div style={{
+          fontFamily: "'Orbitron', sans-serif",
+          fontSize: '10px',
+          color: '#A8FFE0',
+          letterSpacing: '4px',
+          marginTop: '4px',
+        }}>
+          25 ÉTAGES — MISSION ACCOMPLIE
+        </div>
+      )}
+    </div>
+
+    {/* Defeat animation — no green background */}
+    {!isVictory && (
+      <div style={{ textAlign: 'center', padding: '12px 0 4px', background: 'transparent' }}>
         <video autoPlay loop muted playsInline
-          style={{ width: '180px', height: 'auto', flexShrink: 0, marginBottom: '4px', imageRendering: 'pixelated', filter: 'drop-shadow(0 0 18px rgba(255,30,30,0.7))' }}
+          style={{
+            width: '140px', height: 'auto',
+            imageRendering: 'pixelated',
+            filter: 'drop-shadow(0 0 14px rgba(255,30,30,0.5))',
+            background: 'transparent',
+          }}
           src="/game/player/guibour-defaite-v4.webm"
         />
-      )}
-
-{showContent && (
-
-<div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center', padding: '0 16px 16px', width: '100%', maxWidth: '960px' }}>
-
-<div style={{ width: '400px', maxWidth: '92vw', background: '#0C1E40', border: '2px solid #0047AB', animation: 'slideUp 0.4s ease-out', flexShrink: 0, overflow: 'hidden' }}>
-
-<div style={{ background: '#0047AB', padding: '8px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-
-<div style={{ display: 'flex', gap: '5px' }}>
-
-<span style={{ width: 9, height: 9, borderRadius: '50%', background: '#FF5F56', display: 'inline-block' }} />
-
-<span style={{ width: 9, height: 9, borderRadius: '50%', background: '#FFBD2E', display: 'inline-block' }} />
-
-<span style={{ width: 9, height: 9, borderRadius: '50%', background: '#27C93F', display: 'inline-block' }} />
-
-</div>
-
-<span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#fff', letterSpacing: '2px' }}>{isVictory ? 'LIBERTÉ OBTENUE' : 'DOSSIER CLASSÉ'}</span>
-
-<span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: 'rgba(255,255,255,.4)' }}>✕</span>
-
-</div>
-
-<div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-
-<div style={{ textAlign: 'center' }}>
-
-<div style={{ fontFamily: "'Luckiest Guy', cursive", fontSize: '22px', color: '#FFFFFF', letterSpacing: '4px' }}>{pseudo}</div>
-
-<div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#3C5A7A', letterSpacing: '3px' }}>EMPLOYÉ(E) DU MOIS</div>
-
-</div>
-
-<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }}>
-
-{[
-
-{ label: 'ÉTAGE', value: `${String(level).padStart(2,'0')}/25`, color: '#FFE033' },
-
-{ label: 'SALAIRE', value: formatSalary(player.score), color: '#00C8BE' },
-
-{ label: 'RANG', value: rank > 0 ? `#${rank}` : '—', color: '#FF7744' },
-
-].map(s => (
-
-<div key={s.label} style={{ background: '#091E4A', border: '1px solid #1A3E7A', padding: '10px 6px', textAlign: 'center' }}>
-
-<div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#3C5A7A', letterSpacing: '2px', marginBottom: '4px' }}>{s.label}</div>
-
-<div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '16px', fontWeight: 700, color: s.color }}>{s.value}</div>
-
-</div>
-
-))}
-
-</div>
-
-<div style={{ background: '#091E4A', border: '1px solid #1A3E7A', padding: '8px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-
-<span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#3C5A7A', letterSpacing: '2px' }}>DURÉE</span>
-
-<span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '14px', color: '#A8D8FF', fontWeight: 700 }}>{durationText}</span>
-
-</div>
-
-<div style={{ display: 'flex', gap: '8px' }}>
-
-<button onClick={() => { playClick(); onRestart(); }} style={{ flex: 1, fontFamily: "'Luckiest Guy', cursive", fontSize: '15px', letterSpacing: '3px', color: '#fff', background: 'linear-gradient(135deg,#0047AB,#007B8A)', border: '2px solid #00C8BE', padding: '12px', cursor: 'pointer', transition: 'all .2s' }}>REJOUER</button>
-
-<button onClick={handleShare} style={{ padding: '12px 14px', fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#00C8BE', background: 'transparent', border: '1px solid #1A3E7A', cursor: 'pointer' }}>{copied ? '✓' : '↗'}</button>
-
-<button onClick={handleDownloadCertificate} title="Certificat PDF" style={{ padding: '12px 14px', fontFamily: "'Orbitron', sans-serif", fontSize: '14px', color: '#FFE033', background: 'transparent', border: '1px solid #3A2A00', cursor: 'pointer' }}>📜</button>
-
-</div>
-
-{shareImageUrl && (
-
-<div style={{ display: 'flex', gap: '6px', alignItems: 'center', padding: '8px 10px', background: '#0A1828', border: '1px solid #2A1830' }}>
-
-<img src={shareImageUrl} alt="Score" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '2px' }} />
-
-<div style={{ flex: 1 }}>
-
-<div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#C13584', letterSpacing: '1px', marginBottom: '4px' }}>PARTAGER LE SCORE</div>
-
-<div style={{ display: 'flex', gap: '4px' }}>
-
-<button onClick={handleInstagramShare} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', padding: '4px 8px', background: 'linear-gradient(135deg,#C13584,#E1306C)', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '2px' }}>INSTA</button>
-
-<button onClick={handleWhatsAppShare} disabled={waShareCount >= 3} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', padding: '4px 8px', background: waShareCount >= 3 ? '#1A3E7A' : '#25D366', color: '#fff', border: 'none', cursor: waShareCount >= 3 ? 'not-allowed' : 'pointer', borderRadius: '2px', opacity: waShareCount >= 3 ? 0.5 : 1 }}>WA {waShareCount}/3</button>
-
-<button onClick={handleDownloadImage} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', padding: '4px 6px', background: 'transparent', color: '#5B9BD5', border: '1px solid #1A3E7A', cursor: 'pointer', borderRadius: '2px' }}>↓</button>
-
-</div>
-
-</div>
-
-</div>
-
-)}
-
-{replayUrl && (
-
-<div style={{ background: '#091E4A', border: '1px solid #1A3E7A', padding: '8px 10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-
-<span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#00C8BE', letterSpacing: '1px' }}>🎬 REPLAY</span>
-
-<a href={replayUrl} download={`wow-replay-${pseudo}.webm`} style={{ marginLeft: 'auto', fontFamily: "'Orbitron', sans-serif", fontSize: '8px', padding: '5px 10px', background: 'rgba(0,200,190,.12)', color: '#00C8BE', border: '1px solid #1A3E7A', textDecoration: 'none', borderRadius: '2px' }}>↓ DL</a>
-
-</div>
-
-)}
-
-{showRTTPanel && !isVictory && !emailGiven && (
-
-<div style={{ background: '#1A1000', border: '1px solid #3A2A00', padding: '10px 12px' }}>
-
-<div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#FFE033', letterSpacing: '2px', marginBottom: '6px' }}>💼 +1 RTT — LAISSE TON EMAIL</div>
-
-<div style={{ display: 'flex', gap: '4px' }}>
-
-<input type="email" placeholder="ton@email.com" id="rtt-email-input" style={{ flex: 1, padding: '6px 8px', fontFamily: "'Orbitron', sans-serif", fontSize: '9px', background: '#091E4A', color: '#fff', border: '1px solid #1A3E7A', outline: 'none' }} />
-
-<button onClick={() => {
-
-playClick();
-
-const input = document.getElementById('rtt-email-input') as HTMLInputElement;
-
-if (input?.value?.includes('@')) {
-
-const stored = localStorage.getItem('guibour-identity');
-
-if (stored) { const id = JSON.parse(stored); id.email = input.value; id.bonusRTT = (id.bonusRTT ?? 0) + 1; localStorage.setItem('guibour-identity', JSON.stringify(id)); }
-
-fetch('/api/email-collect', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: input.value, pseudo, source: 'rtt-bonus' }) }).catch(() => {});
-
-setEmailGiven(true);
-
-}
-
-}} style={{ padding: '6px 12px', background: '#FFE033', color: '#0A1520', border: 'none', cursor: 'pointer', fontFamily: "'Orbitron', sans-serif", fontSize: '9px', fontWeight: 700 }}>OK</button>
-
-</div>
-
-</div>
-
-)}
-
-{emailGiven && !isVictory && (
-
-<div style={{ textAlign: 'center', fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#00C8BE', padding: '6px', border: '1px solid rgba(0,200,190,.2)' }}>✓ EMAIL ENREGISTRÉ — +1 RTT AU PROCHAIN RUN</div>
-
-)}
-
-</div>
-
-<div style={{ background: '#0047AB', padding: '5px 14px', display: 'flex', justifyContent: 'space-between' }}>
-
-<span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: 'rgba(255,255,255,.5)' }}>guibour.fr</span>
-
-<span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: 'rgba(255,255,255,.5)' }}>#WOW2026</span>
-
-</div>
-
-</div>
-
-</div>
-
-)}
+      </div>
+    )}
+
+    {/* Content — visible after animation delay */}
+    {showContent && (
+      <div style={{ padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+
+        {/* Player name */}
+        <div style={{ textAlign: 'center' }}>
+          <div style={{
+            fontFamily: "'Lilita One', cursive",
+            fontSize: '24px',
+            color: '#FFFFFF',
+            letterSpacing: '3px',
+          }}>{pseudo}</div>
+        </div>
+
+        {/* Score: just salary */}
+        <div style={{
+          background: '#091E4A',
+          border: '1px solid #1A3E7A',
+          padding: '14px',
+          textAlign: 'center',
+        }}>
+          <div style={{
+            fontFamily: "'Orbitron', sans-serif",
+            fontSize: '9px',
+            color: '#5B9BD5',
+            letterSpacing: '3px',
+            marginBottom: '6px',
+          }}>SALAIRE GAGNÉ</div>
+          <div style={{
+            fontFamily: "'Lilita One', cursive",
+            fontSize: '36px',
+            color: '#00C8BE',
+            textShadow: '0 0 20px rgba(0,200,190,.4)',
+          }}>{formatSalary(player.score)}</div>
+        </div>
+
+        {/* Étage + Rang inline */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+          <div style={{ background: '#091E4A', border: '1px solid #1A3E7A', padding: '10px', textAlign: 'center' }}>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#5B9BD5', letterSpacing: '2px', marginBottom: '4px' }}>ÉTAGE</div>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '18px', fontWeight: 700, color: '#FFE033' }}>{String(level).padStart(2,'0')}/25</div>
+          </div>
+          <div style={{ background: '#091E4A', border: '1px solid #1A3E7A', padding: '10px', textAlign: 'center' }}>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#5B9BD5', letterSpacing: '2px', marginBottom: '4px' }}>RANG</div>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '18px', fontWeight: 700, color: '#FF7744' }}>{rank > 0 ? `#${rank}` : '—'}</div>
+          </div>
+        </div>
+
+        {/* Action buttons */}
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <button onClick={() => { playClick(); onRestart(); }} style={{
+            flex: 1,
+            fontFamily: "'Lilita One', cursive",
+            fontSize: '16px',
+            letterSpacing: '3px',
+            color: '#fff',
+            background: 'linear-gradient(135deg,#0047AB,#007B8A)',
+            border: '2px solid #00C8BE',
+            padding: '12px',
+            cursor: 'pointer',
+            borderRadius: '4px',
+            transition: 'all .2s',
+          }}>REJOUER</button>
+          <button onClick={handleShare} style={{
+            padding: '12px 14px',
+            fontFamily: "'Orbitron', sans-serif",
+            fontSize: '12px',
+            color: '#00C8BE',
+            background: 'transparent',
+            border: '1px solid #1A3E7A',
+            cursor: 'pointer',
+            borderRadius: '4px',
+          }}>{copied ? '✓' : '↗'}</button>
+          <button onClick={handleDownloadCertificate} title="Certificat PDF" style={{
+            padding: '12px 14px',
+            fontFamily: "'Orbitron', sans-serif",
+            fontSize: '14px',
+            color: '#FFE033',
+            background: 'transparent',
+            border: '1px solid #3A2A00',
+            cursor: 'pointer',
+            borderRadius: '4px',
+          }}>📜</button>
+        </div>
+
+        {/* Share row */}
+        {shareImageUrl && (
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center', padding: '8px 10px', background: 'rgba(10,24,40,.6)', border: '1px solid #1A3E7A', borderRadius: '4px' }}>
+            <img src={shareImageUrl} alt="Score" style={{ width: '36px', height: '36px', objectFit: 'cover', borderRadius: '3px' }} />
+            <div style={{ flex: 1 }}>
+              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#A8D8FF', letterSpacing: '1px', marginBottom: '4px' }}>PARTAGER</div>
+              <div style={{ display: 'flex', gap: '4px' }}>
+                <button onClick={handleInstagramShare} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', padding: '4px 8px', background: 'linear-gradient(135deg,#C13584,#E1306C)', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '3px' }}>INSTA</button>
+                <button onClick={handleWhatsAppShare} disabled={waShareCount >= 3} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', padding: '4px 8px', background: waShareCount >= 3 ? '#1A3E7A' : '#25D366', color: '#fff', border: 'none', cursor: waShareCount >= 3 ? 'not-allowed' : 'pointer', borderRadius: '3px', opacity: waShareCount >= 3 ? 0.5 : 1 }}>WA {waShareCount}/3</button>
+                <button onClick={handleDownloadImage} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', padding: '4px 6px', background: 'transparent', color: '#5B9BD5', border: '1px solid #1A3E7A', cursor: 'pointer', borderRadius: '3px' }}>↓</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* RTT bonus email input */}
+        {showRTTPanel && !isVictory && !emailGiven && (
+          <div style={{ background: 'rgba(26,16,0,.6)', border: '1px solid #3A2A00', padding: '10px 12px', borderRadius: '4px' }}>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#FFE033', letterSpacing: '2px', marginBottom: '6px' }}>+1 RTT — LAISSE TON EMAIL</div>
+            <div style={{ display: 'flex', gap: '4px' }}>
+              <input type="email" placeholder="ton@email.com" id="rtt-email-input" style={{ flex: 1, padding: '7px 10px', fontFamily: "'Orbitron', sans-serif", fontSize: '10px', background: '#091E4A', color: '#fff', border: '1px solid #1A3E7A', outline: 'none', borderRadius: '3px' }} />
+              <button onClick={() => {
+                playClick();
+                const input = document.getElementById('rtt-email-input') as HTMLInputElement;
+                if (input?.value?.includes('@')) {
+                  const stored = localStorage.getItem('guibour-identity');
+                  if (stored) { const id = JSON.parse(stored); id.email = input.value; id.bonusRTT = (id.bonusRTT ?? 0) + 1; localStorage.setItem('guibour-identity', JSON.stringify(id)); }
+                  fetch('/api/email-collect', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: input.value, pseudo, source: 'rtt-bonus' }) }).catch(() => {});
+                  setEmailGiven(true);
+                }
+              }} style={{ padding: '7px 14px', background: '#FFE033', color: '#0A1520', border: 'none', cursor: 'pointer', fontFamily: "'Orbitron', sans-serif", fontSize: '10px', fontWeight: 700, borderRadius: '3px' }}>OK</button>
+            </div>
+          </div>
+        )}
+
+        {emailGiven && !isVictory && (
+          <div style={{ textAlign: 'center', fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#00C8BE', padding: '8px', border: '1px solid rgba(0,200,190,.2)', borderRadius: '4px' }}>✓ EMAIL ENREGISTRÉ — +1 RTT AU PROCHAIN RUN</div>
+        )}
+      </div>
+    )}
+
+    {/* Footer */}
+    <div style={{ background: isVictory ? '#004D48' : '#5A0000', padding: '5px 14px', display: 'flex', justifyContent: 'space-between' }}>
+      <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: 'rgba(255,255,255,.5)' }}>guibour.fr</span>
+      <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: 'rgba(255,255,255,.5)' }}>#WOW2026</span>
+    </div>
+  </div>
 
 </div>
 

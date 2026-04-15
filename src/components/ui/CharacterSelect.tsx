@@ -28,9 +28,9 @@ const CHARACTERS: CharacterData[] = [
     title: 'EMPLOYÉ MODÈLE',
     emoji: '🧑‍💼',
     stats: [
-      { label: 'VIT', value: 3 },
-      { label: 'TIR', value: 3 },
-      { label: 'LUCK', value: 3 },
+      { label: 'VITESSE', value: 3 },
+      { label: 'PROACTIVITÉ', value: 3 },
+      { label: 'CHANCE', value: 3 },
     ],
   },
   {
@@ -39,9 +39,9 @@ const CHARACTERS: CharacterData[] = [
     title: 'SECRÉTAIRE',
     emoji: '👩‍💼',
     stats: [
-      { label: 'VIT', value: 4 },
-      { label: 'TIR', value: 2 },
-      { label: 'LUCK', value: 4 },
+      { label: 'VITESSE', value: 4 },
+      { label: 'PROACTIVITÉ', value: 2 },
+      { label: 'CHANCE', value: 4 },
     ],
   },
   {
@@ -50,9 +50,9 @@ const CHARACTERS: CharacterData[] = [
     title: 'STAGIAIRE',
     emoji: '🧑‍🎓',
     stats: [
-      { label: 'VIT', value: 5 },
-      { label: 'TIR', value: 1 },
-      { label: 'LUCK', value: 5 },
+      { label: 'VITESSE', value: 5 },
+      { label: 'PROACTIVITÉ', value: 1 },
+      { label: 'CHANCE', value: 5 },
     ],
   },
   {
@@ -63,9 +63,9 @@ const CHARACTERS: CharacterData[] = [
     locked: true,
     lockedLabel: '🔒 ÉTAGE 15+',
     stats: [
-      { label: 'VIT', value: 2 },
-      { label: 'TIR', value: 5 },
-      { label: 'LUCK', value: 2 },
+      { label: 'VITESSE', value: 2 },
+      { label: 'PROACTIVITÉ', value: 5 },
+      { label: 'CHANCE', value: 2 },
     ],
   },
 ];
@@ -284,10 +284,11 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
               autoFocus={!existingIdentity}
               style={{
                 width: '100%', padding: '14px 16px', boxSizing: 'border-box',
-                fontFamily: "'Orbitron', sans-serif", fontSize: '14px', letterSpacing: '2px',
+                fontFamily: "'Orbitron', sans-serif", fontSize: '15px', letterSpacing: '3px', fontWeight: 700,
                 background: '#091E4A', color: '#FFFFFF',
                 border: `2px solid ${pseudoError ? '#FF4444' : '#1A3E7A'}`,
                 outline: 'none', textAlign: 'center', borderRadius: '3px',
+                textShadow: '0 0 6px rgba(255,255,255,.3)',
               }}
               onFocus={e => e.target.style.borderColor = '#00C8BE'}
               onBlur={e => e.target.style.borderColor = pseudoError ? '#FF4444' : '#1A3E7A'}
@@ -302,7 +303,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
               <input
                 type="email" value={email} onChange={e => setEmail(e.target.value)}
                 placeholder="EMAIL (facultatif)"
-                style={{ width: '100%', padding: '11px 16px', boxSizing: 'border-box', fontFamily: "'Orbitron', sans-serif", fontSize: '11px', background: '#091E4A', color: '#FFFFFF', border: '1px solid #1A3E7A', outline: 'none', borderRadius: '3px' }}
+                style={{ width: '100%', padding: '11px 16px', boxSizing: 'border-box', fontFamily: "'Orbitron', sans-serif", fontSize: '13px', fontWeight: 700, letterSpacing: '2px', background: '#091E4A', color: '#FFFFFF', border: '1px solid #1A3E7A', outline: 'none', borderRadius: '3px', textShadow: '0 0 6px rgba(255,255,255,.3)' }}
                 onFocus={e => e.target.style.borderColor = '#00C8BE'}
                 onBlur={e => e.target.style.borderColor = '#1A3E7A'}
               />
@@ -314,7 +315,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
               <input
                 type="tel" value={phone} onChange={e => setPhone(e.target.value)}
                 placeholder="TÉLÉPHONE (facultatif)"
-                style={{ width: '100%', padding: '11px 16px', boxSizing: 'border-box', fontFamily: "'Orbitron', sans-serif", fontSize: '11px', background: '#091E4A', color: '#FFFFFF', border: '1px solid #1A3E7A', outline: 'none', borderRadius: '3px' }}
+                style={{ width: '100%', padding: '11px 16px', boxSizing: 'border-box', fontFamily: "'Orbitron', sans-serif", fontSize: '13px', fontWeight: 700, letterSpacing: '2px', background: '#091E4A', color: '#FFFFFF', border: '1px solid #1A3E7A', outline: 'none', borderRadius: '3px', textShadow: '0 0 6px rgba(255,255,255,.3)' }}
                 onFocus={e => e.target.style.borderColor = '#00C8BE'}
                 onBlur={e => e.target.style.borderColor = '#1A3E7A'}
               />
@@ -444,7 +445,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                       {char.stats.map(stat => (
                         <div key={stat.label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                          <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#5B9BD5', letterSpacing: '2px', width: '30px' }}>{stat.label}</span>
+                          <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#FFFFFF', letterSpacing: '1px', width: '82px', fontWeight: 700, textShadow: '0 0 6px rgba(255,255,255,.25)' }}>{stat.label}</span>
                           <StatBar value={stat.value} />
                         </div>
                       ))}

@@ -8,9 +8,9 @@ import { useEffect, useRef } from 'react';
 
 const N_MERIDIANS = 6;
 const N_PARALLELS = 5;
-const W  = 80;
-const H  = 80;   // carré = sphère parfaite
-const R  = 36;   // rayon remplit bien le carré
+const W  = 120;  // larger canvas so glow doesn't clip at edges
+const H  = 120;
+const R  = 36;   // same visual radius
 const CX = W / 2;
 const CY = H / 2;
 
@@ -105,10 +105,11 @@ export default function GlobeO() {
       height={H}
       style={{
         display      : 'inline-block',
-        // 0.80em = légèrement plus grand que la cap-height, imposant mais équilibré
-        width        : '0.80em',
-        height       : '0.80em',   // même valeur → cercle parfait
-        verticalAlign: '-0.08em',  // compense la hauteur supplémentaire
+        // 1.20em canvas but visual sphere is same size — extra space lets glow breathe
+        width        : '1.20em',
+        height       : '1.20em',
+        margin       : '0 -0.20em', // negative margin so letters stay tight
+        verticalAlign: '-0.20em',   // compensate for taller canvas
       }}
     />
   );

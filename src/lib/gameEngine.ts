@@ -13,15 +13,16 @@ const PROJECTILE_SPEED = 5;
 const PLAYER_H = 90;
 const PLAYER_W = 75;
 // Visual draw scale (draw character larger than physics hitbox for better appearance)
-const PLAYER_DRAW_SCALE = 1.35;
+const PLAYER_DRAW_SCALE = 1.55;
 
 // ===== HITBOX (precise capsule — fractions of player.height, 0=feet, 1=top) =====
+// Tightened to match the visual sprite more closely — reduces unfair "phantom" hits
 const HB = {
   headFrac: 0.88,    // head circle center Y (fraction from bottom)
-  headR:    9,       // head radius (px)
-  bodyTopFrac: 0.68, // body capsule top endpoint Y fraction
-  bodyBotFrac: 0.15, // body capsule bottom endpoint Y fraction
-  bodyR:    13,      // body capsule half-width (px)
+  headR:    7,       // head radius (px) — tighter around actual head
+  bodyTopFrac: 0.72, // body capsule top endpoint Y fraction — starts below neck
+  bodyBotFrac: 0.10, // body capsule bottom endpoint Y fraction — closer to feet
+  bodyR:    10,      // body capsule half-width (px) — narrower = more precise
 };
 
 // 7 bubble sizes: radius, bounceVy, speedX, divisionVy, score
@@ -517,10 +518,10 @@ function checkCollisions(state: GameState) {
     }
   }
 
-  // Bubble vs Player — precise capsule hitbox
+  // Bubble vs Player — precise capsule hitbox (use 85% of visual bubble radius for fairer feel)
   if (player.invincible <= 0) {
     for (const b of bubbles) {
-      if (playerCircleCollision(player, b.x, b.y, b.radius)) {
+      if (playerCircleCollision(player, b.x, b.y, b.radius * 0.82)) {
         if (state.cgtShield) {
           state.cgtShield = false;
           player.invincible = 60;
@@ -1105,13 +1106,13 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
     const drawY = player.y - drawH;
     drawSpriteFrame(ctx, activeSprite, frameIndex, player.x - drawW / 2, drawY, drawW, drawH);
   } else if (idleImg) {
-    // Idle: scale up slightly to match walk sprite visual size
-    const idleScale = 1.15;
+    // Idle: scale up so Guibour's feet touch the ground bar and looks imposing
+    const idleScale = 1.35;
     const idleH = Math.round(drawH * idleScale);
     const idleAR = idleImg.naturalWidth / idleImg.naturalHeight;
     const idleW = Math.round(idleH * idleAR);
-    // Shift down so feet touch the floor bar (source image has padding below feet)
-    const idleY = player.y - idleH + Math.round(idleH * 0.06);
+    // Shift down so feet precisely touch the floor bar
+    const idleY = player.y - idleH + Math.round(idleH * 0.04);
     ctx.drawImage(idleImg, player.x - idleW / 2, idleY, idleW, idleH);
   } else {
     // Fallback rectangle
