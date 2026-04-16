@@ -14,18 +14,8 @@ const GameCanvas = dynamic(() => import('@/components/game/GameCanvas'), {
   loading: () => <div className="flex-1" />,
 });
 
-import Link from 'next/link';
 import Countdown from '@/components/ui/Countdown';
 import GlobeO from '@/components/ui/GlobeO';
-
-function WowSpan() {
-  return (
-    <span style={{
-      color: '#00C8BE',
-      textShadow: '0 0 10px rgba(0,200,190,.55), 1px 2px 0 #003A38',
-    }}>W.O.W</span>
-  );
-}
 
 function HeroContent({ onPlay }: { onPlay: () => void }) {
   return (
@@ -34,232 +24,100 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      minHeight: 'calc(100vh - 160px)',
-      padding: '40px 20px',
+      minHeight: 'calc(100vh - 120px)',
+      padding: '0 20px',
       position: 'relative',
-      overflow: 'hidden',
     }}>
-      {/* Employee ID */}
-      <div style={{
-        fontFamily: "'Orbitron', sans-serif",
-        fontSize: '10px',
-        color: '#5B9BD5',
-        letterSpacing: '4px',
-        marginBottom: '28px',
-        position: 'relative',
-        zIndex: 2,
-      }}>
-        EMPLOYEE ID: GS-4891 // W.O.W // 2026
-      </div>
 
-      {/* Logo GUIBOUR SYSTEM — globe neon dans le O */}
-      <div style={{ textAlign: 'center', position: 'relative', zIndex: 2, marginBottom: '4px' }}>
-        {/* Ligne GUIB + globe + UR */}
+      {/* Logo GUIBOUR SYSTEM — centré, imposant, respire */}
+      <div style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
         <div style={{
-          fontSize     : 'clamp(52px, 10vw, 90px)',
-          lineHeight   : 1,
-          display      : 'flex',
-          alignItems   : 'center',
+          fontSize: 'clamp(60px, 12vw, 110px)',
+          lineHeight: 1,
+          display: 'flex',
+          alignItems: 'center',
           justifyContent: 'center',
-          gap          : 0,
+          gap: 0,
         }}>
           <span style={{
             fontFamily: "'Lilita One', cursive",
-            color     : '#FFFFFF',
-            letterSpacing: '3px',
-            animation : 'glowWhite3D 3s ease-in-out infinite',
-          }}>
-            GUIB
-          </span>
+            color: '#FFFFFF',
+            letterSpacing: '4px',
+            animation: 'glowWhite3D 3s ease-in-out infinite',
+          }}>GUIB</span>
           <GlobeO />
           <span style={{
             fontFamily: "'Lilita One', cursive",
-            color     : '#FFFFFF',
-            letterSpacing: '3px',
-            animation : 'glowWhite3D 3s ease-in-out infinite',
-          }}>
-            UR
-          </span>
+            color: '#FFFFFF',
+            letterSpacing: '4px',
+            animation: 'glowWhite3D 3s ease-in-out infinite',
+          }}>UR</span>
         </div>
 
-        {/* Sous-titre SYSTEM */}
         <div style={{
-          fontFamily   : "'Orbitron', sans-serif",
-          fontSize     : 'clamp(11px, 1.8vw, 16px)',
-          color        : '#00FFEE',
-          letterSpacing: '8px',
-          fontWeight   : 700,
-          textShadow   : '0 0 14px rgba(0,255,238,.5)',
-          marginTop    : '4px',
+          fontFamily: "'Orbitron', sans-serif",
+          fontSize: 'clamp(12px, 2vw, 18px)',
+          color: '#00FFEE',
+          letterSpacing: '10px',
+          fontWeight: 700,
+          textShadow: '0 0 14px rgba(0,255,238,.5)',
+          marginTop: '6px',
         }}>
           S Y S T E M
         </div>
       </div>
 
-      {/* Subtitle */}
+      {/* Tagline — discret */}
       <div style={{
         fontFamily: "'Orbitron', sans-serif",
-        fontSize: '11px',
-        color: '#5B9BD5',
-        letterSpacing: '3px',
-        marginTop: '14px',
+        fontSize: '10px',
+        color: '#2B5090',
+        letterSpacing: '4px',
+        marginTop: '20px',
         position: 'relative',
         zIndex: 2,
-        textAlign: 'center',
       }}>
-        WORK OR WINDOW // GRIMPE LES 25 ÉTAGES
+        WORK OR WINDOW
       </div>
 
-      {/* CTA JOUER À W.O.W */}
+      {/* CTA JOUER — gros, seul, central */}
       <button
         onClick={() => { playClick(); onPlay(); }}
         style={{
-          marginTop: '36px',
+          marginTop: '48px',
           fontFamily: "'Lilita One', cursive",
-          fontSize: '22px',
-          letterSpacing: '6px',
+          fontSize: 'clamp(20px, 4vw, 28px)',
+          letterSpacing: '8px',
           color: '#fff',
           background: 'linear-gradient(135deg, #0047AB, #007B8A)',
-          border: '2px solid #5B9BD5',
-          padding: '14px 48px',
+          border: '2px solid rgba(0,200,190,.4)',
+          padding: '18px 60px',
           cursor: 'pointer',
-          boxShadow: '0 0 18px rgba(0,71,171,.3)',
+          boxShadow: '0 0 40px rgba(0,71,171,.25), 0 0 80px rgba(0,200,190,.1)',
           position: 'relative',
           overflow: 'hidden',
           zIndex: 2,
-          transition: 'all 0.2s ease',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
+          transition: 'all 0.3s ease',
+          borderRadius: '2px',
         }}
         onMouseEnter={e => {
-          e.currentTarget.style.background = 'linear-gradient(135deg, #1B5EBB, #008B9A)';
-          e.currentTarget.style.boxShadow = '0 0 32px rgba(0,71,171,.5)';
+          e.currentTarget.style.boxShadow = '0 0 60px rgba(0,71,171,.5), 0 0 120px rgba(0,200,190,.2)';
+          e.currentTarget.style.borderColor = 'rgba(0,200,190,.8)';
         }}
         onMouseLeave={e => {
-          e.currentTarget.style.background = 'linear-gradient(135deg, #0047AB, #007B8A)';
-          e.currentTarget.style.boxShadow = '0 0 18px rgba(0,71,171,.3)';
+          e.currentTarget.style.boxShadow = '0 0 40px rgba(0,71,171,.25), 0 0 80px rgba(0,200,190,.1)';
+          e.currentTarget.style.borderColor = 'rgba(0,200,190,.4)';
         }}
       >
-        <span style={{ position: 'relative', zIndex: 1, textShadow: '1px 2px 0 rgba(0,0,0,0.55)' }}>
-          JOUER À <WowSpan />
+        <span style={{ position: 'relative', zIndex: 1, textShadow: '2px 3px 0 rgba(0,0,0,.5)' }}>
+          JOUER
         </span>
         <span style={{
           position: 'absolute', top: 0, left: '-100%', width: '50%', height: '100%',
-          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent)',
-          animation: 'shimmer 3s ease-in-out infinite',
+          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent)',
+          animation: 'shimmer 4s ease-in-out infinite',
         }} />
       </button>
-
-      {/* Bouton Boutique — gros et visible */}
-      <Link
-        href="/shopping"
-        onClick={playClick}
-        style={{
-          marginTop: '16px',
-          fontFamily: "'Lilita One', cursive",
-          fontSize: '18px',
-          letterSpacing: '4px',
-          color: '#A8D8FF',
-          textDecoration: 'none',
-          background: 'transparent',
-          border: '2px solid #1E3F6E',
-          padding: '12px 40px',
-          position: 'relative',
-          zIndex: 2,
-          transition: 'all 0.2s ease',
-          display: 'inline-block',
-        }}
-        onMouseEnter={e => {
-          e.currentTarget.style.borderColor = '#5B9BD5';
-          e.currentTarget.style.color = '#fff';
-          e.currentTarget.style.background = 'rgba(0,71,171,0.15)';
-        }}
-        onMouseLeave={e => {
-          e.currentTarget.style.borderColor = '#1E3F6E';
-          e.currentTarget.style.color = '#A8D8FF';
-          e.currentTarget.style.background = 'transparent';
-        }}
-      >
-        <span style={{ textShadow: '1px 2px 0 rgba(0,0,0,0.55)' }}>ALLER À LA BOUTIQUE</span>
-      </Link>
-
-      {/* ── Contest / Promises block ── */}
-      <div style={{
-        marginTop: '40px',
-        maxWidth: '520px',
-        width: '90%',
-        background: 'rgba(12,30,64,0.7)',
-        border: '2px solid #1E3F6E',
-        borderRadius: '6px',
-        padding: '24px 28px',
-        position: 'relative',
-        zIndex: 2,
-        textAlign: 'center',
-      }}>
-        <div style={{
-          fontFamily: "'Lilita One', cursive",
-          fontSize: 'clamp(16px, 3vw, 22px)',
-          color: '#FFE033',
-          letterSpacing: '2px',
-          marginBottom: '12px',
-          textShadow: '0 0 14px rgba(255,224,51,.3)',
-        }}>
-          GAGNE UN CONCERT PRIVÉ
-        </div>
-        <div style={{
-          fontFamily: "'Orbitron', sans-serif",
-          fontSize: 'clamp(10px, 1.5vw, 13px)',
-          color: '#A8D8FF',
-          lineHeight: 1.8,
-          letterSpacing: '0.5px',
-        }}>
-          Tu veux un concert privé de Guibour où tu veux, quand tu veux ?
-          Dans ta chambre, pour ton anniv, pour un déjeuner de famille ?
-        </div>
-        <div style={{
-          fontFamily: "'Lilita One', cursive",
-          fontSize: 'clamp(13px, 2vw, 17px)',
-          color: '#00C8BE',
-          marginTop: '14px',
-          letterSpacing: '1px',
-          textShadow: '0 0 10px rgba(0,200,190,.3)',
-        }}>
-          FAIS LE MEILLEUR SCORE À CE JEU.
-        </div>
-        <div style={{
-          fontFamily: "'Orbitron', sans-serif",
-          fontSize: 'clamp(9px, 1.2vw, 11px)',
-          color: '#FF4444',
-          letterSpacing: '3px',
-          marginTop: '10px',
-          textShadow: '0 0 8px rgba(255,68,68,.3)',
-        }}>
-          LE GAGNANT SERA TIRÉ LE 24 JUIN
-        </div>
-        <a
-          href="https://shotgun.live/fr/events/guibour-la-boule-noire"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: 'inline-block',
-            marginTop: '16px',
-            fontFamily: "'Lilita One', cursive",
-            fontSize: '14px',
-            letterSpacing: '3px',
-            color: '#fff',
-            background: 'linear-gradient(135deg, #8B0000, #CC0000)',
-            border: '1px solid rgba(255,68,68,.4)',
-            padding: '10px 28px',
-            borderRadius: '4px',
-            textDecoration: 'none',
-            textShadow: '1px 1px 0 rgba(0,0,0,.5)',
-            transition: 'all 0.2s',
-          }}
-        >
-          CONCERT LA BOULE NOIRE — 24 JUIN
-        </a>
-      </div>
     </div>
   );
 }
