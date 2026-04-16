@@ -407,6 +407,61 @@ html, body {
   100% { transform: rotate(360deg); }
 }
 
+/* ===== SCREEN CRACK (Game Over defeat) ===== */
+@keyframes crackDraw {
+  from { stroke-dashoffset: 2000; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes shardFall {
+  0%   { opacity: 1; transform: translateY(0) rotate(0deg); }
+  100% { opacity: 0; transform: translateY(120vh) rotate(90deg); }
+}
+@keyframes licensedDrop {
+  0%   { transform: translateY(-150%); }
+  60%  { transform: translateY(40vh); }
+  75%  { transform: translateY(36vh); }
+  85%  { transform: translateY(40vh); }
+  92%  { transform: translateY(38.5vh); }
+  100% { transform: translateY(40vh); }
+}
+@keyframes licensedShake {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  25%      { transform: translateX(-2px) rotate(-0.3deg); }
+  75%      { transform: translateX(2px) rotate(0.3deg); }
+}
+
+/* ===== NAV HOVER — tremblement + glow ===== */
+.sidebar-nav a:hover {
+  animation: navTremble 0.3s ease;
+  filter: drop-shadow(0 0 8px rgba(0,255,238,.6));
+}
+@keyframes navTremble {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-1px); }
+  75% { transform: translateX(1px); }
+}
+
+/* ===== CLICK RIPPLE ===== */
+@keyframes clickRippleExpand {
+  0% { width: 0; height: 0; opacity: 1; }
+  100% { width: 100px; height: 100px; opacity: 0; }
+}
+
+/* ===== BOUTONS — effet press 3D ===== */
+button, a[role="button"], .thumb-btn {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+button:active, a[role="button"]:active {
+  transform: scale(0.96) translateY(1px);
+  box-shadow: none !important;
+}
+
+/* ===== TYPEWRITER CURSOR ===== */
+@keyframes typewriterBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 /* ===== ACCESSIBILITY — Reduced motion ===== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

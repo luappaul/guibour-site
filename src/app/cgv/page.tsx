@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import ExcelNav from '@/components/ui/ExcelNav';
+import ExcelChrome from '@/components/ui/ExcelChrome';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -37,8 +38,9 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 export default function CGV() {
   return (
-    <div className="min-h-screen" style={{ background: '#1A3F78', paddingLeft: '48px' }}>
+    <div className="min-h-screen" style={{ background: '#1A3F78' }}>
       <ExcelNav />
+      <ExcelChrome formulaText='=REGLEMENT("W.O.W","2026") // CGV' breadcrumb="SOUS-SOL > CGV" chromeBg="#1A3F78">
       <div style={{ maxWidth: '760px', margin: '0 auto', padding: '40px 24px 80px' }}>
 
         {/* Header */}
@@ -182,6 +184,7 @@ export default function CGV() {
           </Link>
         </div>
       </div>
+      </ExcelChrome>
     </div>
   );
 }

@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useRef, useCallback, useEffect } from 'react';
+import Link from 'next/link';
+import Typewriter from '@/components/ui/Typewriter';
 
 interface ExcelChromeProps {
   formulaText?: string;
@@ -8,6 +10,7 @@ interface ExcelChromeProps {
   gridColor?: string;
   gridOpacity?: number;
   chromeBg?: string;
+  breadcrumb?: string;
 }
 
 const COLUMNS = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X'];
@@ -15,11 +18,12 @@ const COLUMNS = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'
 // ── Easter egg: DEMISSION ──────────────────────────────────────────────
 type DemissionPhase = 'idle' | 'shake' | 'aftermath';
 
-export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SINGLE_2026") → WELCOME_TO_THE_SYSTEM', children, gridColor, gridOpacity, chromeBg }: ExcelChromeProps) {
+export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SINGLE_2026") → WELCOME_TO_THE_SYSTEM', children, gridColor, gridOpacity, chromeBg, breadcrumb }: ExcelChromeProps) {
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [phase, setPhase] = useState<DemissionPhase>('idle');
   const [showFlash, setShowFlash] = useState(false);
+  const [formulaTyped, setFormulaTyped] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const timeoutRefs = useRef<ReturnType<typeof setTimeout>[]>([]);
 
@@ -203,14 +207,86 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
             letterSpacing: '1px',
             transition: 'color 0.3s',
             fontWeight: phase !== 'idle' ? 700 : 400,
-          }}>{getFormulaDisplay()}</span>
+          }}>
+            {phase === 'idle' && !formulaTyped ? (
+              <Typewriter
+                text={getFormulaDisplay()}
+                speed={18}
+                delay={300}
+                onComplete={() => setFormulaTyped(true)}
+              />
+            ) : (
+              getFormulaDisplay()
+            )}
+          </span>
         )}
       </div>
+
+      {/* Breadcrumb bar */}
+      {breadcrumb && (
+        <div
+          style={{
+            position: 'sticky',
+            top: 52,
+            zIndex: 20,
+            display: 'flex',
+            alignItems: 'center',
+            height: '24px',
+            background: '#0D2354',
+            borderBottom: '1px solid #0F2562',
+            paddingLeft: '16px',
+            gap: '0',
+          }}
+        >
+          <Link href="/" style={{
+            fontFamily: "'Orbitron', sans-serif",
+            fontSize: '8px',
+            color: '#5B9BD5',
+            letterSpacing: '2px',
+            textDecoration: 'none',
+            transition: 'color 0.15s',
+          }}
+            onMouseEnter={e => { e.currentTarget.style.color = '#A8D8FF'; }}
+            onMouseLeave={e => { e.currentTarget.style.color = '#5B9BD5'; }}
+          >
+            GUIBOUR SYSTEM
+          </Link>
+          <span style={{
+            fontFamily: "'Orbitron', sans-serif",
+            fontSize: '8px',
+            color: '#2B5090',
+            margin: '0 8px',
+          }}>&gt;</span>
+          {breadcrumb.split(' > ').map((part, i, arr) => {
+            const isLast = i === arr.length - 1;
+            return (
+              <span key={i} style={{ display: 'flex', alignItems: 'center' }}>
+                <span style={{
+                  fontFamily: "'Orbitron', sans-serif",
+                  fontSize: '8px',
+                  color: isLast ? '#3C5A7A' : '#5B9BD5',
+                  letterSpacing: '2px',
+                }}>
+                  {part}
+                </span>
+                {!isLast && (
+                  <span style={{
+                    fontFamily: "'Orbitron', sans-serif",
+                    fontSize: '8px',
+                    color: '#2B5090',
+                    margin: '0 8px',
+                  }}>&gt;</span>
+                )}
+              </span>
+            );
+          })}
+        </div>
+      )}
 
       {/* Main content area */}
       <div style={{
         paddingTop: '16px',
-        minHeight: 'calc(100vh - 52px)',
+        minHeight: breadcrumb ? 'calc(100vh - 76px)' : 'calc(100vh - 52px)',
       }}>
         {children}
       </div>

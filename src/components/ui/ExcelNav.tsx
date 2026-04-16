@@ -2,10 +2,11 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import GlobeIcon from './GlobeIcon';
 import { playClick } from '@/lib/sounds';
 import { useTransitionContext } from './PageTransition';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const mainTabs = [
   { href: '/',          label: 'JOUER À W.O.W'  },
@@ -91,6 +92,37 @@ const legalLinks = [
   { href: '/cgv', label: 'CGV' },
   { href: '/mentions-legales', label: 'MENTIONS' },
 ];
+
+function ThemeToggle() {
+  const { override, toggleTheme } = useTheme();
+  const [hovered, setHovered] = useState(false);
+
+  const icon = override === 'auto' ? '\u26A1' : override === 'day' ? '\u2600' : '\uD83C\uDF19';
+  const tooltip = override === 'auto' ? 'Mode: Automatique' : override === 'day' ? 'Mode: Jour' : 'Mode: Nuit';
+
+  return (
+    <div style={{ borderTop: '1px solid #1B3A6B', padding: '6px 0', flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap' }}>
+      <button
+        onClick={toggleTheme}
+        title={tooltip}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          display: 'flex', alignItems: 'center', gap: '10px',
+          width: '100%', padding: '6px 14px',
+          background: 'transparent', border: 'none', cursor: 'pointer',
+          fontFamily: "'Orbitron', sans-serif", fontSize: '8px', letterSpacing: '2px',
+          color: hovered ? '#7AAFD4' : '#1E3F6E',
+          transition: 'color 0.15s',
+          overflow: 'hidden',
+        }}
+      >
+        <span style={{ fontSize: '14px', flexShrink: 0, width: '20px', textAlign: 'center' }}>{icon}</span>
+        <span style={{ overflow: 'hidden' }}>{tooltip.toUpperCase()}</span>
+      </button>
+    </div>
+  );
+}
 
 export default function ExcelNav() {
   const pathname = usePathname();
@@ -188,6 +220,9 @@ export default function ExcelNav() {
           </Link>
         ))}
       </div>
+
+      {/* Theme toggle */}
+      <ThemeToggle />
 
     </nav>
   );

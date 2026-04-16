@@ -4,6 +4,7 @@ import ExcelNav from '@/components/ui/ExcelNav';
 import ExcelChrome from '@/components/ui/ExcelChrome';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
+import ScrollReveal from '@/components/ui/ScrollReveal';
 
 const AudioReactiveGrid = dynamic(() => import('@/components/ui/AudioReactiveGrid'), { ssr: false });
 
@@ -65,7 +66,7 @@ export default function JukeboxPage() {
     <div className="min-h-screen" style={{ background: '#0E2660' }}>
       <AudioReactiveGrid active={gridActive} bpm={activeTrack.bpm ?? 120} />
       <ExcelNav />
-      <ExcelChrome formulaText='=PLAY("GUIBOUR_EP","VIDEO_MUSIC_BOX_2026") → BROADCAST_MODE_ON'>
+      <ExcelChrome formulaText='=PLAY("GUIBOUR_EP","VIDEO_MUSIC_BOX_2026") → BROADCAST_MODE_ON' breadcrumb="ETAGE 2 > SALLE D'ECOUTE">
         {/* global dark grid bg */}
         <div style={{
           backgroundImage: 'linear-gradient(rgba(0,255,235,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,235,.04) 1px,transparent 1px)',
@@ -74,7 +75,7 @@ export default function JukeboxPage() {
         }}>
 
         {/* ── HERO HEADER ── */}
-        <div style={{
+        <ScrollReveal><div style={{
           background: 'linear-gradient(135deg,#06101F 0%,#0B1E4A 60%,#0A2C70 100%)',
           padding: '36px 48px 28px',
           borderBottom: '2px solid rgba(0,255,235,.15)',
@@ -114,11 +115,11 @@ export default function JukeboxPage() {
               textShadow: '0 0 8px rgba(0,255,235,.6)',
             }}>ÉCOUTER · REGARDER · PARTAGER</div>
           </div>
-        </div>
+        </div></ScrollReveal>
 
         <div style={{ padding: '28px 24px 60px', maxWidth: '940px', margin: '0 auto' }}>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: '20px' }}>
+          <ScrollReveal><div style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: '20px' }}>
 
             {/* ── LEFT COLUMN — PLAYER + TRACKLIST ── */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -456,7 +457,7 @@ export default function JukeboxPage() {
                 <span style={{ marginLeft: 'auto', color: '#FF4444', fontSize: '16px' }}>→</span>
               </a>
             </div>
-          </div>
+          </div></ScrollReveal>
         </div>{/* maxWidth container */}
 
         <style>{`

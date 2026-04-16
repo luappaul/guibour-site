@@ -42,7 +42,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen" style={{ background: '#0E2660' }}>
       <ExcelNav />
-      <ExcelChrome formulaText='=CONTACT("GUIBOUR") // W.O.W'>
+      <ExcelChrome formulaText='=CONTACT("GUIBOUR") // W.O.W' breadcrumb="ETAGE 4 > CONTACT">
         <div style={{
           minHeight: 'calc(100vh - 52px)',
           backgroundImage: 'linear-gradient(rgba(0,255,235,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,235,.04) 1px,transparent 1px)',

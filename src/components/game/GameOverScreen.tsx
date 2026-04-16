@@ -14,6 +14,8 @@ import { playClick } from '@/lib/sounds';
 
 import { launchConfetti } from '@/lib/confetti';
 
+import ScreenCrack from './ScreenCrack';
+
 /** Real chroma-key: draws video frame-by-frame on a canvas, replacing green pixels with transparency */
 function ChromaKeyVideo({ src, width }: { src: string; width: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -380,6 +382,7 @@ const confettiCanvasRef = useRef<HTMLCanvasElement>(null);
 const confettiFired = useRef(false);
 const [profile, setProfile] = useState<PlayerProfile>({ defeatCount: 0 });
 const [ctaDone, setCtaDone] = useState(false);
+const [crackDone, setCrackDone] = useState(false);
 
 const pseudo = playerIdentity?.pseudo || player.name || 'EMPLOYÉ';
 
@@ -432,6 +435,13 @@ const t1 = setTimeout(() => setShowContent(true), 2500);
 return () => clearTimeout(t1);
 
 }, []);
+
+// Crack animation done after 1.5s (defeat only)
+useEffect(() => {
+  if (isVictory) { setCrackDone(true); return; }
+  const t = setTimeout(() => setCrackDone(true), 1500);
+  return () => clearTimeout(t);
+}, [isVictory]);
 
 // Load profile + increment defeat count on mount
 useEffect(() => {
@@ -511,6 +521,9 @@ return (
       zIndex: 50,
     }}
   />
+
+  {/* Screen crack overlay for defeat */}
+  {!isVictory && <ScreenCrack />}
 
   {/* ── TITLE — outside the card, full width, scary ── */}
   {!isVictory ? (

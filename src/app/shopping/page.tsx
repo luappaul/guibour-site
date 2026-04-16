@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import ExcelNav from '@/components/ui/ExcelNav';
 import ExcelChrome from '@/components/ui/ExcelChrome';
 import GlobeIcon from '@/components/ui/GlobeIcon';
+import ScrollReveal from '@/components/ui/ScrollReveal';
 
 // ─── Catalogue ────────────────────────────────────────────────
 const PRODUCTS = [
@@ -355,7 +356,7 @@ export default function ShoppingPage() {
     return (
       <div className="min-h-screen" style={{ background: '#0E2660' }}>
         <ExcelNav />
-        <ExcelChrome formulaText='=ORDER_CONFIRMED() // MERCI // W.O.W'>
+        <ExcelChrome formulaText='=ORDER_CONFIRMED() // MERCI // W.O.W' breadcrumb="ETAGE 3 > BOUTIQUE">
           <div style={{
             display: 'flex', flexDirection: 'column', alignItems: 'center',
             justifyContent: 'center', minHeight: 'calc(100vh - 52px)', gap: '20px', padding: '40px',
@@ -405,7 +406,7 @@ export default function ShoppingPage() {
     return (
       <div className="min-h-screen" style={{ background: '#0E2660' }}>
         <ExcelNav />
-        <ExcelChrome formulaText='=CHECKOUT() // LIVRAISON_INFO // W.O.W'>
+        <ExcelChrome formulaText='=CHECKOUT() // LIVRAISON_INFO // W.O.W' breadcrumb="ETAGE 3 > BOUTIQUE">
           <div style={{
             backgroundImage: 'linear-gradient(rgba(0,255,235,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,235,.04) 1px,transparent 1px)',
             backgroundSize: '56px 34px', minHeight: 'calc(100vh - 52px)',
@@ -513,7 +514,7 @@ export default function ShoppingPage() {
   return (
     <div className="min-h-screen" style={{ background: '#0E2660' }}>
       <ExcelNav />
-      <ExcelChrome formulaText='=BOUTIQUE("W.O.W") // CATALOGUE_MERCH // SAISON_01'>
+      <ExcelChrome formulaText='=BOUTIQUE("W.O.W") // CATALOGUE_MERCH // SAISON_01' breadcrumb="ETAGE 3 > BOUTIQUE">
 
         <div style={{
           backgroundImage: 'linear-gradient(rgba(0,255,235,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,235,.04) 1px,transparent 1px)',
@@ -522,7 +523,7 @@ export default function ShoppingPage() {
         }}>
 
           {/* Header */}
-          <div style={{
+          <ScrollReveal><div style={{
             background: 'linear-gradient(135deg,#06101F 0%,#0B1E4A 60%,#0A2C70 100%)',
             padding: '28px 48px 24px',
             borderBottom: '2px solid rgba(0,255,235,.15)',
@@ -575,7 +576,7 @@ export default function ShoppingPage() {
                 }}>{itemCount}</span>
               )}
             </button>
-          </div>
+          </div></ScrollReveal>
 
           {/* Main content */}
           <div style={{
@@ -584,7 +585,7 @@ export default function ShoppingPage() {
           }}>
 
             {/* Products grid */}
-            <div style={{
+            <ScrollReveal style={{
               flex: 1,
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
@@ -608,7 +609,7 @@ export default function ShoppingPage() {
                 <br />
                 =DISCLAIMER("CES ARTICLES SONT RÉELS ET FICTIFS À LA FOIS. VOUS LES RECEVREZ PEUT-ÊTRE. OU PAS.")
               </div>
-            </div>
+            </ScrollReveal>
 
             {/* Cart panel */}
             {showCart && (

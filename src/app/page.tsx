@@ -5,9 +5,13 @@ import dynamic from 'next/dynamic';
 import ExcelNav from '@/components/ui/ExcelNav';
 import ExcelChrome from '@/components/ui/ExcelChrome';
 import LoadingScreen from '@/components/ui/LoadingScreen';
+import CinematicIntro from '@/components/ui/CinematicIntro';
+import BadgeScanner from '@/components/ui/BadgeScanner';
 import CharacterSelect, { CharacterData, PlayerIdentity } from '@/components/ui/CharacterSelect';
-import { useDayNight, getDayNightTheme, DayNightTheme } from '@/hooks/useDayNight';
+import { DayNightTheme } from '@/hooks/useDayNight';
+import { useTheme } from '@/contexts/ThemeContext';
 import { playClick } from '@/lib/sounds';
+import Typewriter from '@/components/ui/Typewriter';
 
 const GameCanvas = dynamic(() => import('@/components/game/GameCanvas'), {
   ssr: false,
@@ -117,7 +121,7 @@ function HeroContent({ onPlay, theme }: { onPlay: () => void; theme: DayNightThe
         </div>
       </h1>
 
-      {/* Tagline -- discret */}
+      {/* Tagline -- discret, typewriter */}
       <div style={{
         fontFamily: "'Orbitron', sans-serif",
         fontSize: '10px',
@@ -127,7 +131,7 @@ function HeroContent({ onPlay, theme }: { onPlay: () => void; theme: DayNightThe
         position: 'relative',
         zIndex: 2,
       }}>
-        WORK OR WINDOW
+        <Typewriter text="WORK OR WINDOW" speed={60} delay={800} />
       </div>
 
       {/* CTA JOUER -- gros, seul, central */}
@@ -173,19 +177,28 @@ function HeroContent({ onPlay, theme }: { onPlay: () => void; theme: DayNightThe
 }
 
 export default function Home() {
+  const [showBadgeScanner, setShowBadgeScanner] = useState(false);
+  const [showIntro, setShowIntro] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [showCharacterSelect, setShowCharacterSelect] = useState(false);
   const [showGame, setShowGame] = useState(false);
   const [loadingDone, setLoadingDone] = useState(false);
   const [selectedCharacter, setSelectedCharacter] = useState<CharacterData | null>(null);
   const [playerIdentity, setPlayerIdentity] = useState<PlayerIdentity | null>(null);
-  const timeMode = useDayNight();
-  const theme = getDayNightTheme(timeMode);
+  const { mode: timeMode, theme } = useTheme();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      const isMobile = window.innerWidth < 768 || navigator.maxTouchPoints > 0;
+      const badgeScanned = sessionStorage.getItem('guibour-badge-scanned');
+      const introSeen = sessionStorage.getItem('guibour-intro-seen');
       const alreadyLoaded = sessionStorage.getItem('guibour-loaded');
-      if (alreadyLoaded) {
+
+      if (isMobile && !badgeScanned) {
+        setShowBadgeScanner(true);
+      } else if (!introSeen) {
+        setShowIntro(true);
+      } else if (alreadyLoaded) {
         setLoadingDone(true);
       } else {
         setShowLoading(true);
@@ -227,6 +240,39 @@ export default function Home() {
   const handleCharacterBack = useCallback(() => {
     setShowCharacterSelect(false);
   }, []);
+
+  const handleBadgeScannerComplete = useCallback(() => {
+    setShowBadgeScanner(false);
+    const introSeen = sessionStorage.getItem('guibour-intro-seen');
+    if (!introSeen) {
+      setShowIntro(true);
+    } else {
+      const alreadyLoaded = sessionStorage.getItem('guibour-loaded');
+      if (alreadyLoaded) {
+        setLoadingDone(true);
+      } else {
+        setShowLoading(true);
+      }
+    }
+  }, []);
+
+  const handleIntroComplete = useCallback(() => {
+    setShowIntro(false);
+    const alreadyLoaded = sessionStorage.getItem('guibour-loaded');
+    if (alreadyLoaded) {
+      setLoadingDone(true);
+    } else {
+      setShowLoading(true);
+    }
+  }, []);
+
+  if (showBadgeScanner) {
+    return <BadgeScanner onComplete={handleBadgeScannerComplete} />;
+  }
+
+  if (showIntro) {
+    return <CinematicIntro onComplete={handleIntroComplete} />;
+  }
 
   if (showLoading) {
     return <LoadingScreen onComplete={handleLoadingComplete} />;

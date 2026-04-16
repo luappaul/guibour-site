@@ -2,7 +2,10 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import GuibourChat from '@/components/ui/GuibourChat';
 import CursorParticles from '@/components/ui/CursorParticles';
+import ClickRipple from '@/components/ui/ClickRipple';
 import PageTransition from '@/components/ui/PageTransition';
+import VisitorCounter from '@/components/ui/VisitorCounter';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -58,6 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <ThemeProvider>
         <PageTransition>
         {children}
         </PageTransition>
@@ -67,8 +71,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           data-domain="guibour.fr"
           src="https://plausible.io/js/script.js"
         />
+      <VisitorCounter />
+      <ClickRipple />
       <CursorParticles />
       <GuibourChat />
+        </ThemeProvider>
       </body>
     </html>
   );

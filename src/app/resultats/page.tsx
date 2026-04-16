@@ -259,7 +259,7 @@ export default function ResultatsPage() {
   return (
     <div className="min-h-screen" style={{ background: '#0E2660' }}>
       <ExcelNav />
-      <ExcelChrome formulaText={`=RANK(JOUEURS) // TOTAL:${board.length} // W.O.W_LEADERBOARD`}>
+      <ExcelChrome formulaText={`=RANK(JOUEURS) // TOTAL:${board.length} // W.O.W_LEADERBOARD`} breadcrumb="ETAGE 1 > CLASSEMENT">
 
         <div style={{
           backgroundImage: 'linear-gradient(rgba(0,255,235,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,235,.04) 1px,transparent 1px)',
