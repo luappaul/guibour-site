@@ -119,6 +119,7 @@ export const LEVELS: LevelConfig[] = [
     phrase: 'La clim est en panne. Les serveurs aussi.',
     bubbles: [b(7, 0.4, 0.8), b(5, 0.2, -0.9), b(5, 0.8, 0.7)],
     timeLimit: 80, bonusWeights: hardWeights, hasCeilingSpikes: true,
+    musicOverride: '/game/audio/dont-talk-to-me.mp3',
   },
   {
     id: 14, name: 'Etage 14 — Formation obligatoire',
@@ -172,6 +173,7 @@ export const LEVELS: LevelConfig[] = [
     phrase: 'Les decisions se prennent au golf.',
     bubbles: [b(7, 0.15, 1.0), b(7, 0.5, -0.9), b(6, 0.85, 0.8), b(6, 0.3, -0.7), b(5, 0.7, 0.9)],
     timeLimit: 75, bonusWeights: extremeWeights, hasCeilingSpikes: true,
+    musicOverride: '/game/audio/le-11.mp3',
   },
   {
     id: 21, name: 'Etage 21 — Bureau du PDG',

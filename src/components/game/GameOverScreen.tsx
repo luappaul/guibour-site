@@ -434,12 +434,70 @@ link.click();
 
 return (
 
-<div className="absolute inset-0 z-30 flex items-center justify-center"
-  style={{ background: isVictory ? 'rgba(0,8,20,0.65)' : 'rgba(4,0,0,0.60)', backdropFilter: 'blur(4px)', overflowY: 'auto' }}>
+<div className="absolute inset-0 z-30 flex flex-col items-center justify-center"
+  style={{ background: isVictory ? 'rgba(0,8,20,0.65)' : 'rgba(4,0,0,0.60)', backdropFilter: 'blur(4px)', overflowY: 'auto', gap: '0px' }}>
 
-  {/* Central popup card */}
+  {/* ── TITLE — outside the card, full width, scary ── */}
+  {!isVictory ? (
+    <div style={{
+      textAlign: 'center',
+      marginBottom: '12px',
+      animation: 'shakeTitle 0.15s ease-in-out infinite',
+    }}>
+      <div style={{
+        fontFamily: "'Lilita One', cursive",
+        fontSize: 'clamp(42px, 10vw, 72px)',
+        color: '#FF1111',
+        letterSpacing: '6px',
+        lineHeight: 1,
+        textShadow: '0 0 30px rgba(255,0,0,.7), 0 0 60px rgba(255,0,0,.4), 3px 4px 0 rgba(80,0,0,.8)',
+        textTransform: 'uppercase',
+      }}>
+        FIN DE CARRIÈRE
+      </div>
+      <div style={{
+        fontFamily: "'Lilita One', cursive",
+        fontSize: 'clamp(16px, 3.5vw, 26px)',
+        color: '#FF6666',
+        letterSpacing: '8px',
+        marginTop: '6px',
+        textShadow: '0 0 20px rgba(255,0,0,.5)',
+      }}>
+        TU ES UN LOSER
+      </div>
+      <style>{`@keyframes shakeTitle {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-3px) rotate(-0.5deg); }
+        75% { transform: translateX(3px) rotate(0.5deg); }
+      }`}</style>
+    </div>
+  ) : (
+    <div style={{ textAlign: 'center', marginBottom: '12px' }}>
+      <div style={{
+        fontFamily: "'Lilita One', cursive",
+        fontSize: 'clamp(36px, 8vw, 60px)',
+        color: '#FFFFFF',
+        letterSpacing: '4px',
+        lineHeight: 1,
+        textShadow: '0 0 30px rgba(0,200,190,.5), 3px 4px 0 rgba(0,0,0,.4)',
+      }}>
+        VOUS ÊTES LIBRE
+      </div>
+      <div style={{
+        fontFamily: "'Orbitron', sans-serif",
+        fontSize: '12px',
+        color: '#A8FFE0',
+        letterSpacing: '5px',
+        marginTop: '6px',
+      }}>
+        25 ÉTAGES — MISSION ACCOMPLIE
+      </div>
+    </div>
+  )}
+
+  {/* ── Central popup card ── */}
   <div style={{
-    width: '380px', maxWidth: '92vw',
+    width: '420px', maxWidth: '92vw',
     background: 'rgba(12,30,64,0.95)',
     border: `2px solid ${isVictory ? '#00C8BE' : '#FF4444'}`,
     borderRadius: '8px',
@@ -449,55 +507,20 @@ return (
       ? '0 0 60px rgba(0,200,190,.3), 0 20px 60px rgba(0,0,0,.6)'
       : '0 0 60px rgba(255,40,40,.3), 0 20px 60px rgba(0,0,0,.6)',
   }}>
-    {/* Title bar */}
-    <div style={{
-      background: isVictory ? '#006B66' : '#8B0000',
-      padding: '14px 18px',
-      textAlign: 'center',
-    }}>
-      <div style={{
-        fontFamily: "'Lilita One', cursive",
-        fontSize: 'clamp(28px, 6vw, 38px)',
-        color: '#FFFFFF',
-        letterSpacing: '3px',
-        lineHeight: 1.1,
-        textShadow: '2px 3px 0 rgba(0,0,0,.4)',
-      }}>
-        {isVictory ? 'VOUS ÊTES LIBRE' : 'FIN DE CARRIÈRE'}
-      </div>
-      {!isVictory && (
-        <div style={{
-          fontFamily: "'Orbitron', sans-serif",
-          fontSize: '11px',
-          color: '#FF9999',
-          letterSpacing: '4px',
-          marginTop: '4px',
-        }}>
-          TU ES UN LOOSER
-        </div>
-      )}
-      {isVictory && (
-        <div style={{
-          fontFamily: "'Orbitron', sans-serif",
-          fontSize: '10px',
-          color: '#A8FFE0',
-          letterSpacing: '4px',
-          marginTop: '4px',
-        }}>
-          25 ÉTAGES — MISSION ACCOMPLIE
-        </div>
-      )}
-    </div>
 
-    {/* Defeat animation — no green background */}
+    {/* Defeat animation — CSS chroma-key removes green bg */}
     {!isVictory && (
-      <div style={{ textAlign: 'center', padding: '12px 0 4px', background: 'transparent' }}>
+      <div style={{
+        textAlign: 'center', padding: '16px 0 8px',
+        background: '#0C1E40',
+        isolation: 'isolate',
+      }}>
         <video autoPlay loop muted playsInline
           style={{
             width: '140px', height: 'auto',
             imageRendering: 'pixelated',
             filter: 'drop-shadow(0 0 14px rgba(255,30,30,0.5))',
-            background: 'transparent',
+            mixBlendMode: 'screen',
           }}
           src="/game/player/guibour-defaite-v4.webm"
         />
@@ -506,13 +529,13 @@ return (
 
     {/* Content — visible after animation delay */}
     {showContent && (
-      <div style={{ padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <div style={{ padding: '18px 22px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
         {/* Player name */}
         <div style={{ textAlign: 'center' }}>
           <div style={{
             fontFamily: "'Lilita One', cursive",
-            fontSize: '24px',
+            fontSize: '26px',
             color: '#FFFFFF',
             letterSpacing: '3px',
           }}>{pseudo}</div>
@@ -522,19 +545,20 @@ return (
         <div style={{
           background: '#091E4A',
           border: '1px solid #1A3E7A',
-          padding: '14px',
+          padding: '16px',
           textAlign: 'center',
+          borderRadius: '4px',
         }}>
           <div style={{
             fontFamily: "'Orbitron', sans-serif",
-            fontSize: '9px',
+            fontSize: '11px',
             color: '#5B9BD5',
             letterSpacing: '3px',
-            marginBottom: '6px',
+            marginBottom: '8px',
           }}>SALAIRE GAGNÉ</div>
           <div style={{
             fontFamily: "'Lilita One', cursive",
-            fontSize: '36px',
+            fontSize: '38px',
             color: '#00C8BE',
             textShadow: '0 0 20px rgba(0,200,190,.4)',
           }}>{formatSalary(player.score)}</div>
@@ -542,74 +566,78 @@ return (
 
         {/* Étage + Rang inline */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-          <div style={{ background: '#091E4A', border: '1px solid #1A3E7A', padding: '10px', textAlign: 'center' }}>
-            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#5B9BD5', letterSpacing: '2px', marginBottom: '4px' }}>ÉTAGE</div>
-            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '18px', fontWeight: 700, color: '#FFE033' }}>{String(level).padStart(2,'0')}/25</div>
+          <div style={{ background: '#091E4A', border: '1px solid #1A3E7A', padding: '12px', textAlign: 'center', borderRadius: '4px' }}>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#5B9BD5', letterSpacing: '2px', marginBottom: '6px' }}>ÉTAGE</div>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '20px', fontWeight: 700, color: '#FFE033' }}>{String(level).padStart(2,'0')}/25</div>
           </div>
-          <div style={{ background: '#091E4A', border: '1px solid #1A3E7A', padding: '10px', textAlign: 'center' }}>
-            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#5B9BD5', letterSpacing: '2px', marginBottom: '4px' }}>RANG</div>
-            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '18px', fontWeight: 700, color: '#FF7744' }}>{rank > 0 ? `#${rank}` : '—'}</div>
+          <div style={{ background: '#091E4A', border: '1px solid #1A3E7A', padding: '12px', textAlign: 'center', borderRadius: '4px' }}>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#5B9BD5', letterSpacing: '2px', marginBottom: '6px' }}>RANG</div>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '20px', fontWeight: 700, color: '#FF7744' }}>{rank > 0 ? `#${rank}` : '—'}</div>
           </div>
         </div>
 
-        {/* Action buttons */}
+        {/* Action buttons — text labels, no emojis */}
         <div style={{ display: 'flex', gap: '8px' }}>
           <button onClick={() => { playClick(); onRestart(); }} style={{
             flex: 1,
             fontFamily: "'Lilita One', cursive",
-            fontSize: '16px',
+            fontSize: '17px',
             letterSpacing: '3px',
             color: '#fff',
             background: 'linear-gradient(135deg,#0047AB,#007B8A)',
             border: '2px solid #00C8BE',
-            padding: '12px',
+            padding: '14px',
             cursor: 'pointer',
             borderRadius: '4px',
             transition: 'all .2s',
           }}>REJOUER</button>
           <button onClick={handleShare} style={{
-            padding: '12px 14px',
+            padding: '14px 16px',
             fontFamily: "'Orbitron', sans-serif",
-            fontSize: '12px',
+            fontSize: '10px',
+            fontWeight: 700,
+            letterSpacing: '1px',
             color: '#00C8BE',
-            background: 'transparent',
+            background: 'rgba(0,71,171,0.2)',
             border: '1px solid #1A3E7A',
             cursor: 'pointer',
             borderRadius: '4px',
-          }}>{copied ? '✓' : '↗'}</button>
-          <button onClick={handleDownloadCertificate} title="Certificat PDF" style={{
-            padding: '12px 14px',
+          }}>{copied ? 'COPIÉ' : 'COPIER'}</button>
+          <button onClick={handleDownloadCertificate} style={{
+            padding: '14px 14px',
             fontFamily: "'Orbitron', sans-serif",
-            fontSize: '14px',
+            fontSize: '10px',
+            fontWeight: 700,
+            letterSpacing: '1px',
             color: '#FFE033',
-            background: 'transparent',
+            background: 'rgba(58,42,0,0.3)',
             border: '1px solid #3A2A00',
             cursor: 'pointer',
             borderRadius: '4px',
-          }}>📜</button>
+          }}>DIPLÔME</button>
         </div>
 
-        {/* Share row */}
+        {/* Share row — clear text labels */}
         {shareImageUrl && (
-          <div style={{ display: 'flex', gap: '6px', alignItems: 'center', padding: '8px 10px', background: 'rgba(10,24,40,.6)', border: '1px solid #1A3E7A', borderRadius: '4px' }}>
-            <img src={shareImageUrl} alt="Score" style={{ width: '36px', height: '36px', objectFit: 'cover', borderRadius: '3px' }} />
-            <div style={{ flex: 1 }}>
-              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#A8D8FF', letterSpacing: '1px', marginBottom: '4px' }}>PARTAGER</div>
-              <div style={{ display: 'flex', gap: '4px' }}>
-                <button onClick={handleInstagramShare} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', padding: '4px 8px', background: 'linear-gradient(135deg,#C13584,#E1306C)', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '3px' }}>INSTA</button>
-                <button onClick={handleWhatsAppShare} disabled={waShareCount >= 3} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', padding: '4px 8px', background: waShareCount >= 3 ? '#1A3E7A' : '#25D366', color: '#fff', border: 'none', cursor: waShareCount >= 3 ? 'not-allowed' : 'pointer', borderRadius: '3px', opacity: waShareCount >= 3 ? 0.5 : 1 }}>WA {waShareCount}/3</button>
-                <button onClick={handleDownloadImage} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', padding: '4px 6px', background: 'transparent', color: '#5B9BD5', border: '1px solid #1A3E7A', cursor: 'pointer', borderRadius: '3px' }}>↓</button>
-              </div>
+          <div style={{ padding: '12px 14px', background: 'rgba(10,24,40,.6)', border: '1px solid #1A3E7A', borderRadius: '4px' }}>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#A8D8FF', letterSpacing: '2px', marginBottom: '10px', fontWeight: 700 }}>PARTAGER TON SCORE</div>
+            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+              <button onClick={handleInstagramShare} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', fontWeight: 700, padding: '8px 14px', background: 'linear-gradient(135deg,#C13584,#E1306C)', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', letterSpacing: '1px' }}>INSTAGRAM</button>
+              <button onClick={handleWhatsAppShare} disabled={waShareCount >= 3} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', fontWeight: 700, padding: '8px 14px', background: waShareCount >= 3 ? '#1A3E7A' : '#25D366', color: '#fff', border: 'none', cursor: waShareCount >= 3 ? 'not-allowed' : 'pointer', borderRadius: '4px', opacity: waShareCount >= 3 ? 0.5 : 1, letterSpacing: '1px' }}>WHATSAPP</button>
+              <button onClick={handleDownloadImage} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', fontWeight: 700, padding: '8px 14px', background: 'transparent', color: '#5B9BD5', border: '1px solid #1A3E7A', cursor: 'pointer', borderRadius: '4px', letterSpacing: '1px' }}>IMAGE</button>
             </div>
           </div>
         )}
 
-        {/* RTT bonus email input */}
+        {/* RTT bonus email input — clearer messaging */}
         {showRTTPanel && !isVictory && !emailGiven && (
-          <div style={{ background: 'rgba(26,16,0,.6)', border: '1px solid #3A2A00', padding: '10px 12px', borderRadius: '4px' }}>
-            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#FFE033', letterSpacing: '2px', marginBottom: '6px' }}>+1 RTT — LAISSE TON EMAIL</div>
-            <div style={{ display: 'flex', gap: '4px' }}>
-              <input type="email" placeholder="ton@email.com" id="rtt-email-input" style={{ flex: 1, padding: '7px 10px', fontFamily: "'Orbitron', sans-serif", fontSize: '10px', background: '#091E4A', color: '#fff', border: '1px solid #1A3E7A', outline: 'none', borderRadius: '3px' }} />
+          <div style={{ background: 'rgba(26,16,0,.6)', border: '1px solid #5A4400', padding: '14px 16px', borderRadius: '4px' }}>
+            <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '15px', color: '#FFE033', letterSpacing: '1px', marginBottom: '4px' }}>BONUS +1 RTT</div>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#C8A040', letterSpacing: '1px', marginBottom: '10px', lineHeight: 1.5 }}>
+              Laisse ton email pour débloquer un jour de RTT bonus à ta prochaine partie !
+            </div>
+            <div style={{ display: 'flex', gap: '6px' }}>
+              <input type="email" placeholder="ton@email.com" id="rtt-email-input" style={{ flex: 1, padding: '10px 12px', fontFamily: "'Orbitron', sans-serif", fontSize: '11px', background: '#091E4A', color: '#fff', border: '1px solid #1A3E7A', outline: 'none', borderRadius: '4px' }} />
               <button onClick={() => {
                 playClick();
                 const input = document.getElementById('rtt-email-input') as HTMLInputElement;
@@ -619,19 +647,21 @@ return (
                   fetch('/api/email-collect', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: input.value, pseudo, source: 'rtt-bonus' }) }).catch(() => {});
                   setEmailGiven(true);
                 }
-              }} style={{ padding: '7px 14px', background: '#FFE033', color: '#0A1520', border: 'none', cursor: 'pointer', fontFamily: "'Orbitron', sans-serif", fontSize: '10px', fontWeight: 700, borderRadius: '3px' }}>OK</button>
+              }} style={{ padding: '10px 18px', background: '#FFE033', color: '#0A1520', border: 'none', cursor: 'pointer', fontFamily: "'Lilita One', cursive", fontSize: '14px', fontWeight: 700, borderRadius: '4px' }}>OK</button>
             </div>
           </div>
         )}
 
         {emailGiven && !isVictory && (
-          <div style={{ textAlign: 'center', fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#00C8BE', padding: '8px', border: '1px solid rgba(0,200,190,.2)', borderRadius: '4px' }}>✓ EMAIL ENREGISTRÉ — +1 RTT AU PROCHAIN RUN</div>
+          <div style={{ textAlign: 'center', fontFamily: "'Lilita One', cursive", fontSize: '14px', color: '#00C8BE', padding: '12px', border: '1px solid rgba(0,200,190,.3)', borderRadius: '4px', letterSpacing: '1px' }}>
+            EMAIL ENREGISTRÉ — +1 RTT AU PROCHAIN RUN
+          </div>
         )}
       </div>
     )}
 
     {/* Footer */}
-    <div style={{ background: isVictory ? '#004D48' : '#5A0000', padding: '5px 14px', display: 'flex', justifyContent: 'space-between' }}>
+    <div style={{ background: isVictory ? '#004D48' : '#5A0000', padding: '6px 14px', display: 'flex', justifyContent: 'space-between' }}>
       <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: 'rgba(255,255,255,.5)' }}>guibour.fr</span>
       <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: 'rgba(255,255,255,.5)' }}>#WOW2026</span>
     </div>

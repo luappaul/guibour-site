@@ -47,9 +47,9 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   return (
     <div style={{
       position: 'fixed', inset: 0, zIndex: 9999,
-      backgroundColor: '#0E2660',
+      backgroundColor: '#050A12',
       backgroundImage:
-        'linear-gradient(rgba(60,130,240,.18) 1px, transparent 1px), linear-gradient(90deg, rgba(60,130,240,.18) 1px, transparent 1px)',
+        'linear-gradient(rgba(30,60,120,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(30,60,120,.12) 1px, transparent 1px)',
       backgroundSize: '56px 34px',
       backgroundPosition: '48px 52px',
       display: 'flex', flexDirection: 'column',
@@ -69,21 +69,21 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       {/* Excel formula bar at top */}
       <div style={{
         position: 'absolute', top: 0, left: 0, right: 0, height: '28px',
-        background: '#0F2562', borderBottom: '1px solid #1E4080',
+        background: '#060D1A', borderBottom: '1px solid #0A1530',
         display: 'flex', alignItems: 'center', zIndex: 10,
       }}>
         <div style={{
-          width: '56px', height: '100%', borderRight: '1px solid rgba(43,80,144,.4)',
+          width: '56px', height: '100%', borderRight: '1px solid rgba(20,40,80,.4)',
           display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
         }}>
-          <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#5B9BD5' }}>A</span>
+          <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#1E3A6B' }}>A</span>
         </div>
         {['B','C','D','E','F','G','H','I'].map(c => (
           <div key={c} style={{
-            width: '56px', height: '100%', borderRight: '1px solid rgba(43,80,144,.4)',
+            width: '56px', height: '100%', borderRight: '1px solid rgba(20,40,80,.4)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
           }}>
-            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#5B9BD5' }}>{c}</span>
+            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#1E3A6B' }}>{c}</span>
           </div>
         ))}
       </div>
@@ -91,11 +91,11 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       {/* Formula bar */}
       <div style={{
         position: 'absolute', top: '28px', left: 0, right: 0, height: '24px',
-        background: '#091D4E', borderBottom: '2px solid #0F2562',
+        background: '#040A14', borderBottom: '2px solid #060D1A',
         display: 'flex', alignItems: 'center', gap: '12px', paddingLeft: '16px', zIndex: 10,
       }}>
-        <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#00D4CC', fontWeight: 700 }}>fx</span>
-        <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#5B9BD5', letterSpacing: '1px' }}>
+        <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#00A89D', fontWeight: 700 }}>fx</span>
+        <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#1E3A6B', letterSpacing: '1px' }}>
           {'=LOADING("GUIBOUR_SYSTEM") // ' + progress + '%'}
         </span>
       </div>
@@ -106,7 +106,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         {/* Employee ID */}
         <div style={{
           fontFamily: "'Orbitron', sans-serif", fontSize: '10px',
-          color: '#5B9BD5', letterSpacing: '4px', marginBottom: '28px',
+          color: '#1A3058', letterSpacing: '4px', marginBottom: '28px',
           animation: 'fadeIn 0.5s ease-out',
         }}>
           EMPLOYEE ID: GS-4891 // W.O.W // 2026
@@ -141,7 +141,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         {/* Subtitle */}
         <div style={{
           fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
-          color: '#5B9BD5', letterSpacing: '3px', marginTop: '14px',
+          color: '#1A3058', letterSpacing: '3px', marginTop: '14px',
         }}>
           WORK OR WINDOW // GRIMPE LES 25 ÉTAGES
         </div>
@@ -149,14 +149,14 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         {/* Progress bar */}
         <div style={{ width: 'clamp(280px, 40vw, 420px)', marginTop: '36px' }}>
           <div style={{
-            background: '#091D4E', border: '1px solid #1E4080',
+            background: '#040A14', border: '1px solid #0A1530',
             padding: '6px 12px', display: 'flex', alignItems: 'center',
             gap: '10px', borderRadius: '3px',
           }}>
-            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '13px', color: '#00D4CC', fontWeight: 700 }}>fx</span>
+            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '13px', color: '#00A89D', fontWeight: 700 }}>fx</span>
             <div style={{
-              flex: 1, background: '#0C2240',
-              border: '1px solid #1E4080', height: '14px',
+              flex: 1, background: '#060D1A',
+              border: '1px solid #0A1530', height: '14px',
               borderRadius: '2px', overflow: 'hidden',
             }}>
               <div style={{
@@ -179,7 +179,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           {bootLines.map((line, i) => (
             <div key={i} style={{
               fontFamily: "'Orbitron', sans-serif", fontSize: '8px',
-              color: line.includes('READY') ? '#00C8BE' : '#2B5090',
+              color: line.includes('READY') ? '#00A89D' : '#0E1F40',
               letterSpacing: '1px', marginBottom: '4px',
               animation: 'bootLine 0.3s ease-out',
               textShadow: line.includes('READY') ? '0 0 8px rgba(0,200,190,.5)' : 'none',
@@ -198,7 +198,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         position: 'absolute', right: '36px', bottom: '24px',
         zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center',
       }}>
-        <div style={{ width: '2px', height: '20px', background: '#1B3A6B' }} />
+        <div style={{ width: '2px', height: '20px', background: '#0A1530' }} />
         <div style={{
           width: '60px', height: '80px',
           background: 'linear-gradient(135deg, #fff, #E8EEF4)',

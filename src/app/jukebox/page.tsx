@@ -12,7 +12,7 @@ const TRACKS = [
     bpm: 128,
     mood: 'RAW',
     moodColor: '#FF4444',
-    spotifyId: '0eAziZNCXORNa9kDbY91wE',
+    spotifyId: '6oEnxkmtM9Jw68Q9r3UkC2',
     youtubeId: 'oOdwfvDwXcM',
     hasClip: true,
     released: true,
@@ -23,9 +23,9 @@ const TRACKS = [
     bpm: 95,
     mood: 'SOUL',
     moodColor: '#00C8BE',
-    spotifyId: '6oEnxkmtM9Jw68Q9r3UkC2',
-    youtubeId: null,
-    hasClip: false,
+    spotifyId: '0eAziZNCXORNa9kDbY91wE',
+    youtubeId: 'WL7Vi7dQsP8',
+    hasClip: true,
     released: true,
   },
   {
@@ -406,6 +406,7 @@ export default function JukeboxPage() {
                     { label: 'SPOTIFY', url: SPOTIFY_ARTIST, color: '#1DB954', icon: '🎵' },
                     { label: 'YOUTUBE', url: YOUTUBE_CHANNEL, color: '#FF0000', icon: '▶' },
                     { label: 'PLAYLIST W.O.W SOUNDS', url: WOW_PLAYLIST_URL, color: '#00C8BE', icon: '📋' },
+                    { label: 'CONCERT 24 JUIN', url: 'https://shotgun.live/fr/events/guibour-la-boule-noire', color: '#FF4444', icon: '🎤' },
                   ].map(({ label, url, color, icon }) => (
                     <a
                       key={label}

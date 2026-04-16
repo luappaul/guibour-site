@@ -165,6 +165,8 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
           setHudInfo(prev => ({ ...prev, levelName: lc.name, phrase: lc.phrase }));
           setShowPhrase(true);
           setTimeout(() => setShowPhrase(false), 3000);
+          // Switch to level-specific music (easter egg)
+          audioManager.setLevelMusic(lc.musicOverride);
         }
         // YouTube popup once between level 8-12
         if (s.level >= 8 && s.level <= 12 && !youtubeShownRef.current) {
@@ -367,85 +369,20 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
     setIsMuted(muted);
   };
 
-  // Loading screen
+  // Minimal loading placeholder — just the background, no branding
   if (!assetsLoaded) {
     return (
-      <div className="flex h-full w-full flex-col items-center justify-center gap-5"
-           style={{
-             background: '#1A3F78',
-             backgroundImage: 'linear-gradient(rgba(0,72,171,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(0,72,171,.09) 1px, transparent 1px)',
-             backgroundSize: '52px 32px',
-           }}>
+      <div className="flex h-full w-full items-center justify-center"
+           style={{ background: '#1A3F78' }}>
         <div style={{
-          fontFamily: "'Lilita One', cursive",
-          fontSize: 'clamp(52px, 10vw, 80px)',
-          color: '#FFFFFF',
-          letterSpacing: '6px',
-          lineHeight: 1,
-          animation: 'glowWhite 3s ease-in-out infinite',
-        }}>
-          W.O.W
-        </div>
-        <div style={{
-          fontFamily: "'Orbitron', sans-serif",
-          fontSize: 'clamp(11px, 1.8vw, 16px)',
-          color: '#00D4CC',
-          letterSpacing: '8px',
-          fontWeight: 400,
-          textShadow: '0 0 10px rgba(0,212,204,.4)',
-        }}>
-          WORK OR WINDOW
-        </div>
-        <div style={{
-          fontFamily: "'Orbitron', sans-serif",
-          fontSize: 'clamp(10px, 1.5vw, 13px)',
-          color: '#5B9BD5',
-          letterSpacing: '2px',
-          marginTop: '-4px',
-        }}>
-          25 ÉTAGES — SURVIVEZ AUX DOSSIERS VOLANTS
-        </div>
-        {/* fx progress bar */}
-        <div style={{ width: 'clamp(280px, 40vw, 420px)', marginTop: '8px' }}>
-          <div style={{
-            background: '#0C2A62',
-            border: '1px solid #1A3E7A',
-            padding: '5px 10px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            borderRadius: '3px',
-          }}>
-            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '13px', color: '#00D4CC', fontWeight: 700 }}>fx</span>
-            <div style={{
-              flex: 1,
-              background: '#1C3660',
-              border: '1px solid #1E3F6E',
-              height: '14px',
-              borderRadius: '2px',
-              overflow: 'hidden',
-            }}>
-              <div style={{
-                height: '100%',
-                width: `${loadProgress}%`,
-                background: 'linear-gradient(90deg, #0047AB, #00A89D)',
-                borderRadius: '2px',
-                boxShadow: '0 0 8px rgba(0,71,171,.5)',
-                transition: 'width 0.2s ease',
-              }} />
-            </div>
-          </div>
-          <div style={{
-            fontFamily: "'Orbitron', sans-serif",
-            fontSize: '11px',
-            color: '#2B5090',
-            textAlign: 'center',
-            marginTop: '5px',
-            letterSpacing: '2px',
-          }}>
-            =LOADING(&quot;GAME_ASSETS&quot;) // {loadProgress}%
-          </div>
-        </div>
+          width: '40px',
+          height: '40px',
+          border: '3px solid rgba(0,212,204,.2)',
+          borderTop: '3px solid #00D4CC',
+          borderRadius: '50%',
+          animation: 'spin 0.8s linear infinite',
+        }} />
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
   }

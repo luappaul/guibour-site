@@ -68,13 +68,29 @@ const CHARACTERS: CharacterData[] = [
       { label: 'CHANCE', value: 2 },
     ],
   },
+  {
+    id: 'guibour-live',
+    name: 'GUIBOUR LIVE',
+    title: 'ARTISTE EN SCÈNE',
+    emoji: '🎤',
+    locked: true,
+    lockedLabel: '🔒 CODE BILLET',
+    stats: [
+      { label: 'VITESSE', value: 5 },
+      { label: 'PROACTIVITÉ', value: 5 },
+      { label: 'CHANCE', value: 5 },
+    ],
+  },
 ];
 
+// Valid promo codes from concert tickets
+const PROMO_CODES = ['BOULENOIRE24', 'GUIBOURLIVE', 'WOW2024', 'CONCERT24JUIN'];
+
 const N = CHARACTERS.length;
-type RelPos = 0 | 1 | 2 | 3;
+type RelPos = number;
 
 function getRelPos(cardIndex: number, active: number): RelPos {
-  return (((cardIndex - active) % N + N) % N) as RelPos;
+  return ((cardIndex - active) % N + N) % N;
 }
 
 function cardStyle(pos: RelPos): React.CSSProperties {
@@ -86,7 +102,7 @@ function cardStyle(pos: RelPos): React.CSSProperties {
   };
   if (pos === 0) return { ...base, transform: 'translateX(0) scale(1.08) translateZ(0)', opacity: 1, filter: 'none', zIndex: 10, cursor: 'default' };
   if (pos === 1) return { ...base, transform: 'translateX(70%) scale(0.78) rotateY(-28deg)', opacity: 0.62, filter: 'brightness(0.65)', zIndex: 5, cursor: 'pointer' };
-  if (pos === 3) return { ...base, transform: 'translateX(-70%) scale(0.78) rotateY(28deg)', opacity: 0.62, filter: 'brightness(0.65)', zIndex: 5, cursor: 'pointer' };
+  if (pos === N - 1) return { ...base, transform: 'translateX(-70%) scale(0.78) rotateY(28deg)', opacity: 0.62, filter: 'brightness(0.65)', zIndex: 5, cursor: 'pointer' };
   return { ...base, transform: 'translateX(0) scale(0.5)', opacity: 0, zIndex: 0, pointerEvents: 'none' };
 }
 
@@ -158,6 +174,13 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
       setPseudo(stored.pseudo);
       setEmailGiven(!!stored.email);
       setPhoneGiven(!!stored.phone);
+    }
+    // Restore promo-unlocked character
+    if (typeof window !== 'undefined' && localStorage.getItem('guibour-live-unlocked') === 'true') {
+      const idx = CHARACTERS.findIndex(c => c.id === 'guibour-live');
+      if (idx >= 0) {
+        CHARACTERS[idx] = { ...CHARACTERS[idx], locked: false, lockedLabel: undefined };
+      }
     }
   }, []);
 
@@ -482,7 +505,57 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
 
       {/* CTA */}
       <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', marginBottom: '16px' }}>
-        {active.locked ? (
+        {active.locked && active.id === 'guibour-live' ? (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#FFE033', letterSpacing: '2px' }}>
+              ENTRE TON CODE BILLET POUR DÉBLOQUER
+            </div>
+            <div style={{ display: 'flex', gap: '6px' }}>
+              <input
+                type="text"
+                placeholder="CODE PROMO"
+                id="promo-code-input"
+                style={{
+                  padding: '8px 14px', fontFamily: "'Orbitron', sans-serif", fontSize: '12px', fontWeight: 700,
+                  letterSpacing: '3px', textTransform: 'uppercase',
+                  background: '#091E4A', color: '#FFE033', border: '1px solid #3A2A00',
+                  outline: 'none', borderRadius: '3px', width: '180px', textAlign: 'center',
+                }}
+              />
+              <button
+                onClick={() => {
+                  playClick();
+                  const input = document.getElementById('promo-code-input') as HTMLInputElement;
+                  const code = input?.value?.trim().toUpperCase();
+                  if (code && PROMO_CODES.includes(code)) {
+                    // Unlock the character
+                    const idx = CHARACTERS.findIndex(c => c.id === 'guibour-live');
+                    if (idx >= 0) {
+                      CHARACTERS[idx] = { ...CHARACTERS[idx], locked: false, lockedLabel: undefined };
+                      localStorage.setItem('guibour-live-unlocked', 'true');
+                    }
+                    // Force re-render
+                    input.value = '';
+                    window.location.reload();
+                  } else {
+                    input.style.borderColor = '#FF4444';
+                    input.style.color = '#FF4444';
+                    input.value = 'CODE INVALIDE';
+                    setTimeout(() => { input.style.borderColor = '#3A2A00'; input.style.color = '#FFE033'; input.value = ''; }, 1500);
+                  }
+                }}
+                style={{
+                  padding: '8px 16px', fontFamily: "'Lilita One', cursive", fontSize: '14px',
+                  background: '#FFE033', color: '#0A1520', border: 'none', cursor: 'pointer', borderRadius: '3px',
+                }}
+              >OK</button>
+            </div>
+            <a href="https://shotgun.live/fr/events/guibour-la-boule-noire" target="_blank" rel="noopener noreferrer"
+              style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#5B9BD5', letterSpacing: '2px', textDecoration: 'underline' }}>
+              PAS DE CODE ? ACHÈTE TON BILLET
+            </a>
+          </div>
+        ) : active.locked ? (
           <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#FF6B6B', letterSpacing: '3px' }}>
             DÉBLOQUÉ À L&apos;ÉTAGE 15
           </div>

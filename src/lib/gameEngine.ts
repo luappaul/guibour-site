@@ -1107,12 +1107,12 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
     drawSpriteFrame(ctx, activeSprite, frameIndex, player.x - drawW / 2, drawY, drawW, drawH);
   } else if (idleImg) {
     // Idle: scale up so Guibour's feet touch the ground bar and looks imposing
-    const idleScale = 1.35;
+    const idleScale = 1.45;
     const idleH = Math.round(drawH * idleScale);
     const idleAR = idleImg.naturalWidth / idleImg.naturalHeight;
     const idleW = Math.round(idleH * idleAR);
-    // Shift down so feet precisely touch the floor bar
-    const idleY = player.y - idleH + Math.round(idleH * 0.04);
+    // Align feet exactly with the floor bar (same baseline as running sprite)
+    const idleY = player.y - idleH + Math.round(idleH * 0.07);
     ctx.drawImage(idleImg, player.x - idleW / 2, idleY, idleW, idleH);
   } else {
     // Fallback rectangle

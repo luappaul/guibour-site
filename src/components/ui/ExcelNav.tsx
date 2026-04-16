@@ -174,22 +174,6 @@ export default function ExcelNav() {
         ))}
       </div>
 
-      {/* Bottom JOUER button */}
-      <div style={{ borderTop: '1px solid #1B3A6B', padding: '12px 10px', flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap' }}>
-        <Link href="/" onClick={playClick} style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontFamily: "'Lilita One', cursive", fontSize: '13px', letterSpacing: '2px',
-          color: '#fff', textDecoration: 'none',
-          background: 'linear-gradient(135deg, #0047AB, #007B8A)',
-          border: '1px solid #5B9BD5', padding: '10px 12px',
-          boxShadow: '0 0 14px rgba(0,71,171,.25)', transition: 'all 0.2s ease', gap: '4px',
-        }}
-        onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(135deg, #1B5EBB, #008B9A)'; e.currentTarget.style.boxShadow = '0 0 22px rgba(0,71,171,.45)'; }}
-        onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg, #0047AB, #007B8A)'; e.currentTarget.style.boxShadow = '0 0 14px rgba(0,71,171,.25)'; }}
-        >
-          JOUER À <span style={{ color: '#00C8BE', marginLeft: '4px', textShadow: '1px 2px 0 #003A38' }}>W.O.W</span>
-        </Link>
-      </div>
     </nav>
   );
 }

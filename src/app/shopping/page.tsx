@@ -11,6 +11,7 @@ const PRODUCTS = [
   { name: 'MUG CORPORATE', ref: 'GS-MG-001', desc: '30CL · CÉRAMIQUE',   price: 18, cell: 'C4', svgType: 'mug',    tag: null          },
   { name: 'CRAVATE GS',    ref: 'GS-CV-001', desc: 'BLEU MARINE · SOIE', price: 24, cell: 'D4', svgType: 'tie',    tag: 'NOUVEAU'     },
   { name: 'CLÉ USB EP',    ref: 'GS-USB-001', desc: '8GB · USB-A',       price: 22, cell: 'E4', svgType: 'usb',    tag: null          },
+  { name: 'BILLET CONCERT', ref: 'GS-BN-001', desc: 'LA BOULE NOIRE · 24 JUIN', price: 0, cell: 'F4', svgType: 'ticket', tag: 'CONCERT' },
 ] as const;
 
 type Product = typeof PRODUCTS[number];
@@ -59,6 +60,21 @@ function ProductSVG({ type, glow }: { type: string; glow?: boolean }) {
         <line x1="37" y1="30" x2="43" y2="30" stroke={c} strokeWidth="1" opacity=".6"/>
         <line x1="37.5" y1="38" x2="42.5" y2="38" stroke={c} strokeWidth="1" opacity=".6"/>
         <line x1="38" y1="46" x2="42" y2="46" stroke={c} strokeWidth="1" opacity=".6"/>
+      </svg>
+    </div>
+  );
+  if (type === 'ticket') return (
+    <div style={wrap}>
+      <svg width="90" height="90" viewBox="0 0 80 80">
+        <path d="M12 25 L12 35 C16 35 16 45 12 45 L12 55 L68 55 L68 45 C64 45 64 35 68 35 L68 25 Z"
+          fill="none" stroke="#FF4444" strokeWidth="2"/>
+        <line x1="45" y1="25" x2="45" y2="55" stroke="#FF4444" strokeWidth="1" strokeDasharray="3 3" opacity=".6"/>
+        <text x="28" y="38" textAnchor="middle" fontFamily="Orbitron" fontSize="5" fontWeight="700"
+          fill="#FF4444" opacity=".9">BOULE</text>
+        <text x="28" y="47" textAnchor="middle" fontFamily="Orbitron" fontSize="5" fontWeight="700"
+          fill="#FF4444" opacity=".9">NOIRE</text>
+        <text x="56" y="42" textAnchor="middle" fontFamily="Orbitron" fontSize="6" fontWeight="800"
+          fill="#FF4444">24/06</text>
       </svg>
     </div>
   );
@@ -130,11 +146,11 @@ function ProductCard({ p, onAdd }: { p: Product; onAdd: (p: Product) => void }) 
       {p.tag && (
         <div style={{
           position: 'absolute', top: '42px', left: '10px', zIndex: 2,
-          background: p.tag === 'NOUVEAU' ? 'rgba(0,255,238,.15)' : 'rgba(255,200,10,.12)',
-          color: p.tag === 'NOUVEAU' ? '#00FFEE' : '#FFD700',
-          border: `1px solid ${p.tag === 'NOUVEAU' ? 'rgba(0,255,238,.5)' : 'rgba(255,200,10,.4)'}`,
+          background: p.tag === 'NOUVEAU' ? 'rgba(0,255,238,.15)' : p.tag === 'CONCERT' ? 'rgba(255,68,68,.15)' : 'rgba(255,200,10,.12)',
+          color: p.tag === 'NOUVEAU' ? '#00FFEE' : p.tag === 'CONCERT' ? '#FF4444' : '#FFD700',
+          border: `1px solid ${p.tag === 'NOUVEAU' ? 'rgba(0,255,238,.5)' : p.tag === 'CONCERT' ? 'rgba(255,68,68,.5)' : 'rgba(255,200,10,.4)'}`,
           fontFamily: "'Orbitron', sans-serif", fontSize: '7px', letterSpacing: '2px', padding: '3px 8px',
-          textShadow: p.tag === 'NOUVEAU' ? '0 0 8px rgba(0,255,238,.7)' : '0 0 8px rgba(255,200,10,.6)',
+          textShadow: p.tag === 'NOUVEAU' ? '0 0 8px rgba(0,255,238,.7)' : p.tag === 'CONCERT' ? '0 0 8px rgba(255,68,68,.6)' : '0 0 8px rgba(255,200,10,.6)',
         }}>{p.tag}</div>
       )}
 
@@ -167,30 +183,48 @@ function ProductCard({ p, onAdd }: { p: Product; onAdd: (p: Product) => void }) 
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: 'auto', marginBottom: '14px' }}>
           <span style={{
             fontFamily: "'Lilita One', cursive", fontSize: '26px',
-            color: hovered ? '#00FFEE' : '#5B8FBF',
-            textShadow: hovered ? '0 0 16px rgba(0,255,238,.6)' : 'none',
+            color: p.svgType === 'ticket' ? (hovered ? '#FF4444' : '#FF6666') : (hovered ? '#00FFEE' : '#5B8FBF'),
+            textShadow: hovered ? (p.svgType === 'ticket' ? '0 0 16px rgba(255,68,68,.6)' : '0 0 16px rgba(0,255,238,.6)') : 'none',
             transition: 'all .25s',
-          }}>{p.price}€</span>
-          <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#1E3050', letterSpacing: '1px' }}>TVA INCL.</span>
+          }}>{p.price === 0 ? 'LIVE' : `${p.price}€`}</span>
+          <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#1E3050', letterSpacing: '1px' }}>{p.price === 0 ? '24 JUIN 2026' : 'TVA INCL.'}</span>
         </div>
 
-        <button
-          onClick={handleAdd}
-          style={{
-            width: '100%',
-            fontFamily: "'Orbitron', sans-serif", fontSize: '9px', letterSpacing: '2px',
-            color: added ? '#000' : (hovered ? '#00FFEE' : '#4A7AA8'),
-            background: added
-              ? '#00FFEE'
-              : hovered
-              ? 'rgba(0,255,238,.1)'
-              : 'rgba(0,50,100,.4)',
-            border: `1px solid ${added ? '#00FFEE' : hovered ? 'rgba(0,255,238,.6)' : 'rgba(0,100,160,.3)'}`,
-            padding: '11px 0', cursor: 'pointer',
-            boxShadow: hovered && !added ? '0 0 14px rgba(0,255,238,.2)' : 'none',
-            transition: 'all .2s ease',
-          }}
-        >{added ? '✓ AJOUTÉ' : '+ AJOUTER AU PANIER'}</button>
+        {p.svgType === 'ticket' ? (
+          <a
+            href="https://shotgun.live/fr/events/guibour-la-boule-noire"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'block', width: '100%', textAlign: 'center',
+              fontFamily: "'Orbitron', sans-serif", fontSize: '9px', letterSpacing: '2px',
+              color: hovered ? '#fff' : '#FF6666',
+              background: hovered ? 'linear-gradient(135deg, #CC0000, #880000)' : 'rgba(100,0,0,.4)',
+              border: `1px solid ${hovered ? 'rgba(255,68,68,.8)' : 'rgba(255,68,68,.3)'}`,
+              padding: '11px 0', cursor: 'pointer',
+              boxShadow: hovered ? '0 0 14px rgba(255,68,68,.3)' : 'none',
+              transition: 'all .2s ease', textDecoration: 'none',
+            }}
+          >RÉSERVER SUR SHOTGUN</a>
+        ) : (
+          <button
+            onClick={handleAdd}
+            style={{
+              width: '100%',
+              fontFamily: "'Orbitron', sans-serif", fontSize: '9px', letterSpacing: '2px',
+              color: added ? '#000' : (hovered ? '#00FFEE' : '#4A7AA8'),
+              background: added
+                ? '#00FFEE'
+                : hovered
+                ? 'rgba(0,255,238,.1)'
+                : 'rgba(0,50,100,.4)',
+              border: `1px solid ${added ? '#00FFEE' : hovered ? 'rgba(0,255,238,.6)' : 'rgba(0,100,160,.3)'}`,
+              padding: '11px 0', cursor: 'pointer',
+              boxShadow: hovered && !added ? '0 0 14px rgba(0,255,238,.2)' : 'none',
+              transition: 'all .2s ease',
+            }}
+          >{added ? '✓ AJOUTÉ' : '+ AJOUTER AU PANIER'}</button>
+        )}
       </div>
     </div>
   );

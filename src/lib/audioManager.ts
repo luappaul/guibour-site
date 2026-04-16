@@ -6,6 +6,9 @@ class AudioManager {
   private sounds: Map<SoundName, HTMLAudioElement> = new Map();
   private muted: boolean = false;
   private volume: number = 0.5;
+  private defaultGameplay: HTMLAudioElement | null = null;
+  private levelMusic: HTMLAudioElement | null = null;
+  private currentMusicOverride: string | null = null;
 
   init(assets: GameAssets) {
     this.sounds.set('gameplay', assets.audio.gameplay);
@@ -19,6 +22,7 @@ class AudioManager {
     if (gameplay) {
       gameplay.loop = true;
       gameplay.volume = this.volume;
+      this.defaultGameplay = gameplay;
     }
   }
 
@@ -39,25 +43,72 @@ class AudioManager {
       audio.pause();
       audio.currentTime = 0;
     }
+    // Also stop level-specific music
+    if (sound === 'gameplay' && this.levelMusic) {
+      this.levelMusic.pause();
+      this.levelMusic.currentTime = 0;
+      this.levelMusic = null;
+      this.currentMusicOverride = null;
+    }
+  }
+
+  /** Switch to level-specific music or back to default */
+  setLevelMusic(musicPath: string | undefined) {
+    // Same track already playing — do nothing
+    if (musicPath === this.currentMusicOverride) return;
+
+    // Stop current level music if any
+    if (this.levelMusic) {
+      this.levelMusic.pause();
+      this.levelMusic.currentTime = 0;
+      this.levelMusic = null;
+    }
+
+    if (musicPath) {
+      // Pause default gameplay music
+      this.defaultGameplay?.pause();
+
+      // Load and play level-specific music
+      const audio = new Audio(musicPath);
+      audio.loop = true;
+      audio.volume = this.volume;
+      this.levelMusic = audio;
+      this.currentMusicOverride = musicPath;
+      if (!this.muted) {
+        audio.play().catch(() => {});
+      }
+    } else {
+      // Return to default gameplay music
+      this.currentMusicOverride = null;
+      if (!this.muted && this.defaultGameplay) {
+        this.defaultGameplay.play().catch(() => {});
+      }
+    }
   }
 
   /** Pause gameplay music (for slot machine solo sound) */
   pauseGameplay() {
     const gameplay = this.sounds.get('gameplay');
     if (gameplay) gameplay.pause();
+    if (this.levelMusic) this.levelMusic.pause();
   }
 
   /** Resume gameplay music */
   resumeGameplay() {
     if (this.muted) return;
-    const gameplay = this.sounds.get('gameplay');
-    if (gameplay) gameplay.play().catch(() => {});
+    if (this.levelMusic) {
+      this.levelMusic.play().catch(() => {});
+    } else {
+      const gameplay = this.sounds.get('gameplay');
+      if (gameplay) gameplay.play().catch(() => {});
+    }
   }
 
   toggleMute(): boolean {
     this.muted = !this.muted;
     if (this.muted) {
       this.sounds.get('gameplay')?.pause();
+      if (this.levelMusic) this.levelMusic.pause();
     }
     return this.muted;
   }
@@ -70,6 +121,7 @@ class AudioManager {
     this.volume = Math.max(0, Math.min(1, v));
     const gameplay = this.sounds.get('gameplay');
     if (gameplay) gameplay.volume = this.volume;
+    if (this.levelMusic) this.levelMusic.volume = this.volume;
   }
 }
 

@@ -97,6 +97,7 @@ export interface LevelConfig {
   timeLimit: number;    // seconds
   bonusWeights: Partial<Record<BonusType, number>>;
   hasCeilingSpikes: boolean;
+  musicOverride?: string; // optional path to level-specific music (e.g. '/game/audio/dont-talk-to-me.mp3')
 }
 
 // ===== GAME STATE =====

@@ -183,6 +183,83 @@ function HeroContent({ onPlay }: { onPlay: () => void }) {
       >
         <span style={{ textShadow: '1px 2px 0 rgba(0,0,0,0.55)' }}>ALLER À LA BOUTIQUE</span>
       </Link>
+
+      {/* ── Contest / Promises block ── */}
+      <div style={{
+        marginTop: '40px',
+        maxWidth: '520px',
+        width: '90%',
+        background: 'rgba(12,30,64,0.7)',
+        border: '2px solid #1E3F6E',
+        borderRadius: '6px',
+        padding: '24px 28px',
+        position: 'relative',
+        zIndex: 2,
+        textAlign: 'center',
+      }}>
+        <div style={{
+          fontFamily: "'Lilita One', cursive",
+          fontSize: 'clamp(16px, 3vw, 22px)',
+          color: '#FFE033',
+          letterSpacing: '2px',
+          marginBottom: '12px',
+          textShadow: '0 0 14px rgba(255,224,51,.3)',
+        }}>
+          GAGNE UN CONCERT PRIVÉ
+        </div>
+        <div style={{
+          fontFamily: "'Orbitron', sans-serif",
+          fontSize: 'clamp(10px, 1.5vw, 13px)',
+          color: '#A8D8FF',
+          lineHeight: 1.8,
+          letterSpacing: '0.5px',
+        }}>
+          Tu veux un concert privé de Guibour où tu veux, quand tu veux ?
+          Dans ta chambre, pour ton anniv, pour un déjeuner de famille ?
+        </div>
+        <div style={{
+          fontFamily: "'Lilita One', cursive",
+          fontSize: 'clamp(13px, 2vw, 17px)',
+          color: '#00C8BE',
+          marginTop: '14px',
+          letterSpacing: '1px',
+          textShadow: '0 0 10px rgba(0,200,190,.3)',
+        }}>
+          FAIS LE MEILLEUR SCORE À CE JEU.
+        </div>
+        <div style={{
+          fontFamily: "'Orbitron', sans-serif",
+          fontSize: 'clamp(9px, 1.2vw, 11px)',
+          color: '#FF4444',
+          letterSpacing: '3px',
+          marginTop: '10px',
+          textShadow: '0 0 8px rgba(255,68,68,.3)',
+        }}>
+          LE GAGNANT SERA TIRÉ LE 24 JUIN
+        </div>
+        <a
+          href="https://shotgun.live/fr/events/guibour-la-boule-noire"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'inline-block',
+            marginTop: '16px',
+            fontFamily: "'Lilita One', cursive",
+            fontSize: '14px',
+            letterSpacing: '3px',
+            color: '#fff',
+            background: 'linear-gradient(135deg, #8B0000, #CC0000)',
+            border: '1px solid rgba(255,68,68,.4)',
+            padding: '10px 28px',
+            borderRadius: '4px',
+            textDecoration: 'none',
+            textShadow: '1px 1px 0 rgba(0,0,0,.5)',
+            transition: 'all 0.2s',
+          }}
+        >
+          CONCERT LA BOULE NOIRE — 24 JUIN
+        </a>
+      </div>
     </div>
   );
 }
