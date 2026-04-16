@@ -1112,7 +1112,7 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
     const idleAR = idleImg.naturalWidth / idleImg.naturalHeight;
     const idleW = Math.round(idleH * idleAR);
     // Align feet exactly with the floor bar (same baseline as running sprite)
-    const idleY = player.y - idleH + Math.round(idleH * 0.07);
+    const idleY = player.y - idleH + Math.round(idleH * 0.13);
     ctx.drawImage(idleImg, player.x - idleW / 2, idleY, idleW, idleH);
   } else {
     // Fallback rectangle

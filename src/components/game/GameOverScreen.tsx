@@ -12,6 +12,58 @@ import { PlayerIdentity } from '@/components/ui/CharacterSelect';
 
 import { playClick } from '@/lib/sounds';
 
+/** Real chroma-key: draws video frame-by-frame on a canvas, replacing green pixels with transparency */
+function ChromaKeyVideo({ src, width }: { src: string; width: number }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    if (!video || !canvas) return;
+
+    let animId: number;
+    const draw = () => {
+      const ctx = canvas.getContext('2d');
+      if (!ctx || video.paused || video.ended) { animId = requestAnimationFrame(draw); return; }
+
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.drawImage(video, 0, 0);
+
+      const frame = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const d = frame.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const r = d[i], g = d[i + 1], b = d[i + 2];
+        // Green screen: green is dominant and bright enough
+        if (g > 80 && g > r * 1.3 && g > b * 1.3) {
+          d[i + 3] = 0; // make transparent
+        }
+      }
+      ctx.putImageData(frame, 0, 0);
+      animId = requestAnimationFrame(draw);
+    };
+
+    video.addEventListener('play', () => { animId = requestAnimationFrame(draw); });
+    return () => cancelAnimationFrame(animId);
+  }, []);
+
+  return (
+    <div style={{ textAlign: 'center', padding: '16px 0 8px', display: 'flex', justifyContent: 'center' }}>
+      <video ref={videoRef} autoPlay loop muted playsInline src={src}
+        style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', width: 0, height: 0 }}
+      />
+      <canvas ref={canvasRef}
+        style={{
+          width: `${width}px`, height: 'auto',
+          imageRendering: 'pixelated',
+          filter: 'drop-shadow(0 0 14px rgba(255,30,30,0.5))',
+        }}
+      />
+    </div>
+  );
+}
+
 interface Props {
 
 state: GameState;
@@ -508,24 +560,8 @@ return (
       : '0 0 60px rgba(255,40,40,.3), 0 20px 60px rgba(0,0,0,.6)',
   }}>
 
-    {/* Defeat animation — CSS chroma-key removes green bg */}
-    {!isVictory && (
-      <div style={{
-        textAlign: 'center', padding: '16px 0 8px',
-        background: '#0C1E40',
-        isolation: 'isolate',
-      }}>
-        <video autoPlay loop muted playsInline
-          style={{
-            width: '140px', height: 'auto',
-            imageRendering: 'pixelated',
-            filter: 'drop-shadow(0 0 14px rgba(255,30,30,0.5))',
-            mixBlendMode: 'screen',
-          }}
-          src="/game/player/guibour-defaite-v4.webm"
-        />
-      </div>
-    )}
+    {/* Defeat animation — real chroma-key via canvas */}
+    {!isVictory && <ChromaKeyVideo src="/game/player/guibour-defaite-v5.webm" width={160} />}
 
     {/* Content — visible after animation delay */}
     {showContent && (
