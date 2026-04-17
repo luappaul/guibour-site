@@ -19,7 +19,7 @@ const TransitionContext = createContext<TransitionContextType>({
 export const useTransitionContext = () => useContext(TransitionContext);
 
 export default function PageTransition({ children }: { children: React.ReactNode }) {
-  const { phase, isTransitioning, floorLabel, floorNumber, triggerTransition } = usePageTransition();
+  const { phase, isTransitioning, floorLabel, triggerTransition } = usePageTransition();
 
   return (
     <TransitionContext.Provider value={{ triggerTransition, isTransitioning, phase }}>
@@ -135,33 +135,17 @@ export default function PageTransition({ children }: { children: React.ReactNode
                 pointerEvents: 'none',
               }}
             >
-              {/* Floor number — big */}
+              {/* Page name */}
               <div
                 style={{
-                  fontFamily: "'Orbitron', sans-serif",
-                  fontSize: 'clamp(64px, 15vw, 140px)',
-                  fontWeight: 900,
-                  color: '#00C8BE',
-                  textShadow: '0 0 40px rgba(0,200,190,0.6), 0 0 80px rgba(0,200,190,0.3)',
-                  lineHeight: 1,
-                  letterSpacing: '8px',
-                  animation: phase === 'display' ? 'floorSlideIn 0.3s ease-out' : 'none',
-                }}
-              >
-                {floorNumber}
-              </div>
-
-              {/* Floor label */}
-              <div
-                style={{
-                  fontFamily: "'Orbitron', sans-serif",
-                  fontSize: 'clamp(12px, 2.5vw, 20px)',
+                  fontFamily: "'Lilita One', cursive",
+                  fontSize: 'clamp(28px, 6vw, 48px)',
                   fontWeight: 400,
-                  color: '#7AAFD4',
-                  letterSpacing: '6px',
-                  marginTop: '16px',
+                  color: '#FFFFFF',
+                  letterSpacing: '8px',
+                  textShadow: '0 0 30px rgba(0,200,190,0.5), 0 0 60px rgba(0,200,190,0.2)',
                   textTransform: 'uppercase',
-                  animation: phase === 'display' ? 'floorFadeIn 0.3s ease-out 0.1s both' : 'none',
+                  animation: phase === 'display' ? 'floorSlideIn 0.3s ease-out' : 'none',
                 }}
               >
                 {floorLabel}
@@ -170,34 +154,13 @@ export default function PageTransition({ children }: { children: React.ReactNode
               {/* Decorative line */}
               <div
                 style={{
-                  width: 'clamp(100px, 30vw, 300px)',
+                  width: 'clamp(80px, 25vw, 200px)',
                   height: '2px',
                   background: 'linear-gradient(90deg, transparent, #00C8BE, transparent)',
-                  marginTop: '20px',
-                  animation: phase === 'display' ? 'lineExpand 0.3s ease-out 0.15s both' : 'none',
+                  marginTop: '16px',
+                  animation: phase === 'display' ? 'lineExpand 0.3s ease-out 0.1s both' : 'none',
                 }}
               />
-
-              {/* Elevator indicator dots */}
-              <div style={{
-                display: 'flex',
-                gap: '12px',
-                marginTop: '24px',
-              }}>
-                {['RDC', '1', '2', '3', '4'].map((num) => (
-                  <div
-                    key={num}
-                    style={{
-                      width: '10px',
-                      height: '10px',
-                      borderRadius: '50%',
-                      background: num === floorNumber ? '#00C8BE' : 'rgba(122,175,212,0.2)',
-                      boxShadow: num === floorNumber ? '0 0 12px rgba(0,200,190,0.8)' : 'none',
-                      transition: 'all 0.2s ease',
-                    }}
-                  />
-                ))}
-              </div>
             </div>
           )}
 
