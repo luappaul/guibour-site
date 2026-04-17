@@ -84,7 +84,7 @@ function generateShareImage(pseudo: string, level: number, score: number): strin
   ctx.textAlign = 'center';
   ctx.fillText('GUIBOUR', w / 2, 220);
 
-  ctx.fillStyle = '#00D4CC';
+  ctx.fillStyle = '#00C8BE';
   ctx.font = 'bold 36px Orbitron, monospace';
   ctx.fillText('SYSTEM', w / 2, 270);
 
@@ -153,14 +153,14 @@ function ShareButtons({ pseudo, level, score, shareImageUrl, onDiploma }: {
   const shareText = `J'ai atteint l'etage ${level} avec ${score.toLocaleString('fr-FR')} points sur GUIBOUR SYSTEM W.O.W ! 🏢 Bats mon score → guibour.fr`;
 
   const btnBase: React.CSSProperties = {
-    width: '100%', padding: '10px 12px', borderRadius: '4px', cursor: 'pointer',
-    fontFamily: "'Orbitron', sans-serif", fontSize: '10px', letterSpacing: '2px',
+    width: '100%', padding: '12px 12px', borderRadius: '4px', cursor: 'pointer',
+    fontFamily: "'Orbitron', sans-serif", fontSize: '11px', letterSpacing: '2px',
     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
     transition: 'all .2s', border: 'none',
   };
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', animation: 'fadeIn 0.4s ease-out' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', animation: 'fadeIn 0.4s ease-out' }}>
       <button onClick={() => { playClick(); window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(scoreCardUrl)}`, '_blank'); }} style={{ ...btnBase, background: '#000', color: '#fff', border: '1px solid #333' }}>
         PARTAGER SUR X
       </button>
@@ -344,11 +344,11 @@ function GameOverScreen({ state, onRestart, onContinueWithRTT, playerIdentity, r
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
               <div style={{ background: '#091E4A', border: '1px solid #1A3E7A', padding: '12px', textAlign: 'center', borderRadius: '4px' }}>
-                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#5B9BD5', letterSpacing: '2px', marginBottom: '6px' }}>ÉTAGE</div>
+                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#5B9BD5', letterSpacing: '2px', marginBottom: '8px' }}>ÉTAGE</div>
                 <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '20px', fontWeight: 700, color: '#FFE033' }}>25/25</div>
               </div>
               <div style={{ background: '#091E4A', border: '1px solid #1A3E7A', padding: '12px', textAlign: 'center', borderRadius: '4px' }}>
-                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#5B9BD5', letterSpacing: '2px', marginBottom: '6px' }}>RANG</div>
+                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#5B9BD5', letterSpacing: '2px', marginBottom: '8px' }}>RANG</div>
                 <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '20px', fontWeight: 700, color: '#FF7744' }}>{rank > 0 ? `#${rank}` : '—'}</div>
               </div>
             </div>
@@ -359,9 +359,9 @@ function GameOverScreen({ state, onRestart, onContinueWithRTT, playerIdentity, r
             <ShareButtons pseudo={pseudo} level={level} score={player.score} shareImageUrl={shareImageUrl} onDiploma={handleDiploma} />
             <ReferralChallenge pseudo={pseudo} />
           </div>
-          <div style={{ background: '#004D48', padding: '6px 14px', display: 'flex', justifyContent: 'space-between' }}>
-            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: 'rgba(255,255,255,.5)' }}>guibour.fr</span>
-            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: 'rgba(255,255,255,.5)' }}>#WOW2026</span>
+          <div style={{ background: '#004D48', padding: '8px 16px', display: 'flex', justifyContent: 'space-between' }}>
+            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,.5)' }}>guibour.fr</span>
+            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,.5)' }}>#WOW2026</span>
           </div>
         </Popup>
       </div>
@@ -414,8 +414,8 @@ function GameOverScreen({ state, onRestart, onContinueWithRTT, playerIdentity, r
           </div>
 
           <Popup borderColor="#FFE033">
-            <div style={{ background: 'rgba(58,42,0,.3)', padding: '10px 16px', borderBottom: '1px solid #5A4400' }}>
-              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#FFE033', letterSpacing: '3px', textShadow: '0 0 8px rgba(255,224,51,.5)' }}>
+            <div style={{ background: 'rgba(58,42,0,.3)', padding: '12px 16px', borderBottom: '1px solid #5A4400' }}>
+              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#FFE033', letterSpacing: '3px', textShadow: '0 0 8px rgba(255,224,51,.5)' }}>
                 SERVICE DES RESSOURCES HUMAINES
               </div>
             </div>
@@ -428,13 +428,13 @@ function GameOverScreen({ state, onRestart, onContinueWithRTT, playerIdentity, r
                 VOULEZ-VOUS GAGNER UN RTT ?
               </div>
               <div style={{
-                fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#C8A040',
+                fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#C8A040',
                 letterSpacing: '1px', lineHeight: 1.8, marginBottom: '24px',
               }}>
                 UN JOUR DE RTT VOUS PERMET DE CONTINUER<br />LA PARTIE DEPUIS CET ÉTAGE
               </div>
 
-              <div style={{ display: 'flex', gap: '10px' }}>
+              <div style={{ display: 'flex', gap: '12px' }}>
                 <button onClick={() => { playClick(); setDefeatStep('rtt-options'); }} style={{
                   flex: 1, padding: '16px', fontFamily: "'Lilita One', cursive", fontSize: '18px',
                   letterSpacing: '3px', color: '#000', background: '#FFE033', border: 'none',
@@ -468,12 +468,12 @@ function GameOverScreen({ state, onRestart, onContinueWithRTT, playerIdentity, r
           </div>
 
           <Popup borderColor="#FFE033">
-            <div style={{ background: 'rgba(58,42,0,.3)', padding: '10px 16px', borderBottom: '1px solid #5A4400' }}>
-              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#FFE033', letterSpacing: '3px' }}>
+            <div style={{ background: 'rgba(58,42,0,.3)', padding: '12px 16px', borderBottom: '1px solid #5A4400' }}>
+              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#FFE033', letterSpacing: '3px' }}>
                 CHOISISSEZ UNE OPTION
               </div>
             </div>
-            <div style={{ padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div style={{ padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
               {/* Option 1: Email */}
               {!profile.email && !rttEarned && (
@@ -483,13 +483,13 @@ function GameOverScreen({ state, onRestart, onContinueWithRTT, playerIdentity, r
               {/* Option 2: Share on Twitter */}
               {!rttEarned && (
                 <button onClick={() => { playClick(); handleRTTShare('twitter'); }} style={{
-                  width: '100%', padding: '14px', display: 'flex', alignItems: 'center', gap: '12px',
+                  width: '100%', padding: '16px', display: 'flex', alignItems: 'center', gap: '12px',
                   background: 'rgba(0,0,0,.4)', border: '1px solid #333', borderRadius: '4px', cursor: 'pointer',
                 }}>
                   <span style={{ fontSize: '24px' }}>𝕏</span>
                   <div style={{ textAlign: 'left' }}>
                     <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '14px', color: '#fff', letterSpacing: '1px' }}>PARTAGER SUR X</div>
-                    <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#666', letterSpacing: '1px' }}>TWEET POUR DÉBLOQUER +1 RTT</div>
+                    <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#666', letterSpacing: '1px' }}>TWEET POUR DÉBLOQUER +1 RTT</div>
                   </div>
                 </button>
               )}
@@ -497,13 +497,13 @@ function GameOverScreen({ state, onRestart, onContinueWithRTT, playerIdentity, r
               {/* Option 3: Share on WhatsApp */}
               {!rttEarned && (
                 <button onClick={() => { playClick(); handleRTTShare('whatsapp'); }} style={{
-                  width: '100%', padding: '14px', display: 'flex', alignItems: 'center', gap: '12px',
+                  width: '100%', padding: '16px', display: 'flex', alignItems: 'center', gap: '12px',
                   background: 'rgba(37,211,102,.1)', border: '1px solid #25D366', borderRadius: '4px', cursor: 'pointer',
                 }}>
                   <span style={{ fontSize: '24px' }}>💬</span>
                   <div style={{ textAlign: 'left' }}>
                     <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '14px', color: '#25D366', letterSpacing: '1px' }}>ENVOYER SUR WHATSAPP</div>
-                    <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#1A8A4A', letterSpacing: '1px' }}>PARTAGE POUR DÉBLOQUER +1 RTT</div>
+                    <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#1A8A4A', letterSpacing: '1px' }}>PARTAGE POUR DÉBLOQUER +1 RTT</div>
                   </div>
                 </button>
               )}
@@ -534,7 +534,7 @@ function GameOverScreen({ state, onRestart, onContinueWithRTT, playerIdentity, r
                   </button>
                 )}
                 <button onClick={() => { playClick(); setDefeatStep('results'); }} style={{
-                  flex: 1, padding: '16px', fontFamily: "'Orbitron', sans-serif", fontSize: '10px',
+                  flex: 1, padding: '16px', fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
                   letterSpacing: '2px', color: '#666', background: 'rgba(255,255,255,.05)',
                   border: '1px solid #333', cursor: 'pointer', borderRadius: '4px',
                 }}>
@@ -558,7 +558,7 @@ function GameOverScreen({ state, onRestart, onContinueWithRTT, playerIdentity, r
               LICENCIÉ
             </div>
             <div style={{
-              fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#FF6666',
+              fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#FF6666',
               letterSpacing: '4px', marginTop: '6px',
             }}>
               MOTIF : INCOMPÉTENCE PROFESSIONNELLE
@@ -576,11 +576,11 @@ function GameOverScreen({ state, onRestart, onContinueWithRTT, playerIdentity, r
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                 <div style={{ background: '#091E4A', border: '1px solid #1A3E7A', padding: '12px', textAlign: 'center', borderRadius: '4px' }}>
-                  <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#5B9BD5', letterSpacing: '2px', marginBottom: '6px' }}>ÉTAGE</div>
+                  <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#5B9BD5', letterSpacing: '2px', marginBottom: '8px' }}>ÉTAGE</div>
                   <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '20px', fontWeight: 700, color: '#FFE033' }}>{String(level).padStart(2, '0')}/25</div>
                 </div>
                 <div style={{ background: '#091E4A', border: '1px solid #1A3E7A', padding: '12px', textAlign: 'center', borderRadius: '4px' }}>
-                  <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#5B9BD5', letterSpacing: '2px', marginBottom: '6px' }}>RANG</div>
+                  <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#5B9BD5', letterSpacing: '2px', marginBottom: '8px' }}>RANG</div>
                   <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '20px', fontWeight: 700, color: '#FF7744' }}>{rank > 0 ? `#${rank}` : '—'}</div>
                 </div>
               </div>
@@ -592,9 +592,9 @@ function GameOverScreen({ state, onRestart, onContinueWithRTT, playerIdentity, r
               <ShareButtons pseudo={pseudo} level={level} score={player.score} shareImageUrl={shareImageUrl} onDiploma={handleDiploma} />
               <ReferralChallenge pseudo={pseudo} />
             </div>
-            <div style={{ background: '#5A0000', padding: '6px 14px', display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: 'rgba(255,255,255,.5)' }}>guibour.fr</span>
-              <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: 'rgba(255,255,255,.5)' }}>#WOW2026</span>
+            <div style={{ background: '#5A0000', padding: '8px 16px', display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,.5)' }}>guibour.fr</span>
+              <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,.5)' }}>#WOW2026</span>
             </div>
           </Popup>
         </>
@@ -609,18 +609,18 @@ function RTTOptionEmail({ onSubmit }: { onSubmit: (email: string) => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
   return (
     <div style={{
-      padding: '14px', background: 'rgba(58,42,0,.3)', border: '1px solid #5A4400', borderRadius: '4px',
+      padding: '16px', background: 'rgba(58,42,0,.3)', border: '1px solid #5A4400', borderRadius: '4px',
     }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
         <span style={{ fontSize: '24px' }}>📧</span>
         <div>
           <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '14px', color: '#FFE033', letterSpacing: '1px' }}>LAISSE TON EMAIL</div>
-          <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#C8A040', letterSpacing: '1px' }}>DÉBLOQUER +1 RTT INSTANTANÉMENT</div>
+          <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#C8A040', letterSpacing: '1px' }}>DÉBLOQUER +1 RTT INSTANTANÉMENT</div>
         </div>
       </div>
       <div style={{ display: 'flex', gap: '6px' }}>
         <input ref={inputRef} type="email" placeholder="ton@email.com" style={{
-          flex: 1, padding: '10px 12px', fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
+          flex: 1, padding: '12px 12px', fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
           background: '#091E4A', color: '#fff', border: '1px solid #1A3E7A', outline: 'none', borderRadius: '4px',
         }} />
         <button onClick={() => {
@@ -628,7 +628,7 @@ function RTTOptionEmail({ onSubmit }: { onSubmit: (email: string) => void }) {
           const email = inputRef.current?.value;
           if (email && email.includes('@') && email.includes('.')) onSubmit(email);
         }} style={{
-          padding: '10px 18px', background: '#FFE033', color: '#0A1520', border: 'none', cursor: 'pointer',
+          padding: '12px 24px', background: '#FFE033', color: '#0A1520', border: 'none', cursor: 'pointer',
           fontFamily: "'Lilita One', cursive", fontSize: '14px', borderRadius: '4px',
         }}>OK</button>
       </div>
@@ -667,23 +667,23 @@ function ReferralChallenge({ pseudo }: { pseudo: string }) {
 
   return (
     <div style={{
-      marginTop: '10px',
-      padding: '14px',
+      marginTop: '12px',
+      padding: '16px',
       background: 'rgba(40,25,0,.4)',
       border: '1px solid #8B6508',
       borderRadius: '4px',
       animation: 'fadeIn 0.4s ease-out',
     }}>
-      <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '12px' }}>
         <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '14px', color: '#FFB347', letterSpacing: '2px' }}>
           ⚔️ DÉFIE UN COLLÈGUE
         </div>
-        <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#C8A040', letterSpacing: '1px', marginTop: '4px' }}>
+        <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#C8A040', letterSpacing: '1px', marginTop: '4px' }}>
           ENVOIE UN DÉFI PAR EMAIL — GAGNE +1 RTT SI TON AMI JOUE
         </div>
       </div>
       {status === 'sent' ? (
-        <div style={{ textAlign: 'center', padding: '10px', color: '#00C8BE', fontFamily: "'Orbitron', sans-serif", fontSize: '10px', letterSpacing: '1px' }}>
+        <div style={{ textAlign: 'center', padding: '10px', color: '#00C8BE', fontFamily: "'Orbitron', sans-serif", fontSize: '11px', letterSpacing: '1px' }}>
           ✅ DÉFI ENVOYÉ ! RTT DÉBLOQUÉ QUAND IL JOUE
         </div>
       ) : (
@@ -693,7 +693,7 @@ function ReferralChallenge({ pseudo }: { pseudo: string }) {
             type="email"
             placeholder="email-du-collegue@enterprise.com"
             style={{
-              flex: 1, padding: '10px 12px', fontFamily: "'Orbitron', sans-serif", fontSize: '10px',
+              flex: 1, padding: '12px 12px', fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
               background: '#091E4A', color: '#fff', border: '1px solid #1A3E7A', outline: 'none', borderRadius: '4px',
               minWidth: 0,
             }}
@@ -702,7 +702,7 @@ function ReferralChallenge({ pseudo }: { pseudo: string }) {
             onClick={handleSend}
             disabled={status === 'sending'}
             style={{
-              padding: '10px 16px', background: status === 'sending' ? '#5A4400' : '#FFB347', color: '#0A1520',
+              padding: '12px 16px', background: status === 'sending' ? '#5A4400' : '#FFB347', color: '#0A1520',
               border: 'none', cursor: status === 'sending' ? 'wait' : 'pointer',
               fontFamily: "'Lilita One', cursive", fontSize: '11px', borderRadius: '4px', whiteSpace: 'nowrap',
               letterSpacing: '1px',

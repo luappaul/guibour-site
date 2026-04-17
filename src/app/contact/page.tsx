@@ -64,7 +64,7 @@ export default function ContactPage() {
               <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '32px', color: '#fff', letterSpacing: '4px' }}>
                 MESSAGE ENVOYÉ
               </div>
-              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#fff', opacity: 0.5, letterSpacing: '3px' }}>
+              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#fff', opacity: 0.5, letterSpacing: '3px' }}>
                 LA DIRECTION VOUS RÉPONDRA APRÈS LA PAUSE CAFÉ.
               </div>
               <button
@@ -87,7 +87,7 @@ export default function ContactPage() {
 
               {/* Title */}
               <div style={{ marginBottom: '36px' }}>
-                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#fff', opacity: 0.4, letterSpacing: '5px', marginBottom: '8px' }}>
+                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#fff', opacity: 0.4, letterSpacing: '5px', marginBottom: '8px' }}>
                   04 / CONTACT
                 </div>
                 <div style={{
@@ -127,8 +127,8 @@ export default function ContactPage() {
 
                 {error && (
                   <div style={{
-                    fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#FF4444',
-                    letterSpacing: '1px', padding: '10px 14px',
+                    fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#FF4444',
+                    letterSpacing: '1px', padding: '12px 16px',
                     background: 'rgba(255,68,68,.08)', border: '1px solid rgba(255,68,68,.3)',
                   }}>⚠ {error}</div>
                 )}
@@ -170,10 +170,10 @@ export default function ContactPage() {
 const labelCss: React.CSSProperties = {
   display: 'block',
   fontFamily: "'Orbitron', sans-serif",
-  fontSize: '8px',
+  fontSize: '11px',
   color: '#ffffff',
   letterSpacing: '3px',
-  marginBottom: '7px',
+  marginBottom: '8px',
   opacity: 0.85,
 };
 
@@ -181,7 +181,7 @@ const inputCss: React.CSSProperties = {
   width: '100%',
   background: '#ffffff',
   border: '1px solid rgba(255,255,255,.2)',
-  padding: '11px 14px',
+  padding: '12px 16px',
   fontFamily: "'Orbitron', sans-serif",
   fontSize: '12px',
   color: '#0E2660',

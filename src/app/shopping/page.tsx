@@ -126,19 +126,19 @@ function ProductCard({ p, onAdd }: { p: Product; onAdd: (p: Product) => void }) 
       {/* Reference bar */}
       <div style={{
         background: hovered ? 'rgba(0,255,238,.08)' : 'rgba(0,0,0,.4)',
-        padding: '6px 12px',
+        padding: '8px 12px',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         borderBottom: `1px solid ${hovered ? 'rgba(0,255,238,.2)' : 'rgba(0,255,238,.05)'}`,
         transition: 'all .25s',
       }}>
         <span style={{
-          fontFamily: "'Orbitron', sans-serif", fontSize: '7px',
+          fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
           color: hovered ? '#00FFEE' : '#2A4060', letterSpacing: '2px',
           textShadow: hovered ? '0 0 6px rgba(0,255,238,.8)' : 'none',
           transition: 'all .25s',
         }}>{p.cell}</span>
         <span style={{
-          fontFamily: "'Orbitron', sans-serif", fontSize: '7px',
+          fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
           color: '#1E3050', letterSpacing: '1px',
         }}>REF: {p.ref}</span>
       </div>
@@ -150,7 +150,7 @@ function ProductCard({ p, onAdd }: { p: Product; onAdd: (p: Product) => void }) 
           background: p.tag === 'NOUVEAU' ? 'rgba(0,255,238,.15)' : p.tag === 'CONCERT' ? 'rgba(255,68,68,.15)' : 'rgba(255,200,10,.12)',
           color: p.tag === 'NOUVEAU' ? '#00FFEE' : p.tag === 'CONCERT' ? '#FF4444' : '#FFD700',
           border: `1px solid ${p.tag === 'NOUVEAU' ? 'rgba(0,255,238,.5)' : p.tag === 'CONCERT' ? 'rgba(255,68,68,.5)' : 'rgba(255,200,10,.4)'}`,
-          fontFamily: "'Orbitron', sans-serif", fontSize: '7px', letterSpacing: '2px', padding: '3px 8px',
+          fontFamily: "'Orbitron', sans-serif", fontSize: '11px', letterSpacing: '2px', padding: '3px 8px',
           textShadow: p.tag === 'NOUVEAU' ? '0 0 8px rgba(0,255,238,.7)' : p.tag === 'CONCERT' ? '0 0 8px rgba(255,68,68,.6)' : '0 0 8px rgba(255,200,10,.6)',
         }}>{p.tag}</div>
       )}
@@ -177,18 +177,18 @@ function ProductCard({ p, onAdd }: { p: Product; onAdd: (p: Product) => void }) 
           transition: 'all .25s',
         }}>{p.name}</h3>
         <span style={{
-          fontFamily: "'Orbitron', sans-serif", fontSize: '7px',
+          fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
           color: '#2A4060', letterSpacing: '2px', display: 'block', marginBottom: '12px',
         }}>{p.desc}</span>
 
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: 'auto', marginBottom: '14px' }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: 'auto', marginBottom: '16px' }}>
           <span style={{
             fontFamily: "'Lilita One', cursive", fontSize: '26px',
             color: p.svgType === 'ticket' ? (hovered ? '#FF4444' : '#FF6666') : (hovered ? '#00FFEE' : '#5B8FBF'),
             textShadow: hovered ? (p.svgType === 'ticket' ? '0 0 16px rgba(255,68,68,.6)' : '0 0 16px rgba(0,255,238,.6)') : 'none',
             transition: 'all .25s',
           }}>{p.price === 0 ? 'LIVE' : `${p.price}€`}</span>
-          <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#1E3050', letterSpacing: '1px' }}>{p.price === 0 ? '24 JUIN 2026' : 'TVA INCL.'}</span>
+          <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#1E3050', letterSpacing: '1px' }}>{p.price === 0 ? '24 JUIN 2026' : 'TVA INCL.'}</span>
         </div>
 
         {p.svgType === 'ticket' ? (
@@ -198,7 +198,7 @@ function ProductCard({ p, onAdd }: { p: Product; onAdd: (p: Product) => void }) 
             rel="noopener noreferrer"
             style={{
               display: 'block', width: '100%', textAlign: 'center',
-              fontFamily: "'Orbitron', sans-serif", fontSize: '9px', letterSpacing: '2px',
+              fontFamily: "'Orbitron', sans-serif", fontSize: '11px', letterSpacing: '2px',
               color: hovered ? '#fff' : '#FF6666',
               background: hovered ? 'linear-gradient(135deg, #CC0000, #880000)' : 'rgba(100,0,0,.4)',
               border: `1px solid ${hovered ? 'rgba(255,68,68,.8)' : 'rgba(255,68,68,.3)'}`,
@@ -212,7 +212,7 @@ function ProductCard({ p, onAdd }: { p: Product; onAdd: (p: Product) => void }) 
             onClick={handleAdd}
             style={{
               width: '100%',
-              fontFamily: "'Orbitron', sans-serif", fontSize: '9px', letterSpacing: '2px',
+              fontFamily: "'Orbitron', sans-serif", fontSize: '11px', letterSpacing: '2px',
               color: added ? '#000' : (hovered ? '#00FFEE' : '#4A7AA8'),
               background: added
                 ? '#00FFEE'
@@ -252,7 +252,7 @@ function CartPanel({
         borderBottom: '1px solid rgba(0,255,238,.12)',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       }}>
-        <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#00FFEE', letterSpacing: '3px', textShadow: '0 0 8px rgba(0,255,238,.6)' }}>
+        <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#00FFEE', letterSpacing: '3px', textShadow: '0 0 8px rgba(0,255,238,.6)' }}>
           PANIER // {cart.reduce((s, l) => s + l.qty, 0)} ARTICLE(S)
         </span>
         <button onClick={onClose} style={{
@@ -264,19 +264,19 @@ function CartPanel({
       <div style={{ flex: 1, overflowY: 'auto', padding: '12px' }}>
         {cart.length === 0 ? (
           <div style={{
-            fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#1E3050',
+            fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#1E3050',
             letterSpacing: '2px', padding: '24px', textAlign: 'center',
           }}>PANIER VIDE</div>
         ) : cart.map(line => (
           <div key={line.product.ref} style={{
-            display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 8px',
+            display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 8px',
             borderBottom: '1px solid rgba(0,255,238,.05)',
           }}>
             <div style={{ flex: 1 }}>
               <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '13px', color: '#A8C8E8', letterSpacing: '1px' }}>
                 {line.product.name}
               </div>
-              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#1E3050', marginTop: '2px' }}>
+              <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#1E3050', marginTop: '2px' }}>
                 {line.product.price}€ × {line.qty} = {line.product.price * line.qty}€
               </div>
             </div>
@@ -299,9 +299,9 @@ function CartPanel({
       </div>
 
       {cart.length > 0 && (
-        <div style={{ padding: '14px 16px', borderTop: '1px solid rgba(0,255,238,.12)', background: 'rgba(0,0,0,.3)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '14px' }}>
-            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#2A4060', letterSpacing: '3px' }}>TOTAL</span>
+        <div style={{ padding: '16px 16px', borderTop: '1px solid rgba(0,255,238,.12)', background: 'rgba(0,0,0,.3)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '16px' }}>
+            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#2A4060', letterSpacing: '3px' }}>TOTAL</span>
             <span style={{
               fontFamily: "'Lilita One', cursive", fontSize: '24px', color: '#00FFEE',
               textShadow: '0 0 14px rgba(0,255,238,.6)',
@@ -375,11 +375,11 @@ export default function ShoppingPage() {
               letterSpacing: '4px', textAlign: 'center',
               textShadow: '0 0 24px rgba(0,255,235,.3)',
             }}>COMMANDE REÇUE</div>
-            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#00FFEE', letterSpacing: '3px', opacity: .7 }}>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#00FFEE', letterSpacing: '3px', opacity: .7 }}>
               ON VOUS ENVOIE ÇA... APRÈS LA PAUSE CAFÉ.
             </div>
             <div style={{
-              fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#1E3050',
+              fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#1E3050',
               padding: '8px 18px', border: '1px solid rgba(0,255,235,.08)',
               background: 'rgba(0,255,235,.02)', letterSpacing: '2px',
             }}>
@@ -419,7 +419,7 @@ export default function ShoppingPage() {
             }}>
               <GlobeIcon size={44} color="#00FFEE" />
               <div>
-                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#2A4060', letterSpacing: '5px' }}>BOUTIQUE</div>
+                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#2A4060', letterSpacing: '5px' }}>BOUTIQUE</div>
                 <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '28px', color: '#FFF', letterSpacing: '3px', textShadow: '0 0 20px rgba(0,255,235,.15)' }}>
                   FINALISER LA COMMANDE
                 </div>
@@ -442,7 +442,7 @@ export default function ShoppingPage() {
                       border: '1px solid rgba(0,255,235,.07)',
                       padding: '12px 16px 10px', marginBottom: '2px',
                     }}>
-                      <label style={{ display: 'block', fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#2A4060', letterSpacing: '3px', marginBottom: '6px' }}>
+                      <label style={{ display: 'block', fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#2A4060', letterSpacing: '3px', marginBottom: '8px' }}>
                         {f.label}
                       </label>
                       <input
@@ -462,7 +462,7 @@ export default function ShoppingPage() {
 
                   <div style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
                     <button type="button" onClick={() => setScreen('shop')} style={{
-                      fontFamily: "'Orbitron', sans-serif", fontSize: '10px', letterSpacing: '2px',
+                      fontFamily: "'Orbitron', sans-serif", fontSize: '11px', letterSpacing: '2px',
                       color: '#2A4060', background: 'transparent',
                       border: '1px solid rgba(0,255,235,.1)', padding: '13px 24px', cursor: 'pointer',
                     }}>← RETOUR</button>
@@ -481,7 +481,7 @@ export default function ShoppingPage() {
                 background: 'rgba(0,0,0,.25)', borderLeft: '1px solid rgba(0,255,235,.08)',
                 padding: '32px 24px', display: 'flex', flexDirection: 'column', gap: '0',
               }}>
-                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#00FFEE', letterSpacing: '3px', marginBottom: '16px', textShadow: '0 0 8px rgba(0,255,235,.5)' }}>
+                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#00FFEE', letterSpacing: '3px', marginBottom: '16px', textShadow: '0 0 8px rgba(0,255,235,.5)' }}>
                   RÉCAPITULATIF
                 </div>
                 {cart.map(line => (
@@ -491,7 +491,7 @@ export default function ShoppingPage() {
                   }}>
                     <div>
                       <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '13px', color: '#A8C8E8' }}>{line.product.name}</div>
-                      <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#1E3050' }}>QTÉ: {line.qty}</div>
+                      <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#1E3050' }}>QTÉ: {line.qty}</div>
                     </div>
                     <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '15px', color: '#00FFEE', alignSelf: 'center' }}>
                       {line.product.price * line.qty}€
@@ -499,7 +499,7 @@ export default function ShoppingPage() {
                   </div>
                 ))}
                 <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(0,255,235,.12)', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                  <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#2A4060', letterSpacing: '3px' }}>TOTAL</span>
+                  <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#2A4060', letterSpacing: '3px' }}>TOTAL</span>
                   <span style={{ fontFamily: "'Lilita One', cursive", fontSize: '28px', color: '#00FFEE', textShadow: '0 0 14px rgba(0,255,235,.6)' }}>{total}€</span>
                 </div>
               </div>
@@ -532,7 +532,7 @@ export default function ShoppingPage() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
               <GlobeIcon size={52} color="#00FFEE" />
               <div>
-                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#2A4060', letterSpacing: '5px', marginBottom: '4px' }}>
+                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#2A4060', letterSpacing: '5px', marginBottom: '4px' }}>
                   03 / BOUTIQUE
                 </div>
                 <div style={{
@@ -542,7 +542,7 @@ export default function ShoppingPage() {
                   textShadow: '0 0 24px rgba(0,255,235,.18)',
                 }}>BOUTIQUE W.O.W</div>
                 <div style={{
-                  fontFamily: "'Orbitron', sans-serif", fontSize: '8px',
+                  fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
                   color: '#00FFEE', letterSpacing: '4px', marginTop: '4px',
                   textShadow: '0 0 8px rgba(0,255,235,.6)',
                 }}>MERCH OFFICIEL — SAISON 01</div>
@@ -553,8 +553,8 @@ export default function ShoppingPage() {
             <button
               onClick={() => setShowCart(v => !v)}
               style={{
-                display: 'flex', alignItems: 'center', gap: '10px',
-                fontFamily: "'Orbitron', sans-serif", fontSize: '10px', letterSpacing: '2px',
+                display: 'flex', alignItems: 'center', gap: '12px',
+                fontFamily: "'Orbitron', sans-serif", fontSize: '11px', letterSpacing: '2px',
                 color: itemCount > 0 ? '#00FFEE' : '#2A4060',
                 background: itemCount > 0 ? 'rgba(0,255,235,.08)' : 'rgba(255,255,255,.03)',
                 border: `1px solid ${itemCount > 0 ? 'rgba(0,255,235,.4)' : 'rgba(0,255,235,.08)'}`,
@@ -570,7 +570,7 @@ export default function ShoppingPage() {
               {itemCount > 0 && (
                 <span style={{
                   background: '#00FFEE', color: '#000',
-                  fontFamily: "'Orbitron', sans-serif", fontSize: '8px', fontWeight: 700,
+                  fontFamily: "'Orbitron', sans-serif", fontSize: '11px', fontWeight: 700,
                   width: '18px', height: '18px', borderRadius: '50%',
                   display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                 }}>{itemCount}</span>
@@ -600,7 +600,7 @@ export default function ShoppingPage() {
               {/* Note Excel dégagée */}
               <div style={{
                 gridColumn: '1 / -1', marginTop: '16px',
-                fontFamily: "'Orbitron', sans-serif", fontSize: '8px',
+                fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
                 color: '#1A2E48', letterSpacing: '2px', lineHeight: 1.8,
                 padding: '12px', border: '1px solid rgba(0,255,235,.04)',
                 background: 'rgba(0,255,235,.01)',

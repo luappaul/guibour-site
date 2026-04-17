@@ -173,7 +173,7 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
         <span style={{
           fontFamily: "'Orbitron', sans-serif",
           fontSize: '11px',
-          color: phase === 'shake' ? '#FF3333' : '#00D4CC',
+          color: phase === 'shake' ? '#FF3333' : '#00C8BE',
           fontWeight: 700,
           paddingLeft: '8px',
           transition: 'color 0.3s',
@@ -196,7 +196,7 @@ export default function ExcelChrome({ formulaText = '=LAUNCH_GAME("GUIBOUR","SIN
               fontSize: '9px',
               color: '#FFFFFF',
               letterSpacing: '1px',
-              caretColor: '#00D4CC',
+              caretColor: '#00C8BE',
             }}
           />
         ) : (

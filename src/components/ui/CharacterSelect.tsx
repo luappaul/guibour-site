@@ -397,7 +397,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
         position: 'relative', zIndex: 2, background: '#0C2A62', border: '1px solid #1A3E7A',
         padding: '5px 18px', display: 'inline-flex', alignItems: 'center', gap: '10px', marginBottom: '14px',
       }}>
-        <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '12px', color: '#00D4CC', fontWeight: 700 }}>fx</span>
+        <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '12px', color: '#00C8BE', fontWeight: 700 }}>fx</span>
         <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#5B9BD5', letterSpacing: '1px' }}>
           =SELECT(&quot;PERSONNAGE&quot;) → {pseudo || 'EMPLOYEE'}
         </span>
@@ -464,7 +464,7 @@ export default function CharacterSelect({ onSelect, onBack }: CharacterSelectPro
                   }}>{char.emoji}</div>
                   <div style={{ padding: '12px', background: 'rgba(0,0,0,.2)' }}>
                     <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '15px', color: isFront ? '#FFFFFF' : '#A8D8FF', letterSpacing: '2px', marginBottom: '1px' }}>{char.name}</div>
-                    <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: char.locked ? '#FF6B6B' : '#00D4CC', letterSpacing: '1px', marginBottom: '8px' }}>{char.title}</div>
+                    <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: char.locked ? '#FF6B6B' : '#00C8BE', letterSpacing: '1px', marginBottom: '8px' }}>{char.title}</div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                       {char.stats.map(stat => (
                         <div key={stat.label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

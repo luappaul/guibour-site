@@ -111,7 +111,7 @@ function PodiumCard({
           ? 'linear-gradient(160deg, rgba(200,150,10,.12) 0%, rgba(14,38,96,.9) 100%)'
           : 'rgba(5,15,45,.85)',
         border: `1px solid ${c}55`,
-        padding: '14px 20px', textAlign: 'center',
+        padding: '16px 24px', textAlign: 'center',
         minWidth: rank === 1 ? '160px' : '136px',
         boxShadow: rank === 1 ? `0 0 28px ${glow.replace('.6','.25')}` : 'none',
         position: 'relative', overflow: 'hidden',
@@ -132,7 +132,7 @@ function PodiumCard({
         }}>{entry.name}</div>
 
         <div style={{
-          fontFamily: "'Orbitron', sans-serif", fontSize: '7px',
+          fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
           color: c, letterSpacing: '2px', marginTop: '3px', opacity: .85,
           textShadow: `0 0 6px ${glow}`,
         }}>{getRankTitle(rank)}</div>
@@ -144,14 +144,14 @@ function PodiumCard({
         }}>{formatSalary(entry.score)}</div>
 
         <div style={{
-          fontFamily: "'Orbitron', sans-serif", fontSize: '7px',
+          fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
           color: '#2A4060', marginTop: '3px',
         }}>ÉTG {entry.level}</div>
 
         {isMe && (
           <div style={{
             marginTop: '8px', fontFamily: "'Orbitron', sans-serif",
-            fontSize: '7px', color: c, letterSpacing: '2px',
+            fontSize: '11px', color: c, letterSpacing: '2px',
             textShadow: `0 0 6px ${glow}`, opacity: .85,
           }}>▲ C&apos;EST VOUS</div>
         )}
@@ -277,7 +277,7 @@ export default function ResultatsPage() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
               <GlobeIcon size={52} color="#00FFEE" />
               <div>
-                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#2A4060', letterSpacing: '5px', marginBottom: '4px' }}>
+                <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#2A4060', letterSpacing: '5px', marginBottom: '4px' }}>
                   01 / CLASSEMENT
                 </div>
                 <div style={{
@@ -287,7 +287,7 @@ export default function ResultatsPage() {
                   textShadow: '0 0 24px rgba(0,255,235,.18)',
                 }}>RÉSULTATS</div>
                 <div style={{
-                  fontFamily: "'Orbitron', sans-serif", fontSize: '8px',
+                  fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
                   color: '#00FFEE', letterSpacing: '4px', marginTop: '4px',
                   textShadow: '0 0 8px rgba(0,255,235,.6)',
                 }}>W.O.W — CLASSEMENT GÉNÉRAL</div>
@@ -303,11 +303,11 @@ export default function ResultatsPage() {
                 { label: 'NIVEAU MAX',value: board[0] ? `ÉTG ${board[0].level}` : '—' },
               ].map(s => (
                 <div key={s.label} style={{
-                  textAlign: 'center', padding: '10px 16px',
+                  textAlign: 'center', padding: '12px 16px',
                   background: 'rgba(0,255,235,.03)',
                   border: '1px solid rgba(0,255,235,.12)',
                 }}>
-                  <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#2A4060', letterSpacing: '3px' }}>{s.label}</div>
+                  <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#2A4060', letterSpacing: '3px' }}>{s.label}</div>
                   <div style={{
                     fontFamily: "'Lilita One', cursive", fontSize: '18px',
                     color: '#00FFEE', marginTop: '3px',
@@ -324,7 +324,7 @@ export default function ResultatsPage() {
             {topThree.length >= 1 && (
               <div style={{ marginBottom: '56px' }}>
                 <div style={{
-                  fontFamily: "'Orbitron', sans-serif", fontSize: '8px',
+                  fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
                   color: '#2A4060', letterSpacing: '5px', marginBottom: '32px',
                   display: 'flex', alignItems: 'center', gap: '12px',
                 }}>
@@ -332,7 +332,7 @@ export default function ResultatsPage() {
                   <span style={{ flex: 1, height: '1px', background: 'linear-gradient(to right,rgba(0,255,235,.2),transparent)' }} />
                   {myEmpId && board.slice(0,3).some(e => e.employeeId === myEmpId) && (
                     <span style={{
-                      fontFamily: "'Orbitron', sans-serif", fontSize: '7px',
+                      fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
                       color: '#00FFEE', letterSpacing: '2px', opacity: .75,
                     }}>📷 CLIQUEZ SUR VOTRE AVATAR POUR AJOUTER VOTRE PHOTO</span>
                   )}
@@ -368,13 +368,13 @@ export default function ResultatsPage() {
             {!loading && (
               <>
                 <div style={{
-                  fontFamily: "'Orbitron', sans-serif", fontSize: '8px',
+                  fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
                   color: '#2A4060', letterSpacing: '5px', marginBottom: '14px',
                   display: 'flex', alignItems: 'center', gap: '12px',
                 }}>
                   CLASSEMENT COMPLET
                   <span style={{ flex: 1, height: '1px', background: 'linear-gradient(to right,rgba(0,255,235,.15),transparent)' }} />
-                  <span style={{ fontSize: '7px' }}>={board.length} ENTRÉES</span>
+                  <span style={{ fontSize: '11px' }}>={board.length} ENTRÉES</span>
                 </div>
 
                 <div style={{
@@ -390,8 +390,8 @@ export default function ResultatsPage() {
                   }}>
                     {['RANG', 'PSEUDO', 'TITRE', 'NIVEAU', 'SALAIRE'].map(col => (
                       <div key={col} style={{
-                        padding: '10px 14px',
-                        fontFamily: "'Orbitron', sans-serif", fontSize: '8px',
+                        padding: '12px 16px',
+                        fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
                         color: '#00FFEE', letterSpacing: '2px',
                         borderRight: '1px solid rgba(0,255,235,.06)',
                         textShadow: '0 0 6px rgba(0,255,235,.5)',
@@ -454,7 +454,7 @@ export default function ResultatsPage() {
                         {/* Titre */}
                         <div style={{
                           padding: '12px 14px',
-                          fontFamily: "'Orbitron', sans-serif", fontSize: '8px',
+                          fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
                           color: isMedal ? rc! : '#1E3050', letterSpacing: '1px',
                           borderRight: '1px solid rgba(0,255,235,.04)',
                           display: 'flex', alignItems: 'center',
@@ -485,7 +485,7 @@ export default function ResultatsPage() {
 
                 <div style={{
                   marginTop: '12px',
-                  fontFamily: "'Orbitron', sans-serif", fontSize: '7px',
+                  fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
                   color: '#1A2E48', letterSpacing: '2px',
                   display: 'flex', justifyContent: 'space-between',
                 }}>

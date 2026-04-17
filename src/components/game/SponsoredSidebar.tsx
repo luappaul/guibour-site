@@ -179,7 +179,7 @@ function SponsoredSidebar({ currentLevel, totalLevels, assets }: Props) {
                   fontWeight: isCurrent ? 800 : 400,
                   color: isCurrent ? '#0A1520' : isCompleted ? '#fff' : '#3C5A7A',
                   background: isCurrent
-                    ? '#00C9C8'
+                    ? '#00C8BE'
                     : isCompleted
                     ? 'rgba(0,168,157,0.35)'
                     : 'transparent',

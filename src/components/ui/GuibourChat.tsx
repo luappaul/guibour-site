@@ -175,7 +175,7 @@ export default function GuibourChat() {
           right: '24px',
           background: '#0E2660',
           color: '#A8D8FF',
-          padding: '10px 14px',
+          padding: '12px 16px',
           borderRadius: '12px',
           boxShadow: '0 4px 20px rgba(0,0,0,0.45), 0 0 16px rgba(0,120,255,0.15)',
           fontSize: '12px',
@@ -221,7 +221,7 @@ export default function GuibourChat() {
           zIndex: 9997,
           display: 'flex',
           flexDirection: 'column',
-          gap: '6px',
+          gap: '8px',
           alignItems: 'flex-end',
           pointerEvents: 'none',
         }}>
@@ -230,9 +230,9 @@ export default function GuibourChat() {
               background: '#0A1E40',
               color: '#A8D8FF',
               padding: '8px 12px',
-              borderRadius: '10px',
+              borderRadius: '8px',
               boxShadow: '0 2px 12px rgba(0,0,0,0.4), 0 0 10px rgba(0,120,255,0.12)',
-              fontSize: '10px',
+              fontSize: '11px',
               fontFamily: "'Orbitron', sans-serif",
               fontWeight: 600,
               letterSpacing: '0.5px',
@@ -266,7 +266,7 @@ export default function GuibourChat() {
           background: 'linear-gradient(135deg, #0E2660 0%, #0A3A6E 100%)',
           border: '1px solid rgba(0,150,255,0.35)',
           borderRadius: '24px',
-          padding: '10px 18px 10px 14px',
+          padding: '12px 24px 12px 16px',
           cursor: 'pointer',
           boxShadow: '0 4px 20px rgba(0,0,0,0.5), 0 0 12px rgba(0,100,255,0.12)',
           color: '#fff',
@@ -306,7 +306,7 @@ export default function GuibourChat() {
           width: '360px',
           maxHeight: '520px',
           background: '#060F1E',
-          borderRadius: '10px',
+          borderRadius: '8px',
           boxShadow: '0 8px 48px rgba(0,0,0,0.6), 0 0 32px rgba(0,80,200,0.12)',
           border: '1px solid rgba(0,150,255,0.2)',
           zIndex: 999,
@@ -322,7 +322,7 @@ export default function GuibourChat() {
             padding: '12px 16px',
             display: 'flex',
             alignItems: 'center',
-            gap: '10px',
+            gap: '12px',
             flexShrink: 0,
             borderBottom: '1px solid rgba(0,150,255,0.2)',
           }}>
@@ -344,7 +344,7 @@ export default function GuibourChat() {
               }}>
                 GUIBOT
               </div>
-              <div style={{ color: '#A8D8FF', fontSize: '9px', marginTop: '2px', letterSpacing: '1px', opacity: 0.8 }}>
+              <div style={{ color: '#A8D8FF', fontSize: '11px', marginTop: '2px', letterSpacing: '1px', opacity: 0.8 }}>
                 ASSISTANT IA · EN LIGNE
               </div>
             </div>
@@ -354,7 +354,7 @@ export default function GuibourChat() {
               border: '1px solid rgba(0,200,190,0.3)',
               borderRadius: '4px',
               padding: '2px 6px',
-              fontSize: '8px',
+              fontSize: '11px',
               color: '#00C8BE',
               letterSpacing: '1px',
               fontFamily: "'Orbitron', sans-serif",
@@ -423,7 +423,7 @@ export default function GuibourChat() {
             {loading && (
               <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <div style={{
-                  padding: '10px 16px',
+                  padding: '12px 16px',
                   background: '#0D1F3C',
                   borderRadius: '12px 12px 12px 3px',
                   border: '1px solid rgba(0,100,180,0.15)',
@@ -452,7 +452,7 @@ export default function GuibourChat() {
               padding: '8px 10px',
               background: '#0A1628',
               display: 'flex',
-              gap: '6px',
+              gap: '8px',
               flexWrap: 'wrap',
               flexShrink: 0,
               borderTop: '1px solid rgba(0,100,180,0.2)',
@@ -466,7 +466,7 @@ export default function GuibourChat() {
                     border: '1px solid rgba(0,150,255,0.3)',
                     borderRadius: '8px',
                     padding: '4px 10px',
-                    fontSize: '10px',
+                    fontSize: '11px',
                     cursor: 'pointer',
                     color: '#A8D8FF',
                     fontFamily: "'Orbitron', sans-serif",
@@ -492,7 +492,7 @@ export default function GuibourChat() {
 
           {/* Zone de saisie */}
           <div style={{
-            padding: '10px 12px',
+            padding: '12px 12px',
             background: '#0A1628',
             borderTop: '1px solid rgba(0,100,180,0.2)',
             display: 'flex',

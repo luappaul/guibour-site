@@ -101,7 +101,7 @@ function ThemeToggle() {
   const tooltip = override === 'auto' ? 'Mode: Automatique' : override === 'day' ? 'Mode: Jour' : 'Mode: Nuit';
 
   return (
-    <div style={{ borderTop: '1px solid #1B3A6B', padding: '6px 0', flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap' }}>
+    <div style={{ borderTop: '1px solid #1B3A6B', padding: '8px 0', flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap' }}>
       <button
         onClick={toggleTheme}
         title={tooltip}
@@ -109,9 +109,9 @@ function ThemeToggle() {
         onMouseLeave={() => setHovered(false)}
         style={{
           display: 'flex', alignItems: 'center', gap: '10px',
-          width: '100%', padding: '6px 14px',
+          width: '100%', padding: '8px 16px',
           background: 'transparent', border: 'none', cursor: 'pointer',
-          fontFamily: "'Orbitron', sans-serif", fontSize: '8px', letterSpacing: '2px',
+          fontFamily: "'Orbitron', sans-serif", fontSize: '11px', letterSpacing: '2px',
           color: hovered ? '#7AAFD4' : '#1E3F6E',
           transition: 'color 0.15s',
           overflow: 'hidden',
@@ -165,7 +165,7 @@ export default function ExcelNav() {
         <GlobeIcon size={28} color="#00C8BE" />
         <div style={{ overflow: 'hidden' }}>
           <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '13px', color: '#FFFFFF', letterSpacing: '2px', lineHeight: 1.1, textShadow: '0 0 10px rgba(255,255,255,.5)' }}>GUIBOUR</div>
-          <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', fontWeight: 400, color: '#00D4CC', letterSpacing: '3px', marginTop: '-1px' }}>SYSTEM</div>
+          <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', fontWeight: 400, color: '#00C8BE', letterSpacing: '3px', marginTop: '-1px' }}>SYSTEM</div>
         </div>
       </a>
 
@@ -177,7 +177,7 @@ export default function ExcelNav() {
           return (
             <Link key={tab.href} href={tab.href} onClick={(e) => handleNavClick(e, tab.href)} style={{
               display: 'flex', alignItems: 'center', gap: '12px',
-              padding: '10px 0 10px 11px',
+              padding: '12px 0 12px 12px',
               fontFamily: "'Lilita One', cursive", fontSize: '13px', letterSpacing: '2px',
               color: active ? '#A8D8FF' : '#7AAFD4',
               textDecoration: 'none',
@@ -205,11 +205,11 @@ export default function ExcelNav() {
       </div>
 
       {/* Legal links — very discreet, icon-only when collapsed */}
-      <div style={{ borderTop: '1px solid #1B3A6B', padding: '6px 0', flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap' }}>
+      <div style={{ borderTop: '1px solid #1B3A6B', padding: '8px 0', flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap' }}>
         {legalLinks.map(link => (
           <Link key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} style={{
             display: 'block', padding: '5px 14px',
-            fontFamily: "'Orbitron', sans-serif", fontSize: '8px', letterSpacing: '2px',
+            fontFamily: "'Orbitron', sans-serif", fontSize: '11px', letterSpacing: '2px',
             color: '#1E3F6E', textDecoration: 'none', overflow: 'hidden',
             transition: 'color 0.15s',
           }}

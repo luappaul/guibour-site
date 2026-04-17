@@ -1114,7 +1114,7 @@ function drawPlayer(ctx: CanvasRenderingContext2D, state: GameState) {
     ctx.drawImage(idleImg, player.x - idleW / 2, idleY, idleW, idleH);
   } else {
     // Fallback rectangle
-    ctx.fillStyle = '#00C9C8';
+    ctx.fillStyle = '#00C8BE';
     ctx.fillRect(player.x - player.width / 2, player.y - player.height, player.width, player.height);
   }
 

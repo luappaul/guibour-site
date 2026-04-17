@@ -23,7 +23,7 @@
   --color-sky:       #A8D8FF;
   --color-teal:      #007B8A;
   --color-teal-lt:   #00A89D;
-  --color-cyan:      #00D4CC;
+  --color-cyan:      #00C8BE;
   --color-bg:        #EEF3F8;
   --color-bg2:       #F7FAFD;
   --color-card:      #FFFFFF;
@@ -38,6 +38,116 @@
   --font-impact:  'Lilita One', cursive;
   --font-mono:    'Orbitron', sans-serif;
   --font-body:    'Orbitron', sans-serif;
+}
+
+/* ===== DESIGN SYSTEM — Typography Scale ===== */
+/* Minimum text size: 11px. No text below 11px on the site. */
+/* Scale: 11, 13, 15, 18, 22, 28, 36, 48, 64 */
+
+/* ===== DESIGN SYSTEM — Spacing Scale ===== */
+/* Scale: 4, 8, 12, 16, 24, 32, 48, 64 */
+
+/* ===== DESIGN SYSTEM — Border Radius ===== */
+/* Scale: 2px (sharp), 4px (default), 8px (rounded), 16px (pill), 50% (circle) */
+
+/* ===== DESIGN SYSTEM — Reusable Card ===== */
+.gs-card {
+  background: rgba(9,30,74,0.95);
+  border: 1px solid #1A3E7A;
+  border-radius: 4px;
+  padding: 16px;
+}
+.gs-card-dark {
+  background: rgba(5,15,45,.75);
+  border: 1px solid rgba(0,255,238,.1);
+  border-radius: 4px;
+}
+
+/* ===== DESIGN SYSTEM — Buttons ===== */
+.gs-btn-primary {
+  font-family: 'Lilita One', cursive;
+  font-size: 18px;
+  letter-spacing: 3px;
+  color: #fff;
+  background: linear-gradient(135deg, #0047AB, #007B8A);
+  border: 2px solid #00C8BE;
+  padding: 16px 32px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 20px rgba(0,200,190,.2);
+}
+.gs-btn-primary:hover {
+  box-shadow: 0 0 40px rgba(0,200,190,.4);
+  border-color: #00FFEE;
+}
+
+.gs-btn-secondary {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #A8D8FF;
+  background: rgba(0,71,171,0.2);
+  border: 1px solid #1A3E7A;
+  padding: 12px 24px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+.gs-btn-secondary:hover {
+  background: rgba(0,71,171,0.4);
+  border-color: #5B9BD5;
+}
+
+/* ===== DESIGN SYSTEM — Labels & Text ===== */
+.gs-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  color: #5B9BD5;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.gs-label-muted {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  color: #2B5090;
+  letter-spacing: 2px;
+}
+.gs-title {
+  font-family: 'Lilita One', cursive;
+  letter-spacing: 3px;
+  color: #FFFFFF;
+}
+.gs-value-cyan {
+  font-family: 'Lilita One', cursive;
+  color: #00C8BE;
+  text-shadow: 0 0 14px rgba(0,200,190,.4);
+}
+.gs-value-gold {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: #FFE033;
+}
+
+/* ===== DESIGN SYSTEM — Input fields ===== */
+.gs-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  background: #091E4A;
+  color: #FFFFFF;
+  border: 1px solid #1A3E7A;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.gs-input:focus {
+  border-color: rgba(0,255,238,.5);
+  box-shadow: 0 0 12px rgba(0,255,238,.1);
+}
+.gs-input::placeholder {
+  color: #2B5090;
 }
 
 * {
@@ -61,7 +171,7 @@ html, body {
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #060E1A; }
-::-webkit-scrollbar-thumb { background: #1B3A6B; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: #1B3A6B; border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: #2B5090; }
 
 /* ===== ANIMATIONS ===== */
@@ -88,7 +198,7 @@ html, body {
   to{opacity:1;transform:translateY(0)}
 }
 @keyframes colorCycle {
-  0%{color:#A8D8FF} 33%{color:#00D4CC} 66%{color:#C8960A} 100%{color:#A8D8FF}
+  0%{color:#A8D8FF} 33%{color:#00C8BE} 66%{color:#C8960A} 100%{color:#A8D8FF}
 }
 @keyframes glowBlue {
   0%,100%{text-shadow:3px 3px 0 #0D2B5E, 0 0 20px rgba(90,160,255,.35)}

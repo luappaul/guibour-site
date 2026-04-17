@@ -403,7 +403,7 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
           width: '40px',
           height: '40px',
           border: '3px solid rgba(0,212,204,.2)',
-          borderTop: '3px solid #00D4CC',
+          borderTop: '3px solid #00C8BE',
           borderRadius: '50%',
           animation: 'spin 0.8s linear infinite',
         }} />
@@ -735,7 +735,7 @@ export default function GameCanvas({ characterName = '', playerIdentity }: GameC
           <div style={{ flexShrink: 0, background: '#0D1F3C', borderTop: '2px solid #1A3E7A', fontFamily: "'Orbitron', sans-serif" }}>
             <div style={{ display: 'flex', alignItems: 'center', height: '32px' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '30px', height: '100%', borderRight: '1px solid #1A3E7A', background: '#0C2A62', flexShrink: 0 }}>
-                <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '12px', color: '#00D4CC', fontWeight: 700 }}>fx</span>
+                <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '12px', color: '#00C8BE', fontWeight: 700 }}>fx</span>
               </div>
               <div style={{ flex: 1, padding: '0 10px', display: 'flex', alignItems: 'center' }}>
                 <div style={{ flex: 1, background: '#0C2A62', border: '1px solid #1A3E7A', height: '20px', borderRadius: '3px', overflow: 'hidden' }}>

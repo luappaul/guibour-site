@@ -100,7 +100,7 @@ export default function JukeboxPage() {
           </div>
 
           <div>
-            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#2A4060', letterSpacing: '5px', marginBottom: '6px' }}>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#2A4060', letterSpacing: '5px', marginBottom: '8px' }}>
               02 / SALLE D&apos;ÉCOUTE
             </div>
             <h1 style={{
@@ -110,7 +110,7 @@ export default function JukeboxPage() {
               textShadow: '0 0 30px rgba(0,255,235,.2)', marginBottom: '6px',
             }}>VIDEO &amp; MUSIC BOX</h1>
             <div style={{
-              fontFamily: "'Orbitron', sans-serif", fontSize: '9px',
+              fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
               color: '#00FFEE', letterSpacing: '4px',
               textShadow: '0 0 8px rgba(0,255,235,.6)',
             }}>ÉCOUTER · REGARDER · PARTAGER</div>
@@ -134,7 +134,7 @@ export default function JukeboxPage() {
                 {/* Player header bar */}
                 <div style={{
                   background: '#0A2254',
-                  padding: '10px 16px',
+                  padding: '12px 16px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
@@ -145,7 +145,7 @@ export default function JukeboxPage() {
                     <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#FFBD2E', display: 'inline-block' }} />
                     <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#27C93F', display: 'inline-block' }} />
                   </div>
-                  <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: '#5B9BD5', letterSpacing: '2px' }}>
+                  <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#5B9BD5', letterSpacing: '2px' }}>
                     GUIBOUR.JUKEBOX — {activeTrack.title}
                   </span>
                   {/* View toggle */}
@@ -157,9 +157,9 @@ export default function JukeboxPage() {
                         disabled={v === 'clip' && !activeTrack.hasClip}
                         style={{
                           fontFamily: "'Orbitron', sans-serif",
-                          fontSize: '8px',
+                          fontSize: '11px',
                           letterSpacing: '1px',
-                          padding: '4px 10px',
+                          padding: '4px 12px',
                           background: view === v ? '#0047AB' : 'transparent',
                           color: view === v ? '#fff' : (v === 'clip' && !activeTrack.hasClip) ? '#2B4060' : '#5B9BD5',
                           border: `1px solid ${view === v ? '#00C8BE' : '#1A3E7A'}`,
@@ -200,7 +200,7 @@ export default function JukeboxPage() {
                     <div style={{
                       height: '152px',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontFamily: "'Orbitron', sans-serif", fontSize: '10px',
+                      fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
                       color: '#3C5A7A', letterSpacing: '3px',
                     }}>
                       {!activeTrack.released ? 'BIENTÔT DISPONIBLE' : 'PAS DE CLIP DISPONIBLE'}
@@ -222,7 +222,7 @@ export default function JukeboxPage() {
                       onClick={() => handleSave(activeTrack.id, activeTrack.spotifyId!)}
                       style={{
                         fontFamily: "'Orbitron', sans-serif",
-                        fontSize: '9px',
+                        fontSize: '11px',
                         letterSpacing: '2px',
                         padding: '8px 16px',
                         background: saved[activeTrack.id] ? '#1A8A5A' : 'linear-gradient(135deg, #1DB954, #169940)',
@@ -244,7 +244,7 @@ export default function JukeboxPage() {
                       rel="noopener noreferrer"
                       style={{
                         fontFamily: "'Orbitron', sans-serif",
-                        fontSize: '9px',
+                        fontSize: '11px',
                         letterSpacing: '2px',
                         padding: '8px 16px',
                         background: 'linear-gradient(135deg, #FF0000, #CC0000)',
@@ -264,7 +264,7 @@ export default function JukeboxPage() {
                     rel="noopener noreferrer"
                     style={{
                       fontFamily: "'Orbitron', sans-serif",
-                      fontSize: '9px',
+                      fontSize: '11px',
                       letterSpacing: '2px',
                       padding: '8px 16px',
                       background: 'transparent',
@@ -295,7 +295,7 @@ export default function JukeboxPage() {
                   borderBottom: '1px solid #2B5090',
                 }}>
                   {['#', 'TITRE', ''].map((h, i) => (
-                    <div key={i} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#5B9BD5', letterSpacing: '2px' }}>
+                    <div key={i} style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#5B9BD5', letterSpacing: '2px' }}>
                       {h}
                     </div>
                   ))}
@@ -322,14 +322,14 @@ export default function JukeboxPage() {
                       onMouseEnter={e => { if (track.released && !isActive) e.currentTarget.style.background = 'rgba(0,71,171,.1)'; }}
                       onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent'; }}
                     >
-                      <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '10px', color: isActive ? '#00C8BE' : '#3C5A7A' }}>
+                      <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: isActive ? '#00C8BE' : '#3C5A7A' }}>
                         {isActive ? '▶' : String(i + 1).padStart(2, '0')}
                       </div>
                       <div>
                         <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '13px', color: isActive ? '#FFFFFF' : '#A8D8FF', letterSpacing: '1px' }}>
                           {track.title}
                         </div>
-                        <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#3C5A7A', marginTop: '2px' }}>
+                        <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#3C5A7A', marginTop: '2px' }}>
                           GUIBOUR {track.hasClip ? '· CLIP DISPO' : ''}
                         </div>
                       </div>
@@ -338,7 +338,7 @@ export default function JukeboxPage() {
                           <button
                             onClick={e => { e.stopPropagation(); handleSave(track.id, track.spotifyId!); }}
                             style={{
-                              fontFamily: "'Orbitron', sans-serif", fontSize: '7px',
+                              fontFamily: "'Orbitron', sans-serif", fontSize: '11px',
                               padding: '4px 8px', background: 'transparent',
                               color: saved[track.id] ? '#27C93F' : '#1DB954',
                               border: `1px solid ${saved[track.id] ? '#27C93F' : '#1A3E7A'}`,
@@ -365,8 +365,8 @@ export default function JukeboxPage() {
                 borderRadius: '4px',
                 overflow: 'hidden',
               }}>
-                <div style={{ background: '#1A3E7A', padding: '8px 14px', borderBottom: '1px solid #2B5090' }}>
-                  <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#A8D8FF', letterSpacing: '3px' }}>DOSSIER ARTISTE</span>
+                <div style={{ background: '#1A3E7A', padding: '8px 16px', borderBottom: '1px solid #2B5090' }}>
+                  <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#A8D8FF', letterSpacing: '3px' }}>DOSSIER ARTISTE</span>
                 </div>
                 {/* Photo */}
                 <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', overflow: 'hidden' }}>
@@ -385,13 +385,13 @@ export default function JukeboxPage() {
                     <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '22px', color: '#FFF', letterSpacing: '4px', textShadow: '0 0 14px rgba(0,255,235,.2)' }}>
                       GUIBOUR
                     </div>
-                    <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '7px', color: '#00D4CC', letterSpacing: '4px', textShadow: '0 0 6px rgba(0,200,190,.5)' }}>
+                    <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#00C8BE', letterSpacing: '4px', textShadow: '0 0 6px rgba(0,200,190,.5)' }}>
                       ARTISTE · EP 2026
                     </div>
                   </div>
                 </div>
                 <div style={{ padding: '12px 14px' }}>
-                  <p style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#5B9BD5', lineHeight: 1.7, letterSpacing: '0.5px' }}>
+                  <p style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#5B9BD5', lineHeight: 1.7, letterSpacing: '0.5px' }}>
                     Artiste indépendant. Un EP en cours de sortie. Un jeu web. Une satire du monde du travail.
                     Work Or Window — le son du bureau qui brûle.
                   </p>
@@ -405,8 +405,8 @@ export default function JukeboxPage() {
                 borderRadius: '4px',
                 overflow: 'hidden',
               }}>
-                <div style={{ background: '#1A3E7A', padding: '8px 14px', borderBottom: '1px solid #2B5090' }}>
-                  <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '9px', color: '#A8D8FF', letterSpacing: '3px' }}>ÉCOUTER PARTOUT</span>
+                <div style={{ background: '#1A3E7A', padding: '8px 16px', borderBottom: '1px solid #2B5090' }}>
+                  <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#A8D8FF', letterSpacing: '3px' }}>ÉCOUTER PARTOUT</span>
                 </div>
                 <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {[
@@ -421,15 +421,15 @@ export default function JukeboxPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
-                        display: 'flex', alignItems: 'center', gap: '10px',
-                        padding: '10px 14px',
+                        display: 'flex', alignItems: 'center', gap: '12px',
+                        padding: '12px 16px',
                         background: `${color}12`,
                         border: `1px solid ${color}30`,
-                        borderRadius: '3px',
+                        borderRadius: '4px',
                         textDecoration: 'none',
                         transition: 'all .2s',
                         fontFamily: "'Orbitron', sans-serif",
-                        fontSize: '9px',
+                        fontSize: '11px',
                         color: color,
                         letterSpacing: '2px',
                       }}
@@ -446,13 +446,13 @@ export default function JukeboxPage() {
 
               {/* YouTube subscribe — compact */}
               <a href={YOUTUBE_CHANNEL} target="_blank" rel="noopener noreferrer"
-                style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 14px', background: '#0A0000', border: '2px solid #CC0000', textDecoration: 'none', transition: 'all .2s' }}
+                style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 14px', background: '#0A0000', border: '2px solid #CC0000', textDecoration: 'none', transition: 'all .2s' }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = '#FF0000'; e.currentTarget.style.boxShadow = '0 0 16px rgba(255,0,0,.25)'; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = '#CC0000'; e.currentTarget.style.boxShadow = 'none'; }}>
                 <span style={{ fontSize: '22px' }}>▶</span>
                 <div>
                   <div style={{ fontFamily: "'Lilita One', cursive", fontSize: '13px', color: '#FF4444', letterSpacing: '2px', textShadow: '0 0 8px rgba(255,68,68,.6)' }}>S&apos;ABONNER</div>
-                  <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '8px', color: '#884444', letterSpacing: '1px' }}>@GUIBOUR</div>
+                  <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '11px', color: '#884444', letterSpacing: '1px' }}>@GUIBOUR</div>
                 </div>
                 <span style={{ marginLeft: 'auto', color: '#FF4444', fontSize: '16px' }}>→</span>
               </a>

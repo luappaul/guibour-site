@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
       <p style="color:#A8D8FF;font-size:11px;line-height:1.8;margin:16px 0;">
         Votre dossier a été enregistré dans le système Guibour.<br>
         <strong style="color:#FFE033;">Employé N° GS-${employeeNum}</strong> — vous êtes désormais en compétition.<br><br>
-        Le classement est mis à jour en temps réel sur <strong style="color:#00D4CC;">guibour.fr</strong>.<br>
+        Le classement est mis à jour en temps réel sur <strong style="color:#00C8BE;">guibour.fr</strong>.<br>
         Les gagnants seront contactés personnellement.
       </p>
       <div style="background:#0047AB;padding:12px;text-align:center;margin:20px 0;">
