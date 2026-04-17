@@ -12,7 +12,7 @@ import { DayNightTheme } from '@/hooks/useDayNight';
 import { useTheme } from '@/contexts/ThemeContext';
 import { playClick } from '@/lib/sounds';
 import Typewriter from '@/components/ui/Typewriter';
-import Testimonials from '@/components/ui/Testimonials';
+// Testimonials component available at @/components/ui/Testimonials if needed elsewhere
 
 const GameCanvas = dynamic(() => import('@/components/game/GameCanvas'), {
   ssr: false,
@@ -64,6 +64,14 @@ function HeroContent({ onPlay, theme }: { onPlay: () => void; theme: DayNightThe
   const systemRef = useRef<HTMLDivElement>(null);
   const isTouchDevice = useRef(false);
   const [playerCount, setPlayerCount] = useState<number | null>(null);
+  const [testimonialIdx, setTestimonialIdx] = useState(0);
+
+  const QUOTES = [
+    { text: "J'ai perdu 3h de ma vie sur ce jeu.", author: "Jean-Michel D.", role: "Directeur des Synergies" },
+    { text: "J'ai battu le record du bureau. Personne ne m'a félicitée.", author: "Nathalie K.", role: "Cheffe de Projet" },
+    { text: "Mon boss m'a surprise en train de jouer. Il est toujours dessus.", author: "Isabelle M.", role: "Assistante de Direction" },
+    { text: "La réunion de 14h a été annulée grâce à ce jeu.", author: "François T.", role: "Consultant Senior" },
+  ];
 
   useEffect(() => {
     isTouchDevice.current = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -76,28 +84,28 @@ function HeroContent({ onPlay, theme }: { onPlay: () => void; theme: DayNightThe
       .catch(() => {});
   }, []);
 
+  useEffect(() => {
+    const id = setInterval(() => setTestimonialIdx(i => (i + 1) % QUOTES.length), 6000);
+    return () => clearInterval(id);
+  }, [QUOTES.length]);
+
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (isTouchDevice.current) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
-    const dx = (e.clientX - cx) / (rect.width / 2);  // -1 to 1
+    const dx = (e.clientX - cx) / (rect.width / 2);
     const dy = (e.clientY - cy) / (rect.height / 2);
-
-    // Logo: opposite direction, max 15px
-    if (logoRef.current) {
-      logoRef.current.style.transform = `translate3d(${-dx * 15}px, ${-dy * 15}px, 0)`;
-    }
-    // SYSTEM text: opposite direction, max 8px (deeper)
-    if (systemRef.current) {
-      systemRef.current.style.transform = `translate3d(${-dx * 8}px, ${-dy * 8}px, 0)`;
-    }
+    if (logoRef.current) logoRef.current.style.transform = `translate3d(${-dx * 15}px, ${-dy * 15}px, 0)`;
+    if (systemRef.current) systemRef.current.style.transform = `translate3d(${-dx * 8}px, ${-dy * 8}px, 0)`;
   }, []);
 
   const handleMouseLeave = useCallback(() => {
     if (logoRef.current) logoRef.current.style.transform = 'translate3d(0,0,0)';
     if (systemRef.current) systemRef.current.style.transform = 'translate3d(0,0,0)';
   }, []);
+
+  const q = QUOTES[testimonialIdx];
 
   return (
     <div
@@ -115,7 +123,7 @@ function HeroContent({ onPlay, theme }: { onPlay: () => void; theme: DayNightThe
       }}
     >
 
-      {/* Logo GUIBOUR SYSTEM -- centre, imposant, respire */}
+      {/* ── LOGO GUIBOUR SYSTEM (inchangé) ── */}
       <h1
         ref={logoRef}
         aria-label="GUIBOUR SYSTEM"
@@ -166,10 +174,10 @@ function HeroContent({ onPlay, theme }: { onPlay: () => void; theme: DayNightThe
         </div>
       </h1>
 
-      {/* Tagline -- discret, typewriter */}
+      {/* ── TAGLINE ── */}
       <div style={{
         fontFamily: "'Orbitron', sans-serif",
-        fontSize: '10px',
+        fontSize: '11px',
         color: '#2B5090',
         letterSpacing: '4px',
         marginTop: '20px',
@@ -179,11 +187,11 @@ function HeroContent({ onPlay, theme }: { onPlay: () => void; theme: DayNightThe
         <Typewriter text="WORK OR WINDOW" speed={60} delay={800} />
       </div>
 
-      {/* CTA JOUER -- gros, seul, central */}
+      {/* ── CTA JOUER ── */}
       <button
         onClick={() => { playClick(); onPlay(); }}
         style={{
-          marginTop: '48px',
+          marginTop: '40px',
           fontFamily: "'Lilita One', cursive",
           fontSize: 'clamp(20px, 4vw, 28px)',
           letterSpacing: '8px',
@@ -218,11 +226,114 @@ function HeroContent({ onPlay, theme }: { onPlay: () => void; theme: DayNightThe
         }} />
       </button>
 
-      {/* Social proof counter */}
+      {/* ── COMPTEUR JOUEURS ── */}
       {playerCount !== null && playerCount > 0 && <AnimatedCounter target={playerCount} />}
 
-      {/* Testimonials carousel */}
-      <Testimonials />
+      {/* ── NOTICE "BIENVENUE DANS LE SYSTEM" ── */}
+      <div style={{
+        marginTop: '40px',
+        maxWidth: '480px',
+        width: '100%',
+        padding: '20px 24px',
+        background: 'rgba(0,0,0,.25)',
+        border: '1px solid rgba(0,200,190,.15)',
+        borderRadius: '4px',
+        position: 'relative',
+        zIndex: 2,
+      }}>
+        <div style={{
+          fontFamily: "'Orbitron', sans-serif",
+          fontSize: '11px',
+          color: '#00C8BE',
+          letterSpacing: '3px',
+          marginBottom: '16px',
+          textShadow: '0 0 8px rgba(0,200,190,.4)',
+        }}>
+          BIENVENUE DANS LE SYSTEM
+        </div>
+        {[
+          'Survivez aux 25 étages de l\'open space',
+          'Esquivez les dossiers volants',
+          'Grimpez dans le classement mondial',
+          'Gagnez votre liberté',
+        ].map((line, i) => (
+          <div key={i} style={{
+            fontFamily: "'Orbitron', sans-serif",
+            fontSize: '11px',
+            color: '#5B9BD5',
+            lineHeight: 2,
+            paddingLeft: '16px',
+          }}>
+            <span style={{ color: '#00C8BE', marginRight: '8px' }}>&gt;</span>
+            {line}
+          </div>
+        ))}
+
+        {/* Liens secondaires */}
+        <div style={{
+          display: 'flex',
+          gap: '12px',
+          marginTop: '16px',
+          paddingTop: '16px',
+          borderTop: '1px solid rgba(0,200,190,.08)',
+        }}>
+          {[
+            { label: 'ÉCOUTER', href: '/jukebox' },
+            { label: 'CLASSEMENT', href: '/resultats' },
+            { label: 'BOUTIQUE', href: '/shopping' },
+          ].map(link => (
+            <a key={link.href} href={link.href} style={{
+              fontFamily: "'Orbitron', sans-serif",
+              fontSize: '11px',
+              color: '#2B5090',
+              letterSpacing: '2px',
+              textDecoration: 'none',
+              padding: '8px 16px',
+              border: '1px solid rgba(0,200,190,.1)',
+              borderRadius: '4px',
+              transition: 'all .2s',
+            }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#00C8BE'; e.currentTarget.style.color = '#00C8BE'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(0,200,190,.1)'; e.currentTarget.style.color = '#2B5090'; }}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* ── TESTIMONIAL UNIQUE (petit, discret, rotatif) ── */}
+      <div style={{
+        marginTop: '32px',
+        maxWidth: '400px',
+        textAlign: 'center',
+        position: 'relative',
+        zIndex: 2,
+        minHeight: '48px',
+      }}>
+        <div key={testimonialIdx} style={{
+          animation: 'fadeIn 0.5s ease-out',
+        }}>
+          <div style={{
+            fontFamily: "'Orbitron', sans-serif",
+            fontSize: '11px',
+            color: '#5B9BD5',
+            fontStyle: 'italic',
+            lineHeight: 1.6,
+            opacity: 0.7,
+          }}>
+            &laquo; {q.text} &raquo;
+          </div>
+          <div style={{
+            fontFamily: "'Orbitron', sans-serif",
+            fontSize: '11px',
+            color: '#2B5090',
+            marginTop: '4px',
+          }}>
+            — {q.author}, {q.role}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
