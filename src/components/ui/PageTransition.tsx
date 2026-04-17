@@ -138,12 +138,12 @@ export default function PageTransition({ children }: { children: React.ReactNode
               {/* Page name */}
               <div
                 style={{
-                  fontFamily: "'Lilita One', cursive",
-                  fontSize: 'clamp(28px, 6vw, 48px)',
-                  fontWeight: 400,
-                  color: '#FFFFFF',
+                  fontFamily: "'Orbitron', sans-serif",
+                  fontSize: 'clamp(32px, 8vw, 64px)',
+                  fontWeight: 900,
+                  color: '#00C8BE',
                   letterSpacing: '8px',
-                  textShadow: '0 0 30px rgba(0,200,190,0.5), 0 0 60px rgba(0,200,190,0.2)',
+                  textShadow: '0 0 40px rgba(0,200,190,0.6), 0 0 80px rgba(0,200,190,0.3)',
                   textTransform: 'uppercase',
                   animation: phase === 'display' ? 'floorSlideIn 0.3s ease-out' : 'none',
                 }}
