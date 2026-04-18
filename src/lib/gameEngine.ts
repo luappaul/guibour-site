@@ -31,15 +31,17 @@ const HB_IDLE = [
   { frac: 0.06, r: 12 },  // Feet
 ];
 
+// Walk radii based on P75 width across all 64 sprite frames at 80%.
+// Covers 75% of frames accurately, avoids phantom hits on narrow frames.
 const HB_WALK = [
-  { frac: 0.92, r: 17 },  // Top of head (slightly wider due to tilt)
-  { frac: 0.82, r: 20 },  // Head/face
-  { frac: 0.70, r: 28 },  // Shoulders (arms extended)
-  { frac: 0.58, r: 34 },  // Chest (arms + torso, widest)
-  { frac: 0.45, r: 32 },  // Torso
-  { frac: 0.32, r: 30 },  // Hips (legs stepping)
-  { frac: 0.18, r: 34 },  // Upper legs (spread wide during walk)
-  { frac: 0.06, r: 28 },  // Feet (stride extends far)
+  { frac: 0.92, r: 20 },  // Top of head
+  { frac: 0.82, r: 22 },  // Head/face
+  { frac: 0.70, r: 24 },  // Shoulders
+  { frac: 0.58, r: 23 },  // Chest
+  { frac: 0.45, r: 23 },  // Torso
+  { frac: 0.32, r: 24 },  // Hips
+  { frac: 0.18, r: 23 },  // Upper legs
+  { frac: 0.06, r: 20 },  // Feet
 ];
 
 // 7 bubble sizes: radius, bounceVy, speedX, divisionVy, score
@@ -536,7 +538,7 @@ function checkCollisions(state: GameState) {
   // Bubble vs Player — precise capsule hitbox (use 85% of visual bubble radius for fairer feel)
   if (player.invincible <= 0) {
     for (const b of bubbles) {
-      if (playerCircleCollision(player, b.x, b.y, b.radius * 0.82)) {
+      if (playerCircleCollision(player, b.x, b.y, b.radius * 0.75)) {
         if (state.cgtShield) {
           state.cgtShield = false;
           player.invincible = 60;
