@@ -145,18 +145,18 @@ function HeroContent({ onPlay, theme }: { onPlay: () => void; theme: DayNightThe
             fontFamily: "'Anton', sans-serif",
             color: '#FFFFFF',
             letterSpacing: '-2px',
-            WebkitTextStroke: '3px #0047AB',
+            WebkitTextStroke: '4px rgba(255,255,255,.85)',
             paintOrder: 'stroke fill',
-            textShadow: '-5px 1px 5px rgba(0,0,0,.58)',
+            textShadow: '2px 3px 0 rgba(0,0,0,.9), 4px 6px 0 rgba(0,0,0,.8), 6px 9px 0 rgba(0,0,0,.7), 8px 12px 0 rgba(0,0,0,.6), 10px 15px 4px rgba(0,0,0,.5), -5px 1px 8px rgba(0,0,0,.6)',
           }}>GUIB</span>
           <GlobeO />
           <span style={{
             fontFamily: "'Anton', sans-serif",
             color: '#FFFFFF',
             letterSpacing: '-2px',
-            WebkitTextStroke: '3px #0047AB',
+            WebkitTextStroke: '4px rgba(255,255,255,.85)',
             paintOrder: 'stroke fill',
-            textShadow: '-5px 1px 5px rgba(0,0,0,.58)',
+            textShadow: '2px 3px 0 rgba(0,0,0,.9), 4px 6px 0 rgba(0,0,0,.8), 6px 9px 0 rgba(0,0,0,.7), 8px 12px 0 rgba(0,0,0,.6), 10px 15px 4px rgba(0,0,0,.5), -5px 1px 8px rgba(0,0,0,.6)',
           }}>UR</span>
         </div>
 
