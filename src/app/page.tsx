@@ -142,16 +142,16 @@ function HeroContent({ onPlay, theme }: { onPlay: () => void; theme: DayNightThe
           gap: 0,
         }}>
           <span style={{
-            fontFamily: "'Lilita One', cursive",
+            fontFamily: "'Abolition', 'Lilita One', sans-serif",
             color: '#FFFFFF',
-            letterSpacing: '4px',
+            letterSpacing: '6px',
             animation: 'glowWhite3D 3s ease-in-out infinite',
           }}>GUIB</span>
           <GlobeO />
           <span style={{
-            fontFamily: "'Lilita One', cursive",
+            fontFamily: "'Abolition', 'Lilita One', sans-serif",
             color: '#FFFFFF',
-            letterSpacing: '4px',
+            letterSpacing: '6px',
             animation: 'glowWhite3D 3s ease-in-out infinite',
           }}>UR</span>
         </div>

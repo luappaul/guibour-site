@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* ===== ABOLITION — Logo font ===== */
+@font-face {
+  font-family: 'Abolition';
+  src: url('/fonts/Abolition-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ===== DSEG7 — 7-segment digital clock font ===== */
 @font-face {
   font-family: 'DSEG7';
