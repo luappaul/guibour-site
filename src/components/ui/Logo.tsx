@@ -7,7 +7,7 @@ interface LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
-function GlobeSVG({ size = 80, color = '#1A5C38', accentColor = '#3CB371', glowColor }: { size?: number; color?: string; accentColor?: string; glowColor?: string }) {
+function GlobeSVG({ size = 80, color = '#0047AB', accentColor = '#00C8BE', glowColor }: { size?: number; color?: string; accentColor?: string; glowColor?: string }) {
   const r = size * 0.425;
   const cx = size / 2;
   const cy = size / 2;
@@ -62,12 +62,12 @@ export default function Logo({ variant = 'dark', size = 'md' }: LogoProps) {
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <GlobeSVG
           size={s.globe}
-          color="#1A5C38"
-          accentColor="#3CB371"
+          color="#0047AB"
+          accentColor="#00C8BE"
         />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <span style={{
-            fontFamily: "'Oxanium', sans-serif",
+            fontFamily: "'Orbitron', sans-serif",
             fontSize: `${s.title}px`,
             fontWeight: 800,
             color: '#1A2530',
@@ -77,10 +77,10 @@ export default function Logo({ variant = 'dark', size = 'md' }: LogoProps) {
             GUIBOUR
           </span>
           <span style={{
-            fontFamily: "'Oxanium', sans-serif",
+            fontFamily: "'Orbitron', sans-serif",
             fontSize: `${s.sub}px`,
             fontWeight: 300,
-            color: '#2E8B57',
+            color: '#00A89D',
             letterSpacing: s.subSpacing,
             lineHeight: 1,
             marginTop: '2px',
@@ -96,19 +96,19 @@ export default function Logo({ variant = 'dark', size = 'md' }: LogoProps) {
     <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <GlobeSVG
         size={s.globe}
-        color="#1A5C38"
-        accentColor={isDark ? '#3CB371' : '#2E8B57'}
-        glowColor={isDark ? '#3CB371' : undefined}
+        color="#0047AB"
+        accentColor={isDark ? '#00C8BE' : '#00A89D'}
+        glowColor={isDark ? '#00C8BE' : undefined}
       />
       <span style={{
-        fontFamily: "'Oxanium', sans-serif",
+        fontFamily: "'Orbitron', sans-serif",
         fontSize: `${s.title}px`,
         fontWeight: 800,
         color: isDark ? 'white' : '#1A2530',
         letterSpacing: s.letterSpacing,
         lineHeight: 1,
         marginTop: `${s.gap}px`,
-        ...(isDark ? { textShadow: '0 0 14px rgba(60,179,113,0.8), 0 0 40px rgba(60,179,113,0.3)' } : {}),
+        ...(isDark ? { textShadow: '0 0 14px rgba(0,168,157,0.8), 0 0 40px rgba(0,168,157,0.3)' } : {}),
       }}>
         GUIBOUR
       </span>
@@ -116,15 +116,15 @@ export default function Logo({ variant = 'dark', size = 'md' }: LogoProps) {
       <div style={{
         width: `${s.sepW}px`,
         height: '1px',
-        background: 'linear-gradient(90deg, transparent, #2E8B57, #3CB371, transparent)',
+        background: 'linear-gradient(90deg, transparent, #00A89D, #00C8BE, transparent)',
         margin: `${s.gap * 0.6}px 0`,
-        ...(isDark ? { boxShadow: '0 0 8px #3CB371' } : {}),
+        ...(isDark ? { boxShadow: '0 0 8px #00C8BE' } : {}),
       }} />
       <span style={{
-        fontFamily: "'Oxanium', sans-serif",
+        fontFamily: "'Orbitron', sans-serif",
         fontSize: `${s.sub}px`,
         fontWeight: 300,
-        color: isDark ? '#3CB371' : '#607888',
+        color: isDark ? '#00C8BE' : '#607888',
         letterSpacing: s.subSpacing,
         lineHeight: 1,
       }}>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUIBOUR — Comparatif Typo Logo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Orbitron:wght@400;700;900&family=Paytone+One&family=Righteous&family=Titan+One&family=Concert+One&family=Fredoka:wght@600;700&family=Baloo+2:wght@700;800&family=Boogaloo&family=Bubblegum+Sans&family=Coiny&family=Exo+2:wght@700&family=Chakra+Petch:wght@600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #0A0F1A;
+  min-height: 100vh;
+  font-family: -apple-system, sans-serif;
+}
+
+.header {
+  text-align: center;
+  padding: 50px 20px 30px;
+}
+.header h1 {
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: #3A5A80;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* Each logo block */
+.logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 20px;
+  border-bottom: 1px solid rgba(255,255,255,.03);
+  position: relative;
+  transition: background .3s;
+}
+.logo-row:hover {
+  background: rgba(255,255,255,.02);
+}
+
+.logo-row .tag {
+  position: absolute;
+  top: 18px;
+  left: 30px;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #2A4060;
+  text-transform: uppercase;
+  font-family: -apple-system, sans-serif;
+}
+.logo-row .font-name {
+  position: absolute;
+  bottom: 16px;
+  left: 30px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #1A3050;
+  font-family: 'Orbitron', monospace;
+}
+
+.logo-row.current {
+  background: rgba(255,255,255,.02);
+  border-bottom: 1px solid rgba(0,200,190,.1);
+}
+.logo-row.current .tag {
+  color: #00C8BE;
+}
+
+/* Logo assembly */
+.logo-assembly {
+  text-align: center;
+}
+.logo-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  line-height: 1;
+}
+.logo-main .letters {
+  font-size: 90px;
+  color: #FFFFFF;
+  letter-spacing: 4px;
+}
+.logo-system {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px;
+  color: #00FFEE;
+  letter-spacing: 10px;
+  font-weight: 700;
+  margin-top: 6px;
+  text-shadow: 0 0 14px rgba(0,255,238,.4);
+}
+
+/* Globe SVG — neon wireframe */
+.globe-container {
+  display: inline-block;
+  width: 108px;
+  height: 108px;
+  margin: 0 -18px;
+  vertical-align: -18px;
+}
+.globe-container svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 8px rgba(0,255,238,.5));
+}
+.globe-container svg .globe-line {
+  stroke: #00FFEE;
+  stroke-width: 1.7;
+  fill: none;
+  stroke-linecap: round;
+}
+.globe-container svg .globe-line-back {
+  stroke: #00FFEE;
+  stroke-width: 1.2;
+  fill: none;
+  stroke-dasharray: 2 4;
+  opacity: .18;
+}
+
+@media (max-width: 768px) {
+  .logo-main .letters { font-size: 50px; }
+  .globe-container { width: 60px; height: 60px; margin: 0 -10px; vertical-align: -10px; }
+  .logo-system { font-size: 11px; letter-spacing: 7px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Comparatif typo logo — GUIBOUR SYSTEM</h1>
+</div>
+
+<script>
+// Generate the globe SVG (neon wireframe)
+function globeSVG() {
+  const R = 36, CX = 60, CY = 60;
+  let paths = '';
+
+  // Outer circle
+  paths += `<circle cx="${CX}" cy="${CY}" r="${R}" class="globe-line"/>`;
+
+  // Parallels (5)
+  for (let i = 1; i <= 5; i++) {
+    const p = (i / 6) * 2 - 1;
+    const py = CY + p * R;
+    const rx = R * Math.sqrt(1 - p * p);
+    const ry = rx * 0.22;
+    paths += `<ellipse cx="${CX}" cy="${py}" rx="${rx}" ry="${ry}" class="globe-line"/>`;
+  }
+
+  // Meridians (6) — static snapshot at t=0
+  for (let i = 0; i < 6; i++) {
+    const angle = (i / 6) * Math.PI;
+    const sinA = Math.sin(angle);
+    const rx = R * Math.abs(sinA);
+    const isFront = Math.cos(angle) >= 0;
+    if (rx < 1) continue;
+    paths += `<ellipse cx="${CX}" cy="${CY}" rx="${rx}" ry="${R}" class="${isFront ? 'globe-line' : 'globe-line-back'}"/>`;
+  }
+
+  return `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">${paths}</svg>`;
+}
+
+const globe = globeSVG();
+
+const fonts = [
+  { family: "'Lilita One', cursive", name: "Lilita One", tag: "Actuel", current: true },
+  { family: "'Paytone One', sans-serif", name: "Paytone One", tag: "Proposition 1" },
+  { family: "'Righteous', cursive", name: "Righteous", tag: "Proposition 2" },
+  { family: "'Concert One', cursive", name: "Concert One", tag: "Proposition 3" },
+  { family: "'Fredoka', sans-serif; font-weight:700", name: "Fredoka Bold", tag: "Proposition 4" },
+  { family: "'Titan One', cursive", name: "Titan One", tag: "Proposition 5" },
+  { family: "'Baloo 2', cursive; font-weight:800", name: "Baloo 2 ExtraBold", tag: "Proposition 6" },
+  { family: "'Boogaloo', cursive", name: "Boogaloo", tag: "Proposition 7" },
+  { family: "'Bubblegum Sans', cursive", name: "Bubblegum Sans", tag: "Proposition 8" },
+  { family: "'Coiny', cursive", name: "Coiny", tag: "Proposition 9" },
+];
+
+let html = '';
+fonts.forEach(f => {
+  const cls = f.current ? 'logo-row current' : 'logo-row';
+  // Parse font-family and extra styles
+  const parts = f.family.split(';');
+  const ff = parts[0].trim();
+  const extra = parts.slice(1).map(p => p.trim()).join(';');
+
+  html += `
+    <div class="${cls}">
+      <div class="tag">${f.tag}</div>
+      <div class="logo-assembly">
+        <div class="logo-main">
+          <span class="letters" style="font-family:${ff};${extra}">GUIB</span>
+          <span class="globe-container">${globe}</span>
+          <span class="letters" style="font-family:${ff};${extra}">UR</span>
+        </div>
+        <div class="logo-system">S Y S T E M</div>
+      </div>
+      <div class="font-name">${f.name}</div>
+    </div>
+  `;
+});
+
+document.write(html);
+</script>
+
+</body>
+</html>

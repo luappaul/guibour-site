@@ -40,6 +40,19 @@ export interface ActiveEffect {
   remaining: number; // frames remaining
 }
 
+// ===== FLOATING TEXT (bonus collection popup) =====
+export interface FloatingText {
+  id: number;
+  x: number;
+  y: number;
+  text: string;
+  color: string;
+  opacity: number; // 0-1
+  vy: number;      // rises upward (negative)
+  life: number;    // frames remaining
+  maxLife: number; // total frames
+}
+
 // ===== TIMER =====
 export interface RoundTimer {
   total: number;    // seconds
@@ -78,17 +91,18 @@ export interface BubbleConfig {
 export interface LevelConfig {
   id: number;           // 0-24
   name: string;         // "Etage 00 — Accueil" etc.
-  background: string;   // "/game/backgrounds/bg-00.png"
+  background: string;   // "/game/backgrounds/bg-00.webp"
   phrase: string;       // satirical phrase shown at start
   bubbles: BubbleConfig[];
   timeLimit: number;    // seconds
   bonusWeights: Partial<Record<BonusType, number>>;
   hasCeilingSpikes: boolean;
+  musicOverride?: string; // optional path to level-specific music (e.g. '/game/audio/dont-talk-to-me.mp3')
 }
 
 // ===== GAME STATE =====
 export interface GameState {
-  status: 'idle' | 'playing' | 'paused' | 'levelComplete' | 'gameOver' | 'victory' | 'burnout';
+  status: 'idle' | 'playing' | 'paused' | 'levelComplete' | 'gameOver' | 'victory' | 'burnout' | 'victoryAnim' | 'elevatorClose' | 'elevatorOpen';
   level: number;         // 0-24
   player: Player;
   bubbles: Bubble[];
@@ -111,6 +125,13 @@ export interface GameState {
   levelTransitionTimer: number;
   startTime: number;
   endTime: number;
+  // Victory animation + elevator transition
+  victoryAnimTimer: number;        // frames for victory dance
+  elevatorDoorProgress: number;    // 0-1 for door close/open
+  timeToMoneyRemaining: number;    // seconds left to convert
+  timeToMoneyTotal: number;        // total seconds at start of conversion
+  moneyEarnedThisRound: number;    // money from time conversion
+  floatingTexts: FloatingText[];
   frameCount: number;
 }
 
@@ -120,4 +141,5 @@ export interface LeaderboardEntry {
   score: number;
   level: number;
   date: string;
+  employeeId?: string;
 }
